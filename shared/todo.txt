@@ -1,0 +1,52 @@
+=QServ Collect: compatible w/ Mac Windows & Linux
+
+[TODOLIST]
+
+COMMANDS
+
+    addgametime
+    cheater
+    mapsucks
+    setmaxhealth
+    setmaxammo
+—-  tournament countdown
+    persistteams
+    editmute
+
+MODES
+
+    chainsaw insta 
+-—  zombie mode DONE
+
+PROTECTION
+
+    name protection
+    dos protection from ENET send packets: 
+    See “ENet Cookies” at https://github.com/pisto/spaghettimod for info.
+
+FEATURES
+
+—-  Lua integration DONE
+    tournament countdown
+    name instead of cn
+    timestamp for console commands 
+    local time by GeoIP loc
+    GeoIP City geolite
+    banlist w/ options and time (forcespec/forcemute/noconnect)
+    sql lite implementation for online stats and banlist
+    intermission beststats
+    intermission mapvote
+    livestats xml website integration
+    cubescript integration?
+—-  cross compatable clients DONE
+
+OTHER
+    
+    If(zombie mode) handler 
+    forced getmap from server possibility in init with mapname
+    info command tells how long client has been connected for 
+    uptime function needs fixing
+    time/timezone commands issue wrong times
+—-  when client connect echo cn to irc DONE
+    default mode setting, default map, mode rotation
+    github page

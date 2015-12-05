@@ -1,0 +1,2223 @@
+Determining if the function gethostbyaddr_r, exists failed with the following output:
+Change Dir: /Users/user/Desktop/QServ/STABLE/mac/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_61e58/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_61e58.dir/build.make CMakeFiles/cmTC_61e58.dir/build
+Building C object CMakeFiles/cmTC_61e58.dir/CheckFunctionExists.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc    -DCHECK_FUNCTION_EXISTS=gethostbyaddr_r,   -o CMakeFiles/cmTC_61e58.dir/CheckFunctionExists.c.o   -c /usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:6:28: error: expected identifier or '('
+char CHECK_FUNCTION_EXISTS();
+                           ^
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:14:25: error: expected expression
+  CHECK_FUNCTION_EXISTS();
+                        ^
+2 errors generated.
+make[1]: *** [CMakeFiles/cmTC_61e58.dir/CheckFunctionExists.c.o] Error 1
+make: *** [cmTC_61e58/fast] Error 2
+
+
+Determining if the function gethostbyname_r, exists failed with the following output:
+Change Dir: /Users/user/Desktop/QServ/STABLE/mac/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_8d3d4/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_8d3d4.dir/build.make CMakeFiles/cmTC_8d3d4.dir/build
+Building C object CMakeFiles/cmTC_8d3d4.dir/CheckFunctionExists.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc    -DCHECK_FUNCTION_EXISTS=gethostbyname_r,   -o CMakeFiles/cmTC_8d3d4.dir/CheckFunctionExists.c.o   -c /usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:6:28: error: expected identifier or '('
+char CHECK_FUNCTION_EXISTS();
+                           ^
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:14:25: error: expected expression
+  CHECK_FUNCTION_EXISTS();
+                        ^
+2 errors generated.
+make[1]: *** [CMakeFiles/cmTC_8d3d4.dir/CheckFunctionExists.c.o] Error 1
+make: *** [cmTC_8d3d4/fast] Error 2
+
+
+Determining if the function poll, exists failed with the following output:
+Change Dir: /Users/user/Desktop/QServ/STABLE/mac/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_3977e/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_3977e.dir/build.make CMakeFiles/cmTC_3977e.dir/build
+Building C object CMakeFiles/cmTC_3977e.dir/CheckFunctionExists.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc    -DCHECK_FUNCTION_EXISTS=poll,   -o CMakeFiles/cmTC_3977e.dir/CheckFunctionExists.c.o   -c /usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:6:28: error: expected identifier or '('
+char CHECK_FUNCTION_EXISTS();
+                           ^
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:14:25: error: expected expression
+  CHECK_FUNCTION_EXISTS();
+                        ^
+2 errors generated.
+make[1]: *** [CMakeFiles/cmTC_3977e.dir/CheckFunctionExists.c.o] Error 1
+make: *** [cmTC_3977e/fast] Error 2
+
+
+Determining if the function fcntl, exists failed with the following output:
+Change Dir: /Users/user/Desktop/QServ/STABLE/mac/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_83b6a/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_83b6a.dir/build.make CMakeFiles/cmTC_83b6a.dir/build
+Building C object CMakeFiles/cmTC_83b6a.dir/CheckFunctionExists.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc    -DCHECK_FUNCTION_EXISTS=fcntl,   -o CMakeFiles/cmTC_83b6a.dir/CheckFunctionExists.c.o   -c /usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:6:28: error: expected identifier or '('
+char CHECK_FUNCTION_EXISTS();
+                           ^
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:14:25: error: expected expression
+  CHECK_FUNCTION_EXISTS();
+                        ^
+2 errors generated.
+make[1]: *** [CMakeFiles/cmTC_83b6a.dir/CheckFunctionExists.c.o] Error 1
+make: *** [cmTC_83b6a/fast] Error 2
+
+
+Determining if the function inet_pton, exists failed with the following output:
+Change Dir: /Users/user/Desktop/QServ/STABLE/mac/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_5a4e0/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_5a4e0.dir/build.make CMakeFiles/cmTC_5a4e0.dir/build
+Building C object CMakeFiles/cmTC_5a4e0.dir/CheckFunctionExists.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc    -DCHECK_FUNCTION_EXISTS=inet_pton,   -o CMakeFiles/cmTC_5a4e0.dir/CheckFunctionExists.c.o   -c /usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:6:28: error: expected identifier or '('
+char CHECK_FUNCTION_EXISTS();
+                           ^
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:14:25: error: expected expression
+  CHECK_FUNCTION_EXISTS();
+                        ^
+2 errors generated.
+make[1]: *** [CMakeFiles/cmTC_5a4e0.dir/CheckFunctionExists.c.o] Error 1
+make: *** [cmTC_5a4e0/fast] Error 2
+
+
+Determining if the function inet_ntop, exists failed with the following output:
+Change Dir: /Users/user/Desktop/QServ/STABLE/mac/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_b14ae/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_b14ae.dir/build.make CMakeFiles/cmTC_b14ae.dir/build
+Building C object CMakeFiles/cmTC_b14ae.dir/CheckFunctionExists.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc    -DCHECK_FUNCTION_EXISTS=inet_ntop,   -o CMakeFiles/cmTC_b14ae.dir/CheckFunctionExists.c.o   -c /usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:6:28: error: expected identifier or '('
+char CHECK_FUNCTION_EXISTS();
+                           ^
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:14:25: error: expected expression
+  CHECK_FUNCTION_EXISTS();
+                        ^
+2 errors generated.
+make[1]: *** [CMakeFiles/cmTC_b14ae.dir/CheckFunctionExists.c.o] Error 1
+make: *** [cmTC_b14ae/fast] Error 2
+
+
+Determining if the struct msghdr.msg_flags exist failed with the following output:
+Change Dir: /Users/user/Desktop/QServ/STABLE/mac/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_4f9bf/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_4f9bf.dir/build.make CMakeFiles/cmTC_4f9bf.dir/build
+Building C object CMakeFiles/cmTC_4f9bf.dir/CheckSymbolExists.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc     -o CMakeFiles/cmTC_4f9bf.dir/CheckSymbolExists.c.o   -c /Users/user/Desktop/QServ/STABLE/mac/CMakeFiles/CMakeTmp/CheckSymbolExists.c
+/Users/user/Desktop/QServ/STABLE/mac/CMakeFiles/CMakeTmp/CheckSymbolExists.c:7:16: warning: extra tokens at end of #ifndef directive [-Wextra-tokens]
+#ifndef struct msghdr.msg_flags
+               ^
+               //
+/Users/user/Desktop/QServ/STABLE/mac/CMakeFiles/CMakeTmp/CheckSymbolExists.c:8:19: error: expected expression
+  return ((int*)(&struct msghdr.msg_flags))[argc];
+                  ^
+1 warning and 1 error generated.
+make[1]: *** [CMakeFiles/cmTC_4f9bf.dir/CheckSymbolExists.c.o] Error 1
+make: *** [cmTC_4f9bf/fast] Error 2
+
+File /Users/user/Desktop/QServ/STABLE/mac/CMakeFiles/CMakeTmp/CheckSymbolExists.c:
+/* */
+#include <sys/socket.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef struct msghdr.msg_flags
+  return ((int*)(&struct msghdr.msg_flags))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+
+Determining if the socklen_t exist failed with the following output:
+Change Dir: /Users/user/Desktop/QServ/STABLE/mac/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_790bd/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_790bd.dir/build.make CMakeFiles/cmTC_790bd.dir/build
+Building C object CMakeFiles/cmTC_790bd.dir/CheckSymbolExists.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc     -o CMakeFiles/cmTC_790bd.dir/CheckSymbolExists.c.o   -c /Users/user/Desktop/QServ/STABLE/mac/CMakeFiles/CMakeTmp/CheckSymbolExists.c
+/Users/user/Desktop/QServ/STABLE/mac/CMakeFiles/CMakeTmp/CheckSymbolExists.c:9:19: error: unexpected type name 'socklen_t': expected expression
+  return ((int*)(&socklen_t))[argc];
+                  ^
+1 error generated.
+make[1]: *** [CMakeFiles/cmTC_790bd.dir/CheckSymbolExists.c.o] Error 1
+make: *** [cmTC_790bd/fast] Error 2
+
+File /Users/user/Desktop/QServ/STABLE/mac/CMakeFiles/CMakeTmp/CheckSymbolExists.c:
+/* */
+#include <sys/types.h>
+#include <sys/socket.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef socklen_t
+  return ((int*)(&socklen_t))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+
+Determining if the function gethostbyaddr_r, exists failed with the following output:
+Change Dir: /Users/user/Desktop/QServ/STABLE/mac/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_d8a1e/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_d8a1e.dir/build.make CMakeFiles/cmTC_d8a1e.dir/build
+Building C object CMakeFiles/cmTC_d8a1e.dir/CheckFunctionExists.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc    -DCHECK_FUNCTION_EXISTS=gethostbyaddr_r,   -o CMakeFiles/cmTC_d8a1e.dir/CheckFunctionExists.c.o   -c /usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:6:28: error: expected identifier or '('
+char CHECK_FUNCTION_EXISTS();
+                           ^
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:14:25: error: expected expression
+  CHECK_FUNCTION_EXISTS();
+                        ^
+2 errors generated.
+make[1]: *** [CMakeFiles/cmTC_d8a1e.dir/CheckFunctionExists.c.o] Error 1
+make: *** [cmTC_d8a1e/fast] Error 2
+
+
+Determining if the function gethostbyname_r, exists failed with the following output:
+Change Dir: /Users/user/Desktop/QServ/STABLE/mac/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_ea7c5/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_ea7c5.dir/build.make CMakeFiles/cmTC_ea7c5.dir/build
+Building C object CMakeFiles/cmTC_ea7c5.dir/CheckFunctionExists.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc    -DCHECK_FUNCTION_EXISTS=gethostbyname_r,   -o CMakeFiles/cmTC_ea7c5.dir/CheckFunctionExists.c.o   -c /usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:6:28: error: expected identifier or '('
+char CHECK_FUNCTION_EXISTS();
+                           ^
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:14:25: error: expected expression
+  CHECK_FUNCTION_EXISTS();
+                        ^
+2 errors generated.
+make[1]: *** [CMakeFiles/cmTC_ea7c5.dir/CheckFunctionExists.c.o] Error 1
+make: *** [cmTC_ea7c5/fast] Error 2
+
+
+Determining if the function poll, exists failed with the following output:
+Change Dir: /Users/user/Desktop/QServ/STABLE/mac/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_3e327/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_3e327.dir/build.make CMakeFiles/cmTC_3e327.dir/build
+Building C object CMakeFiles/cmTC_3e327.dir/CheckFunctionExists.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc    -DCHECK_FUNCTION_EXISTS=poll,   -o CMakeFiles/cmTC_3e327.dir/CheckFunctionExists.c.o   -c /usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:6:28: error: expected identifier or '('
+char CHECK_FUNCTION_EXISTS();
+                           ^
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:14:25: error: expected expression
+  CHECK_FUNCTION_EXISTS();
+                        ^
+2 errors generated.
+make[1]: *** [CMakeFiles/cmTC_3e327.dir/CheckFunctionExists.c.o] Error 1
+make: *** [cmTC_3e327/fast] Error 2
+
+
+Determining if the function fcntl, exists failed with the following output:
+Change Dir: /Users/user/Desktop/QServ/STABLE/mac/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_7ebff/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_7ebff.dir/build.make CMakeFiles/cmTC_7ebff.dir/build
+Building C object CMakeFiles/cmTC_7ebff.dir/CheckFunctionExists.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc    -DCHECK_FUNCTION_EXISTS=fcntl,   -o CMakeFiles/cmTC_7ebff.dir/CheckFunctionExists.c.o   -c /usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:6:28: error: expected identifier or '('
+char CHECK_FUNCTION_EXISTS();
+                           ^
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:14:25: error: expected expression
+  CHECK_FUNCTION_EXISTS();
+                        ^
+2 errors generated.
+make[1]: *** [CMakeFiles/cmTC_7ebff.dir/CheckFunctionExists.c.o] Error 1
+make: *** [cmTC_7ebff/fast] Error 2
+
+
+Determining if the function inet_pton, exists failed with the following output:
+Change Dir: /Users/user/Desktop/QServ/STABLE/mac/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_77d64/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_77d64.dir/build.make CMakeFiles/cmTC_77d64.dir/build
+Building C object CMakeFiles/cmTC_77d64.dir/CheckFunctionExists.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc    -DCHECK_FUNCTION_EXISTS=inet_pton,   -o CMakeFiles/cmTC_77d64.dir/CheckFunctionExists.c.o   -c /usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:6:28: error: expected identifier or '('
+char CHECK_FUNCTION_EXISTS();
+                           ^
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:14:25: error: expected expression
+  CHECK_FUNCTION_EXISTS();
+                        ^
+2 errors generated.
+make[1]: *** [CMakeFiles/cmTC_77d64.dir/CheckFunctionExists.c.o] Error 1
+make: *** [cmTC_77d64/fast] Error 2
+
+
+Determining if the function inet_ntop, exists failed with the following output:
+Change Dir: /Users/user/Desktop/QServ/STABLE/mac/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_870e5/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_870e5.dir/build.make CMakeFiles/cmTC_870e5.dir/build
+Building C object CMakeFiles/cmTC_870e5.dir/CheckFunctionExists.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc    -DCHECK_FUNCTION_EXISTS=inet_ntop,   -o CMakeFiles/cmTC_870e5.dir/CheckFunctionExists.c.o   -c /usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:6:28: error: expected identifier or '('
+char CHECK_FUNCTION_EXISTS();
+                           ^
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:14:25: error: expected expression
+  CHECK_FUNCTION_EXISTS();
+                        ^
+2 errors generated.
+make[1]: *** [CMakeFiles/cmTC_870e5.dir/CheckFunctionExists.c.o] Error 1
+make: *** [cmTC_870e5/fast] Error 2
+
+
+Determining if the struct msghdr.msg_flags exist failed with the following output:
+Change Dir: /Users/user/Desktop/QServ/STABLE/mac/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_3f9a8/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_3f9a8.dir/build.make CMakeFiles/cmTC_3f9a8.dir/build
+Building C object CMakeFiles/cmTC_3f9a8.dir/CheckSymbolExists.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc     -o CMakeFiles/cmTC_3f9a8.dir/CheckSymbolExists.c.o   -c /Users/user/Desktop/QServ/STABLE/mac/CMakeFiles/CMakeTmp/CheckSymbolExists.c
+/Users/user/Desktop/QServ/STABLE/mac/CMakeFiles/CMakeTmp/CheckSymbolExists.c:7:16: warning: extra tokens at end of #ifndef directive [-Wextra-tokens]
+#ifndef struct msghdr.msg_flags
+               ^
+               //
+/Users/user/Desktop/QServ/STABLE/mac/CMakeFiles/CMakeTmp/CheckSymbolExists.c:8:19: error: expected expression
+  return ((int*)(&struct msghdr.msg_flags))[argc];
+                  ^
+1 warning and 1 error generated.
+make[1]: *** [CMakeFiles/cmTC_3f9a8.dir/CheckSymbolExists.c.o] Error 1
+make: *** [cmTC_3f9a8/fast] Error 2
+
+File /Users/user/Desktop/QServ/STABLE/mac/CMakeFiles/CMakeTmp/CheckSymbolExists.c:
+/* */
+#include <sys/socket.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef struct msghdr.msg_flags
+  return ((int*)(&struct msghdr.msg_flags))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+
+Determining if the socklen_t exist failed with the following output:
+Change Dir: /Users/user/Desktop/QServ/STABLE/mac/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_2b867/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_2b867.dir/build.make CMakeFiles/cmTC_2b867.dir/build
+Building C object CMakeFiles/cmTC_2b867.dir/CheckSymbolExists.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc     -o CMakeFiles/cmTC_2b867.dir/CheckSymbolExists.c.o   -c /Users/user/Desktop/QServ/STABLE/mac/CMakeFiles/CMakeTmp/CheckSymbolExists.c
+/Users/user/Desktop/QServ/STABLE/mac/CMakeFiles/CMakeTmp/CheckSymbolExists.c:9:19: error: unexpected type name 'socklen_t': expected expression
+  return ((int*)(&socklen_t))[argc];
+                  ^
+1 error generated.
+make[1]: *** [CMakeFiles/cmTC_2b867.dir/CheckSymbolExists.c.o] Error 1
+make: *** [cmTC_2b867/fast] Error 2
+
+File /Users/user/Desktop/QServ/STABLE/mac/CMakeFiles/CMakeTmp/CheckSymbolExists.c:
+/* */
+#include <sys/types.h>
+#include <sys/socket.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef socklen_t
+  return ((int*)(&socklen_t))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+
+Determining if the function gethostbyaddr_r, exists failed with the following output:
+Change Dir: /Users/user/desktop/QServ/STABLE/mac/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_a2383/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_a2383.dir/build.make CMakeFiles/cmTC_a2383.dir/build
+Building C object CMakeFiles/cmTC_a2383.dir/CheckFunctionExists.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc    -DCHECK_FUNCTION_EXISTS=gethostbyaddr_r,   -o CMakeFiles/cmTC_a2383.dir/CheckFunctionExists.c.o   -c /usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:6:28: error: expected identifier or '('
+char CHECK_FUNCTION_EXISTS();
+                           ^
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:14:25: error: expected expression
+  CHECK_FUNCTION_EXISTS();
+                        ^
+2 errors generated.
+make[2]: *** [CMakeFiles/cmTC_a2383.dir/CheckFunctionExists.c.o] Error 1
+make[1]: *** [cmTC_a2383/fast] Error 2
+
+
+Determining if the function gethostbyname_r, exists failed with the following output:
+Change Dir: /Users/user/desktop/QServ/STABLE/mac/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_c40aa/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_c40aa.dir/build.make CMakeFiles/cmTC_c40aa.dir/build
+Building C object CMakeFiles/cmTC_c40aa.dir/CheckFunctionExists.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc    -DCHECK_FUNCTION_EXISTS=gethostbyname_r,   -o CMakeFiles/cmTC_c40aa.dir/CheckFunctionExists.c.o   -c /usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:6:28: error: expected identifier or '('
+char CHECK_FUNCTION_EXISTS();
+                           ^
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:14:25: error: expected expression
+  CHECK_FUNCTION_EXISTS();
+                        ^
+2 errors generated.
+make[2]: *** [CMakeFiles/cmTC_c40aa.dir/CheckFunctionExists.c.o] Error 1
+make[1]: *** [cmTC_c40aa/fast] Error 2
+
+
+Determining if the function poll, exists failed with the following output:
+Change Dir: /Users/user/desktop/QServ/STABLE/mac/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_f61f1/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_f61f1.dir/build.make CMakeFiles/cmTC_f61f1.dir/build
+Building C object CMakeFiles/cmTC_f61f1.dir/CheckFunctionExists.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc    -DCHECK_FUNCTION_EXISTS=poll,   -o CMakeFiles/cmTC_f61f1.dir/CheckFunctionExists.c.o   -c /usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:6:28: error: expected identifier or '('
+char CHECK_FUNCTION_EXISTS();
+                           ^
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:14:25: error: expected expression
+  CHECK_FUNCTION_EXISTS();
+                        ^
+2 errors generated.
+make[2]: *** [CMakeFiles/cmTC_f61f1.dir/CheckFunctionExists.c.o] Error 1
+make[1]: *** [cmTC_f61f1/fast] Error 2
+
+
+Determining if the function fcntl, exists failed with the following output:
+Change Dir: /Users/user/desktop/QServ/STABLE/mac/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_1c6d9/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_1c6d9.dir/build.make CMakeFiles/cmTC_1c6d9.dir/build
+Building C object CMakeFiles/cmTC_1c6d9.dir/CheckFunctionExists.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc    -DCHECK_FUNCTION_EXISTS=fcntl,   -o CMakeFiles/cmTC_1c6d9.dir/CheckFunctionExists.c.o   -c /usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:6:28: error: expected identifier or '('
+char CHECK_FUNCTION_EXISTS();
+                           ^
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:14:25: error: expected expression
+  CHECK_FUNCTION_EXISTS();
+                        ^
+2 errors generated.
+make[2]: *** [CMakeFiles/cmTC_1c6d9.dir/CheckFunctionExists.c.o] Error 1
+make[1]: *** [cmTC_1c6d9/fast] Error 2
+
+
+Determining if the function inet_pton, exists failed with the following output:
+Change Dir: /Users/user/desktop/QServ/STABLE/mac/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_271b5/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_271b5.dir/build.make CMakeFiles/cmTC_271b5.dir/build
+Building C object CMakeFiles/cmTC_271b5.dir/CheckFunctionExists.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc    -DCHECK_FUNCTION_EXISTS=inet_pton,   -o CMakeFiles/cmTC_271b5.dir/CheckFunctionExists.c.o   -c /usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:6:28: error: expected identifier or '('
+char CHECK_FUNCTION_EXISTS();
+                           ^
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:14:25: error: expected expression
+  CHECK_FUNCTION_EXISTS();
+                        ^
+2 errors generated.
+make[2]: *** [CMakeFiles/cmTC_271b5.dir/CheckFunctionExists.c.o] Error 1
+make[1]: *** [cmTC_271b5/fast] Error 2
+
+
+Determining if the function inet_ntop, exists failed with the following output:
+Change Dir: /Users/user/desktop/QServ/STABLE/mac/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_356f1/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_356f1.dir/build.make CMakeFiles/cmTC_356f1.dir/build
+Building C object CMakeFiles/cmTC_356f1.dir/CheckFunctionExists.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc    -DCHECK_FUNCTION_EXISTS=inet_ntop,   -o CMakeFiles/cmTC_356f1.dir/CheckFunctionExists.c.o   -c /usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:6:28: error: expected identifier or '('
+char CHECK_FUNCTION_EXISTS();
+                           ^
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:14:25: error: expected expression
+  CHECK_FUNCTION_EXISTS();
+                        ^
+2 errors generated.
+make[2]: *** [CMakeFiles/cmTC_356f1.dir/CheckFunctionExists.c.o] Error 1
+make[1]: *** [cmTC_356f1/fast] Error 2
+
+
+Determining if the struct msghdr.msg_flags exist failed with the following output:
+Change Dir: /Users/user/desktop/QServ/STABLE/mac/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_fa1df/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_fa1df.dir/build.make CMakeFiles/cmTC_fa1df.dir/build
+Building C object CMakeFiles/cmTC_fa1df.dir/CheckSymbolExists.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc     -o CMakeFiles/cmTC_fa1df.dir/CheckSymbolExists.c.o   -c /Users/user/desktop/QServ/STABLE/mac/CMakeFiles/CMakeTmp/CheckSymbolExists.c
+/Users/user/desktop/QServ/STABLE/mac/CMakeFiles/CMakeTmp/CheckSymbolExists.c:7:16: warning: extra tokens at end of #ifndef directive [-Wextra-tokens]
+#ifndef struct msghdr.msg_flags
+               ^
+               //
+/Users/user/desktop/QServ/STABLE/mac/CMakeFiles/CMakeTmp/CheckSymbolExists.c:8:19: error: expected expression
+  return ((int*)(&struct msghdr.msg_flags))[argc];
+                  ^
+1 warning and 1 error generated.
+make[2]: *** [CMakeFiles/cmTC_fa1df.dir/CheckSymbolExists.c.o] Error 1
+make[1]: *** [cmTC_fa1df/fast] Error 2
+
+File /Users/user/desktop/QServ/STABLE/mac/CMakeFiles/CMakeTmp/CheckSymbolExists.c:
+/* */
+#include <sys/socket.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef struct msghdr.msg_flags
+  return ((int*)(&struct msghdr.msg_flags))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+
+Determining if the socklen_t exist failed with the following output:
+Change Dir: /Users/user/desktop/QServ/STABLE/mac/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_fd405/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_fd405.dir/build.make CMakeFiles/cmTC_fd405.dir/build
+Building C object CMakeFiles/cmTC_fd405.dir/CheckSymbolExists.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc     -o CMakeFiles/cmTC_fd405.dir/CheckSymbolExists.c.o   -c /Users/user/desktop/QServ/STABLE/mac/CMakeFiles/CMakeTmp/CheckSymbolExists.c
+/Users/user/desktop/QServ/STABLE/mac/CMakeFiles/CMakeTmp/CheckSymbolExists.c:9:19: error: unexpected type name 'socklen_t': expected expression
+  return ((int*)(&socklen_t))[argc];
+                  ^
+1 error generated.
+make[2]: *** [CMakeFiles/cmTC_fd405.dir/CheckSymbolExists.c.o] Error 1
+make[1]: *** [cmTC_fd405/fast] Error 2
+
+File /Users/user/desktop/QServ/STABLE/mac/CMakeFiles/CMakeTmp/CheckSymbolExists.c:
+/* */
+#include <sys/types.h>
+#include <sys/socket.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef socklen_t
+  return ((int*)(&socklen_t))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+
+Determining if the function gethostbyaddr_r, exists failed with the following output:
+Change Dir: /Users/user/desktop/cp/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_4e978/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_4e978.dir/build.make CMakeFiles/cmTC_4e978.dir/build
+Building C object CMakeFiles/cmTC_4e978.dir/CheckFunctionExists.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc    -DCHECK_FUNCTION_EXISTS=gethostbyaddr_r,   -o CMakeFiles/cmTC_4e978.dir/CheckFunctionExists.c.o   -c /usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:6:28: error: expected identifier or '('
+char CHECK_FUNCTION_EXISTS();
+                           ^
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:14:25: error: expected expression
+  CHECK_FUNCTION_EXISTS();
+                        ^
+2 errors generated.
+make[1]: *** [CMakeFiles/cmTC_4e978.dir/CheckFunctionExists.c.o] Error 1
+make: *** [cmTC_4e978/fast] Error 2
+
+
+Determining if the function gethostbyname_r, exists failed with the following output:
+Change Dir: /Users/user/desktop/cp/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_0caa5/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_0caa5.dir/build.make CMakeFiles/cmTC_0caa5.dir/build
+Building C object CMakeFiles/cmTC_0caa5.dir/CheckFunctionExists.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc    -DCHECK_FUNCTION_EXISTS=gethostbyname_r,   -o CMakeFiles/cmTC_0caa5.dir/CheckFunctionExists.c.o   -c /usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:6:28: error: expected identifier or '('
+char CHECK_FUNCTION_EXISTS();
+                           ^
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:14:25: error: expected expression
+  CHECK_FUNCTION_EXISTS();
+                        ^
+2 errors generated.
+make[1]: *** [CMakeFiles/cmTC_0caa5.dir/CheckFunctionExists.c.o] Error 1
+make: *** [cmTC_0caa5/fast] Error 2
+
+
+Determining if the function poll, exists failed with the following output:
+Change Dir: /Users/user/desktop/cp/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_ce5a5/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_ce5a5.dir/build.make CMakeFiles/cmTC_ce5a5.dir/build
+Building C object CMakeFiles/cmTC_ce5a5.dir/CheckFunctionExists.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc    -DCHECK_FUNCTION_EXISTS=poll,   -o CMakeFiles/cmTC_ce5a5.dir/CheckFunctionExists.c.o   -c /usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:6:28: error: expected identifier or '('
+char CHECK_FUNCTION_EXISTS();
+                           ^
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:14:25: error: expected expression
+  CHECK_FUNCTION_EXISTS();
+                        ^
+2 errors generated.
+make[1]: *** [CMakeFiles/cmTC_ce5a5.dir/CheckFunctionExists.c.o] Error 1
+make: *** [cmTC_ce5a5/fast] Error 2
+
+
+Determining if the function fcntl, exists failed with the following output:
+Change Dir: /Users/user/desktop/cp/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_8c87c/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_8c87c.dir/build.make CMakeFiles/cmTC_8c87c.dir/build
+Building C object CMakeFiles/cmTC_8c87c.dir/CheckFunctionExists.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc    -DCHECK_FUNCTION_EXISTS=fcntl,   -o CMakeFiles/cmTC_8c87c.dir/CheckFunctionExists.c.o   -c /usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:6:28: error: expected identifier or '('
+char CHECK_FUNCTION_EXISTS();
+                           ^
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:14:25: error: expected expression
+  CHECK_FUNCTION_EXISTS();
+                        ^
+2 errors generated.
+make[1]: *** [CMakeFiles/cmTC_8c87c.dir/CheckFunctionExists.c.o] Error 1
+make: *** [cmTC_8c87c/fast] Error 2
+
+
+Determining if the function inet_pton, exists failed with the following output:
+Change Dir: /Users/user/desktop/cp/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_95bab/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_95bab.dir/build.make CMakeFiles/cmTC_95bab.dir/build
+Building C object CMakeFiles/cmTC_95bab.dir/CheckFunctionExists.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc    -DCHECK_FUNCTION_EXISTS=inet_pton,   -o CMakeFiles/cmTC_95bab.dir/CheckFunctionExists.c.o   -c /usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:6:28: error: expected identifier or '('
+char CHECK_FUNCTION_EXISTS();
+                           ^
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:14:25: error: expected expression
+  CHECK_FUNCTION_EXISTS();
+                        ^
+2 errors generated.
+make[1]: *** [CMakeFiles/cmTC_95bab.dir/CheckFunctionExists.c.o] Error 1
+make: *** [cmTC_95bab/fast] Error 2
+
+
+Determining if the function inet_ntop, exists failed with the following output:
+Change Dir: /Users/user/desktop/cp/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_a8446/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_a8446.dir/build.make CMakeFiles/cmTC_a8446.dir/build
+Building C object CMakeFiles/cmTC_a8446.dir/CheckFunctionExists.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc    -DCHECK_FUNCTION_EXISTS=inet_ntop,   -o CMakeFiles/cmTC_a8446.dir/CheckFunctionExists.c.o   -c /usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:6:28: error: expected identifier or '('
+char CHECK_FUNCTION_EXISTS();
+                           ^
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:14:25: error: expected expression
+  CHECK_FUNCTION_EXISTS();
+                        ^
+2 errors generated.
+make[1]: *** [CMakeFiles/cmTC_a8446.dir/CheckFunctionExists.c.o] Error 1
+make: *** [cmTC_a8446/fast] Error 2
+
+
+Determining if the struct msghdr.msg_flags exist failed with the following output:
+Change Dir: /Users/user/desktop/cp/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_b2ac1/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_b2ac1.dir/build.make CMakeFiles/cmTC_b2ac1.dir/build
+Building C object CMakeFiles/cmTC_b2ac1.dir/CheckSymbolExists.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc     -o CMakeFiles/cmTC_b2ac1.dir/CheckSymbolExists.c.o   -c /Users/user/desktop/cp/CMakeFiles/CMakeTmp/CheckSymbolExists.c
+/Users/user/desktop/cp/CMakeFiles/CMakeTmp/CheckSymbolExists.c:7:16: warning: extra tokens at end of #ifndef directive [-Wextra-tokens]
+#ifndef struct msghdr.msg_flags
+               ^
+               //
+/Users/user/desktop/cp/CMakeFiles/CMakeTmp/CheckSymbolExists.c:8:19: error: expected expression
+  return ((int*)(&struct msghdr.msg_flags))[argc];
+                  ^
+1 warning and 1 error generated.
+make[1]: *** [CMakeFiles/cmTC_b2ac1.dir/CheckSymbolExists.c.o] Error 1
+make: *** [cmTC_b2ac1/fast] Error 2
+
+File /Users/user/desktop/cp/CMakeFiles/CMakeTmp/CheckSymbolExists.c:
+/* */
+#include <sys/socket.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef struct msghdr.msg_flags
+  return ((int*)(&struct msghdr.msg_flags))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+
+Determining if the socklen_t exist failed with the following output:
+Change Dir: /Users/user/desktop/cp/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_d3de3/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_d3de3.dir/build.make CMakeFiles/cmTC_d3de3.dir/build
+Building C object CMakeFiles/cmTC_d3de3.dir/CheckSymbolExists.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc     -o CMakeFiles/cmTC_d3de3.dir/CheckSymbolExists.c.o   -c /Users/user/desktop/cp/CMakeFiles/CMakeTmp/CheckSymbolExists.c
+/Users/user/desktop/cp/CMakeFiles/CMakeTmp/CheckSymbolExists.c:9:19: error: unexpected type name 'socklen_t': expected expression
+  return ((int*)(&socklen_t))[argc];
+                  ^
+1 error generated.
+make[1]: *** [CMakeFiles/cmTC_d3de3.dir/CheckSymbolExists.c.o] Error 1
+make: *** [cmTC_d3de3/fast] Error 2
+
+File /Users/user/desktop/cp/CMakeFiles/CMakeTmp/CheckSymbolExists.c:
+/* */
+#include <sys/types.h>
+#include <sys/socket.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef socklen_t
+  return ((int*)(&socklen_t))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+
+Determining if the function gethostbyaddr_r, exists failed with the following output:
+Change Dir: /Users/user/desktop/cp/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_c595f/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_c595f.dir/build.make CMakeFiles/cmTC_c595f.dir/build
+Building C object CMakeFiles/cmTC_c595f.dir/CheckFunctionExists.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc    -DCHECK_FUNCTION_EXISTS=gethostbyaddr_r,   -o CMakeFiles/cmTC_c595f.dir/CheckFunctionExists.c.o   -c /usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:6:28: error: expected identifier or '('
+char CHECK_FUNCTION_EXISTS();
+                           ^
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:14:25: error: expected expression
+  CHECK_FUNCTION_EXISTS();
+                        ^
+2 errors generated.
+make[2]: *** [CMakeFiles/cmTC_c595f.dir/CheckFunctionExists.c.o] Error 1
+make[1]: *** [cmTC_c595f/fast] Error 2
+
+
+Determining if the function gethostbyname_r, exists failed with the following output:
+Change Dir: /Users/user/desktop/cp/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_31dbb/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_31dbb.dir/build.make CMakeFiles/cmTC_31dbb.dir/build
+Building C object CMakeFiles/cmTC_31dbb.dir/CheckFunctionExists.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc    -DCHECK_FUNCTION_EXISTS=gethostbyname_r,   -o CMakeFiles/cmTC_31dbb.dir/CheckFunctionExists.c.o   -c /usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:6:28: error: expected identifier or '('
+char CHECK_FUNCTION_EXISTS();
+                           ^
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:14:25: error: expected expression
+  CHECK_FUNCTION_EXISTS();
+                        ^
+2 errors generated.
+make[2]: *** [CMakeFiles/cmTC_31dbb.dir/CheckFunctionExists.c.o] Error 1
+make[1]: *** [cmTC_31dbb/fast] Error 2
+
+
+Determining if the function poll, exists failed with the following output:
+Change Dir: /Users/user/desktop/cp/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_7eb03/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_7eb03.dir/build.make CMakeFiles/cmTC_7eb03.dir/build
+Building C object CMakeFiles/cmTC_7eb03.dir/CheckFunctionExists.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc    -DCHECK_FUNCTION_EXISTS=poll,   -o CMakeFiles/cmTC_7eb03.dir/CheckFunctionExists.c.o   -c /usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:6:28: error: expected identifier or '('
+char CHECK_FUNCTION_EXISTS();
+                           ^
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:14:25: error: expected expression
+  CHECK_FUNCTION_EXISTS();
+                        ^
+2 errors generated.
+make[2]: *** [CMakeFiles/cmTC_7eb03.dir/CheckFunctionExists.c.o] Error 1
+make[1]: *** [cmTC_7eb03/fast] Error 2
+
+
+Determining if the function fcntl, exists failed with the following output:
+Change Dir: /Users/user/desktop/cp/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_94df3/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_94df3.dir/build.make CMakeFiles/cmTC_94df3.dir/build
+Building C object CMakeFiles/cmTC_94df3.dir/CheckFunctionExists.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc    -DCHECK_FUNCTION_EXISTS=fcntl,   -o CMakeFiles/cmTC_94df3.dir/CheckFunctionExists.c.o   -c /usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:6:28: error: expected identifier or '('
+char CHECK_FUNCTION_EXISTS();
+                           ^
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:14:25: error: expected expression
+  CHECK_FUNCTION_EXISTS();
+                        ^
+2 errors generated.
+make[2]: *** [CMakeFiles/cmTC_94df3.dir/CheckFunctionExists.c.o] Error 1
+make[1]: *** [cmTC_94df3/fast] Error 2
+
+
+Determining if the function inet_pton, exists failed with the following output:
+Change Dir: /Users/user/desktop/cp/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_c93df/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_c93df.dir/build.make CMakeFiles/cmTC_c93df.dir/build
+Building C object CMakeFiles/cmTC_c93df.dir/CheckFunctionExists.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc    -DCHECK_FUNCTION_EXISTS=inet_pton,   -o CMakeFiles/cmTC_c93df.dir/CheckFunctionExists.c.o   -c /usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:6:28: error: expected identifier or '('
+char CHECK_FUNCTION_EXISTS();
+                           ^
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:14:25: error: expected expression
+  CHECK_FUNCTION_EXISTS();
+                        ^
+2 errors generated.
+make[2]: *** [CMakeFiles/cmTC_c93df.dir/CheckFunctionExists.c.o] Error 1
+make[1]: *** [cmTC_c93df/fast] Error 2
+
+
+Determining if the function inet_ntop, exists failed with the following output:
+Change Dir: /Users/user/desktop/cp/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_72b26/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_72b26.dir/build.make CMakeFiles/cmTC_72b26.dir/build
+Building C object CMakeFiles/cmTC_72b26.dir/CheckFunctionExists.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc    -DCHECK_FUNCTION_EXISTS=inet_ntop,   -o CMakeFiles/cmTC_72b26.dir/CheckFunctionExists.c.o   -c /usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:6:28: error: expected identifier or '('
+char CHECK_FUNCTION_EXISTS();
+                           ^
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:14:25: error: expected expression
+  CHECK_FUNCTION_EXISTS();
+                        ^
+2 errors generated.
+make[2]: *** [CMakeFiles/cmTC_72b26.dir/CheckFunctionExists.c.o] Error 1
+make[1]: *** [cmTC_72b26/fast] Error 2
+
+
+Determining if the struct msghdr.msg_flags exist failed with the following output:
+Change Dir: /Users/user/desktop/cp/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_4878a/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_4878a.dir/build.make CMakeFiles/cmTC_4878a.dir/build
+Building C object CMakeFiles/cmTC_4878a.dir/CheckSymbolExists.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc     -o CMakeFiles/cmTC_4878a.dir/CheckSymbolExists.c.o   -c /Users/user/desktop/cp/CMakeFiles/CMakeTmp/CheckSymbolExists.c
+/Users/user/desktop/cp/CMakeFiles/CMakeTmp/CheckSymbolExists.c:7:16: warning: extra tokens at end of #ifndef directive [-Wextra-tokens]
+#ifndef struct msghdr.msg_flags
+               ^
+               //
+/Users/user/desktop/cp/CMakeFiles/CMakeTmp/CheckSymbolExists.c:8:19: error: expected expression
+  return ((int*)(&struct msghdr.msg_flags))[argc];
+                  ^
+1 warning and 1 error generated.
+make[2]: *** [CMakeFiles/cmTC_4878a.dir/CheckSymbolExists.c.o] Error 1
+make[1]: *** [cmTC_4878a/fast] Error 2
+
+File /Users/user/desktop/cp/CMakeFiles/CMakeTmp/CheckSymbolExists.c:
+/* */
+#include <sys/socket.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef struct msghdr.msg_flags
+  return ((int*)(&struct msghdr.msg_flags))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+
+Determining if the socklen_t exist failed with the following output:
+Change Dir: /Users/user/desktop/cp/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_7bcf1/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_7bcf1.dir/build.make CMakeFiles/cmTC_7bcf1.dir/build
+Building C object CMakeFiles/cmTC_7bcf1.dir/CheckSymbolExists.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc     -o CMakeFiles/cmTC_7bcf1.dir/CheckSymbolExists.c.o   -c /Users/user/desktop/cp/CMakeFiles/CMakeTmp/CheckSymbolExists.c
+/Users/user/desktop/cp/CMakeFiles/CMakeTmp/CheckSymbolExists.c:9:19: error: unexpected type name 'socklen_t': expected expression
+  return ((int*)(&socklen_t))[argc];
+                  ^
+1 error generated.
+make[2]: *** [CMakeFiles/cmTC_7bcf1.dir/CheckSymbolExists.c.o] Error 1
+make[1]: *** [cmTC_7bcf1/fast] Error 2
+
+File /Users/user/desktop/cp/CMakeFiles/CMakeTmp/CheckSymbolExists.c:
+/* */
+#include <sys/types.h>
+#include <sys/socket.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef socklen_t
+  return ((int*)(&socklen_t))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+
+Determining if the function gethostbyaddr_r, exists failed with the following output:
+Change Dir: /Users/user/desktop/cp/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_18445/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_18445.dir/build.make CMakeFiles/cmTC_18445.dir/build
+Building C object CMakeFiles/cmTC_18445.dir/CheckFunctionExists.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc    -DCHECK_FUNCTION_EXISTS=gethostbyaddr_r,   -o CMakeFiles/cmTC_18445.dir/CheckFunctionExists.c.o   -c /usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:6:28: error: expected identifier or '('
+char CHECK_FUNCTION_EXISTS();
+                           ^
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:14:25: error: expected expression
+  CHECK_FUNCTION_EXISTS();
+                        ^
+2 errors generated.
+make[2]: *** [CMakeFiles/cmTC_18445.dir/CheckFunctionExists.c.o] Error 1
+make[1]: *** [cmTC_18445/fast] Error 2
+
+
+Determining if the function gethostbyname_r, exists failed with the following output:
+Change Dir: /Users/user/desktop/cp/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_3187a/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_3187a.dir/build.make CMakeFiles/cmTC_3187a.dir/build
+Building C object CMakeFiles/cmTC_3187a.dir/CheckFunctionExists.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc    -DCHECK_FUNCTION_EXISTS=gethostbyname_r,   -o CMakeFiles/cmTC_3187a.dir/CheckFunctionExists.c.o   -c /usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:6:28: error: expected identifier or '('
+char CHECK_FUNCTION_EXISTS();
+                           ^
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:14:25: error: expected expression
+  CHECK_FUNCTION_EXISTS();
+                        ^
+2 errors generated.
+make[2]: *** [CMakeFiles/cmTC_3187a.dir/CheckFunctionExists.c.o] Error 1
+make[1]: *** [cmTC_3187a/fast] Error 2
+
+
+Determining if the function poll, exists failed with the following output:
+Change Dir: /Users/user/desktop/cp/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_90465/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_90465.dir/build.make CMakeFiles/cmTC_90465.dir/build
+Building C object CMakeFiles/cmTC_90465.dir/CheckFunctionExists.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc    -DCHECK_FUNCTION_EXISTS=poll,   -o CMakeFiles/cmTC_90465.dir/CheckFunctionExists.c.o   -c /usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:6:28: error: expected identifier or '('
+char CHECK_FUNCTION_EXISTS();
+                           ^
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:14:25: error: expected expression
+  CHECK_FUNCTION_EXISTS();
+                        ^
+2 errors generated.
+make[2]: *** [CMakeFiles/cmTC_90465.dir/CheckFunctionExists.c.o] Error 1
+make[1]: *** [cmTC_90465/fast] Error 2
+
+
+Determining if the function fcntl, exists failed with the following output:
+Change Dir: /Users/user/desktop/cp/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_e1673/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_e1673.dir/build.make CMakeFiles/cmTC_e1673.dir/build
+Building C object CMakeFiles/cmTC_e1673.dir/CheckFunctionExists.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc    -DCHECK_FUNCTION_EXISTS=fcntl,   -o CMakeFiles/cmTC_e1673.dir/CheckFunctionExists.c.o   -c /usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:6:28: error: expected identifier or '('
+char CHECK_FUNCTION_EXISTS();
+                           ^
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:14:25: error: expected expression
+  CHECK_FUNCTION_EXISTS();
+                        ^
+2 errors generated.
+make[2]: *** [CMakeFiles/cmTC_e1673.dir/CheckFunctionExists.c.o] Error 1
+make[1]: *** [cmTC_e1673/fast] Error 2
+
+
+Determining if the function inet_pton, exists failed with the following output:
+Change Dir: /Users/user/desktop/cp/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_0f802/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_0f802.dir/build.make CMakeFiles/cmTC_0f802.dir/build
+Building C object CMakeFiles/cmTC_0f802.dir/CheckFunctionExists.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc    -DCHECK_FUNCTION_EXISTS=inet_pton,   -o CMakeFiles/cmTC_0f802.dir/CheckFunctionExists.c.o   -c /usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:6:28: error: expected identifier or '('
+char CHECK_FUNCTION_EXISTS();
+                           ^
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:14:25: error: expected expression
+  CHECK_FUNCTION_EXISTS();
+                        ^
+2 errors generated.
+make[2]: *** [CMakeFiles/cmTC_0f802.dir/CheckFunctionExists.c.o] Error 1
+make[1]: *** [cmTC_0f802/fast] Error 2
+
+
+Determining if the function inet_ntop, exists failed with the following output:
+Change Dir: /Users/user/desktop/cp/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_a6ff4/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_a6ff4.dir/build.make CMakeFiles/cmTC_a6ff4.dir/build
+Building C object CMakeFiles/cmTC_a6ff4.dir/CheckFunctionExists.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc    -DCHECK_FUNCTION_EXISTS=inet_ntop,   -o CMakeFiles/cmTC_a6ff4.dir/CheckFunctionExists.c.o   -c /usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:6:28: error: expected identifier or '('
+char CHECK_FUNCTION_EXISTS();
+                           ^
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:14:25: error: expected expression
+  CHECK_FUNCTION_EXISTS();
+                        ^
+2 errors generated.
+make[2]: *** [CMakeFiles/cmTC_a6ff4.dir/CheckFunctionExists.c.o] Error 1
+make[1]: *** [cmTC_a6ff4/fast] Error 2
+
+
+Determining if the struct msghdr.msg_flags exist failed with the following output:
+Change Dir: /Users/user/desktop/cp/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_659b2/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_659b2.dir/build.make CMakeFiles/cmTC_659b2.dir/build
+Building C object CMakeFiles/cmTC_659b2.dir/CheckSymbolExists.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc     -o CMakeFiles/cmTC_659b2.dir/CheckSymbolExists.c.o   -c /Users/user/desktop/cp/CMakeFiles/CMakeTmp/CheckSymbolExists.c
+/Users/user/desktop/cp/CMakeFiles/CMakeTmp/CheckSymbolExists.c:7:16: warning: extra tokens at end of #ifndef directive [-Wextra-tokens]
+#ifndef struct msghdr.msg_flags
+               ^
+               //
+/Users/user/desktop/cp/CMakeFiles/CMakeTmp/CheckSymbolExists.c:8:19: error: expected expression
+  return ((int*)(&struct msghdr.msg_flags))[argc];
+                  ^
+1 warning and 1 error generated.
+make[2]: *** [CMakeFiles/cmTC_659b2.dir/CheckSymbolExists.c.o] Error 1
+make[1]: *** [cmTC_659b2/fast] Error 2
+
+File /Users/user/desktop/cp/CMakeFiles/CMakeTmp/CheckSymbolExists.c:
+/* */
+#include <sys/socket.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef struct msghdr.msg_flags
+  return ((int*)(&struct msghdr.msg_flags))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+
+Determining if the socklen_t exist failed with the following output:
+Change Dir: /Users/user/desktop/cp/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_868ca/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_868ca.dir/build.make CMakeFiles/cmTC_868ca.dir/build
+Building C object CMakeFiles/cmTC_868ca.dir/CheckSymbolExists.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc     -o CMakeFiles/cmTC_868ca.dir/CheckSymbolExists.c.o   -c /Users/user/desktop/cp/CMakeFiles/CMakeTmp/CheckSymbolExists.c
+/Users/user/desktop/cp/CMakeFiles/CMakeTmp/CheckSymbolExists.c:9:19: error: unexpected type name 'socklen_t': expected expression
+  return ((int*)(&socklen_t))[argc];
+                  ^
+1 error generated.
+make[2]: *** [CMakeFiles/cmTC_868ca.dir/CheckSymbolExists.c.o] Error 1
+make[1]: *** [cmTC_868ca/fast] Error 2
+
+File /Users/user/desktop/cp/CMakeFiles/CMakeTmp/CheckSymbolExists.c:
+/* */
+#include <sys/types.h>
+#include <sys/socket.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef socklen_t
+  return ((int*)(&socklen_t))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+
+Determining if the function gethostbyaddr_r, exists failed with the following output:
+Change Dir: /Users/user/desktop/cp/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_0044e/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_0044e.dir/build.make CMakeFiles/cmTC_0044e.dir/build
+Building C object CMakeFiles/cmTC_0044e.dir/CheckFunctionExists.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc    -DCHECK_FUNCTION_EXISTS=gethostbyaddr_r,   -o CMakeFiles/cmTC_0044e.dir/CheckFunctionExists.c.o   -c /usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:6:28: error: expected identifier or '('
+char CHECK_FUNCTION_EXISTS();
+                           ^
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:14:25: error: expected expression
+  CHECK_FUNCTION_EXISTS();
+                        ^
+2 errors generated.
+make[2]: *** [CMakeFiles/cmTC_0044e.dir/CheckFunctionExists.c.o] Error 1
+make[1]: *** [cmTC_0044e/fast] Error 2
+
+
+Determining if the function gethostbyname_r, exists failed with the following output:
+Change Dir: /Users/user/desktop/cp/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_f14ae/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_f14ae.dir/build.make CMakeFiles/cmTC_f14ae.dir/build
+Building C object CMakeFiles/cmTC_f14ae.dir/CheckFunctionExists.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc    -DCHECK_FUNCTION_EXISTS=gethostbyname_r,   -o CMakeFiles/cmTC_f14ae.dir/CheckFunctionExists.c.o   -c /usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:6:28: error: expected identifier or '('
+char CHECK_FUNCTION_EXISTS();
+                           ^
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:14:25: error: expected expression
+  CHECK_FUNCTION_EXISTS();
+                        ^
+2 errors generated.
+make[2]: *** [CMakeFiles/cmTC_f14ae.dir/CheckFunctionExists.c.o] Error 1
+make[1]: *** [cmTC_f14ae/fast] Error 2
+
+
+Determining if the function poll, exists failed with the following output:
+Change Dir: /Users/user/desktop/cp/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_7db58/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_7db58.dir/build.make CMakeFiles/cmTC_7db58.dir/build
+Building C object CMakeFiles/cmTC_7db58.dir/CheckFunctionExists.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc    -DCHECK_FUNCTION_EXISTS=poll,   -o CMakeFiles/cmTC_7db58.dir/CheckFunctionExists.c.o   -c /usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:6:28: error: expected identifier or '('
+char CHECK_FUNCTION_EXISTS();
+                           ^
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:14:25: error: expected expression
+  CHECK_FUNCTION_EXISTS();
+                        ^
+2 errors generated.
+make[2]: *** [CMakeFiles/cmTC_7db58.dir/CheckFunctionExists.c.o] Error 1
+make[1]: *** [cmTC_7db58/fast] Error 2
+
+
+Determining if the function fcntl, exists failed with the following output:
+Change Dir: /Users/user/desktop/cp/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_39f5c/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_39f5c.dir/build.make CMakeFiles/cmTC_39f5c.dir/build
+Building C object CMakeFiles/cmTC_39f5c.dir/CheckFunctionExists.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc    -DCHECK_FUNCTION_EXISTS=fcntl,   -o CMakeFiles/cmTC_39f5c.dir/CheckFunctionExists.c.o   -c /usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:6:28: error: expected identifier or '('
+char CHECK_FUNCTION_EXISTS();
+                           ^
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:14:25: error: expected expression
+  CHECK_FUNCTION_EXISTS();
+                        ^
+2 errors generated.
+make[2]: *** [CMakeFiles/cmTC_39f5c.dir/CheckFunctionExists.c.o] Error 1
+make[1]: *** [cmTC_39f5c/fast] Error 2
+
+
+Determining if the function inet_pton, exists failed with the following output:
+Change Dir: /Users/user/desktop/cp/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_a17c5/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_a17c5.dir/build.make CMakeFiles/cmTC_a17c5.dir/build
+Building C object CMakeFiles/cmTC_a17c5.dir/CheckFunctionExists.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc    -DCHECK_FUNCTION_EXISTS=inet_pton,   -o CMakeFiles/cmTC_a17c5.dir/CheckFunctionExists.c.o   -c /usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:6:28: error: expected identifier or '('
+char CHECK_FUNCTION_EXISTS();
+                           ^
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:14:25: error: expected expression
+  CHECK_FUNCTION_EXISTS();
+                        ^
+2 errors generated.
+make[2]: *** [CMakeFiles/cmTC_a17c5.dir/CheckFunctionExists.c.o] Error 1
+make[1]: *** [cmTC_a17c5/fast] Error 2
+
+
+Determining if the function inet_ntop, exists failed with the following output:
+Change Dir: /Users/user/desktop/cp/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_f7425/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_f7425.dir/build.make CMakeFiles/cmTC_f7425.dir/build
+Building C object CMakeFiles/cmTC_f7425.dir/CheckFunctionExists.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc    -DCHECK_FUNCTION_EXISTS=inet_ntop,   -o CMakeFiles/cmTC_f7425.dir/CheckFunctionExists.c.o   -c /usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:6:28: error: expected identifier or '('
+char CHECK_FUNCTION_EXISTS();
+                           ^
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:14:25: error: expected expression
+  CHECK_FUNCTION_EXISTS();
+                        ^
+2 errors generated.
+make[2]: *** [CMakeFiles/cmTC_f7425.dir/CheckFunctionExists.c.o] Error 1
+make[1]: *** [cmTC_f7425/fast] Error 2
+
+
+Determining if the struct msghdr.msg_flags exist failed with the following output:
+Change Dir: /Users/user/desktop/cp/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_68258/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_68258.dir/build.make CMakeFiles/cmTC_68258.dir/build
+Building C object CMakeFiles/cmTC_68258.dir/CheckSymbolExists.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc     -o CMakeFiles/cmTC_68258.dir/CheckSymbolExists.c.o   -c /Users/user/desktop/cp/CMakeFiles/CMakeTmp/CheckSymbolExists.c
+/Users/user/desktop/cp/CMakeFiles/CMakeTmp/CheckSymbolExists.c:7:16: warning: extra tokens at end of #ifndef directive [-Wextra-tokens]
+#ifndef struct msghdr.msg_flags
+               ^
+               //
+/Users/user/desktop/cp/CMakeFiles/CMakeTmp/CheckSymbolExists.c:8:19: error: expected expression
+  return ((int*)(&struct msghdr.msg_flags))[argc];
+                  ^
+1 warning and 1 error generated.
+make[2]: *** [CMakeFiles/cmTC_68258.dir/CheckSymbolExists.c.o] Error 1
+make[1]: *** [cmTC_68258/fast] Error 2
+
+File /Users/user/desktop/cp/CMakeFiles/CMakeTmp/CheckSymbolExists.c:
+/* */
+#include <sys/socket.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef struct msghdr.msg_flags
+  return ((int*)(&struct msghdr.msg_flags))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+
+Determining if the socklen_t exist failed with the following output:
+Change Dir: /Users/user/desktop/cp/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_e000a/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_e000a.dir/build.make CMakeFiles/cmTC_e000a.dir/build
+Building C object CMakeFiles/cmTC_e000a.dir/CheckSymbolExists.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc     -o CMakeFiles/cmTC_e000a.dir/CheckSymbolExists.c.o   -c /Users/user/desktop/cp/CMakeFiles/CMakeTmp/CheckSymbolExists.c
+/Users/user/desktop/cp/CMakeFiles/CMakeTmp/CheckSymbolExists.c:9:19: error: unexpected type name 'socklen_t': expected expression
+  return ((int*)(&socklen_t))[argc];
+                  ^
+1 error generated.
+make[2]: *** [CMakeFiles/cmTC_e000a.dir/CheckSymbolExists.c.o] Error 1
+make[1]: *** [cmTC_e000a/fast] Error 2
+
+File /Users/user/desktop/cp/CMakeFiles/CMakeTmp/CheckSymbolExists.c:
+/* */
+#include <sys/types.h>
+#include <sys/socket.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef socklen_t
+  return ((int*)(&socklen_t))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+
+Determining if the function gethostbyaddr_r, exists failed with the following output:
+Change Dir: /Users/user/desktop/cp/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_2a54a/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_2a54a.dir/build.make CMakeFiles/cmTC_2a54a.dir/build
+Building C object CMakeFiles/cmTC_2a54a.dir/CheckFunctionExists.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc    -DCHECK_FUNCTION_EXISTS=gethostbyaddr_r,   -o CMakeFiles/cmTC_2a54a.dir/CheckFunctionExists.c.o   -c /usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:6:28: error: expected identifier or '('
+char CHECK_FUNCTION_EXISTS();
+                           ^
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:14:25: error: expected expression
+  CHECK_FUNCTION_EXISTS();
+                        ^
+2 errors generated.
+make[2]: *** [CMakeFiles/cmTC_2a54a.dir/CheckFunctionExists.c.o] Error 1
+make[1]: *** [cmTC_2a54a/fast] Error 2
+
+
+Determining if the function gethostbyname_r, exists failed with the following output:
+Change Dir: /Users/user/desktop/cp/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_9c755/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_9c755.dir/build.make CMakeFiles/cmTC_9c755.dir/build
+Building C object CMakeFiles/cmTC_9c755.dir/CheckFunctionExists.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc    -DCHECK_FUNCTION_EXISTS=gethostbyname_r,   -o CMakeFiles/cmTC_9c755.dir/CheckFunctionExists.c.o   -c /usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:6:28: error: expected identifier or '('
+char CHECK_FUNCTION_EXISTS();
+                           ^
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:14:25: error: expected expression
+  CHECK_FUNCTION_EXISTS();
+                        ^
+2 errors generated.
+make[2]: *** [CMakeFiles/cmTC_9c755.dir/CheckFunctionExists.c.o] Error 1
+make[1]: *** [cmTC_9c755/fast] Error 2
+
+
+Determining if the function poll, exists failed with the following output:
+Change Dir: /Users/user/desktop/cp/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_6f6df/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_6f6df.dir/build.make CMakeFiles/cmTC_6f6df.dir/build
+Building C object CMakeFiles/cmTC_6f6df.dir/CheckFunctionExists.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc    -DCHECK_FUNCTION_EXISTS=poll,   -o CMakeFiles/cmTC_6f6df.dir/CheckFunctionExists.c.o   -c /usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:6:28: error: expected identifier or '('
+char CHECK_FUNCTION_EXISTS();
+                           ^
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:14:25: error: expected expression
+  CHECK_FUNCTION_EXISTS();
+                        ^
+2 errors generated.
+make[2]: *** [CMakeFiles/cmTC_6f6df.dir/CheckFunctionExists.c.o] Error 1
+make[1]: *** [cmTC_6f6df/fast] Error 2
+
+
+Determining if the function fcntl, exists failed with the following output:
+Change Dir: /Users/user/desktop/cp/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_ee50f/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_ee50f.dir/build.make CMakeFiles/cmTC_ee50f.dir/build
+Building C object CMakeFiles/cmTC_ee50f.dir/CheckFunctionExists.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc    -DCHECK_FUNCTION_EXISTS=fcntl,   -o CMakeFiles/cmTC_ee50f.dir/CheckFunctionExists.c.o   -c /usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:6:28: error: expected identifier or '('
+char CHECK_FUNCTION_EXISTS();
+                           ^
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:14:25: error: expected expression
+  CHECK_FUNCTION_EXISTS();
+                        ^
+2 errors generated.
+make[2]: *** [CMakeFiles/cmTC_ee50f.dir/CheckFunctionExists.c.o] Error 1
+make[1]: *** [cmTC_ee50f/fast] Error 2
+
+
+Determining if the function inet_pton, exists failed with the following output:
+Change Dir: /Users/user/desktop/cp/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_8db24/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_8db24.dir/build.make CMakeFiles/cmTC_8db24.dir/build
+Building C object CMakeFiles/cmTC_8db24.dir/CheckFunctionExists.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc    -DCHECK_FUNCTION_EXISTS=inet_pton,   -o CMakeFiles/cmTC_8db24.dir/CheckFunctionExists.c.o   -c /usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:6:28: error: expected identifier or '('
+char CHECK_FUNCTION_EXISTS();
+                           ^
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:14:25: error: expected expression
+  CHECK_FUNCTION_EXISTS();
+                        ^
+2 errors generated.
+make[2]: *** [CMakeFiles/cmTC_8db24.dir/CheckFunctionExists.c.o] Error 1
+make[1]: *** [cmTC_8db24/fast] Error 2
+
+
+Determining if the function inet_ntop, exists failed with the following output:
+Change Dir: /Users/user/desktop/cp/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_7442b/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_7442b.dir/build.make CMakeFiles/cmTC_7442b.dir/build
+Building C object CMakeFiles/cmTC_7442b.dir/CheckFunctionExists.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc    -DCHECK_FUNCTION_EXISTS=inet_ntop,   -o CMakeFiles/cmTC_7442b.dir/CheckFunctionExists.c.o   -c /usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:6:28: error: expected identifier or '('
+char CHECK_FUNCTION_EXISTS();
+                           ^
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:14:25: error: expected expression
+  CHECK_FUNCTION_EXISTS();
+                        ^
+2 errors generated.
+make[2]: *** [CMakeFiles/cmTC_7442b.dir/CheckFunctionExists.c.o] Error 1
+make[1]: *** [cmTC_7442b/fast] Error 2
+
+
+Determining if the struct msghdr.msg_flags exist failed with the following output:
+Change Dir: /Users/user/desktop/cp/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_ab920/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_ab920.dir/build.make CMakeFiles/cmTC_ab920.dir/build
+Building C object CMakeFiles/cmTC_ab920.dir/CheckSymbolExists.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc     -o CMakeFiles/cmTC_ab920.dir/CheckSymbolExists.c.o   -c /Users/user/desktop/cp/CMakeFiles/CMakeTmp/CheckSymbolExists.c
+/Users/user/desktop/cp/CMakeFiles/CMakeTmp/CheckSymbolExists.c:7:16: warning: extra tokens at end of #ifndef directive [-Wextra-tokens]
+#ifndef struct msghdr.msg_flags
+               ^
+               //
+/Users/user/desktop/cp/CMakeFiles/CMakeTmp/CheckSymbolExists.c:8:19: error: expected expression
+  return ((int*)(&struct msghdr.msg_flags))[argc];
+                  ^
+1 warning and 1 error generated.
+make[2]: *** [CMakeFiles/cmTC_ab920.dir/CheckSymbolExists.c.o] Error 1
+make[1]: *** [cmTC_ab920/fast] Error 2
+
+File /Users/user/desktop/cp/CMakeFiles/CMakeTmp/CheckSymbolExists.c:
+/* */
+#include <sys/socket.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef struct msghdr.msg_flags
+  return ((int*)(&struct msghdr.msg_flags))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+
+Determining if the socklen_t exist failed with the following output:
+Change Dir: /Users/user/desktop/cp/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_aa539/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_aa539.dir/build.make CMakeFiles/cmTC_aa539.dir/build
+Building C object CMakeFiles/cmTC_aa539.dir/CheckSymbolExists.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc     -o CMakeFiles/cmTC_aa539.dir/CheckSymbolExists.c.o   -c /Users/user/desktop/cp/CMakeFiles/CMakeTmp/CheckSymbolExists.c
+/Users/user/desktop/cp/CMakeFiles/CMakeTmp/CheckSymbolExists.c:9:19: error: unexpected type name 'socklen_t': expected expression
+  return ((int*)(&socklen_t))[argc];
+                  ^
+1 error generated.
+make[2]: *** [CMakeFiles/cmTC_aa539.dir/CheckSymbolExists.c.o] Error 1
+make[1]: *** [cmTC_aa539/fast] Error 2
+
+File /Users/user/desktop/cp/CMakeFiles/CMakeTmp/CheckSymbolExists.c:
+/* */
+#include <sys/types.h>
+#include <sys/socket.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef socklen_t
+  return ((int*)(&socklen_t))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+
+Determining if the function gethostbyaddr_r, exists failed with the following output:
+Change Dir: /Users/user/desktop/cp/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_7c57b/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_7c57b.dir/build.make CMakeFiles/cmTC_7c57b.dir/build
+Building C object CMakeFiles/cmTC_7c57b.dir/CheckFunctionExists.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc    -DCHECK_FUNCTION_EXISTS=gethostbyaddr_r,   -o CMakeFiles/cmTC_7c57b.dir/CheckFunctionExists.c.o   -c /usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:6:28: error: expected identifier or '('
+char CHECK_FUNCTION_EXISTS();
+                           ^
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:14:25: error: expected expression
+  CHECK_FUNCTION_EXISTS();
+                        ^
+2 errors generated.
+make[2]: *** [CMakeFiles/cmTC_7c57b.dir/CheckFunctionExists.c.o] Error 1
+make[1]: *** [cmTC_7c57b/fast] Error 2
+
+
+Determining if the function gethostbyname_r, exists failed with the following output:
+Change Dir: /Users/user/desktop/cp/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_f7fd8/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_f7fd8.dir/build.make CMakeFiles/cmTC_f7fd8.dir/build
+Building C object CMakeFiles/cmTC_f7fd8.dir/CheckFunctionExists.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc    -DCHECK_FUNCTION_EXISTS=gethostbyname_r,   -o CMakeFiles/cmTC_f7fd8.dir/CheckFunctionExists.c.o   -c /usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:6:28: error: expected identifier or '('
+char CHECK_FUNCTION_EXISTS();
+                           ^
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:14:25: error: expected expression
+  CHECK_FUNCTION_EXISTS();
+                        ^
+2 errors generated.
+make[2]: *** [CMakeFiles/cmTC_f7fd8.dir/CheckFunctionExists.c.o] Error 1
+make[1]: *** [cmTC_f7fd8/fast] Error 2
+
+
+Determining if the function poll, exists failed with the following output:
+Change Dir: /Users/user/desktop/cp/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_b89fd/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_b89fd.dir/build.make CMakeFiles/cmTC_b89fd.dir/build
+Building C object CMakeFiles/cmTC_b89fd.dir/CheckFunctionExists.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc    -DCHECK_FUNCTION_EXISTS=poll,   -o CMakeFiles/cmTC_b89fd.dir/CheckFunctionExists.c.o   -c /usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:6:28: error: expected identifier or '('
+char CHECK_FUNCTION_EXISTS();
+                           ^
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:14:25: error: expected expression
+  CHECK_FUNCTION_EXISTS();
+                        ^
+2 errors generated.
+make[2]: *** [CMakeFiles/cmTC_b89fd.dir/CheckFunctionExists.c.o] Error 1
+make[1]: *** [cmTC_b89fd/fast] Error 2
+
+
+Determining if the function fcntl, exists failed with the following output:
+Change Dir: /Users/user/desktop/cp/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_e7a50/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_e7a50.dir/build.make CMakeFiles/cmTC_e7a50.dir/build
+Building C object CMakeFiles/cmTC_e7a50.dir/CheckFunctionExists.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc    -DCHECK_FUNCTION_EXISTS=fcntl,   -o CMakeFiles/cmTC_e7a50.dir/CheckFunctionExists.c.o   -c /usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:6:28: error: expected identifier or '('
+char CHECK_FUNCTION_EXISTS();
+                           ^
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:14:25: error: expected expression
+  CHECK_FUNCTION_EXISTS();
+                        ^
+2 errors generated.
+make[2]: *** [CMakeFiles/cmTC_e7a50.dir/CheckFunctionExists.c.o] Error 1
+make[1]: *** [cmTC_e7a50/fast] Error 2
+
+
+Determining if the function inet_pton, exists failed with the following output:
+Change Dir: /Users/user/desktop/cp/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_5865b/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_5865b.dir/build.make CMakeFiles/cmTC_5865b.dir/build
+Building C object CMakeFiles/cmTC_5865b.dir/CheckFunctionExists.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc    -DCHECK_FUNCTION_EXISTS=inet_pton,   -o CMakeFiles/cmTC_5865b.dir/CheckFunctionExists.c.o   -c /usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:6:28: error: expected identifier or '('
+char CHECK_FUNCTION_EXISTS();
+                           ^
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:14:25: error: expected expression
+  CHECK_FUNCTION_EXISTS();
+                        ^
+2 errors generated.
+make[2]: *** [CMakeFiles/cmTC_5865b.dir/CheckFunctionExists.c.o] Error 1
+make[1]: *** [cmTC_5865b/fast] Error 2
+
+
+Determining if the function inet_ntop, exists failed with the following output:
+Change Dir: /Users/user/desktop/cp/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_f2c9f/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_f2c9f.dir/build.make CMakeFiles/cmTC_f2c9f.dir/build
+Building C object CMakeFiles/cmTC_f2c9f.dir/CheckFunctionExists.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc    -DCHECK_FUNCTION_EXISTS=inet_ntop,   -o CMakeFiles/cmTC_f2c9f.dir/CheckFunctionExists.c.o   -c /usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:6:28: error: expected identifier or '('
+char CHECK_FUNCTION_EXISTS();
+                           ^
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:14:25: error: expected expression
+  CHECK_FUNCTION_EXISTS();
+                        ^
+2 errors generated.
+make[2]: *** [CMakeFiles/cmTC_f2c9f.dir/CheckFunctionExists.c.o] Error 1
+make[1]: *** [cmTC_f2c9f/fast] Error 2
+
+
+Determining if the struct msghdr.msg_flags exist failed with the following output:
+Change Dir: /Users/user/desktop/cp/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_b4756/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_b4756.dir/build.make CMakeFiles/cmTC_b4756.dir/build
+Building C object CMakeFiles/cmTC_b4756.dir/CheckSymbolExists.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc     -o CMakeFiles/cmTC_b4756.dir/CheckSymbolExists.c.o   -c /Users/user/desktop/cp/CMakeFiles/CMakeTmp/CheckSymbolExists.c
+/Users/user/desktop/cp/CMakeFiles/CMakeTmp/CheckSymbolExists.c:7:16: warning: extra tokens at end of #ifndef directive [-Wextra-tokens]
+#ifndef struct msghdr.msg_flags
+               ^
+               //
+/Users/user/desktop/cp/CMakeFiles/CMakeTmp/CheckSymbolExists.c:8:19: error: expected expression
+  return ((int*)(&struct msghdr.msg_flags))[argc];
+                  ^
+1 warning and 1 error generated.
+make[2]: *** [CMakeFiles/cmTC_b4756.dir/CheckSymbolExists.c.o] Error 1
+make[1]: *** [cmTC_b4756/fast] Error 2
+
+File /Users/user/desktop/cp/CMakeFiles/CMakeTmp/CheckSymbolExists.c:
+/* */
+#include <sys/socket.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef struct msghdr.msg_flags
+  return ((int*)(&struct msghdr.msg_flags))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+
+Determining if the socklen_t exist failed with the following output:
+Change Dir: /Users/user/desktop/cp/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_98d1e/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_98d1e.dir/build.make CMakeFiles/cmTC_98d1e.dir/build
+Building C object CMakeFiles/cmTC_98d1e.dir/CheckSymbolExists.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc     -o CMakeFiles/cmTC_98d1e.dir/CheckSymbolExists.c.o   -c /Users/user/desktop/cp/CMakeFiles/CMakeTmp/CheckSymbolExists.c
+/Users/user/desktop/cp/CMakeFiles/CMakeTmp/CheckSymbolExists.c:9:19: error: unexpected type name 'socklen_t': expected expression
+  return ((int*)(&socklen_t))[argc];
+                  ^
+1 error generated.
+make[2]: *** [CMakeFiles/cmTC_98d1e.dir/CheckSymbolExists.c.o] Error 1
+make[1]: *** [cmTC_98d1e/fast] Error 2
+
+File /Users/user/desktop/cp/CMakeFiles/CMakeTmp/CheckSymbolExists.c:
+/* */
+#include <sys/types.h>
+#include <sys/socket.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef socklen_t
+  return ((int*)(&socklen_t))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+
+Determining if the function gethostbyaddr_r, exists failed with the following output:
+Change Dir: /Users/user/desktop/cp/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_e6a75/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_e6a75.dir/build.make CMakeFiles/cmTC_e6a75.dir/build
+Building C object CMakeFiles/cmTC_e6a75.dir/CheckFunctionExists.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc    -DCHECK_FUNCTION_EXISTS=gethostbyaddr_r,   -o CMakeFiles/cmTC_e6a75.dir/CheckFunctionExists.c.o   -c /usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:6:28: error: expected identifier or '('
+char CHECK_FUNCTION_EXISTS();
+                           ^
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:14:25: error: expected expression
+  CHECK_FUNCTION_EXISTS();
+                        ^
+2 errors generated.
+make[2]: *** [CMakeFiles/cmTC_e6a75.dir/CheckFunctionExists.c.o] Error 1
+make[1]: *** [cmTC_e6a75/fast] Error 2
+
+
+Determining if the function gethostbyname_r, exists failed with the following output:
+Change Dir: /Users/user/desktop/cp/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_d52f9/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_d52f9.dir/build.make CMakeFiles/cmTC_d52f9.dir/build
+Building C object CMakeFiles/cmTC_d52f9.dir/CheckFunctionExists.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc    -DCHECK_FUNCTION_EXISTS=gethostbyname_r,   -o CMakeFiles/cmTC_d52f9.dir/CheckFunctionExists.c.o   -c /usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:6:28: error: expected identifier or '('
+char CHECK_FUNCTION_EXISTS();
+                           ^
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:14:25: error: expected expression
+  CHECK_FUNCTION_EXISTS();
+                        ^
+2 errors generated.
+make[2]: *** [CMakeFiles/cmTC_d52f9.dir/CheckFunctionExists.c.o] Error 1
+make[1]: *** [cmTC_d52f9/fast] Error 2
+
+
+Determining if the function poll, exists failed with the following output:
+Change Dir: /Users/user/desktop/cp/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_ef793/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_ef793.dir/build.make CMakeFiles/cmTC_ef793.dir/build
+Building C object CMakeFiles/cmTC_ef793.dir/CheckFunctionExists.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc    -DCHECK_FUNCTION_EXISTS=poll,   -o CMakeFiles/cmTC_ef793.dir/CheckFunctionExists.c.o   -c /usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:6:28: error: expected identifier or '('
+char CHECK_FUNCTION_EXISTS();
+                           ^
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:14:25: error: expected expression
+  CHECK_FUNCTION_EXISTS();
+                        ^
+2 errors generated.
+make[2]: *** [CMakeFiles/cmTC_ef793.dir/CheckFunctionExists.c.o] Error 1
+make[1]: *** [cmTC_ef793/fast] Error 2
+
+
+Determining if the function fcntl, exists failed with the following output:
+Change Dir: /Users/user/desktop/cp/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_ed68d/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_ed68d.dir/build.make CMakeFiles/cmTC_ed68d.dir/build
+Building C object CMakeFiles/cmTC_ed68d.dir/CheckFunctionExists.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc    -DCHECK_FUNCTION_EXISTS=fcntl,   -o CMakeFiles/cmTC_ed68d.dir/CheckFunctionExists.c.o   -c /usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:6:28: error: expected identifier or '('
+char CHECK_FUNCTION_EXISTS();
+                           ^
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:14:25: error: expected expression
+  CHECK_FUNCTION_EXISTS();
+                        ^
+2 errors generated.
+make[2]: *** [CMakeFiles/cmTC_ed68d.dir/CheckFunctionExists.c.o] Error 1
+make[1]: *** [cmTC_ed68d/fast] Error 2
+
+
+Determining if the function inet_pton, exists failed with the following output:
+Change Dir: /Users/user/desktop/cp/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_56a3e/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_56a3e.dir/build.make CMakeFiles/cmTC_56a3e.dir/build
+Building C object CMakeFiles/cmTC_56a3e.dir/CheckFunctionExists.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc    -DCHECK_FUNCTION_EXISTS=inet_pton,   -o CMakeFiles/cmTC_56a3e.dir/CheckFunctionExists.c.o   -c /usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:6:28: error: expected identifier or '('
+char CHECK_FUNCTION_EXISTS();
+                           ^
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:14:25: error: expected expression
+  CHECK_FUNCTION_EXISTS();
+                        ^
+2 errors generated.
+make[2]: *** [CMakeFiles/cmTC_56a3e.dir/CheckFunctionExists.c.o] Error 1
+make[1]: *** [cmTC_56a3e/fast] Error 2
+
+
+Determining if the function inet_ntop, exists failed with the following output:
+Change Dir: /Users/user/desktop/cp/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_b04e8/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_b04e8.dir/build.make CMakeFiles/cmTC_b04e8.dir/build
+Building C object CMakeFiles/cmTC_b04e8.dir/CheckFunctionExists.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc    -DCHECK_FUNCTION_EXISTS=inet_ntop,   -o CMakeFiles/cmTC_b04e8.dir/CheckFunctionExists.c.o   -c /usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:6:28: error: expected identifier or '('
+char CHECK_FUNCTION_EXISTS();
+                           ^
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:14:25: error: expected expression
+  CHECK_FUNCTION_EXISTS();
+                        ^
+2 errors generated.
+make[2]: *** [CMakeFiles/cmTC_b04e8.dir/CheckFunctionExists.c.o] Error 1
+make[1]: *** [cmTC_b04e8/fast] Error 2
+
+
+Determining if the struct msghdr.msg_flags exist failed with the following output:
+Change Dir: /Users/user/desktop/cp/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_0701c/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_0701c.dir/build.make CMakeFiles/cmTC_0701c.dir/build
+Building C object CMakeFiles/cmTC_0701c.dir/CheckSymbolExists.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc     -o CMakeFiles/cmTC_0701c.dir/CheckSymbolExists.c.o   -c /Users/user/desktop/cp/CMakeFiles/CMakeTmp/CheckSymbolExists.c
+/Users/user/desktop/cp/CMakeFiles/CMakeTmp/CheckSymbolExists.c:7:16: warning: extra tokens at end of #ifndef directive [-Wextra-tokens]
+#ifndef struct msghdr.msg_flags
+               ^
+               //
+/Users/user/desktop/cp/CMakeFiles/CMakeTmp/CheckSymbolExists.c:8:19: error: expected expression
+  return ((int*)(&struct msghdr.msg_flags))[argc];
+                  ^
+1 warning and 1 error generated.
+make[2]: *** [CMakeFiles/cmTC_0701c.dir/CheckSymbolExists.c.o] Error 1
+make[1]: *** [cmTC_0701c/fast] Error 2
+
+File /Users/user/desktop/cp/CMakeFiles/CMakeTmp/CheckSymbolExists.c:
+/* */
+#include <sys/socket.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef struct msghdr.msg_flags
+  return ((int*)(&struct msghdr.msg_flags))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+
+Determining if the socklen_t exist failed with the following output:
+Change Dir: /Users/user/desktop/cp/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_b5135/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_b5135.dir/build.make CMakeFiles/cmTC_b5135.dir/build
+Building C object CMakeFiles/cmTC_b5135.dir/CheckSymbolExists.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc     -o CMakeFiles/cmTC_b5135.dir/CheckSymbolExists.c.o   -c /Users/user/desktop/cp/CMakeFiles/CMakeTmp/CheckSymbolExists.c
+/Users/user/desktop/cp/CMakeFiles/CMakeTmp/CheckSymbolExists.c:9:19: error: unexpected type name 'socklen_t': expected expression
+  return ((int*)(&socklen_t))[argc];
+                  ^
+1 error generated.
+make[2]: *** [CMakeFiles/cmTC_b5135.dir/CheckSymbolExists.c.o] Error 1
+make[1]: *** [cmTC_b5135/fast] Error 2
+
+File /Users/user/desktop/cp/CMakeFiles/CMakeTmp/CheckSymbolExists.c:
+/* */
+#include <sys/types.h>
+#include <sys/socket.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef socklen_t
+  return ((int*)(&socklen_t))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+
+Determining if the function gethostbyaddr_r, exists failed with the following output:
+Change Dir: /Users/user/Desktop/QServ/cp/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_d5301/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_d5301.dir/build.make CMakeFiles/cmTC_d5301.dir/build
+Building C object CMakeFiles/cmTC_d5301.dir/CheckFunctionExists.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc    -DCHECK_FUNCTION_EXISTS=gethostbyaddr_r,   -o CMakeFiles/cmTC_d5301.dir/CheckFunctionExists.c.o   -c /usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:6:28: error: expected identifier or '('
+char CHECK_FUNCTION_EXISTS();
+                           ^
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:14:25: error: expected expression
+  CHECK_FUNCTION_EXISTS();
+                        ^
+2 errors generated.
+make[1]: *** [CMakeFiles/cmTC_d5301.dir/CheckFunctionExists.c.o] Error 1
+make: *** [cmTC_d5301/fast] Error 2
+
+
+Determining if the function gethostbyname_r, exists failed with the following output:
+Change Dir: /Users/user/Desktop/QServ/cp/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_6fb65/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_6fb65.dir/build.make CMakeFiles/cmTC_6fb65.dir/build
+Building C object CMakeFiles/cmTC_6fb65.dir/CheckFunctionExists.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc    -DCHECK_FUNCTION_EXISTS=gethostbyname_r,   -o CMakeFiles/cmTC_6fb65.dir/CheckFunctionExists.c.o   -c /usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:6:28: error: expected identifier or '('
+char CHECK_FUNCTION_EXISTS();
+                           ^
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:14:25: error: expected expression
+  CHECK_FUNCTION_EXISTS();
+                        ^
+2 errors generated.
+make[1]: *** [CMakeFiles/cmTC_6fb65.dir/CheckFunctionExists.c.o] Error 1
+make: *** [cmTC_6fb65/fast] Error 2
+
+
+Determining if the function poll, exists failed with the following output:
+Change Dir: /Users/user/Desktop/QServ/cp/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_74f08/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_74f08.dir/build.make CMakeFiles/cmTC_74f08.dir/build
+Building C object CMakeFiles/cmTC_74f08.dir/CheckFunctionExists.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc    -DCHECK_FUNCTION_EXISTS=poll,   -o CMakeFiles/cmTC_74f08.dir/CheckFunctionExists.c.o   -c /usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:6:28: error: expected identifier or '('
+char CHECK_FUNCTION_EXISTS();
+                           ^
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:14:25: error: expected expression
+  CHECK_FUNCTION_EXISTS();
+                        ^
+2 errors generated.
+make[1]: *** [CMakeFiles/cmTC_74f08.dir/CheckFunctionExists.c.o] Error 1
+make: *** [cmTC_74f08/fast] Error 2
+
+
+Determining if the function fcntl, exists failed with the following output:
+Change Dir: /Users/user/Desktop/QServ/cp/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_7e281/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_7e281.dir/build.make CMakeFiles/cmTC_7e281.dir/build
+Building C object CMakeFiles/cmTC_7e281.dir/CheckFunctionExists.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc    -DCHECK_FUNCTION_EXISTS=fcntl,   -o CMakeFiles/cmTC_7e281.dir/CheckFunctionExists.c.o   -c /usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:6:28: error: expected identifier or '('
+char CHECK_FUNCTION_EXISTS();
+                           ^
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:14:25: error: expected expression
+  CHECK_FUNCTION_EXISTS();
+                        ^
+2 errors generated.
+make[1]: *** [CMakeFiles/cmTC_7e281.dir/CheckFunctionExists.c.o] Error 1
+make: *** [cmTC_7e281/fast] Error 2
+
+
+Determining if the function inet_pton, exists failed with the following output:
+Change Dir: /Users/user/Desktop/QServ/cp/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_f7628/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_f7628.dir/build.make CMakeFiles/cmTC_f7628.dir/build
+Building C object CMakeFiles/cmTC_f7628.dir/CheckFunctionExists.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc    -DCHECK_FUNCTION_EXISTS=inet_pton,   -o CMakeFiles/cmTC_f7628.dir/CheckFunctionExists.c.o   -c /usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:6:28: error: expected identifier or '('
+char CHECK_FUNCTION_EXISTS();
+                           ^
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:14:25: error: expected expression
+  CHECK_FUNCTION_EXISTS();
+                        ^
+2 errors generated.
+make[1]: *** [CMakeFiles/cmTC_f7628.dir/CheckFunctionExists.c.o] Error 1
+make: *** [cmTC_f7628/fast] Error 2
+
+
+Determining if the function inet_ntop, exists failed with the following output:
+Change Dir: /Users/user/Desktop/QServ/cp/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_0eb03/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_0eb03.dir/build.make CMakeFiles/cmTC_0eb03.dir/build
+Building C object CMakeFiles/cmTC_0eb03.dir/CheckFunctionExists.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc    -DCHECK_FUNCTION_EXISTS=inet_ntop,   -o CMakeFiles/cmTC_0eb03.dir/CheckFunctionExists.c.o   -c /usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:6:28: error: expected identifier or '('
+char CHECK_FUNCTION_EXISTS();
+                           ^
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:14:25: error: expected expression
+  CHECK_FUNCTION_EXISTS();
+                        ^
+2 errors generated.
+make[1]: *** [CMakeFiles/cmTC_0eb03.dir/CheckFunctionExists.c.o] Error 1
+make: *** [cmTC_0eb03/fast] Error 2
+
+
+Determining if the struct msghdr.msg_flags exist failed with the following output:
+Change Dir: /Users/user/Desktop/QServ/cp/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_d59bf/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_d59bf.dir/build.make CMakeFiles/cmTC_d59bf.dir/build
+Building C object CMakeFiles/cmTC_d59bf.dir/CheckSymbolExists.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc     -o CMakeFiles/cmTC_d59bf.dir/CheckSymbolExists.c.o   -c /Users/user/Desktop/QServ/cp/CMakeFiles/CMakeTmp/CheckSymbolExists.c
+/Users/user/Desktop/QServ/cp/CMakeFiles/CMakeTmp/CheckSymbolExists.c:7:16: warning: extra tokens at end of #ifndef directive [-Wextra-tokens]
+#ifndef struct msghdr.msg_flags
+               ^
+               //
+/Users/user/Desktop/QServ/cp/CMakeFiles/CMakeTmp/CheckSymbolExists.c:8:19: error: expected expression
+  return ((int*)(&struct msghdr.msg_flags))[argc];
+                  ^
+1 warning and 1 error generated.
+make[1]: *** [CMakeFiles/cmTC_d59bf.dir/CheckSymbolExists.c.o] Error 1
+make: *** [cmTC_d59bf/fast] Error 2
+
+File /Users/user/Desktop/QServ/cp/CMakeFiles/CMakeTmp/CheckSymbolExists.c:
+/* */
+#include <sys/socket.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef struct msghdr.msg_flags
+  return ((int*)(&struct msghdr.msg_flags))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+
+Determining if the socklen_t exist failed with the following output:
+Change Dir: /Users/user/Desktop/QServ/cp/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_aa88a/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_aa88a.dir/build.make CMakeFiles/cmTC_aa88a.dir/build
+Building C object CMakeFiles/cmTC_aa88a.dir/CheckSymbolExists.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc     -o CMakeFiles/cmTC_aa88a.dir/CheckSymbolExists.c.o   -c /Users/user/Desktop/QServ/cp/CMakeFiles/CMakeTmp/CheckSymbolExists.c
+/Users/user/Desktop/QServ/cp/CMakeFiles/CMakeTmp/CheckSymbolExists.c:9:19: error: unexpected type name 'socklen_t': expected expression
+  return ((int*)(&socklen_t))[argc];
+                  ^
+1 error generated.
+make[1]: *** [CMakeFiles/cmTC_aa88a.dir/CheckSymbolExists.c.o] Error 1
+make: *** [cmTC_aa88a/fast] Error 2
+
+File /Users/user/Desktop/QServ/cp/CMakeFiles/CMakeTmp/CheckSymbolExists.c:
+/* */
+#include <sys/types.h>
+#include <sys/socket.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef socklen_t
+  return ((int*)(&socklen_t))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+
+Determining if the function gethostbyaddr_r, exists failed with the following output:
+Change Dir: /Users/user/Desktop/QServ/cp/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_bec2b/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_bec2b.dir/build.make CMakeFiles/cmTC_bec2b.dir/build
+Building C object CMakeFiles/cmTC_bec2b.dir/CheckFunctionExists.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc    -DCHECK_FUNCTION_EXISTS=gethostbyaddr_r,   -o CMakeFiles/cmTC_bec2b.dir/CheckFunctionExists.c.o   -c /usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:6:28: error: expected identifier or '('
+char CHECK_FUNCTION_EXISTS();
+                           ^
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:14:25: error: expected expression
+  CHECK_FUNCTION_EXISTS();
+                        ^
+2 errors generated.
+make[2]: *** [CMakeFiles/cmTC_bec2b.dir/CheckFunctionExists.c.o] Error 1
+make[1]: *** [cmTC_bec2b/fast] Error 2
+
+
+Determining if the function gethostbyname_r, exists failed with the following output:
+Change Dir: /Users/user/Desktop/QServ/cp/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_4ce72/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_4ce72.dir/build.make CMakeFiles/cmTC_4ce72.dir/build
+Building C object CMakeFiles/cmTC_4ce72.dir/CheckFunctionExists.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc    -DCHECK_FUNCTION_EXISTS=gethostbyname_r,   -o CMakeFiles/cmTC_4ce72.dir/CheckFunctionExists.c.o   -c /usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:6:28: error: expected identifier or '('
+char CHECK_FUNCTION_EXISTS();
+                           ^
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:14:25: error: expected expression
+  CHECK_FUNCTION_EXISTS();
+                        ^
+2 errors generated.
+make[2]: *** [CMakeFiles/cmTC_4ce72.dir/CheckFunctionExists.c.o] Error 1
+make[1]: *** [cmTC_4ce72/fast] Error 2
+
+
+Determining if the function poll, exists failed with the following output:
+Change Dir: /Users/user/Desktop/QServ/cp/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_103fc/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_103fc.dir/build.make CMakeFiles/cmTC_103fc.dir/build
+Building C object CMakeFiles/cmTC_103fc.dir/CheckFunctionExists.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc    -DCHECK_FUNCTION_EXISTS=poll,   -o CMakeFiles/cmTC_103fc.dir/CheckFunctionExists.c.o   -c /usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:6:28: error: expected identifier or '('
+char CHECK_FUNCTION_EXISTS();
+                           ^
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:14:25: error: expected expression
+  CHECK_FUNCTION_EXISTS();
+                        ^
+2 errors generated.
+make[2]: *** [CMakeFiles/cmTC_103fc.dir/CheckFunctionExists.c.o] Error 1
+make[1]: *** [cmTC_103fc/fast] Error 2
+
+
+Determining if the function fcntl, exists failed with the following output:
+Change Dir: /Users/user/Desktop/QServ/cp/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_33ef1/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_33ef1.dir/build.make CMakeFiles/cmTC_33ef1.dir/build
+Building C object CMakeFiles/cmTC_33ef1.dir/CheckFunctionExists.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc    -DCHECK_FUNCTION_EXISTS=fcntl,   -o CMakeFiles/cmTC_33ef1.dir/CheckFunctionExists.c.o   -c /usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:6:28: error: expected identifier or '('
+char CHECK_FUNCTION_EXISTS();
+                           ^
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:14:25: error: expected expression
+  CHECK_FUNCTION_EXISTS();
+                        ^
+2 errors generated.
+make[2]: *** [CMakeFiles/cmTC_33ef1.dir/CheckFunctionExists.c.o] Error 1
+make[1]: *** [cmTC_33ef1/fast] Error 2
+
+
+Determining if the function inet_pton, exists failed with the following output:
+Change Dir: /Users/user/Desktop/QServ/cp/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_91656/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_91656.dir/build.make CMakeFiles/cmTC_91656.dir/build
+Building C object CMakeFiles/cmTC_91656.dir/CheckFunctionExists.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc    -DCHECK_FUNCTION_EXISTS=inet_pton,   -o CMakeFiles/cmTC_91656.dir/CheckFunctionExists.c.o   -c /usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:6:28: error: expected identifier or '('
+char CHECK_FUNCTION_EXISTS();
+                           ^
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:14:25: error: expected expression
+  CHECK_FUNCTION_EXISTS();
+                        ^
+2 errors generated.
+make[2]: *** [CMakeFiles/cmTC_91656.dir/CheckFunctionExists.c.o] Error 1
+make[1]: *** [cmTC_91656/fast] Error 2
+
+
+Determining if the function inet_ntop, exists failed with the following output:
+Change Dir: /Users/user/Desktop/QServ/cp/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_a1b54/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_a1b54.dir/build.make CMakeFiles/cmTC_a1b54.dir/build
+Building C object CMakeFiles/cmTC_a1b54.dir/CheckFunctionExists.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc    -DCHECK_FUNCTION_EXISTS=inet_ntop,   -o CMakeFiles/cmTC_a1b54.dir/CheckFunctionExists.c.o   -c /usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:6:28: error: expected identifier or '('
+char CHECK_FUNCTION_EXISTS();
+                           ^
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:14:25: error: expected expression
+  CHECK_FUNCTION_EXISTS();
+                        ^
+2 errors generated.
+make[2]: *** [CMakeFiles/cmTC_a1b54.dir/CheckFunctionExists.c.o] Error 1
+make[1]: *** [cmTC_a1b54/fast] Error 2
+
+
+Determining if the struct msghdr.msg_flags exist failed with the following output:
+Change Dir: /Users/user/Desktop/QServ/cp/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_51558/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_51558.dir/build.make CMakeFiles/cmTC_51558.dir/build
+Building C object CMakeFiles/cmTC_51558.dir/CheckSymbolExists.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc     -o CMakeFiles/cmTC_51558.dir/CheckSymbolExists.c.o   -c /Users/user/Desktop/QServ/cp/CMakeFiles/CMakeTmp/CheckSymbolExists.c
+/Users/user/Desktop/QServ/cp/CMakeFiles/CMakeTmp/CheckSymbolExists.c:7:16: warning: extra tokens at end of #ifndef directive [-Wextra-tokens]
+#ifndef struct msghdr.msg_flags
+               ^
+               //
+/Users/user/Desktop/QServ/cp/CMakeFiles/CMakeTmp/CheckSymbolExists.c:8:19: error: expected expression
+  return ((int*)(&struct msghdr.msg_flags))[argc];
+                  ^
+1 warning and 1 error generated.
+make[2]: *** [CMakeFiles/cmTC_51558.dir/CheckSymbolExists.c.o] Error 1
+make[1]: *** [cmTC_51558/fast] Error 2
+
+File /Users/user/Desktop/QServ/cp/CMakeFiles/CMakeTmp/CheckSymbolExists.c:
+/* */
+#include <sys/socket.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef struct msghdr.msg_flags
+  return ((int*)(&struct msghdr.msg_flags))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+
+Determining if the socklen_t exist failed with the following output:
+Change Dir: /Users/user/Desktop/QServ/cp/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_2f286/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_2f286.dir/build.make CMakeFiles/cmTC_2f286.dir/build
+Building C object CMakeFiles/cmTC_2f286.dir/CheckSymbolExists.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc     -o CMakeFiles/cmTC_2f286.dir/CheckSymbolExists.c.o   -c /Users/user/Desktop/QServ/cp/CMakeFiles/CMakeTmp/CheckSymbolExists.c
+/Users/user/Desktop/QServ/cp/CMakeFiles/CMakeTmp/CheckSymbolExists.c:9:19: error: unexpected type name 'socklen_t': expected expression
+  return ((int*)(&socklen_t))[argc];
+                  ^
+1 error generated.
+make[2]: *** [CMakeFiles/cmTC_2f286.dir/CheckSymbolExists.c.o] Error 1
+make[1]: *** [cmTC_2f286/fast] Error 2
+
+File /Users/user/Desktop/QServ/cp/CMakeFiles/CMakeTmp/CheckSymbolExists.c:
+/* */
+#include <sys/types.h>
+#include <sys/socket.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef socklen_t
+  return ((int*)(&socklen_t))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+
+Determining if the function gethostbyaddr_r, exists failed with the following output:
+Change Dir: /Users/user/Desktop/QServ/cp/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_2a04e/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_2a04e.dir/build.make CMakeFiles/cmTC_2a04e.dir/build
+Building C object CMakeFiles/cmTC_2a04e.dir/CheckFunctionExists.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc    -DCHECK_FUNCTION_EXISTS=gethostbyaddr_r,   -o CMakeFiles/cmTC_2a04e.dir/CheckFunctionExists.c.o   -c /usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:6:28: error: expected identifier or '('
+char CHECK_FUNCTION_EXISTS();
+                           ^
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:14:25: error: expected expression
+  CHECK_FUNCTION_EXISTS();
+                        ^
+2 errors generated.
+make[1]: *** [CMakeFiles/cmTC_2a04e.dir/CheckFunctionExists.c.o] Error 1
+make: *** [cmTC_2a04e/fast] Error 2
+
+
+Determining if the function gethostbyname_r, exists failed with the following output:
+Change Dir: /Users/user/Desktop/QServ/cp/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_f2e78/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_f2e78.dir/build.make CMakeFiles/cmTC_f2e78.dir/build
+Building C object CMakeFiles/cmTC_f2e78.dir/CheckFunctionExists.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc    -DCHECK_FUNCTION_EXISTS=gethostbyname_r,   -o CMakeFiles/cmTC_f2e78.dir/CheckFunctionExists.c.o   -c /usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:6:28: error: expected identifier or '('
+char CHECK_FUNCTION_EXISTS();
+                           ^
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:14:25: error: expected expression
+  CHECK_FUNCTION_EXISTS();
+                        ^
+2 errors generated.
+make[1]: *** [CMakeFiles/cmTC_f2e78.dir/CheckFunctionExists.c.o] Error 1
+make: *** [cmTC_f2e78/fast] Error 2
+
+
+Determining if the function poll, exists failed with the following output:
+Change Dir: /Users/user/Desktop/QServ/cp/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_cd9d1/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_cd9d1.dir/build.make CMakeFiles/cmTC_cd9d1.dir/build
+Building C object CMakeFiles/cmTC_cd9d1.dir/CheckFunctionExists.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc    -DCHECK_FUNCTION_EXISTS=poll,   -o CMakeFiles/cmTC_cd9d1.dir/CheckFunctionExists.c.o   -c /usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:6:28: error: expected identifier or '('
+char CHECK_FUNCTION_EXISTS();
+                           ^
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:14:25: error: expected expression
+  CHECK_FUNCTION_EXISTS();
+                        ^
+2 errors generated.
+make[1]: *** [CMakeFiles/cmTC_cd9d1.dir/CheckFunctionExists.c.o] Error 1
+make: *** [cmTC_cd9d1/fast] Error 2
+
+
+Determining if the function fcntl, exists failed with the following output:
+Change Dir: /Users/user/Desktop/QServ/cp/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_183c6/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_183c6.dir/build.make CMakeFiles/cmTC_183c6.dir/build
+Building C object CMakeFiles/cmTC_183c6.dir/CheckFunctionExists.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc    -DCHECK_FUNCTION_EXISTS=fcntl,   -o CMakeFiles/cmTC_183c6.dir/CheckFunctionExists.c.o   -c /usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:6:28: error: expected identifier or '('
+char CHECK_FUNCTION_EXISTS();
+                           ^
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:14:25: error: expected expression
+  CHECK_FUNCTION_EXISTS();
+                        ^
+2 errors generated.
+make[1]: *** [CMakeFiles/cmTC_183c6.dir/CheckFunctionExists.c.o] Error 1
+make: *** [cmTC_183c6/fast] Error 2
+
+
+Determining if the function inet_pton, exists failed with the following output:
+Change Dir: /Users/user/Desktop/QServ/cp/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_6e91b/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_6e91b.dir/build.make CMakeFiles/cmTC_6e91b.dir/build
+Building C object CMakeFiles/cmTC_6e91b.dir/CheckFunctionExists.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc    -DCHECK_FUNCTION_EXISTS=inet_pton,   -o CMakeFiles/cmTC_6e91b.dir/CheckFunctionExists.c.o   -c /usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:6:28: error: expected identifier or '('
+char CHECK_FUNCTION_EXISTS();
+                           ^
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:14:25: error: expected expression
+  CHECK_FUNCTION_EXISTS();
+                        ^
+2 errors generated.
+make[1]: *** [CMakeFiles/cmTC_6e91b.dir/CheckFunctionExists.c.o] Error 1
+make: *** [cmTC_6e91b/fast] Error 2
+
+
+Determining if the function inet_ntop, exists failed with the following output:
+Change Dir: /Users/user/Desktop/QServ/cp/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_83ed2/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_83ed2.dir/build.make CMakeFiles/cmTC_83ed2.dir/build
+Building C object CMakeFiles/cmTC_83ed2.dir/CheckFunctionExists.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc    -DCHECK_FUNCTION_EXISTS=inet_ntop,   -o CMakeFiles/cmTC_83ed2.dir/CheckFunctionExists.c.o   -c /usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:6:28: error: expected identifier or '('
+char CHECK_FUNCTION_EXISTS();
+                           ^
+/usr/local/share/cmake-3.4/Modules/CheckFunctionExists.c:14:25: error: expected expression
+  CHECK_FUNCTION_EXISTS();
+                        ^
+2 errors generated.
+make[1]: *** [CMakeFiles/cmTC_83ed2.dir/CheckFunctionExists.c.o] Error 1
+make: *** [cmTC_83ed2/fast] Error 2
+
+
+Determining if the struct msghdr.msg_flags exist failed with the following output:
+Change Dir: /Users/user/Desktop/QServ/cp/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_853b1/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_853b1.dir/build.make CMakeFiles/cmTC_853b1.dir/build
+Building C object CMakeFiles/cmTC_853b1.dir/CheckSymbolExists.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc     -o CMakeFiles/cmTC_853b1.dir/CheckSymbolExists.c.o   -c /Users/user/Desktop/QServ/cp/CMakeFiles/CMakeTmp/CheckSymbolExists.c
+/Users/user/Desktop/QServ/cp/CMakeFiles/CMakeTmp/CheckSymbolExists.c:7:16: warning: extra tokens at end of #ifndef directive [-Wextra-tokens]
+#ifndef struct msghdr.msg_flags
+               ^
+               //
+/Users/user/Desktop/QServ/cp/CMakeFiles/CMakeTmp/CheckSymbolExists.c:8:19: error: expected expression
+  return ((int*)(&struct msghdr.msg_flags))[argc];
+                  ^
+1 warning and 1 error generated.
+make[1]: *** [CMakeFiles/cmTC_853b1.dir/CheckSymbolExists.c.o] Error 1
+make: *** [cmTC_853b1/fast] Error 2
+
+File /Users/user/Desktop/QServ/cp/CMakeFiles/CMakeTmp/CheckSymbolExists.c:
+/* */
+#include <sys/socket.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef struct msghdr.msg_flags
+  return ((int*)(&struct msghdr.msg_flags))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+
+Determining if the socklen_t exist failed with the following output:
+Change Dir: /Users/user/Desktop/QServ/cp/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_f0445/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_f0445.dir/build.make CMakeFiles/cmTC_f0445.dir/build
+Building C object CMakeFiles/cmTC_f0445.dir/CheckSymbolExists.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc     -o CMakeFiles/cmTC_f0445.dir/CheckSymbolExists.c.o   -c /Users/user/Desktop/QServ/cp/CMakeFiles/CMakeTmp/CheckSymbolExists.c
+/Users/user/Desktop/QServ/cp/CMakeFiles/CMakeTmp/CheckSymbolExists.c:9:19: error: unexpected type name 'socklen_t': expected expression
+  return ((int*)(&socklen_t))[argc];
+                  ^
+1 error generated.
+make[1]: *** [CMakeFiles/cmTC_f0445.dir/CheckSymbolExists.c.o] Error 1
+make: *** [cmTC_f0445/fast] Error 2
+
+File /Users/user/Desktop/QServ/cp/CMakeFiles/CMakeTmp/CheckSymbolExists.c:
+/* */
+#include <sys/types.h>
+#include <sys/socket.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef socklen_t
+  return ((int*)(&socklen_t))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+

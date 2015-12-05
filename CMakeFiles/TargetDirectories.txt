@@ -1,0 +1,3 @@
+/Users/user/Desktop/QServ/cp/GeoIP/CMakeFiles/GeoIP.dir
+/Users/user/Desktop/QServ/cp/enet/CMakeFiles/enet.dir
+/Users/user/Desktop/QServ/cp/CMakeFiles/qserv.dir
