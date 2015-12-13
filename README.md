@@ -1,7 +1,7 @@
 # QServCollect
 Cube 2: Sauerbraten Server modification with recode, commands, GeoIP, logs, customization and more!
 
-### Mac Users - watch this video:
+### Mac/Linux Users: watch the following video
 http://techmaster.mooo.com/download/howto_install_qserv.mp4
 
 ### Windows Users: download/use precompiled binary on QServ website.
