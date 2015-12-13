@@ -10,8 +10,11 @@ http://techmaster.mooo.com/download/howto_install_qserv.mp4
 Visit https://gamesurge.net/chat/ and join channel #QServ, or email gscottmalibu@gmail.com
 
 Commands: https://github.com/deathstar/QServ/wiki/Commands/
+
 Configuration: https://github.com/deathstar/QServ/wiki/Configuration/
+
 GeoIP Installation: https://github.com/deathstar/QServ/wiki/GeoIP-Installation/
+
 QServ Installation: https://github.com/deathstar/QServ/wiki/QServ-Installation/
 
 ## Macintosh 
