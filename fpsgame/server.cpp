@@ -1,9 +1,11 @@
 #include "../QServ.h"
 
-// pastebin.com/hXwL68GX
+//QServ todolist:
+//www.pastebin.com/hXwL68GX
 
 int count = 0;
 int msgcount[128];
+extern int servuptime = 0;
 
 namespace game {
     void parseoptions(vector<const char *> &args)
@@ -20,14 +22,13 @@ namespace game {
 extern ENetAddress masteraddress;
 
 //Zombie code
-char* humanteam = "good";
-char* zombieteam = "evil";
+const char* humanteam = "good";  //previously "char" - simple char trunctuates
+const char* zombieteam = "evil";
 //zombie code end
 
 
 namespace server {
-    
-    /***********/
+
     bool duplicatename(clientinfo *ci, char *name) {
         if(!name) name = ci->name;
         loopv(clients) if(clients[i]!=ci && !strcmp(name, clients[i]->name)) return true;
@@ -49,7 +50,6 @@ namespace server {
         
     
     }
-    /***********/
     
     vector<uint> allowedips;
     vector<ban> bannedips;
@@ -481,6 +481,15 @@ namespace server {
         }
         return n;
     }
+    /*ICOMMAND(addbotname, "ss", (char *name, char *pwd), {
+        if(aiman::addbotname(name)) out(ECHO_SERV,"Botname \"%s\" added.", name);
+        else out(ECHO_SERV,"Botname \"%s\" already exists.", name);
+    });
+    ICOMMAND(delbotname, "ss", (char *name), {
+        if(aiman::delbotname(name)) out(ECHO_SERV,"Botname \"%s\" removed.", name);
+        else out(ECHO_SERV,"Could not find botname \"%s\".", name);
+    });
+    ICOMMAND(listbotnames, "", (), aiman::listbotnames());*/
 
     struct servmode
     {
@@ -1199,7 +1208,7 @@ namespace server {
     } msgfilter(-1, N_CONNECT, N_SERVINFO, N_INITCLIENT, N_WELCOME, N_MAPCHANGE, N_SERVMSG, N_DAMAGE, N_HITPUSH, N_SHOTFX, N_EXPLODEFX, N_DIED, N_SPAWNSTATE, N_FORCEDEATH, N_TEAMINFO, N_ITEMACC, N_ITEMSPAWN, N_TIMEUP, N_CDIS, N_CURRENTMASTER, N_PONG, N_RESUME, N_BASESCORE, N_BASEINFO, N_BASEREGEN, N_ANNOUNCE, N_SENDDEMOLIST, N_SENDDEMO, N_DEMOPLAYBACK, N_SENDMAP, N_DROPFLAG, N_SCOREFLAG, N_RETURNFLAG, N_RESETFLAG, N_INVISFLAG, N_CLIENT, N_AUTHCHAL, N_INITAI, N_EXPIRETOKENS, N_DROPTOKENS, N_STEALTOKENS, N_DEMOPACKET, -2, N_REMIP, N_NEWMAP, N_GETMAP, N_SENDMAP, N_CLIPBOARD, -3, N_EDITENT, N_EDITF, N_EDITT, N_EDITM, N_FLIP, N_COPY, N_PASTE, N_ROTATE, N_REPLACE, N_DELCUBE, N_EDITVAR, -4, N_POS, NUMMSG),
     connectfilter(-1, N_CONNECT, -2, N_AUTHANS, -3, N_PING, NUMMSG);
     
-    int checktype(int type, clientinfo *ci)
+    /*int checktype(int type, clientinfo *ci)
     {
         if(ci)
         {
@@ -1219,7 +1228,7 @@ namespace server {
         switch(msgfilter[type])
         {
                 // server-only messages
-            case 1: return ci ? -1 : type;
+            case 1: return type; //bypass typecheck for zombie should be case 1: return ci ? -1 : type;
                 // only allowed in coop-edit
             case 2: if(m_edit) break; return -1;
                 // only allowed in coop-edit, no overflow check
@@ -1229,6 +1238,29 @@ namespace server {
         }
         if(ci && ++ci->overflow >= 200) return -2;
         return type;
+    }*/
+    
+    //zombie mode checktype
+    int checktype(int type, clientinfo *ci)
+    {
+        if(ci)
+        {
+            if(!ci->connected) return type == (ci->connectauth ? N_AUTHANS : N_CONNECT) || type == N_PING ? type : -1;
+            if(ci->local) return type;
+        }
+        // only allow edit messages in coop-edit mode
+        if(type>=N_EDITENT && type<=N_EDITVAR && !m_edit) return -1;
+        // server only messages
+        static const int servtypes[] = { N_CONNECT, N_SERVINFO, N_INITCLIENT, N_WELCOME, N_MAPCHANGE, N_SERVMSG, N_DAMAGE, N_HITPUSH, N_SHOTFX, N_EXPLODEFX, N_DIED, N_SPAWNSTATE, N_FORCEDEATH, N_TEAMINFO, N_ITEMACC, N_ITEMSPAWN, N_TIMEUP, N_CDIS, N_CURRENTMASTER, N_PONG, N_RESUME, N_BASESCORE, N_BASEINFO, N_BASEREGEN, N_ANNOUNCE, N_SENDDEMOLIST, N_SENDDEMO, N_DEMOPLAYBACK, N_SENDMAP, N_DROPFLAG, N_SCOREFLAG, N_RETURNFLAG, N_RESETFLAG, N_INVISFLAG, N_CLIENT, N_AUTHCHAL, N_INITAI, N_EXPIRETOKENS, N_DROPTOKENS, N_STEALTOKENS, N_DEMOPACKET };
+        if(ci)
+        {
+            //loopi(sizeof(servtypes)/sizeof(int)) if(type == servtypes[i]) return -1;
+            if(type < N_EDITENT || type > N_EDITVAR || !m_edit)
+            {
+                if(type != N_POS && ++ci->overflow >= 200) return -2;
+            }
+        }
+        return type; //returns a good statement w/o check
     }
     
     struct worldstate
@@ -1832,15 +1864,15 @@ namespace server {
     
     void changemap(const char *s, int mode)
     {
+        servuptime=(gamemillis/1000)+servuptime;
+        out(ECHO_SERV, "Loaded map: \f1%s", s);
+        out(ECHO_CONSOLE, "Loaded map: %s", s);
+        out(ECHO_IRC, "Loaded map: \x02%s\x02", s);
+        
         stopdemo();
         pausegame(false);
         changegamespeed(100);
         if(smode) smode->cleanup();
-        
-        //Zombie code for not clearing bots on changemap
-        aiman::clearai();
-        //end zombie code
-
         gamemode = mode;
         gamemillis = 0;
         gamelimit = (m_overtime ? 15 : 10)*60000;
@@ -1855,10 +1887,10 @@ namespace server {
         loopv(clients)
         {
             clientinfo *ci = clients[i];
-            aiman::reqadd(ci, 50);
-            //Zombie code for adding bots on changemap
-            //End zombie code
             ci->state.timeplayed += lastmillis - ci->state.lasttimeplayed;
+            //Zombie code for adding bots on changemap
+            aiman::reqadd(ci, 76);
+            //End zombie code
         }
 
         
@@ -2009,6 +2041,7 @@ namespace server {
             checkvotes();
         }
     }
+    
     int number_of(char* team)
     {
         int n = 0;
@@ -2018,6 +2051,263 @@ namespace server {
         }
         return n;
     }
+    
+//game ending stats
+#define _BESTSTAT(stat) \
+{ \
+best.setsize(0); \
+best.add(clients[0]); \
+besti = best[0]->state.stat; \
+for(int i = 1; i < clients.length(); i++) if(!clients[i]->_xi.spy) \
+{ \
+if(clients[i]->state.stat > besti) \
+{ \
+best.setsize(0); \
+best.add(clients[i]); \
+besti = clients[i]->state.stat; \
+} \
+else if(clients[i]->state.stat == besti) \
+{ \
+best.add(clients[i]); \
+} \
+} \
+}
+    
+    void _printbest(vector<clientinfo *> &best, int besti, char *msg)
+    {
+        int l = min(best.length(), 3);
+        loopi(l)
+        {
+            concatstring(msg, colorname(best[i]), MAXTRANS);
+            if(i + 1 < l) concatstring(msg, ", ", MAXTRANS);
+        }
+        defformatstring(buf)(" \f1(\f0%i\f1)", besti);
+        concatstring(msg, buf, MAXTRANS);
+    }
+    
+    void printbeststats()
+    {
+        vector<clientinfo *> best;
+        int besti;
+        char msg[MAXTRANS];
+        
+        static char const * const bestkills = "\f0Best kills:\f1";
+        static char const * const worstkills = "\f0Worst kills:\f1";
+        
+        // Best kills
+        msg[0] = '\0';
+        // frags
+        _BESTSTAT(frags);
+        if(besti)
+        {
+            copystring(msg, bestkills, MAXTRANS);
+            concatstring(msg, " frags: \f7", MAXTRANS);
+            _printbest(best, besti, msg);
+        }
+        // damage dealt
+        _BESTSTAT(damage);
+        if(besti > 0)
+        {
+            if(!msg[0]) copystring(msg, bestkills, MAXTRANS);
+            concatstring(msg, " damage dealt: \f7", MAXTRANS);
+            _printbest(best, besti, msg);
+        }
+        // kpd
+        best.setsize(0);
+        best.add(clients[0]);
+        {
+            float bestf = float(best[0]->state.frags) / float(max(best[0]->state.deaths, 1));
+            for(int i = 1; i < clients.length(); i++)
+            {
+                float currf = float(clients[i]->state.frags) / float(max(clients[i]->state.deaths, 1));
+                if(currf > bestf)
+                {
+                    best.setsize(0);
+                    best.add(clients[i]);
+                    bestf = currf;
+                }
+                else if(currf == bestf)
+                {
+                    best.add(clients[i]);
+                }
+            }
+            
+            if(bestf >= 0.01f || bestf <= -0.01f)   // non 0
+            {
+                if(!msg[0]) copystring(msg, bestkills, MAXTRANS);
+                concatstring(msg, " kpd: \f7", MAXTRANS);
+                int l = min(best.length(), 3);
+                loopi(l)
+                {
+                    concatstring(msg, colorname(best[i]), MAXTRANS);
+                    if(i + 1 < l) concatstring(msg, ", ", MAXTRANS);
+                }
+                defformatstring(buf)(" \f1(\f0%.2f\f1)", bestf);
+                concatstring(msg, buf, MAXTRANS);
+            }
+        }
+        // accuracy
+        best.setsize(0);
+        best.add(clients[0]);
+        besti = best[0]->state.damage * 100 / max(best[0]->state.shotdamage, 1);
+        for(int i = 1; i < clients.length(); i++) if(!clients[i]->_xi.spy)
+        {
+            int curri = clients[i]->state.damage * 100 / max(clients[i]->state.shotdamage, 1);
+            if(curri > besti)
+            {
+                best.setsize(0);
+                best.add(clients[i]);
+                besti = curri;
+            }
+            else if(curri == besti)
+            {
+                best.add(clients[i]);
+            }
+        }
+        if(besti)
+        {
+            if(!msg[0]) copystring(msg, bestkills, MAXTRANS);
+            concatstring(msg, " accuracy: \f7", MAXTRANS);
+            int l = min(best.length(), 3);
+            loopi(l)
+            {
+                concatstring(msg, colorname(best[i]), MAXTRANS);
+                if(i + 1 < l) concatstring(msg, ", ", MAXTRANS);
+            }
+            defformatstring(buf)(" \f1(\f0%i%%\f1)", besti);
+            concatstring(msg, buf, MAXTRANS);
+        }
+        // print out
+        if(msg[0]) sendservmsg(msg);
+        
+        // Worst kills
+        msg[0] = '\0';
+        // deaths
+        _BESTSTAT(deaths);
+        if(besti)
+        {
+            copystring(msg, worstkills, MAXTRANS);
+            concatstring(msg, " deaths: \f7", MAXTRANS);
+            _printbest(best, besti, msg);
+        }
+        // suicides
+        _BESTSTAT(_suicides);
+        if(besti)
+        {
+            if(!msg[0]) copystring(msg, worstkills, MAXTRANS);
+            concatstring(msg, " suicides: \f7", MAXTRANS);
+            _printbest(best, besti, msg);
+        }
+        // teamkills
+        if(m_teammode)
+        {
+            _BESTSTAT(teamkills);
+            if(besti)
+            {
+                if(!msg[0]) copystring(msg, worstkills, MAXTRANS);
+                concatstring(msg, " teamkills: \f7", MAXTRANS);
+                _printbest(best, besti, msg);
+            }
+        }
+        // damage wasted
+        best.setsize(0);
+        best.add(clients[0]);
+        besti = best[0]->state.shotdamage-best[0]->state.damage;
+        for(int i = 1; i < clients.length(); i++) if(!clients[i]->_xi.spy)
+        {
+            int curri = clients[i]->state.shotdamage-clients[i]->state.damage;
+            if(curri > besti)
+            {
+                best.setsize(0);
+                best.add(clients[i]);
+                besti = curri;
+            }
+            else if(curri == besti)
+            {
+                best.add(clients[i]);
+            }
+        }
+        if(besti > 0)
+        {
+            if(!msg[0]) copystring(msg, worstkills, MAXTRANS);
+            concatstring(msg, " damage wasted: \f7", MAXTRANS);
+            _printbest(best, besti, msg);
+        }
+        // print out
+        if(msg[0]) sendservmsg(msg);
+        
+        // Print statuses for ctf modes
+        if(m_ctf)
+        {
+            static char const * const bestflags = "\f0Best flags:\f1";
+            _BESTSTAT(flags);
+            if(besti)
+            {
+                copystring(msg, bestflags, MAXTRANS);
+                concatstring(msg, " scored: \f7", MAXTRANS);
+                _printbest(best, besti, msg);
+            }
+            else msg[0] = 0;
+            
+            if(m_hold)
+            {
+                _BESTSTAT(_stolen);
+                if(besti)
+                {
+                    if(!msg[0]) copystring(msg, bestflags, MAXTRANS);
+                    concatstring(msg, " taken: \f7", MAXTRANS);
+                    _printbest(best, besti, msg);
+                }
+            }
+            else if(!m_protect)
+            {
+                _BESTSTAT(_stolen);
+                if(besti)
+                {
+                    if(!msg[0]) copystring(msg, bestflags, MAXTRANS);
+                    concatstring(msg, " stolen: \f7", MAXTRANS);
+                    _printbest(best, besti, msg);
+                }
+                
+                _BESTSTAT(_returned);
+                if(besti)
+                {
+                    if(!msg[0]) copystring(msg, bestflags, MAXTRANS);
+                    concatstring(msg, " returned: \f7", MAXTRANS);
+                    _printbest(best, besti, msg);
+                }
+            }
+            if(msg[0]) sendservmsg(msg);
+        }
+        else if(m_collect)
+        {
+            static char const * const bestskulls = "\f0Best skulls:\f1";
+            _BESTSTAT(flags);
+            if(besti)
+            {
+                copystring(msg, bestskulls, MAXTRANS);
+                concatstring(msg, " scored: \f7", MAXTRANS);
+                _printbest(best, besti, msg);
+            }
+            else msg[0] = 0;
+            _BESTSTAT(_stolen);
+            if(besti)
+            {
+                if(!msg[0]) copystring(msg, bestskulls, MAXTRANS);
+                concatstring(msg, " stolen: \f7", MAXTRANS);
+                _printbest(best, besti, msg);
+            }
+            _BESTSTAT(_returned);
+            if(besti)
+            {
+                if(!msg[0]) copystring(msg, bestskulls, MAXTRANS);
+                concatstring(msg, " returned: \f7", MAXTRANS);
+                _printbest(best, besti, msg);
+            }
+            if(msg[0]) sendservmsg(msg);
+        }
+    }
+    
     VAR(serverintermission, 1, 10, 3600);
     void checkintermission()
     {
@@ -2027,6 +2317,7 @@ namespace server {
             if(smode) smode->intermission();
             changegamespeed(100);
             interm = gamemillis + serverintermission+10000;
+            printbeststats();
         }
     }
     VAR(modifiedmapspectator, 0, 1, 2);
@@ -2043,7 +2334,6 @@ namespace server {
         ci->state.timeplayed += lastmillis - ci->state.lasttimeplayed;
         if(!ci->local && (!ci->privilege || ci->warned)) aiman::removeai(ci);
         sendf(-1, 1, "ri3", N_SPECTATOR, ci->clientnum, 1);
-        //spaghetti::simpleconstevent(spaghetti::hotstring::specstate, ci);
     }
     
     extern void unspectate(clientinfo *ci)
@@ -2054,7 +2344,6 @@ namespace server {
         ci->state.lasttimeplayed = lastmillis;
         aiman::addclient(ci);
         sendf(-1, 1, "ri3", N_SPECTATOR, ci->clientnum, 0);
-        //spaghetti::simpleconstevent(spaghetti::hotstring::specstate, ci);
         //if(ci->clientmap[0] || ci->mapcrc) checkmaps();
         if(!hasmap(ci)) rotatemap(true);
     }
@@ -2076,7 +2365,29 @@ namespace server {
     SVAR(defmultikillmsg, "MULTI KILL"); //default message for multikills. The message is followed by the number of frags
     VAR(minmultikill, 2, 2, INT_MAX); // minimum number of kills for a multi-kill to occur
     ICOMMAND(addmultikillmsg, "is", (int *frags, char *msg), { multikillmsg m; m.frags = *frags; copystring(m.msg, msg); multikillmessages.add(m); });
-
+    
+    void suicide(clientinfo *ci)
+    {
+        //Zombie code
+        //if (teamhasplayers(humanteam)) {startintermission();}
+        //end zombie code
+        
+        gamestate &gs = ci->state;
+        if(gs.state!=CS_ALIVE) return;
+        int fragvalue = smode ? smode->fragvalue(ci, ci) : -1;
+        ci->state.frags += fragvalue;
+        ci->state.deaths++;
+        teaminfo *t = m_teammode ? teaminfos.access(ci->team) : NULL;
+        if(t) t->frags += fragvalue;
+        sendf(-1, 1, "ri5", N_DIED, ci->clientnum, ci->clientnum, gs.frags, t ? t->frags : 0);
+        ci->position.setsize(0);
+        if(smode) smode->died(ci, NULL);
+        gs.state = CS_DEAD;
+        gs.lastdeath = gamemillis;
+        gs.respawn();
+        out(ECHO_SERV,"\f0%s \f4was doing well until he \f6COMMITED SUICIDE!", colorname(ci));
+    }
+    
     void dodamage(clientinfo *target, clientinfo *actor, int damage, int gun, const vec &hitpush = vec(0, 0, 0))
     {
         
@@ -2093,13 +2404,20 @@ namespace server {
         }
         if(ts.health<=0)
         {
-            target->state.deaths++;
-            //if ( !teamhasplayers(humanteam) & teamhasplayers(zombieteam) ) startintermission();
-            //Zombie mode team messages
-            if(strcmp(target->team,"evil")) {out(ECHO_SERV,"\f0%s \f4was killed by the horde", colorname(target)); }
-            else if (isteam(actor->team, actor->team))  out(ECHO_SERV,"\f0%s \f4was resurrected", colorname(target));
-            //End zombie mode team messages
+            //zombie check players and switch
+            if(!teamhasplayers(zombieteam)) startintermission();
+            else if(!teamhasplayers(humanteam)) startintermission();
+             if(strcmp(target->team,"evil") && !strcmp(target->team,"good")){
+                    if(m_teammode && (!smode || smode->canchangeteam(target, target->team, actor->team)) && addteaminfo(actor->team)) {
+                        if(!strcmp(target->team,"Z")){out(ECHO_SERV,"\f0%s \f4is now a \f3zombie\f4!", colorname(target));}
+                        aiman::changeteam(target);
+                        sendf(-1, 1, "riisi", N_SETTEAM, target->clientnum, "Z", 1);
+                    }
+                out(ECHO_CONSOLE,"%s was killed by a human", colorname(target));
+            }
+            //end
 
+            target->state.deaths++;
             int fragvalue = smode ? smode->fragvalue(target, actor) : (target==actor || isteam(target->team, actor->team) ? -1 : 1);
             actor->state.frags += fragvalue;
             if(fragvalue>0)
@@ -2112,24 +2430,6 @@ namespace server {
             teaminfo *t = m_teammode ? teaminfos.access(actor->team) : NULL;
             if(t) t->frags += fragvalue;
             sendf(-1, 1, "ri5", N_DIED, target->clientnum, actor->clientnum, actor->state.frags, t ? t->frags : 0);
-            
-            //Zombie code
-            //aiman::changeteam(target);
-            if(strcmp(target->team,"good")){
-                if(m_teammode && (!smode || smode->canchangeteam(target, actor->team, target->team))) {
-                sendf(-1, 1, "riisi", N_SETTEAM, actor->clientnum, target->team, 0);
-                aiman::changeteam(target);
-                }
-            }
-            /*else if(strcmp(target->team,"evil")) {
-                if(m_teammode && (!smode || smode->canchangeteam(target, actor->team, target->team))) {
-                sendf(-1, 1, "riisi", N_SETTEAM, actor->clientnum, target->team, 0);
-                aiman::changeteam(target);
-                }
-            }*/
-            else if(strcmp(target->team,"evil")) {sendf(-1, 1, "riisi", N_SETTEAM, target->clientnum, actor->team, 0);}
-            //else {out(ECHO_SERV,"test");}
-            //End zombie
             
             if(!firstblood && actor != target) { firstblood = true; out(ECHO_SERV, "\f0%s \f4drew \f6FIRST BLOOD!", colorname(actor)); }
             if(actor != target) actor->state.spreefrags++;
@@ -2149,9 +2449,8 @@ namespace server {
             if(smode) smode->died(target, actor);
             ts.state = CS_DEAD;
             ts.lastdeath = gamemillis;
-            
-            
-            //No teamkill messages allowed during zombiemode (must comment section out below)
+        
+            //No teamkill messages
             if(actor!=target && isteam(actor->team, target->team))
             {
                 actor->state.teamkills++;
@@ -2160,7 +2459,7 @@ namespace server {
                 //sendf(actor->clientnum, 1, "ris", N_SERVMSG, msg);
                 
                 defformatstring(srryfrag)("\f4You were teamkilled by: \f0%s \f4(\f3%d\f4). Use \f2#forgive %d \f4to forgive him.", colorname(actor), actor->state.teamkills, actor->clientnum);
-                if(target->clientnum < 100 && target->clientnum >= 0) { //Don't sent sorry to bots
+                if(target->clientnum < 100 && target->clientnum >= 0) { //Don't send sorry to bots
                  //sendf(target->clientnum, 1, "ris", N_SERVMSG, srryfrag);
                 }
                 out(ECHO_IRC, "Teamkiller: %s (%d)", colorname(actor), actor->state.teamkills);
@@ -2168,51 +2467,13 @@ namespace server {
                  
                 
             }
-            //Zombie code
-            //We try to issue intermission when evil team becomes empty with just 1 human left
-            //if (number_of(humanteam) == 1) startintermission();
-            //else {out(ECHO_SERV,"\f0%s \f4killed a \f6ZOMBIE!", colorname(actor));}
-            //else if(number_of(humanteam) >= 1) {}
-           // loopv(clients) {
-                //if ( isteam(clients[i]->team, "evil") && strcmp(actor->team,"evil") && number_of(actor->team) == 1 && actor!=target && !isteam(actor->team, target->team)) {startintermission();}
-            //    clientinfo *ci = clients[i];
-                //if(!teamhasplayers(ci->team) && isteam(ci->team, "good")) {startintermission();}
-                //if(strcmp(ci->team,"evil") && !teamhasplayers(ci->team)) {startintermission();}
-                //if(clients.length() < 2) startintermission();
-                //int np = numclients(-1, true, false);
-                //if(strcmp(ci->team,"evil") && ci->state.state==CS_DEAD && np<=1) startintermission();
-            //}
-            
-            //End zombie code
             
             // don't issue respawn yet until DEATHMILLIS has elapsed
             ts.deadflush = ts.lastdeath + DEATHMILLIS;
             ts.respawn();
         }
     }
-
-    void suicide(clientinfo *ci)
-    {
-        //Zombie code
-        //if (teamhasplayers(humanteam)) {startintermission();}
-
-        //end zombie code
-        
-        gamestate &gs = ci->state;
-        if(gs.state!=CS_ALIVE) return;
-        int fragvalue = smode ? smode->fragvalue(ci, ci) : -1;
-        ci->state.frags += fragvalue;
-        ci->state.deaths++;
-        teaminfo *t = m_teammode ? teaminfos.access(ci->team) : NULL;
-        if(t) t->frags += fragvalue;
-        sendf(-1, 1, "ri5", N_DIED, ci->clientnum, ci->clientnum, gs.frags, t ? t->frags : 0);
-        ci->position.setsize(0);
-        if(smode) smode->died(ci, NULL);
-        gs.state = CS_DEAD;
-        gs.lastdeath = gamemillis;
-        gs.respawn();
-        out(ECHO_SERV,"\f0%s \f4was doing well until he \f6COMMITED SUICIDE!", colorname(ci));
-    }
+    
 
     void suicideevent::process(clientinfo *ci)
     {
@@ -2450,10 +2711,10 @@ namespace server {
                 checkvotes(true);
             }
         }
+        
+        // multi kill
         loopv(clients) {
             clientinfo *ci = clients[i];
-            //gamemillis is supposed to be totalmillis
-            ci->connectmillis = totalmillis;
             if(totalmillis - ci->state.lastfragmillis >= (int64_t)multifragmillis) {
                 if(ci->state.multifrags >= minmultikill) {
                     char *msg = NULL;
@@ -2463,15 +2724,17 @@ namespace server {
                             break;
                         }
                     }
-                    if(msg) out(ECHO_SERV,"\f2%s scored a \f6%s", colorname(ci), msg);
+                    if(msg) out(ECHO_SERV, "\f2%s scored a \f6%s", colorname(ci), msg);
                     else out(ECHO_SERV,"\f2%s scored a \f6%s (%d)", colorname(ci), defmultikillmsg, ci->state.multifrags);
                 }
                 ci->state.multifrags = 0;
             }
         }
+        
+    //}
 
-        shouldstep = clients.length() > 0;
-            }
+        //shouldstep = clients.length() > 0;
+           }
     struct crcinfo
     {
         int crc, matches;
@@ -2556,6 +2819,11 @@ namespace server {
     void localconnect(int n)
     {
         clientinfo *ci = getinfo(n);
+        
+        //Zombie mode changeteam on local client connect to human team
+        aiman::changeteam(ci);
+        sendf(-1, 1, "riisi", N_SETTEAM, ci->clientnum, humanteam, 0);
+        
         ci->clientnum = ci->ownernum = n;
         ci->connectmillis = totalmillis;
         ci->sessionid = (rnd(0x1000000)*((totalmillis%10000)+1))&0xFFFFFF;
@@ -2569,13 +2837,22 @@ namespace server {
     
         if(m_demo) enddemoplayback();
         clientdisconnect(n);
+        
+        //zombie mode readds on disconnect to avoid LAG Bot issues
+        clientinfo *ci = getinfo(n);
+        aiman::clearai();
+        loopv(clients) {aiman::reqadd(ci, 75);}
     }
 
     int clientconnect(int n, uint ip)
     {
-        
         clientinfo *ci = getinfo(n);
-        /* auto sendmap can't correctly call this?
+    
+        //Zombie mode changeteam on client connect to human team
+        aiman::changeteam(ci);
+        sendf(-1, 1, "riisi", N_SETTEAM, ci->clientnum, humanteam, 0);
+        
+        /*auto sendmap can't correctly call this?
         if(!mapdata) sendf(ci->clientnum, 1, "ris", N_SERVMSG, "\f3Error: no map to send");
         else if(ci->getmap) sendf(ci->clientnum, 1, "ris", N_SERVMSG, "\f3Error: already sending map");
         else if(m_edit) {
@@ -2607,12 +2884,10 @@ namespace server {
             savescore(ci);
             sendf(-1, 1, "ri2", N_CDIS, n);
             clients.removeobj(ci);
-            
-            //Zombie code to not clear zombies on empty
-            //if ( clients.length() >= 1 && number_of(humanteam) == 0 ) startintermission();
-            //if ( !teamhasplayers(humanteam) & teamhasplayers(zombieteam) ) startintermission();
-            //aiman::removeai(ci);
-            //End zombie code
+
+            //zombie mode readds on disconnect to avoid LAG Bot issues
+            aiman::clearai();
+            loopv(clients) {aiman::reqadd(ci, 75);}
             
             if(clearbansonempty) {
             if(!numclients(-1, false, true)) noclients();
@@ -2863,16 +3138,17 @@ namespace server {
         if(mastermode>=MM_LOCKED) ci->state.state = CS_SPECTATOR;
         ci->state.lasttimeplayed = lastmillis;
         const char *worst = m_teammode ? chooseworstteam(NULL, ci) : NULL;
-        copystring(ci->team, worst ? worst : "good", MAXTEAMLEN+1);
+        copystring(ci->team, worst ? worst : "good", MAXTEAMLEN+1);//zombie mode change default team?
         sendwelcome(ci);
         if(restorescore(ci)) sendresume(ci);
         sendinitclient(ci);
         aiman::addclient(ci);
         
         //Zombie code to add bots for each client, max bot limit necessary
+        aiman::clearai();
         loopv(clients)
         {
-            aiman::reqadd(ci, 50);
+            aiman::reqadd(ci, 75);
         }
         //end zombie code
         
@@ -3074,7 +3350,7 @@ namespace server {
             {
                 //Zombie code welcome message moved after reqadd bots
                 if(servermotd[0]) {
-                    defformatstring(welcomemsg)("\f4Welcome to \f2%s, \f0%s\f4! \n%s",serverdesc, colorname(ci), servermotd);
+                    defformatstring(welcomemsg)("\f4You're connected to \f1%s, \f0%s\f4! %s",serverdesc, colorname(ci), servermotd);
                     sendf(ci->clientnum, 1, "ris", N_SERVMSG, welcomemsg);
                 }
                 //end zombie code
@@ -3750,7 +4026,6 @@ namespace server {
         sendstring(serverdesc, p);
         sendserverinforeply(p);
     }
-
     bool servercompatible(char *name, char *sdec, char *map, int ping, const vector<int> &attr, int np)
     {
         return attr.length() && attr[0]==PROTOCOL_VERSION;

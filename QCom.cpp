@@ -16,11 +16,11 @@ namespace server {
                  PRIV_NONE, me_cmd, 0);
         ncommand("cmd", "\f4View command list or command usage. Usage: #cmd for command list and #cmd <commandname> for command usage",
                  PRIV_NONE, cmd_cmd, 1);
-        ncommand("stats", "\f4View the stats of a player. Usage: #stats <cn>",
+        ncommand("stats", "\f4View the stats of a player or yourself. Usage: #stats <cn> or #stats",
                  PRIV_NONE, stats_cmd, 1);
         ncommand("localtime", "\f4Get the local time of the Server. Usage: #localtime",
                  PRIV_NONE, localtime_cmd, 0);
-        ncommand("time", "\f4View time. Usage: #time <zone>",
+        ncommand("time", "\f4View the current time. Usage: #time <zone>",
                  PRIV_NONE, time_cmd, 1);
         ncommand("bunny", "\f4Broadcast a helper message to all players. Usage: #bunny <helpmessage>",
                  PRIV_ADMIN, bunny_cmd, 0);
@@ -45,36 +45,64 @@ namespace server {
         ncommand("togglelockspec", "\f4Forces a client to be locked in spectator mode. Usage #togglelockspec <cn>", PRIV_ADMIN, togglelockspec_cmd, 1);
         ncommand("uptime", "\f4View how long the server has been up for. Usage: #uptime", PRIV_NONE, uptime_cmd, 0);
         ncommand("info", "\f4View information about a player. Usage: #info <cn>", PRIV_NONE, info_cmd, 0);
-        ncommand("tournament", "\f4Start a tournament with a timer. Usage: #tournament <mode> <map> ", PRIV_MASTER, tournament_cmd, 2);
+        ncommand("tournament", "\f4Start a tournament with a timer. Usage: #tournament <mode> <map>", PRIV_MASTER, tournament_cmd, 2);
+        ncommand("help", "\f4Lists the #cmd command and more information. Usage: #help", PRIV_NONE, help_cmd, 0);
         //ncommand("owords", "View list of offensive words. Usage: #owords",
         ///         PRIV_NONE, owords_cmd, 0);
         //ncommand("olangfilter", "Turn the offensive language filter on or off. Usage: #olang <off/on> (0/1) and #olang to see if it's activated",
         //         PRIV_MASTER, olangfilter_cmd, 1);
     }
     
+    QSERV_CALLBACK help_cmd(p) {
+        static char colors[2], commandList[2056] = {0};
+        int color = -1;
+        
+        strcpy(commandList, "");
+        sprintf(commandList, "%s", "\f7Commands: ");
+        
+        for(int i = 0; i < CMD_LAST; i++) {
+            if(CMD_PRIV(i) == PRIV_NONE) {
+                color = 4;
+            } else if(CMD_PRIV(i) == PRIV_MASTER) {
+                color = 0;
+            } else if(CMD_PRIV(i) == PRIV_ADMIN) {
+                color = 6;
+            }
+            
+            sprintf(colors, "\f%d", color);
+            strcat(commandList, colors);
+            strcat(commandList, CMD_NAME(i));
+            
+            if(i != CMD_LAST-1) {
+                strcat(commandList, "\f7, ");
+            }
+        }
+        sendf(CMD_SENDER, 1, "ris", N_SERVMSG, commandList);
+
+        clientinfo *ci = qs.getClient(CMD_SENDER);
+        defformatstring(f)("\f7Help\f4: Type \f2#cmd \f4to list commands, or use \f2#cmd <commandname> \f4for information about a specific command.");
+        sendf(ci->clientnum, 1, "ris", N_SERVMSG, f);
+        }
+    
     // restrict modes certain modes only for a tournament, not coop etc.
     char *qserv_modenames[] = {
         "ffa",
         "coop", "teamplay", "insta", "instateam", "effic",
         "efficteam", "tactics", "tacticsteam", "capture",
-        "refencapture", "ctf", "instactf", "efficctf", "protect",
+        "regencapture", "ctf", "instactf", "efficctf", "protect",
         "instaprotect", "efficprotect", "hold", "instahold", "effichold",
         "collect", "instacollect", "efficcollect"
     }; // custom mode names remember to type them like this if you want that mode
     
     int mc = 22;
     
-    
-    
     extern void changemap(const char *s, int mode);
     extern void pausegame(bool val, clientinfo *ci = NULL);
     
-    
-    
     int t_timer() {
-        int ct = 0;
+        int ct = 10000;
         
-        while(ct > 10000) {
+        while(ct >= 10000) {
             for(int i = 10; i >= 0; i--) {
                 out(ECHO_SERV, "Tournament starting in %d seconds", i);
             }
@@ -82,15 +110,45 @@ namespace server {
             ct--;
         }
     }
-
     
+    void delayProgram(double secondsToDelay)
+    {
+        clock_t startTime = clock(); //Start timer
+        
+        clock_t testTime;
+        clock_t timePassed;
+        double secondsPassed;
+        
+        while(true)
+        {
+            testTime = clock();
+            timePassed = startTime - testTime;
+            secondsPassed = timePassed / (double)CLOCKS_PER_SEC;
+            
+            if(secondsPassed >= secondsToDelay)
+            {
+                out(ECHO_SERV, "%d seconds have passed", secondsToDelay);
+                break;
+            }
+            
+        }
+        
+        
+    }
+    
+   bool timerelapsed = 0;
+    void mytimer() {
+        for(int i = 10; i >= 0; i--)
+        {
+            i--;
+            bool timerelapsed = 1;
+        }
+    }
     QSERV_CALLBACK tournament_cmd(p) {
-        t_timer();
-        
-        //pausegame(true);
-        
-        /*const char *mapname = args[2];
+
+        const char *mapname = args[2];
         char *mn = args[1];
+        mytimer();
         if(args[1] != NULL && args[2] != NULL) {
         int gm; // default set to current mode td
         bool valid = false;
@@ -100,27 +158,25 @@ namespace server {
             if(!strcmp(mn, qserv_modenames[i]))  {
                 gm = i;
                 // use other list to send full name of mode
-                changemap(mapname, gm);
+                if(timerelapsed) {changemap(mapname, gm);}
                 valid = true;
                 break;
             }
         }
-            pausegame(false);
             defformatstring(f)("\f4Tournament has started: %s on map %s", qserv_modenames[gm], mapname);
             sendf(-1, 1, "ris", N_SERVMSG, f);
             
-        if(!valid) sendf(-1, 1, "ris", N_SERVMSG, "\f7Error: Unknown mode");
+        if(!valid) sendf(-1, 1, "ris", N_SERVMSG, "\f3Error: Unknown mode");
         }
         else {
-            defformatstring(f)("\f3Error: \f4Invalid mode/mapname provided.");
+            defformatstring(f)("\f3Error: Invalid mode/mapname provided");
             sendf(CMD_SENDER, 1, "ris", N_SERVMSG, f);
-        }*/
+        }
     }
-    
     
     int servuptime = 0;
     QSERV_CALLBACK uptime_cmd(p) {
-             //broken 
+             //broken
              clientinfo *ci = qs.getClient(CMD_SENDER);
              ci->connectedmillis=(gamemillis/1000)+servuptime-(ci->connectedmillis/1000);
              int ssstime = gamemillis+servuptime;
@@ -140,7 +196,7 @@ namespace server {
         
         if(CMD_SA) {
             cn = atoi(args[1]);
-            if(cn >= 0 && cn <= 1000) {
+            if(cn >= 0 && cn <= 1000 && cn != NULL) {
                 //if(!isalpha(cn)) {
             sendinfo:
                 clientinfo *ci = qs.getClient(cn);
@@ -164,7 +220,7 @@ namespace server {
                         sprintf(lmsg[0], "%s", lmsg[1]);
                         int milisec = (ci->connectmillis);
                         int sec = (ci->connectmillis/1000);
-                        int min = (sec / 60) % 60;
+                        int min = (sec / 60);
                         defformatstring(s)("\f0%s \f4(\f2%d\f4) [\f1%s\f4] \f4connected for %d minutes %d sec", colorname(ci), ci->clientnum, lmsg[0], min, sec);
                         sendf(CMD_SENDER, 1, "ris", N_SERVMSG, s);
                 } else {
@@ -231,15 +287,20 @@ namespace server {
             sendf(CMD_SENDER, 1, "ris", N_SERVMSG, "\f0%s \f4has been \f0unmuted", colorname(ci));
         }
         else {
-            sendf(CMD_SENDER, 1, "ris", N_SERVMSG, "\f3Error: \f4Incorrect client number/no cn specified or you're trying to mute yourself.");
+            sendf(CMD_SENDER, 1, "ris", N_SERVMSG, "\f3Error: \f4Incorrect client number/no cn specified or you're trying to unmute yourself.");
             sendf(CMD_SENDER, 1, "ris", N_SERVMSG, CMD_DESC(cid));
         }
     }
-    // Needs handlers
     QSERV_CALLBACK forcespectator_cmd(p) {
         int cn = atoi(args[1]);
         clientinfo *ci = qs.getClient(cn);
+        if(cn!=CMD_SENDER && cn >= 0 && cn <= 1000 && ci != NULL && ci->connected && args[1] != NULL) {
+        clientinfo *ci = qs.getClient(cn);
         forcespectator(ci);
+        } else {
+            sendf(CMD_SENDER, 1, "ris", N_SERVMSG, "\f3Error: \f4Incorrect client number/no cn specified or you're trying to force spectate yourself.");
+            sendf(CMD_SENDER, 1, "ris", N_SERVMSG, CMD_DESC(cid));
+        }
     }
     
     QSERV_CALLBACK forgive_cmd(p) {
@@ -270,11 +331,11 @@ namespace server {
             sendf(CMD_SENDER, 1, "ris", N_SERVMSG, msg);
         }
     }
-    SVAR(operators, "");
-    QSERV_CALLBACK callops_cmd(p) {VAR(ircignore, 0, 0, 1);if(!getvar("ircignore")) {out(ECHO_IRC, "[Attention operator(s)]: %s: %s is in need of assistance.", operators, CMD_SCI.name); defformatstring(toclient)("You alerted operator(s) %s", irc.lastmsg()->nick); sendf(CMD_SENDER, 1, "ris", N_SERVMSG, toclient);}}
+    SVAR(ircoperators, "");
+    QSERV_CALLBACK callops_cmd(p) {VAR(ircignore, 0, 0, 1);if(!getvar("ircignore")) {out(ECHO_IRC, "[Attention operator(s)]: %s: %s is in need of assistance.", ircoperators, CMD_SCI.name); defformatstring(toclient)("You alerted operator(s) %s", ircoperators); sendf(CMD_SENDER, 1, "ris", N_SERVMSG, toclient);}}
     QSERV_CALLBACK getversion_cmd(p) {
-        defformatstring(ver)("\f4Running \f4QServ 11 \f0Collect Edition Beta\f4. Written by Mamasita, DeathStar & Jonlimle.");sendf(CMD_SENDER, 1, "ris", N_SERVMSG, ver);}
-    QSERV_CALLBACK forceintermission_cmd(p) {startintermission(); defformatstring(msg)("\f0%s \f4forced an intermission",CMD_SCI.name);sendf(-1, 1, "ris", N_SERVMSG, msg);}
+        defformatstring(ver)("\f4Running \f4QServ 11 \f0Collect Edition\f4. Written by Mamasita, DeathStar & Jonlimle: \f1www.github.com/deathstar/QServCollect");sendf(CMD_SENDER, 1, "ris", N_SERVMSG, ver);}
+    QSERV_CALLBACK forceintermission_cmd(p) {startintermission(); defformatstring(msg)("\f0%s \f4forced an intermission",CMD_SCI.name);sendf(-1, 1, "ris", N_SERVMSG, msg); out(ECHO_IRC,"%s forced an intermission",CMD_SCI.name);}
 
     QSERV_CALLBACK me_cmd(p) {
         if(strlen(fulltext) > 0) {
@@ -364,7 +425,7 @@ namespace server {
             int color = -1;
 
             strcpy(commandList, "");
-            sprintf(commandList, "%s", "\f4Commands: ");
+            sprintf(commandList, "%s", "\f7Commands: ");
 
             for(int i = 0; i < CMD_LAST; i++) {
                 if(CMD_PRIV(i) == PRIV_NONE) {

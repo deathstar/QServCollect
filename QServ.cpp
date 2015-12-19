@@ -263,7 +263,8 @@ namespace server {
                     return false;
                 }
             } else {
-                sendf(ci->clientnum, 1, "ris", N_SERVMSG, "\f3Command not found");
+                sprintf(ftb, "%s", text);
+                sendf(ci->clientnum, 1, "ris", N_SERVMSG, "\f3Error: Command not found. \f4Use \f2#cmd \f4for a list of commands.");
                 return false;
             }
         } else {
@@ -349,4 +350,6 @@ namespace server {
     void QServ::resetMsg(int cn) {
         ms[cn].count = 0;
     }
+
+
 }
