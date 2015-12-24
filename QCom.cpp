@@ -286,20 +286,18 @@ namespace server {
         
     }
 
-    
+
     
     //Check to see if args 1 is blank, if not causes seg fault on linux when #info is issued
     QSERV_CALLBACK info_cmd(p) {
         bool usage = false;
         int cn = -1;
-        cn = CMD_SENDER;
-        
         if(CMD_SA) {
             cn = atoi(args[1]);
-            if(cn >= 0 && cn <= 1000 && cn != NULL && args[1]!=NULL) {
+             clientinfo *ci = qs.getClient(cn);
+            if(cn!=-1 && cn >= 0 && cn <= 1000 && cn != NULL && args[1]!=NULL) {
                 //if(!isalpha(cn)) {
             sendinfo:
-                clientinfo *ci = qs.getClient(cn);
                 
                 if(ci != NULL) {
                     if(ci->connected) {
@@ -311,7 +309,7 @@ namespace server {
                             location = qs.congeoip(ip);
                             
                             if(!location) {
-                                sprintf(lmsg[1], "%s", "Unknown Location");
+                                sprintf(lmsg[1], "%s", "Unknown/Localhost");
                             }
                         }
                         
@@ -425,6 +423,7 @@ namespace server {
         clientinfo *ci = qs.getClient(cn);
         if(cn!=CMD_SENDER && cn >= 0 && cn <= 1000 && ci != NULL && ci->connected && args[1] != NULL) {
             ci->isEditMuted = true;
+            sendf(ci->clientnum, 1, "ris", N_SERVMSG, "\f4Your edits \f3will not \f4show up to others.");
             defformatstring(mutemsg)("\f0%s\f4's edits have been \f3muted", colorname(ci));
             sendf(CMD_SENDER, 1, "ris", N_SERVMSG, mutemsg);
         }
@@ -438,11 +437,9 @@ namespace server {
         int cn = atoi(args[1]);
         clientinfo *ci = qs.getClient(cn);
         if(cn!=CMD_SENDER && cn >= 0 && cn <= 1000 && ci != NULL && ci->connected && args[1] != NULL) {
+            sendf(ci->clientnum, 1, "ris", N_SERVMSG, "\f4Your edits \f0will \f4now show up to others.");
             ci->isEditMuted = false;
-            sendf(CMD_SENDER, 1, "ris", N_SERVMSG, "You are being disconnected, please use \"/reconnect\" to update.");
-            defformatstring(unmutemsg)("\f0%s\f4's edits have been \f0unmuted, re-initalizing client", colorname(ci));
-            sendf(CMD_SENDER, 1, "ris", N_SERVMSG, unmutemsg);
-            disconnect_client(ci->clientnum, DISC_TIMEOUT);
+            out(ECHO_SERV,"\f0%s\f4's edits have been \f0unmuted", colorname(ci));
         }
         else {
             sendf(CMD_SENDER, 1, "ris", N_SERVMSG, "\f3Error: \f4Incorrect client number/no cn specified or you're trying to uneditmute yourself.");

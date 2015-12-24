@@ -321,14 +321,14 @@ namespace server {
         
         int type = 0;
         const char *types[] = {
-            " connected from \f1Localhost",
-            " \f4connected from \f3an unknown location",
+            " connected from \f3Unknown",
+            " \f4connected from \f1Localhost",
             " \f4connected from \f0"
         };
         int typeconsole = 0;
         const char *typesconsole[] = {
+            " connected from Unknown",
             " connected from Localhost",
-            " connected from an Unknown Location",
             " connected from "
         };
         

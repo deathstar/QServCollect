@@ -44,6 +44,8 @@ namespace aiman
     }
     void listbotnames() {
         if(botnames.length() > 0) {
+            out(ECHO_SERV,"Listing Bot names: ");
+            loopv(botnames) {out(ECHO_SERV,"%s \n",botnames[i].name);}
         } else out(ECHO_SERV,"No bot names in list (all bots will be called \"bot\").");
     }
     //end custom bot names

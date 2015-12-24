@@ -260,6 +260,7 @@ namespace server {
         bool isMuted = false;
         bool isSpecLocked = false;
         bool isEditMuted = false;
+        bool pingwarned = false;
         
         //Spam protection
         int64_t lasttext; // spam protection

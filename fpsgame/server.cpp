@@ -3771,10 +3771,11 @@ best.add(clients[i]); \
                 if(ci->isEditMuted)
                 {
                     sendf(ci->clientnum, 1, "ris", N_SERVMSG, "\f3[Warning] Your editing is muted");
+                    QUEUE_AI;
                     break;
                 }
                 else {
-                    QUEUE_AI; QUEUE_MSG;
+                QUEUE_MSG;
                 }
                 break;
             }
@@ -3855,13 +3856,12 @@ best.add(clients[i]); \
                 {
                     ci->ping = ping;
                     loopv(ci->bots) ci->bots[i]->ping = ping;
-                    bool pingwarned = false;
                     if((ci->ping)>getvar("maxpingwarn")) {
-                    	if(!pingwarned) {
+                    	if(!ci->pingwarned) {
                     		sendf(ci->clientnum, 1, "ris", N_SERVMSG, "\f3[Warning]: You are lagging, please lower internet usage");
                     		out(ECHO_NOCOLOR, "[Warning] %s has a ping in excess of: %d", colorname(ci), maxpingwarn);
                     		out(ECHO_SERV, "\f3[Warning]: %s has a ping in excess of: %d", colorname(ci),maxpingwarn);
-                            pingwarned = true;
+                            ci->pingwarned = true;
                     	}
                     }
                 }
@@ -3930,6 +3930,7 @@ best.add(clients[i]); \
                         spinfo->state.state = CS_SPECTATOR;
                         spinfo->state.timeplayed += lastmillis - spinfo->state.lasttimeplayed;
                         if(!spinfo->local && !spinfo->privilege) aiman::removeai(spinfo);
+                        out(ECHO_SERV,"\f0%s \f4is now a spectator", colorname(spinfo));
                 }
                 else if(spinfo->state.state==CS_SPECTATOR && !val)
                 {
@@ -3938,6 +3939,7 @@ best.add(clients[i]); \
                     spinfo->state.lasttimeplayed = lastmillis;
                     aiman::addclient(spinfo);
                     if(spinfo->clientmap[0] || spinfo->mapcrc) checkmaps();
+                    out(ECHO_SERV,"\f0%s \f4is no longer a spectator", colorname(spinfo));
                     
                 }
                 if(!spinfo->isSpecLocked) {
@@ -4012,6 +4014,7 @@ best.add(clients[i]); \
                 senddemo(ci, n);
                 break;
             }
+        
 
             case N_GETMAP:
                 if(!mapdata) sendf(sender, 1, "ris", N_SERVMSG, "\f3Error: no map to send");
@@ -4024,6 +4027,7 @@ best.add(clients[i]); \
                     ci->needclipboard = totalmillis ? totalmillis : 1;
                 }
                 break;
+                
 
             case N_NEWMAP:
             {

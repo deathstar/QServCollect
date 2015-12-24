@@ -907,3 +907,269 @@ int main(int argc, char** argv)
 #endif
 }
 
+Determining if the include file pthread.h exists passed with the following output:
+Change Dir: /Users/user/Desktop/QServCollect/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_72c09/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_72c09.dir/build.make CMakeFiles/cmTC_72c09.dir/build
+Building C object CMakeFiles/cmTC_72c09.dir/CheckIncludeFile.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc     -o CMakeFiles/cmTC_72c09.dir/CheckIncludeFile.c.o   -c /Users/user/Desktop/QServCollect/CMakeFiles/CMakeTmp/CheckIncludeFile.c
+Linking C executable cmTC_72c09
+/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_72c09.dir/link.txt --verbose=1
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc    -Wl,-search_paths_first -Wl,-headerpad_max_install_names   CMakeFiles/cmTC_72c09.dir/CheckIncludeFile.c.o  -o cmTC_72c09  
+
+
+Determining if the pthread_create exist passed with the following output:
+Change Dir: /Users/user/Desktop/QServCollect/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_ed30d/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_ed30d.dir/build.make CMakeFiles/cmTC_ed30d.dir/build
+Building C object CMakeFiles/cmTC_ed30d.dir/CheckSymbolExists.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc     -o CMakeFiles/cmTC_ed30d.dir/CheckSymbolExists.c.o   -c /Users/user/Desktop/QServCollect/CMakeFiles/CMakeTmp/CheckSymbolExists.c
+Linking C executable cmTC_ed30d
+/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_ed30d.dir/link.txt --verbose=1
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc    -Wl,-search_paths_first -Wl,-headerpad_max_install_names   CMakeFiles/cmTC_ed30d.dir/CheckSymbolExists.c.o  -o cmTC_ed30d  
+
+File /Users/user/Desktop/QServCollect/CMakeFiles/CMakeTmp/CheckSymbolExists.c:
+/* */
+#include <pthread.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef pthread_create
+  return ((int*)(&pthread_create))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+
+Determining if the include file pthread.h exists passed with the following output:
+Change Dir: /Users/user/Desktop/QServCollect/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_f0c09/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_f0c09.dir/build.make CMakeFiles/cmTC_f0c09.dir/build
+Building C object CMakeFiles/cmTC_f0c09.dir/CheckIncludeFile.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc     -o CMakeFiles/cmTC_f0c09.dir/CheckIncludeFile.c.o   -c /Users/user/Desktop/QServCollect/CMakeFiles/CMakeTmp/CheckIncludeFile.c
+Linking C executable cmTC_f0c09
+/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_f0c09.dir/link.txt --verbose=1
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc    -Wl,-search_paths_first -Wl,-headerpad_max_install_names   CMakeFiles/cmTC_f0c09.dir/CheckIncludeFile.c.o  -o cmTC_f0c09  
+
+
+Determining if the pthread_create exist passed with the following output:
+Change Dir: /Users/user/Desktop/QServCollect/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_87475/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_87475.dir/build.make CMakeFiles/cmTC_87475.dir/build
+Building C object CMakeFiles/cmTC_87475.dir/CheckSymbolExists.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc     -o CMakeFiles/cmTC_87475.dir/CheckSymbolExists.c.o   -c /Users/user/Desktop/QServCollect/CMakeFiles/CMakeTmp/CheckSymbolExists.c
+Linking C executable cmTC_87475
+/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_87475.dir/link.txt --verbose=1
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc    -Wl,-search_paths_first -Wl,-headerpad_max_install_names   CMakeFiles/cmTC_87475.dir/CheckSymbolExists.c.o  -o cmTC_87475  
+
+File /Users/user/Desktop/QServCollect/CMakeFiles/CMakeTmp/CheckSymbolExists.c:
+/* */
+#include <pthread.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef pthread_create
+  return ((int*)(&pthread_create))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+
+Determining if the include file pthread.h exists passed with the following output:
+Change Dir: /Users/user/Desktop/QServCollect/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_3447c/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_3447c.dir/build.make CMakeFiles/cmTC_3447c.dir/build
+Building C object CMakeFiles/cmTC_3447c.dir/CheckIncludeFile.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc     -o CMakeFiles/cmTC_3447c.dir/CheckIncludeFile.c.o   -c /Users/user/Desktop/QServCollect/CMakeFiles/CMakeTmp/CheckIncludeFile.c
+Linking C executable cmTC_3447c
+/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_3447c.dir/link.txt --verbose=1
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc    -Wl,-search_paths_first -Wl,-headerpad_max_install_names   CMakeFiles/cmTC_3447c.dir/CheckIncludeFile.c.o  -o cmTC_3447c  
+
+
+Determining if the pthread_create exist passed with the following output:
+Change Dir: /Users/user/Desktop/QServCollect/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_6701f/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_6701f.dir/build.make CMakeFiles/cmTC_6701f.dir/build
+Building C object CMakeFiles/cmTC_6701f.dir/CheckSymbolExists.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc     -o CMakeFiles/cmTC_6701f.dir/CheckSymbolExists.c.o   -c /Users/user/Desktop/QServCollect/CMakeFiles/CMakeTmp/CheckSymbolExists.c
+Linking C executable cmTC_6701f
+/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_6701f.dir/link.txt --verbose=1
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc    -Wl,-search_paths_first -Wl,-headerpad_max_install_names   CMakeFiles/cmTC_6701f.dir/CheckSymbolExists.c.o  -o cmTC_6701f  
+
+File /Users/user/Desktop/QServCollect/CMakeFiles/CMakeTmp/CheckSymbolExists.c:
+/* */
+#include <pthread.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef pthread_create
+  return ((int*)(&pthread_create))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+
+Determining if the include file pthread.h exists passed with the following output:
+Change Dir: /Users/user/Desktop/QServCollect/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_6b1c9/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_6b1c9.dir/build.make CMakeFiles/cmTC_6b1c9.dir/build
+Building C object CMakeFiles/cmTC_6b1c9.dir/CheckIncludeFile.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc     -o CMakeFiles/cmTC_6b1c9.dir/CheckIncludeFile.c.o   -c /Users/user/Desktop/QServCollect/CMakeFiles/CMakeTmp/CheckIncludeFile.c
+Linking C executable cmTC_6b1c9
+/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_6b1c9.dir/link.txt --verbose=1
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc    -Wl,-search_paths_first -Wl,-headerpad_max_install_names   CMakeFiles/cmTC_6b1c9.dir/CheckIncludeFile.c.o  -o cmTC_6b1c9  
+
+
+Determining if the pthread_create exist passed with the following output:
+Change Dir: /Users/user/Desktop/QServCollect/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_26649/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_26649.dir/build.make CMakeFiles/cmTC_26649.dir/build
+Building C object CMakeFiles/cmTC_26649.dir/CheckSymbolExists.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc     -o CMakeFiles/cmTC_26649.dir/CheckSymbolExists.c.o   -c /Users/user/Desktop/QServCollect/CMakeFiles/CMakeTmp/CheckSymbolExists.c
+Linking C executable cmTC_26649
+/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_26649.dir/link.txt --verbose=1
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc    -Wl,-search_paths_first -Wl,-headerpad_max_install_names   CMakeFiles/cmTC_26649.dir/CheckSymbolExists.c.o  -o cmTC_26649  
+
+File /Users/user/Desktop/QServCollect/CMakeFiles/CMakeTmp/CheckSymbolExists.c:
+/* */
+#include <pthread.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef pthread_create
+  return ((int*)(&pthread_create))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+
+Determining if the include file pthread.h exists passed with the following output:
+Change Dir: /Users/user/Desktop/QServCollect/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_4d419/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_4d419.dir/build.make CMakeFiles/cmTC_4d419.dir/build
+Building C object CMakeFiles/cmTC_4d419.dir/CheckIncludeFile.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc     -o CMakeFiles/cmTC_4d419.dir/CheckIncludeFile.c.o   -c /Users/user/Desktop/QServCollect/CMakeFiles/CMakeTmp/CheckIncludeFile.c
+Linking C executable cmTC_4d419
+/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_4d419.dir/link.txt --verbose=1
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc    -Wl,-search_paths_first -Wl,-headerpad_max_install_names   CMakeFiles/cmTC_4d419.dir/CheckIncludeFile.c.o  -o cmTC_4d419  
+
+
+Determining if the pthread_create exist passed with the following output:
+Change Dir: /Users/user/Desktop/QServCollect/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_a89da/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_a89da.dir/build.make CMakeFiles/cmTC_a89da.dir/build
+Building C object CMakeFiles/cmTC_a89da.dir/CheckSymbolExists.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc     -o CMakeFiles/cmTC_a89da.dir/CheckSymbolExists.c.o   -c /Users/user/Desktop/QServCollect/CMakeFiles/CMakeTmp/CheckSymbolExists.c
+Linking C executable cmTC_a89da
+/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_a89da.dir/link.txt --verbose=1
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc    -Wl,-search_paths_first -Wl,-headerpad_max_install_names   CMakeFiles/cmTC_a89da.dir/CheckSymbolExists.c.o  -o cmTC_a89da  
+
+File /Users/user/Desktop/QServCollect/CMakeFiles/CMakeTmp/CheckSymbolExists.c:
+/* */
+#include <pthread.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef pthread_create
+  return ((int*)(&pthread_create))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+
+Determining if the include file pthread.h exists passed with the following output:
+Change Dir: /Users/user/Desktop/QServCollect/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_9580b/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_9580b.dir/build.make CMakeFiles/cmTC_9580b.dir/build
+Building C object CMakeFiles/cmTC_9580b.dir/CheckIncludeFile.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc     -o CMakeFiles/cmTC_9580b.dir/CheckIncludeFile.c.o   -c /Users/user/Desktop/QServCollect/CMakeFiles/CMakeTmp/CheckIncludeFile.c
+Linking C executable cmTC_9580b
+/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_9580b.dir/link.txt --verbose=1
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc    -Wl,-search_paths_first -Wl,-headerpad_max_install_names   CMakeFiles/cmTC_9580b.dir/CheckIncludeFile.c.o  -o cmTC_9580b  
+
+
+Determining if the pthread_create exist passed with the following output:
+Change Dir: /Users/user/Desktop/QServCollect/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_42132/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_42132.dir/build.make CMakeFiles/cmTC_42132.dir/build
+Building C object CMakeFiles/cmTC_42132.dir/CheckSymbolExists.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc     -o CMakeFiles/cmTC_42132.dir/CheckSymbolExists.c.o   -c /Users/user/Desktop/QServCollect/CMakeFiles/CMakeTmp/CheckSymbolExists.c
+Linking C executable cmTC_42132
+/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_42132.dir/link.txt --verbose=1
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc    -Wl,-search_paths_first -Wl,-headerpad_max_install_names   CMakeFiles/cmTC_42132.dir/CheckSymbolExists.c.o  -o cmTC_42132  
+
+File /Users/user/Desktop/QServCollect/CMakeFiles/CMakeTmp/CheckSymbolExists.c:
+/* */
+#include <pthread.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef pthread_create
+  return ((int*)(&pthread_create))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+
+Determining if the include file pthread.h exists passed with the following output:
+Change Dir: /Users/user/Desktop/QServCollect/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_6a8e0/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_6a8e0.dir/build.make CMakeFiles/cmTC_6a8e0.dir/build
+Building C object CMakeFiles/cmTC_6a8e0.dir/CheckIncludeFile.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc     -o CMakeFiles/cmTC_6a8e0.dir/CheckIncludeFile.c.o   -c /Users/user/Desktop/QServCollect/CMakeFiles/CMakeTmp/CheckIncludeFile.c
+Linking C executable cmTC_6a8e0
+/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_6a8e0.dir/link.txt --verbose=1
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc    -Wl,-search_paths_first -Wl,-headerpad_max_install_names   CMakeFiles/cmTC_6a8e0.dir/CheckIncludeFile.c.o  -o cmTC_6a8e0  
+
+
+Determining if the pthread_create exist passed with the following output:
+Change Dir: /Users/user/Desktop/QServCollect/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_8caf2/fast"
+/Applications/Xcode.app/Contents/Developer/usr/bin/make -f CMakeFiles/cmTC_8caf2.dir/build.make CMakeFiles/cmTC_8caf2.dir/build
+Building C object CMakeFiles/cmTC_8caf2.dir/CheckSymbolExists.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc     -o CMakeFiles/cmTC_8caf2.dir/CheckSymbolExists.c.o   -c /Users/user/Desktop/QServCollect/CMakeFiles/CMakeTmp/CheckSymbolExists.c
+Linking C executable cmTC_8caf2
+/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_8caf2.dir/link.txt --verbose=1
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc    -Wl,-search_paths_first -Wl,-headerpad_max_install_names   CMakeFiles/cmTC_8caf2.dir/CheckSymbolExists.c.o  -o cmTC_8caf2  
+
+File /Users/user/Desktop/QServCollect/CMakeFiles/CMakeTmp/CheckSymbolExists.c:
+/* */
+#include <pthread.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef pthread_create
+  return ((int*)(&pthread_create))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+
