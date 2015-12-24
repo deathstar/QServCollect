@@ -437,7 +437,6 @@ const char *disconnectreason(int reason)
 
 void disconnect_client(int n, int reason) {
     qs.resetoLangWarn(n);
-
     if(!clients.inrange(n) || clients[n]->type!=ST_TCPIP) return;
     enet_peer_disconnect(clients[n]->peer, reason);
     server::clientdisconnect(n);
@@ -452,7 +451,6 @@ void disconnect_client(int n, int reason) {
 
 void dcres(int n, const char *reason) {
     qs.resetoLangWarn(n);
-
     if(!clients.inrange(n) || clients[n]->type!=ST_TCPIP) return;
     enet_peer_disconnect(clients[n]->peer, DISC_KICK);
     server::clientdisconnect(n);
@@ -767,7 +765,7 @@ void serverslice(bool dedicated, uint timeout)   // main server update, called f
                 char hn[1024];
                 copystring(c.hostname, (enet_address_get_host_ip(&c.peer->address, hn, sizeof(hn))==0) ? hn : "unknown");
                 logoutf("\nJoin: (%s)", c.hostname);
-                int reason = server::clientconnect(c.num, c.peer->address.host);
+                int reason = server::clientconnect(c.num, c.peer->address.host, c.hostname); //ipstring for QServ
                 if(reason) disconnect_client(c.num, reason);
                 break;
             }
@@ -1170,11 +1168,16 @@ void initserver(bool listen, bool dedicated, const char *path)
     }
 
     /**
-        Load/Check GeoIP database
+        Load/Check GeoIP databases
     **/
-    if(qs.initgeoip("./GeoIP.dat")) {printf("[ OK ] GeoIP Initalized succesfully\n");}
-    else if(!qs.initgeoip("./GeoIP.dat")) {
-        logoutf("[ FATAL ] Failed to load GeoIP database from GeoIP.dat file");
+    if(qs.initgeoip("./GeoIP/GeoIP.dat")) {printf("[ OK ] GeoIP Initalized succesfully\n");}
+    else if(!qs.initgeoip("./GeoIP/GeoIP.dat")) {
+        logoutf("[FATAL ERROR] Failed to load GeoIP database from GeoIP.dat file");
+    }
+    /*
+    if(qs.initcitygeoip("./GeoIP/GeoLiteCity.dat")) {printf("[ OK ] GeoLite City Initalized succesfully\n");}
+    else if(!qs.initcitygeoip("./GeoIP/GeoLiteCity.dat")) {
+        logoutf("[FATAL ERROR] Failed to load GeoLite database from GeoLiteCity.dat file");
     }
     /**/
 
@@ -1212,7 +1215,7 @@ vector<const char *> gameargs;
 #include "../QCom.h"
 
 void *irc_thread(void *) {
-        sleep(5); //Wait 5 seconds before starting IRC otherwise IRC doesn't start
+        sleep(3); //Wait 3 seconds before starting IRC otherwise IRC doesn't start (previously 5)
         irc.init();
 
 }

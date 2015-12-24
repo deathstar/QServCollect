@@ -1,7 +1,5 @@
 #include "QCom.h"
 
-
-
 namespace server {
     void initCmds() {
         /**
@@ -39,20 +37,25 @@ namespace server {
                  PRIV_ADMIN, sendprivs_cmd, 1);
         ncommand("forgive", "\f4Forgive a player for teamkilling or just in general. Usage: #forgive <cn>",
                  PRIV_NONE, forgive_cmd, 1);
-        ncommand("forcespectator", "\f4Forces a player to become a spectator. Usage: #forcespectator <cn>", PRIV_ADMIN, forcespectator_cmd, 0);
+        ncommand("forcespectator", "\f4Forces a player to become a spectator. Usage: #forcespectator <cn>", PRIV_ADMIN, forcespectator_cmd, 1);
+        ncommand("unspectate", "\f4Removes a player from spectator mode. Usage: #unspectate <cn>", PRIV_ADMIN, unspectate_cmd, 1);
         ncommand("mute", "\f4Mutes a client. Usage #mute <cn>", PRIV_ADMIN, mute_cmd, 1);
         ncommand("unmute", "\f4Unmutes a client. Usage #mute <cn>", PRIV_ADMIN, unmute_cmd, 1);
+        ncommand("editmute", "\f4Stops a client from editing. Usage #editmute <cn>", PRIV_ADMIN, editmute_cmd, 1);
+        ncommand("uneditmute", "\f4Allows a client to edit again. Usage #uneditmute <cn>", PRIV_ADMIN, uneditmute_cmd, 1);
         ncommand("togglelockspec", "\f4Forces a client to be locked in spectator mode. Usage #togglelockspec <cn>", PRIV_ADMIN, togglelockspec_cmd, 1);
         ncommand("uptime", "\f4View how long the server has been up for. Usage: #uptime", PRIV_NONE, uptime_cmd, 0);
-        ncommand("info", "\f4View information about a player. Usage: #info <cn>", PRIV_NONE, info_cmd, 0);
+        ncommand("info", "\f4View information about a player. Usage: #info <cn>", PRIV_NONE, info_cmd, 1);
         ncommand("tournament", "\f4Start a tournament with a timer. Usage: #tournament <mode> <map>", PRIV_MASTER, tournament_cmd, 2);
         ncommand("help", "\f4Lists the #cmd command and more information. Usage: #help", PRIV_NONE, help_cmd, 0);
+        ncommand("cheater", "\f4Accuses someone of cheating and alerts moderators. Usage: #cheater <cn>", PRIV_NONE, cheater_cmd, 1);
         //ncommand("owords", "View list of offensive words. Usage: #owords",
         ///         PRIV_NONE, owords_cmd, 0);
         //ncommand("olangfilter", "Turn the offensive language filter on or off. Usage: #olang <off/on> (0/1) and #olang to see if it's activated",
         //         PRIV_MASTER, olangfilter_cmd, 1);
     }
     
+
     QSERV_CALLBACK help_cmd(p) {
         static char colors[2], commandList[2056] = {0};
         int color = -1;
@@ -78,7 +81,6 @@ namespace server {
             }
         }
         sendf(CMD_SENDER, 1, "ris", N_SERVMSG, commandList);
-
         clientinfo *ci = qs.getClient(CMD_SENDER);
         defformatstring(f)("\f7Help\f4: Type \f2#cmd \f4to list commands, or use \f2#cmd <commandname> \f4for information about a specific command.");
         sendf(ci->clientnum, 1, "ris", N_SERVMSG, f);
@@ -99,57 +101,23 @@ namespace server {
     extern void changemap(const char *s, int mode);
     extern void pausegame(bool val, clientinfo *ci = NULL);
     
+    bool time_elapsed = false;
     int t_timer() {
-        int ct = 10000;
+        int cm = 10; 
         
-        while(ct >= 10000) {
-            for(int i = 10; i >= 0; i--) {
+        while(cm >= 10) {
+            for(int i = 10; i <= 0; i--) {
                 out(ECHO_SERV, "Tournament starting in %d seconds", i);
             }
-            
-            ct--;
+            cm--;
         }
-    }
-    
-    void delayProgram(double secondsToDelay)
-    {
-        clock_t startTime = clock(); //Start timer
-        
-        clock_t testTime;
-        clock_t timePassed;
-        double secondsPassed;
-        
-        while(true)
-        {
-            testTime = clock();
-            timePassed = startTime - testTime;
-            secondsPassed = timePassed / (double)CLOCKS_PER_SEC;
-            
-            if(secondsPassed >= secondsToDelay)
-            {
-                out(ECHO_SERV, "%d seconds have passed", secondsToDelay);
-                break;
-            }
-            
-        }
-        
-        
-    }
-    
-   bool timerelapsed = 0;
-    void mytimer() {
-        for(int i = 10; i >= 0; i--)
-        {
-            i--;
-            bool timerelapsed = 1;
-        }
+        time_elapsed = true;
     }
     QSERV_CALLBACK tournament_cmd(p) {
-
+		t_timer();
         const char *mapname = args[2];
         char *mn = args[1];
-        mytimer();
-        if(args[1] != NULL && args[2] != NULL) {
+        if(args[1] != NULL && args[2] != NULL && *mapname !=NULL && *mn!=NULL) {
         int gm; // default set to current mode td
         bool valid = false;
         
@@ -158,45 +126,177 @@ namespace server {
             if(!strcmp(mn, qserv_modenames[i]))  {
                 gm = i;
                 // use other list to send full name of mode
-                if(timerelapsed) {changemap(mapname, gm);}
+                if(time_elapsed) {changemap(mapname, gm);}
                 valid = true;
                 break;
             }
         }
+        	if(valid) {
             defformatstring(f)("\f4Tournament has started: %s on map %s", qserv_modenames[gm], mapname);
             sendf(-1, 1, "ris", N_SERVMSG, f);
+            }
             
-        if(!valid) sendf(-1, 1, "ris", N_SERVMSG, "\f3Error: Unknown mode");
+        if(!valid) {sendf(CMD_SENDER, 1, "ris", N_SERVMSG, "\f3Error: Unknown mode");}
         }
         else {
+        	bool valid = false;
             defformatstring(f)("\f3Error: Invalid mode/mapname provided");
             sendf(CMD_SENDER, 1, "ris", N_SERVMSG, f);
         }
     }
     
     int servuptime = 0;
+
     QSERV_CALLBACK uptime_cmd(p) {
-             //broken
-             clientinfo *ci = qs.getClient(CMD_SENDER);
-             ci->connectedmillis=(gamemillis/1000)+servuptime-(ci->connectedmillis/1000);
-             int ssstime = gamemillis+servuptime;
-             int sssdays = ssstime/86400000, sssdaysms=sssdays*86400000;
-             int ssshours = (ssstime-sssdaysms)/3600000, ssshoursms=ssshours*3600000;
-             int sssminutes = (ssstime-sssdaysms-ssshoursms)/60000;
-             int sssseconds = (ssstime-sssdaysms-ssshoursms-sssminutes*60000)/1000;
+        clientinfo *ci = qs.getClient(CMD_SENDER);
+        string msg, buf;
+        uint t, months, weeks, days, hours, minutes, seconds;
         
-            defformatstring(f)("\f4Server Uptime: \f6%d \f2Day(s)\f4, \f6%d \f2Hour(s)\f4, \f6%d \f2Minute(s)\f4, \f6%d \f2Second(s)", sssdays, ssshours, sssminutes, sssseconds);
-            sendf(ci->clientnum, 1, "ris", N_SERVMSG, f);
+        copystring(msg,"\f3QServ \f4(DeathStar/Mamasita): \f1https://github.com/deathstar/QServCollect");
+        sendf(ci ? ci->clientnum : -1, 1, "ris", N_SERVMSG, msg);
+        copystring(msg, "\f4Architecture: \f0"
+                   /* Firstly determine OS */
+#if !(defined(_WIN32) || defined(WIN32) || defined(WIN64) || defined(_WIN64))
+                   /* unix/posix compilant os */
+#   if defined(__linux__) || defined(__linux) || defined(linux) || defined(__gnu_linux__)
+                   "GNU/Linux"
+#   elif defined(__GNU__) || defined(__gnu_hurd__)
+                   "GNU/Hurd"
+#   elif defined(__FreeBSD_kernel__) && defined(__GLIBC__)
+                   "GNU/FreeBSD"
+#   elif defined(__FreeBSD__) || defined(__FreeBSD_kernel__)
+                   "FreeBSD"
+#   elif defined(__OpenBSD__)
+                   "OpenBSD"
+#   elif defined(__NetBSD__)
+                   "NetBSD"
+#   elif defined(__sun) || defined(sun)
+                   "Solaris"
+#   elif defined(__DragonFly__)
+                   "DragonFlyBSD"
+#   elif defined(__MACH__)
+#       if defined(__APPLE__)      
+                   "Apple"     
+#       else   
+                   "Mach"  
+#       endif  
+#   elif defined(__CYGWIN__)  
+                   "Cygwin"  
+#   elif defined(__unix__) || defined(__unix) || defined(unix) || defined(_POSIX_VERSION)  
+                   "UNIX"  
+#   else  
+                   "unknown"   
+#   endif     
+#else      
+                   /* Windows */
+                   "Windows"
+#endif
+                   " "
+                   
+                   );
+        concatstring(msg, (sizeof(void *) == 8) ? "x86 (64 bit)" : "i386");
+        concatstring(msg, "\n\f4Server Uptime:");
+        t = totalsecs;
+        
+        months = t / (30*24*60*60);
+        
+        t = t % (30*24*60*60);
+        
+        weeks = t / (7*24*60*60);
+        
+        t = t % (7*24*60*60);
+        
+        days = t / (24*60*60);
+        
+        t = t % (24*60*60);
+        
+        hours = t / (60*60);
+        
+        t = t % (60*60);
+        
+        minutes = t / 60;
+        
+        t = t % 60;
+        
+        seconds = t;
+    
+        if(months)
+            
+        {
+            
+            formatstring(buf)(" %u month%s", months, months > 1 ? "s" : "");
+            
+            concatstring(msg, buf);
+            
+        }
+        
+        if(weeks)
+            
+        {
+            
+            formatstring(buf)(" %u week%s", weeks, weeks > 1 ? "s" : "");
+            
+            concatstring(msg, buf);
+            
+        }
+        
+
+        if(days)
+            
+        {
+            
+            formatstring(buf)(" %u day%s", days, days > 1 ? "s" : "");
+            
+            concatstring(msg, buf);
+            
+        }
+        
+        if(hours)
+            
+        {
+            
+            formatstring(buf)(" %u hour%s", hours, hours > 1 ? "s" : "");
+            
+            concatstring(msg, buf);
+            
+        }
+          
+        
+        if(minutes)
+            
+        {
+            
+            formatstring(buf)(" %u minute%s", minutes, minutes > 1 ? "s" : "");
+            
+            concatstring(msg, buf);
+            
+        }
+        
+        if(seconds)
+            
+        {
+            
+            formatstring(buf)(" %u second%s", seconds, seconds > 1 ? "s" : "");
+            
+            concatstring(msg, buf);
+            
+        }
+        
+        sendf(ci ? ci->clientnum : -1, 1, "ris", N_SERVMSG, msg);
         
     }
+
+    
+    
     //Check to see if args 1 is blank, if not causes seg fault on linux when #info is issued
     QSERV_CALLBACK info_cmd(p) {
         bool usage = false;
         int cn = -1;
+        cn = CMD_SENDER;
         
         if(CMD_SA) {
             cn = atoi(args[1]);
-            if(cn >= 0 && cn <= 1000 && cn != NULL) {
+            if(cn >= 0 && cn <= 1000 && cn != NULL && args[1]!=NULL) {
                 //if(!isalpha(cn)) {
             sendinfo:
                 clientinfo *ci = qs.getClient(cn);
@@ -218,31 +318,32 @@ namespace server {
                         if(location) sprintf(lmsg[1], "%s", location);
                         (CMD_SCI.privilege == PRIV_ADMIN) ? sprintf(lmsg[0], "%s (%s)", lmsg[1], ip) :
                         sprintf(lmsg[0], "%s", lmsg[1]);
-                        int milisec = (ci->connectmillis);
                         int sec = (ci->connectmillis/1000);
                         int min = (sec / 60);
-                        defformatstring(s)("\f0%s \f4(\f2%d\f4) [\f1%s\f4] \f4connected for %d minutes %d sec", colorname(ci), ci->clientnum, lmsg[0], min, sec);
-                        sendf(CMD_SENDER, 1, "ris", N_SERVMSG, s);
+                        int hour = (min / 60);
+                        int cn = atoi(args[1]);
+                        clientinfo *ci = qs.getClient(cn);
+                        defformatstring(f)("\f0%s \f4(\f2%d\f4) [\f1%s\f4] \f4Connected for: \f6%d \f2Hour(s)\f4, \f6%d \f2Minute(s)\f4, \f6%d \f2Second(s)", colorname(ci), ci->clientnum,lmsg[0], hour, min, sec);
+                        sendf(CMD_SENDER, 1, "ris", N_SERVMSG, f);
+                    } else {
+                        sendf(CMD_SENDER, 1, "ris", N_SERVMSG, "Played not connected");
+                    }
+                    /*} else {
+                     usage = true;
+                     }*/
                 } else {
-                    sendf(CMD_SENDER, 1, "ris", N_SERVMSG, "Played not connected");
+                    usage = true;
                 }
-                /*} else {
-                 usage = true;
-                 }*/
             } else {
-                usage = true;
+                cn = CMD_SENDER;
+                goto sendinfo;
             }
-        } else {
-            cn = CMD_SENDER;
-            goto sendinfo;
+            
+            if(usage) sendf(CMD_SENDER, 1, "ris", N_SERVMSG, CMD_DESC(cid));
         }
         
-        if(usage) sendf(CMD_SENDER, 1, "ris", N_SERVMSG, CMD_DESC(cid));
     }
-
-        }
-
-
+    
     extern void forcespectator(clientinfo *ci);
     extern void unspectate(clientinfo *ci);
     QSERV_CALLBACK togglelockspec_cmd(p) {
@@ -266,31 +367,7 @@ namespace server {
             sendf(CMD_SENDER, 1, "ris", N_SERVMSG, CMD_DESC(cid));
         }
     }
-    QSERV_CALLBACK mute_cmd(p) {
-        int cn = atoi(args[1]);
-        clientinfo *ci = qs.getClient(cn);
-        if(cn!=CMD_SENDER && cn >= 0 && cn <= 1000 && ci != NULL && ci->connected && args[1] != NULL) {
-            ci->isMuted = true;
-            sendf(CMD_SENDER, 1, "ris", N_SERVMSG, "\f0%s \f4has been \f3muted", colorname(ci));
-
-        }
-        else {
-            sendf(CMD_SENDER, 1, "ris", N_SERVMSG, "\f3Error: \f4Incorrect client number/no cn specified or you're trying to mute yourself.");
-            sendf(CMD_SENDER, 1, "ris", N_SERVMSG, CMD_DESC(cid));
-        }
-    }
-    QSERV_CALLBACK unmute_cmd(p) {
-        int cn = atoi(args[1]);
-        clientinfo *ci = qs.getClient(cn);
-        if(cn!=CMD_SENDER && cn >= 0 && cn <= 1000 && ci != NULL && ci->connected && args[1] != NULL) {
-            ci->isMuted = false;
-            sendf(CMD_SENDER, 1, "ris", N_SERVMSG, "\f0%s \f4has been \f0unmuted", colorname(ci));
-        }
-        else {
-            sendf(CMD_SENDER, 1, "ris", N_SERVMSG, "\f3Error: \f4Incorrect client number/no cn specified or you're trying to unmute yourself.");
-            sendf(CMD_SENDER, 1, "ris", N_SERVMSG, CMD_DESC(cid));
-        }
-    }
+    
     QSERV_CALLBACK forcespectator_cmd(p) {
         int cn = atoi(args[1]);
         clientinfo *ci = qs.getClient(cn);
@@ -299,6 +376,76 @@ namespace server {
         forcespectator(ci);
         } else {
             sendf(CMD_SENDER, 1, "ris", N_SERVMSG, "\f3Error: \f4Incorrect client number/no cn specified or you're trying to force spectate yourself.");
+            sendf(CMD_SENDER, 1, "ris", N_SERVMSG, CMD_DESC(cid));
+        }
+    }
+    
+    QSERV_CALLBACK unspectate_cmd(p) {
+        int cn = atoi(args[1]);
+        clientinfo *ci = qs.getClient(cn);
+        if(cn!=CMD_SENDER && cn >= 0 && cn <= 1000 && ci != NULL && ci->connected && args[1] != NULL) {
+        clientinfo *ci = qs.getClient(cn);
+        unspectate(ci);
+        } else {
+            sendf(CMD_SENDER, 1, "ris", N_SERVMSG, "\f3Error: \f4Incorrect client number/no cn specified or you're trying to unspectate spectate yourself.");
+            sendf(CMD_SENDER, 1, "ris", N_SERVMSG, CMD_DESC(cid));
+        }
+    }
+    
+    QSERV_CALLBACK mute_cmd(p) {
+        int cn = atoi(args[1]);
+        clientinfo *ci = qs.getClient(cn);
+        if(cn!=CMD_SENDER && cn >= 0 && cn <= 1000 && ci != NULL && ci->connected && args[1] != NULL) {
+            ci->isMuted = true;
+            defformatstring(mutemsg)("\f0%s \f4has been \f3muted", colorname(ci));
+            sendf(CMD_SENDER, 1, "ris", N_SERVMSG, mutemsg);
+        }
+        else {
+            sendf(CMD_SENDER, 1, "ris", N_SERVMSG, "\f3Error: \f4Incorrect client number/no cn specified or you're trying to mute yourself.");
+            sendf(CMD_SENDER, 1, "ris", N_SERVMSG, CMD_DESC(cid));
+        }
+    }
+    
+    QSERV_CALLBACK unmute_cmd(p) {
+        int cn = atoi(args[1]);
+        clientinfo *ci = qs.getClient(cn);
+        if(cn!=CMD_SENDER && cn >= 0 && cn <= 1000 && ci != NULL && ci->connected && args[1] != NULL) {
+            ci->isMuted = false;
+            defformatstring(unmutemsg)("\f0%s \f4has been \f0unmuted", colorname(ci));
+            sendf(CMD_SENDER, 1, "ris", N_SERVMSG, unmutemsg);
+        }
+        else {
+            sendf(CMD_SENDER, 1, "ris", N_SERVMSG, "\f3Error: \f4Incorrect client number/no cn specified or you're trying to unmute yourself.");
+            sendf(CMD_SENDER, 1, "ris", N_SERVMSG, CMD_DESC(cid));
+        }
+    }
+    
+    QSERV_CALLBACK editmute_cmd(p) {
+        int cn = atoi(args[1]);
+        clientinfo *ci = qs.getClient(cn);
+        if(cn!=CMD_SENDER && cn >= 0 && cn <= 1000 && ci != NULL && ci->connected && args[1] != NULL) {
+            ci->isEditMuted = true;
+            defformatstring(mutemsg)("\f0%s\f4's edits have been \f3muted", colorname(ci));
+            sendf(CMD_SENDER, 1, "ris", N_SERVMSG, mutemsg);
+        }
+        else {
+            sendf(CMD_SENDER, 1, "ris", N_SERVMSG, "\f3Error: \f4Incorrect client number/no cn specified or you're trying to editmute yourself.");
+            sendf(CMD_SENDER, 1, "ris", N_SERVMSG, CMD_DESC(cid));
+        }
+    }
+    
+    QSERV_CALLBACK uneditmute_cmd(p) {
+        int cn = atoi(args[1]);
+        clientinfo *ci = qs.getClient(cn);
+        if(cn!=CMD_SENDER && cn >= 0 && cn <= 1000 && ci != NULL && ci->connected && args[1] != NULL) {
+            ci->isEditMuted = false;
+            sendf(CMD_SENDER, 1, "ris", N_SERVMSG, "You are being disconnected, please use \"/reconnect\" to update.");
+            defformatstring(unmutemsg)("\f0%s\f4's edits have been \f0unmuted, re-initalizing client", colorname(ci));
+            sendf(CMD_SENDER, 1, "ris", N_SERVMSG, unmutemsg);
+            disconnect_client(ci->clientnum, DISC_TIMEOUT);
+        }
+        else {
+            sendf(CMD_SENDER, 1, "ris", N_SERVMSG, "\f3Error: \f4Incorrect client number/no cn specified or you're trying to uneditmute yourself.");
             sendf(CMD_SENDER, 1, "ris", N_SERVMSG, CMD_DESC(cid));
         }
     }
@@ -315,7 +462,27 @@ namespace server {
             sendf(CMD_SENDER, 1, "ris", N_SERVMSG, CMD_DESC(cid));
         }
     }
-
+    SVAR(ircoperators, "");
+    QSERV_CALLBACK cheater_cmd(p) {
+    	int cn = atoi(args[1]);
+        clientinfo *ci = qs.getClient(cn);
+        clientinfo *self = qs.getClient(CMD_SENDER);
+        if(cn!=CMD_SENDER && cn >= 0 && cn <= 1000 && ci != NULL && ci->connected && args[1]!=NULL) {
+        	int accuracy = (ci->state.damage*100)/max(ci->state.shotdamage, 1);
+        	
+        	//send it to admins and log
+            privilegemsg(PRIV_MASTER,"\f4Something's fishy! A cheater has been reported.");
+             out(ECHO_SERV, "\f0%s \f4accuses \f3%s \f4(CN: \f6%d \f4| Accuracy: \f6%d%\f4) of cheating.", colorname(self), colorname(ci), ci->clientnum, accuracy);
+            out(ECHO_NOCOLOR, "Attention Operator(s): %s - %s accuses %s (CN: %d | Accuracy: %d%) of cheating.", ircoperators, colorname(self), colorname(ci), ci->clientnum, accuracy);
+            
+            //Acknowledge we got the report
+            defformatstring(nocolorcheatermsg)("\f3%s \f4has been reported.", colorname(ci));
+            sendf(CMD_SENDER, 1, "ris", N_SERVMSG,nocolorcheatermsg);
+        } else {
+            sendf(CMD_SENDER, 1, "ris", N_SERVMSG, "\f3Error: \f4Incorrect client number/no cn specified or you're trying to accuse yourself.");
+            sendf(CMD_SENDER, 1, "ris", N_SERVMSG, CMD_DESC(cid));
+        }
+    }
 
     QSERV_CALLBACK olangfilter_cmd(p) {
         if(CMD_SA) {
@@ -331,11 +498,22 @@ namespace server {
             sendf(CMD_SENDER, 1, "ris", N_SERVMSG, msg);
         }
     }
-    SVAR(ircoperators, "");
-    QSERV_CALLBACK callops_cmd(p) {VAR(ircignore, 0, 0, 1);if(!getvar("ircignore")) {out(ECHO_IRC, "[Attention operator(s)]: %s: %s is in need of assistance.", ircoperators, CMD_SCI.name); defformatstring(toclient)("You alerted operator(s) %s", ircoperators); sendf(CMD_SENDER, 1, "ris", N_SERVMSG, toclient);}}
+    
+	VAR(ircignore, 0, 0, 1);
+	SVAR(contactemail, "");
+    QSERV_CALLBACK callops_cmd(p) {
+    	if(!getvar("ircignore")) {
+    		out(ECHO_IRC, "[Attention operator(s)]: %s: %s is in need of assistance.", ircoperators, CMD_SCI.name); 
+    		defformatstring(toclient)("You alerted operator(s) %s", ircoperators); 
+    		sendf(CMD_SENDER, 1, "ris", N_SERVMSG, toclient);
+        }
+        else {defformatstring(operatorunavailable)("\f4Sorry, No operators are available currently, please email: \f1%s \f4for more assistance.",contactemail); sendf(CMD_SENDER, 1, "ris", N_SERVMSG, operatorunavailable);}
+    }
+    SVAR(qserv_version, "");
     QSERV_CALLBACK getversion_cmd(p) {
-        defformatstring(ver)("\f4Running \f4QServ 11 \f0Collect Edition\f4. Written by Mamasita, DeathStar & Jonlimle: \f1www.github.com/deathstar/QServCollect");sendf(CMD_SENDER, 1, "ris", N_SERVMSG, ver);}
-    QSERV_CALLBACK forceintermission_cmd(p) {startintermission(); defformatstring(msg)("\f0%s \f4forced an intermission",CMD_SCI.name);sendf(-1, 1, "ris", N_SERVMSG, msg); out(ECHO_IRC,"%s forced an intermission",CMD_SCI.name);}
+    defformatstring(ver)("\f4Running \f3QServ \f4(\f2%s\f4). Written by DeathStar, Mamasita, Erik & Jonlimle: \f1www.github.com/deathstar/QServCollect", qserv_version);sendf(CMD_SENDER, 1, "ris", N_SERVMSG, ver);
+    }
+    QSERV_CALLBACK forceintermission_cmd(p) {bool intermission = false; if(!intermission){startintermission(); defformatstring(msg)("\f0%s \f4forced an intermission",CMD_SCI.name);sendf(-1, 1, "ris", N_SERVMSG, msg); out(ECHO_IRC,"%s forced an intermission",CMD_SCI.name);}}
 
     QSERV_CALLBACK me_cmd(p) {
         if(strlen(fulltext) > 0) {
@@ -363,9 +541,10 @@ namespace server {
             clientinfo *ci = qs.getClient(cn);
             clientinfo *self = qs.getClient(CMD_SENDER);
             if(cn!=CMD_SENDER && cn >= 0 && cn <= 1000 && ci != NULL && ci->connected && strlen(fulltext) > 0) {
-                defformatstring(recieverpmmsg)("\f4Private message from \f0%s\f4: \f3%s", colorname(self), fulltext);
+            	const char *privatemessage = fulltext;
+                defformatstring(recieverpmmsg)("\f4Private message from \f0%s\f4: \f3%s", colorname(self), privatemessage);
                 sendf(cn, 1, "ris", N_SERVMSG, recieverpmmsg);
-                defformatstring(senderpmconf)("\f4Sent \f0%s \f4your message: \f3%s", colorname(ci), fulltext);
+                defformatstring(senderpmconf)("\f4Sent \f0%s \f4your message: \f3%s", colorname(ci), privatemessage);
                 sendf(CMD_SENDER, 1, "ris", N_SERVMSG, senderpmconf);
             } else {
                 sendf(CMD_SENDER, 1, "ris", N_SERVMSG, "\f3Error: \f4Command variables incorrect or client is not connected/existant.");
@@ -415,7 +594,7 @@ namespace server {
                 if(lastcmd > -1) {
                     sendf(CMD_SENDER, 1, "ris", N_SERVMSG, CMD_DESC(lastcmd));
                 } else {
-                    sendf(CMD_SENDER, 1, "ris", N_SERVMSG, "\f3Error: Command not found");
+                    sendf(CMD_SENDER, 1, "ris", N_SERVMSG, "\f3Error: Command not found. Use \f2\"#cmd\" \f3for a list of commands.");
                 }
             } else {
                 sendf(CMD_SENDER, 1, "ris", N_SERVMSG, "\f3Error: Insufficient permissions to view command info");
@@ -542,7 +721,7 @@ namespace server {
                                                              sprintf(lmsg[0], "%s", lmsg[1]);
 
                             int accuracy = (ci->state.damage*100)/max(ci->state.shotdamage, 1);
-                            defformatstring(s)("Stats for \f0%s: \f4Frags: \f0%i \f4Deaths: \f3%i \f4Teamkills: \f1%i \f4Flag Runs: \f2%i \f4Accuracy: \f3%i%%\n\f4Location: \f5%s",
+                            defformatstring(s)("\f4Stats for \f0%s: \f4Frags: \f0%i \f4Deaths: \f3%i \f4Teamkills: \f1%i \f4Flag Runs: \f2%i \f4Accuracy: \f3%i%%\n\f4Location: \f5%s",
                                                 colorname(ci),
                                                 ci->state.frags,
                                                 ci->state.deaths,

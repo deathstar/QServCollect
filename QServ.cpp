@@ -1,4 +1,5 @@
 #include "QServ.h"
+#include "GeoIP/libGeoIP/GeoIPCity.h"
 
 namespace server {
 
@@ -20,10 +21,24 @@ namespace server {
         if(m_geoip == NULL) return false;
         return true;
     }
+    /*bool QServ::initcitygeoip(const char *filename) {
+    city_geoip = GeoIP_open(filename, GEOIP_STANDARD);
+    if(city_geoip == NULL) return false;
+    return true;
+    }
+    char *QServ::citygeoip(const char *ip) {
+    	//GeoIPRecordTag *city;
+    	//GeoIP_record_by_name(city_geoip,ip);
+    	//GeoIPRecord *city;
+    	//return (char *) city;
+    	
+    }
+    */
     
     char *QServ::congeoip(const char *ip) {
         return (char*)GeoIP_country_name_by_name(m_geoip, ip);
     }
+
 
     void QServ::newcommand(const char *name, const char *desc, int priv, void (*callback)(int, char **args, int),
                            int args) {
@@ -263,8 +278,7 @@ namespace server {
                     return false;
                 }
             } else {
-                sprintf(ftb, "%s", text);
-                sendf(ci->clientnum, 1, "ris", N_SERVMSG, "\f3Error: Command not found. \f4Use \f2#cmd \f4for a list of commands.");
+                sendf(ci->clientnum, 1, "ris", N_SERVMSG, "\f3Error: Command not found. Use \f2\"#cmd\" \f3for a list of commands.");
                 return false;
             }
         } else {
@@ -301,41 +315,46 @@ namespace server {
     void QServ::getLocation(clientinfo *ci) {
 
         char *ip = toip(ci->clientnum);
-        defformatstring(location)("%s", congeoip(ip));
-
+        defformatstring(location)("%s",congeoip(ip));
+        //defformatstring(citylocation)("%s",citygeoip(ip));
+        //out(ECHO_NOCOLOR, "%s", citylocation);
+        
         int type = 0;
         const char *types[] = {
-            " \f4connected from \f3Unknown",
-            " connected from \f1Unknown/Localhost",
+            " connected from \f1Localhost",
+            " \f4connected from \f3an unknown location",
             " \f4connected from \f0"
         };
         int typeconsole = 0;
         const char *typesconsole[] = {
-            " connected from Unknown",
-            " connected from Localhost\n",
+            " connected from Localhost",
+            " connected from an Unknown Location",
             " connected from "
         };
         
         char lmsg[255];
+        char pmsg[255];
         
         if(strlen(location) > 2 && strlen(ip) > 2) {
             const char clientip = getclientip(ci->clientnum);
-            int ip = getclientip(ci->clientnum);
-            if(ci->local) {
-                type = 1;
-                typeconsole = 1;
-            } else if(!strcmp("(null)", location)) {
+            unsigned int ip = getclientip(ci->clientnum);
+            if(ci->ip == "127.0.0.1") {
                 type = 0;
-                typeconsole =0;
+                typeconsole = 0;
+            } else if(!strcmp("(null)", location)) {
+                type = 1;
+                typeconsole =1;
             } else {
                 type = 2;
-                typeconsole =2;
+                typeconsole=2;
                 sprintf(lmsg, "%s\f2%s", types[type], location);
+                sprintf(pmsg, "%s%s", typesconsole[typeconsole], location);
             }
             defformatstring(msg)("\f0%s\f4%s", ci->name, (type < 2) ? types[type] : lmsg);
-            out(ECHO_SERV, "%s", msg);
-            out(ECHO_CONSOLE, "%s%s", ci->name, (type < 2) ? typesconsole[typeconsole] : lmsg);
-            out(ECHO_IRC, "%s%s. Clientnum: %d", ci->name, (type < 2) ? types[type] : lmsg, ci->clientnum);
+            defformatstring(nocolormsg)("%s%s", ci->name, (typeconsole < 2) ? typesconsole[typeconsole] : pmsg);
+            out(ECHO_SERV,"%s",msg);
+            out(ECHO_NOCOLOR, "%s",nocolormsg);
+
         }
     }
 
@@ -350,6 +369,4 @@ namespace server {
     void QServ::resetMsg(int cn) {
         ms[cn].count = 0;
     }
-
-
 }

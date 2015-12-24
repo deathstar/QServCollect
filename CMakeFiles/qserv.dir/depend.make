@@ -5,7 +5,6 @@ CMakeFiles/qserv.dir/QCom.cpp.o: GeoIP/libGeoIP/GeoIP.h
 CMakeFiles/qserv.dir/QCom.cpp.o: QCom.cpp
 CMakeFiles/qserv.dir/QCom.cpp.o: QCom.h
 CMakeFiles/qserv.dir/QCom.cpp.o: QServ.h
-CMakeFiles/qserv.dir/QCom.cpp.o: fpsgame.h
 CMakeFiles/qserv.dir/QCom.cpp.o: ircbot/ircbot.h
 CMakeFiles/qserv.dir/QCom.cpp.o: enet/include/enet/callbacks.h
 CMakeFiles/qserv.dir/QCom.cpp.o: enet/include/enet/enet.h
@@ -16,6 +15,7 @@ CMakeFiles/qserv.dir/QCom.cpp.o: enet/include/enet/unix.h
 CMakeFiles/qserv.dir/QCom.cpp.o: enet/include/enet/win32.h
 CMakeFiles/qserv.dir/QCom.cpp.o: engine/world.h
 CMakeFiles/qserv.dir/QCom.cpp.o: fpsgame/ai.h
+CMakeFiles/qserv.dir/QCom.cpp.o: fpsgame/fpsgame.h
 CMakeFiles/qserv.dir/QCom.cpp.o: fpsgame/game.h
 CMakeFiles/qserv.dir/QCom.cpp.o: shared/command.h
 CMakeFiles/qserv.dir/QCom.cpp.o: shared/cube.h
@@ -27,9 +27,9 @@ CMakeFiles/qserv.dir/QCom.cpp.o: shared/tools.h
 CMakeFiles/qserv.dir/QCom.cpp.o: shared/zlib.h
 
 CMakeFiles/qserv.dir/QServ.cpp.o: GeoIP/libGeoIP/GeoIP.h
+CMakeFiles/qserv.dir/QServ.cpp.o: GeoIP/libGeoIP/GeoIPCity.h
 CMakeFiles/qserv.dir/QServ.cpp.o: QServ.cpp
 CMakeFiles/qserv.dir/QServ.cpp.o: QServ.h
-CMakeFiles/qserv.dir/QServ.cpp.o: fpsgame.h
 CMakeFiles/qserv.dir/QServ.cpp.o: ircbot/ircbot.h
 CMakeFiles/qserv.dir/QServ.cpp.o: enet/include/enet/callbacks.h
 CMakeFiles/qserv.dir/QServ.cpp.o: enet/include/enet/enet.h
@@ -40,6 +40,7 @@ CMakeFiles/qserv.dir/QServ.cpp.o: enet/include/enet/unix.h
 CMakeFiles/qserv.dir/QServ.cpp.o: enet/include/enet/win32.h
 CMakeFiles/qserv.dir/QServ.cpp.o: engine/world.h
 CMakeFiles/qserv.dir/QServ.cpp.o: fpsgame/ai.h
+CMakeFiles/qserv.dir/QServ.cpp.o: fpsgame/fpsgame.h
 CMakeFiles/qserv.dir/QServ.cpp.o: fpsgame/game.h
 CMakeFiles/qserv.dir/QServ.cpp.o: shared/command.h
 CMakeFiles/qserv.dir/QServ.cpp.o: shared/cube.h
@@ -73,7 +74,6 @@ CMakeFiles/qserv.dir/engine/server.cpp.o: GeoIP/libGeoIP/GeoIP.h
 CMakeFiles/qserv.dir/engine/server.cpp.o: QCom.h
 CMakeFiles/qserv.dir/engine/server.cpp.o: QServ.h
 CMakeFiles/qserv.dir/engine/server.cpp.o: engine/server.cpp
-CMakeFiles/qserv.dir/engine/server.cpp.o: fpsgame.h
 CMakeFiles/qserv.dir/engine/server.cpp.o: ircbot/ircbot.h
 CMakeFiles/qserv.dir/engine/server.cpp.o: enet/include/enet/callbacks.h
 CMakeFiles/qserv.dir/engine/server.cpp.o: enet/include/enet/enet.h
@@ -84,6 +84,7 @@ CMakeFiles/qserv.dir/engine/server.cpp.o: enet/include/enet/unix.h
 CMakeFiles/qserv.dir/engine/server.cpp.o: enet/include/enet/win32.h
 CMakeFiles/qserv.dir/engine/server.cpp.o: engine/world.h
 CMakeFiles/qserv.dir/engine/server.cpp.o: fpsgame/ai.h
+CMakeFiles/qserv.dir/engine/server.cpp.o: fpsgame/fpsgame.h
 CMakeFiles/qserv.dir/engine/server.cpp.o: fpsgame/game.h
 CMakeFiles/qserv.dir/engine/server.cpp.o: shared/command.h
 CMakeFiles/qserv.dir/engine/server.cpp.o: shared/cube.h
@@ -96,7 +97,6 @@ CMakeFiles/qserv.dir/engine/server.cpp.o: shared/zlib.h
 
 CMakeFiles/qserv.dir/fpsgame/server.cpp.o: GeoIP/libGeoIP/GeoIP.h
 CMakeFiles/qserv.dir/fpsgame/server.cpp.o: QServ.h
-CMakeFiles/qserv.dir/fpsgame/server.cpp.o: fpsgame.h
 CMakeFiles/qserv.dir/fpsgame/server.cpp.o: fpsgame/aiman.h
 CMakeFiles/qserv.dir/fpsgame/server.cpp.o: fpsgame/capture.h
 CMakeFiles/qserv.dir/fpsgame/server.cpp.o: fpsgame/collect.h
@@ -113,6 +113,7 @@ CMakeFiles/qserv.dir/fpsgame/server.cpp.o: enet/include/enet/unix.h
 CMakeFiles/qserv.dir/fpsgame/server.cpp.o: enet/include/enet/win32.h
 CMakeFiles/qserv.dir/fpsgame/server.cpp.o: engine/world.h
 CMakeFiles/qserv.dir/fpsgame/server.cpp.o: fpsgame/ai.h
+CMakeFiles/qserv.dir/fpsgame/server.cpp.o: fpsgame/fpsgame.h
 CMakeFiles/qserv.dir/fpsgame/server.cpp.o: fpsgame/game.h
 CMakeFiles/qserv.dir/fpsgame/server.cpp.o: shared/command.h
 CMakeFiles/qserv.dir/fpsgame/server.cpp.o: shared/cube.h
@@ -123,6 +124,8 @@ CMakeFiles/qserv.dir/fpsgame/server.cpp.o: shared/igame.h
 CMakeFiles/qserv.dir/fpsgame/server.cpp.o: shared/tools.h
 CMakeFiles/qserv.dir/fpsgame/server.cpp.o: shared/zlib.h
 
+CMakeFiles/qserv.dir/ircbot/ircbot.cpp.o: GeoIP/libGeoIP/GeoIP.h
+CMakeFiles/qserv.dir/ircbot/ircbot.cpp.o: QServ.h
 CMakeFiles/qserv.dir/ircbot/ircbot.cpp.o: ircbot/ircbot.cpp
 CMakeFiles/qserv.dir/ircbot/ircbot.cpp.o: ircbot/ircbot.h
 CMakeFiles/qserv.dir/ircbot/ircbot.cpp.o: enet/include/enet/callbacks.h
@@ -134,6 +137,7 @@ CMakeFiles/qserv.dir/ircbot/ircbot.cpp.o: enet/include/enet/unix.h
 CMakeFiles/qserv.dir/ircbot/ircbot.cpp.o: enet/include/enet/win32.h
 CMakeFiles/qserv.dir/ircbot/ircbot.cpp.o: engine/world.h
 CMakeFiles/qserv.dir/ircbot/ircbot.cpp.o: fpsgame/ai.h
+CMakeFiles/qserv.dir/ircbot/ircbot.cpp.o: fpsgame/fpsgame.h
 CMakeFiles/qserv.dir/ircbot/ircbot.cpp.o: fpsgame/game.h
 CMakeFiles/qserv.dir/ircbot/ircbot.cpp.o: shared/command.h
 CMakeFiles/qserv.dir/ircbot/ircbot.cpp.o: shared/cube.h

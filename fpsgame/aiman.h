@@ -5,6 +5,48 @@ namespace aiman
     bool dorefresh = false;
     VARN(serverbotlimit, botlimit, 0, 8, MAXBOTS);
     VARN(serverbotbalance, botbalance, 0, 1, 1);
+    
+    //Custom bot names
+    struct botname {
+        string name;
+        botname() { copystring(name, "bot", MAXSTRLEN-1); }
+    };
+    
+    vector<botname> botnames;
+    
+    bool addbotname(char *name) {
+        bool ok = true;
+        
+        loopv(botnames) {
+            if(!strcasecmp(botnames[i].name, name)) ok = false;
+        }
+        
+        if(ok) {
+            botname bn;
+            copystring(bn.name, name, MAXSTRLEN-1);
+            botnames.add(bn);
+            //writecfg();
+        }
+        
+        return ok;
+    }
+    COMMAND(addbotname, "s");
+    
+    bool delbotname(char *name) {
+        bool ok = false;
+        loopv(botnames) {
+            if(!strcasecmp(botnames[i].name, name)) { botnames.remove(i); i--; ok = true; }
+        }
+        
+        // if(ok) writecfg();
+        
+        return ok;
+    }
+    void listbotnames() {
+        if(botnames.length() > 0) {
+        } else out(ECHO_SERV,"No bot names in list (all bots will be called \"bot\").");
+    }
+    //end custom bot names
 
     void calcteams(vector<teamscore> &teams)
     {
@@ -14,8 +56,7 @@ namespace aiman
             clientinfo *ci = clients[i];
             if(ci->state.state==CS_SPECTATOR || !ci->team[0]) continue;
             teamscore *t = NULL;
-            //zombie mod
-           // loopvj(teams) if(!strcmp(teams[j].team, ci->team)) { t = &teams[j]; break; }
+            loopvj(teams) if(!strcmp(teams[j].team, ci->team)) { t = &teams[j]; break; }
             if(t) t->score++;
             else teams.add(teamscore(ci->team, 1));
         }
@@ -25,10 +66,9 @@ namespace aiman
             loopi(sizeof(defaults)/sizeof(defaults[0])) if(teams.htfind(defaults[i]) < 0) teams.add(teamscore(defaults[i], 0));
         }
     }
-    
+
     void balanceteams()
     {
-        
         vector<teamscore> teams;
         calcteams(teams);
         vector<clientinfo *> reassign;
@@ -53,18 +93,16 @@ namespace aiman
             {
                 if(smode && bot->state.state==CS_ALIVE) smode->changeteam(bot, bot->team, t.team);
                 copystring(bot->team, t.team, MAXTEAMLEN+1);
-                //bot balance commented out below previously for zombie mode
-               // sendf(-1, 1, "riisi", N_SETTEAM, bot->clientnum, humanteam, 0);
+                sendf(-1, 1, "riisi", N_SETTEAM, bot->clientnum, bot->team, 0);
             }
             else teams.remove(0, 1);
         }
-        
     }
 
     const char *chooseteam()
     {
         vector<teamscore> teams;
-       // calcteams(teams);
+        calcteams(teams);
         return teams.length() ? teams.last().team : "";
     }
 
@@ -123,7 +161,33 @@ namespace aiman
         ci->state.skill = skill <= 0 ? rnd(50) + 51 : clamp(skill, 1, 101);
 	    clients.add(ci);
 		ci->state.lasttimeplayed = lastmillis;
-		copystring(ci->name, botname, MAXNAMELEN+1);
+        //pick best bot name
+        if(botnames.length()) {
+            int nbots = 0;
+            loopv(bots) { if(bots[i]) nbots++; }
+            if(nbots <= botnames.length()) {
+                int n = 0;
+                if(nbots < botnames.length()) n = random() % (botnames.length() - nbots); // avoid FPE % 0
+                int x = 0;
+                loopv(botnames) {
+                    bool found = false;
+                    loopvj(bots) { if(!bots[j]) continue; if(!strcmp(bots[j]->name, botnames[i].name)) { found = true; break; } }
+                    if(!found) {
+                        if(x == n) copystring(ci->name, botnames[i].name, MAXNAMELEN-1);
+                        if(x++ == n) break;
+                    }
+                }
+            } else
+                copystring(ci->name, botnames[random() % botnames.length()].name, MAXNAMELEN-1);
+        } else copystring(ci->name, "bot", MAXNAMELEN+1); //^&
+        
+        ci->state.state = CS_DEAD;
+        copystring(ci->team, team, MAXTEAMLEN+1);
+        ci->playermodel = rnd(128);
+        ci->aireinit = 2;
+        ci->connected = true;
+        dorefresh = true;
+		//copystring(ci->name, botname, MAXNAMELEN+1); //Old zombie name code, changed out with ^&
 		ci->state.state = CS_DEAD;
         copystring(ci->team, team, MAXTEAMLEN+1);
         ci->playermodel = rnd(128);
@@ -132,6 +196,7 @@ namespace aiman
         dorefresh = true;
 		return true;
 	}
+    
 
 	void deleteai(clientinfo *ci)
 	{
@@ -211,13 +276,12 @@ namespace aiman
 
 	void checksetup()
 	{
-	    //if(m_teammode && botbalance) balanceteams();
+	    if(m_teammode && botbalance) balanceteams();
 		loopvrev(bots) if(bots[i]) reinitai(bots[i]);
 	}
 
 	void clearai()
 	{ // clear and remove all ai immediately
-        //we don't clear ai for zombie mode
         loopvrev(bots) if(bots[i]) deleteai(bots[i]);
 	}
 
@@ -235,10 +299,8 @@ namespace aiman
 
 	void reqadd(clientinfo *ci, int skill)
 	{
-        //Anyone can add bots for zombie mode
-        addai(skill, !ci->local && ci->privilege == PRIV_NONE ? botlimit : -1);
-        //if(!ci->local && !ci->privilege) return;
-        //if(!addai(skill, !ci->local && ci->privilege < PRIV_ADMIN ? botlimit : -1)) sendf(ci->clientnum, 1, "ris", N_SERVMSG, "failed to create or assign bot");
+        if(!ci->local && !ci->privilege) return;
+        if(!addai(skill, !ci->local && ci->privilege < PRIV_ADMIN ? botlimit : -1)) sendf(ci->clientnum, 1, "ris", N_SERVMSG, "failed to create or assign bot");
 	}
 
 	void reqdel(clientinfo *ci)

@@ -101,13 +101,13 @@ namespace server {
         int64_t lastfragmillis;
         int multifrags;
         int spreefrags;
-        int _suicides, _stolen, _returned; //best stats
         vec o;
         int state, editstate;
         int lastdeath, deadflush, lastspawn, lifesequence;
         int lastshot;
         projectilestate<8> rockets, grenades;
         int frags, flags, deaths, teamkills, shotdamage, damage, tokens;
+        int _suicides, _stolen, _returned; //stats for QServ
         int lasttimeplayed, timeplayed;
         float effectiveness;
         
@@ -132,13 +132,15 @@ namespace server {
             
             timeplayed = 0;
             effectiveness = 0;
-            _suicides = _stolen = _returned = 0; //best stats
             frags = flags = deaths = teamkills = shotdamage = damage = tokens = 0;
             lastdeath = 0;
             respawn();
             
+            _suicides = _stolen = _returned = 0; //Stats for QServ
             lastfragmillis = 0;
             multifrags = spreefrags = 0;
+            
+            
         }
         
         void respawn()
@@ -200,11 +202,31 @@ namespace server {
 
     extern int gamemillis, nextexceeded;
     
-    struct extrainfo {
+    struct extrainfo
+    {
+        int mute;
+        int editmute;
+        int editmutewarn;
+        int forcedspectator;
+        int namemute;
+        //int teammute;
+        //bool fakeprivon;
+        //int fakepriv;
         bool spy;
+        int failpass;
+        clientinfo *tkiller;
+        int votekickvictim;
+        int lastmsg, msgnum;
+        int lastremip, remipnum;
+        int teamkillmessageindex;
+        int lasttakeflag;
+        bool slay;
+
     };
+    
     struct clientinfo
     {
+        char *ip; //ipstring for QServ
         int clientnum, ownernum, connectmillis, sessionid, overflow, connectedmillis;
         string name, team, mapvote;
         int playermodel;
@@ -230,13 +252,46 @@ namespace server {
         void *authchallenge;
         int authkickvictim;
         char *authkickreason;
-        extrainfo _xi;
+        extrainfo _xi; //xi 
         
         
         
         /*********************/
         bool isMuted = false;
         bool isSpecLocked = false;
+        bool isEditMuted = false;
+        
+        //Spam protection
+        int64_t lasttext; // spam protection
+        int spamlines; // number of lines that you can type in the spam interval without getting blocked. useful for people who talk fast :P
+        bool spamwarned; // only warn once within the interval
+        int64_t lastremip, lastnewmap; // protect against remip and newmap attacks
+        
+        // protect against large selections
+        int64_t lastbigselspam;
+        bool bigselwarned;
+        // protect against fast scrolling
+        int64_t lastscrollspam;
+        ivec editspamsize[2]; // it's edit spam if at least one dimension of this box is too big (this box gets expanded when fast scrolling)
+        bool scrollspamwarned;
+        // protect against fast Y+scroll
+        int64_t lasttexturespam;
+        int texturespamtimes;
+        bool texturespamwarned;
+        
+        //protect against fast mapmodel change
+        int lastmapmodeltype;
+        int64_t lastmapmodelchange;
+        int mapmodelspamtimes;
+        bool mapmodelspamwarned;
+        
+        // edit recording
+        ivec playorigin;
+        //stream *recording, *playing;
+        
+        // protect against mass kicking
+        //int64_t lastkick;
+
         /*********************/
         
     
@@ -304,6 +359,7 @@ namespace server {
             mapcrc = 0;
             warned = false;
             gameclip = false;
+            _xi.lasttakeflag = 0;
         }
 
         void reassign()
@@ -348,6 +404,24 @@ namespace server {
             cleanclipboard();
             cleanauth();
             mapchange();
+            
+            //spam protection
+            //recording = playing = NULL;
+            playorigin.x = playorigin.y = playorigin.z = 512; //middle of a size 10 map, I guess
+            lastremip = lastnewmap = 0;
+            lasttext = spamlines = 0;
+            lastbigselspam = 0;
+            bigselwarned = false;
+            lastscrollspam = 0;
+            editspamsize[0].x = editspamsize[0].y = editspamsize[0].z = 0;
+            scrollspamwarned = false;
+            lasttexturespam = 0;
+            texturespamtimes = 0;
+            texturespamwarned = 0;
+            lastmapmodeltype = 0;
+            lastmapmodelchange = 0;
+            mapmodelspamwarned = 0;
+            mapmodelspamtimes = 0;
         }
 
         int geteventmillis(int servmillis, int clientmillis)
@@ -393,7 +467,8 @@ namespace server {
 	extern int mastermode;
 	/****/
 	
-	
+	extern int vmessage(int cn, const char *fmt, va_list ap);
+    
     extern bool duplicatename(clientinfo *ci, char *name);
     extern const char *colorname(clientinfo *ci);
 	extern void revokemaster(clientinfo *ci);

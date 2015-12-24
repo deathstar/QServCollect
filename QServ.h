@@ -16,7 +16,9 @@
 
 const bool olanguagewarn = false;
 const int maxolangwarnings = 5;
+
 const char commandprefix = '#';
+
 
     static string owords[] = {"fuck", "shit", "cunt", "bitch", "whore", "twat",
                               "faggot", "retard", "pussy", "ass",
@@ -49,6 +51,8 @@ namespace server {
 
             bool initgeoip(const char*);
             char *congeoip(const char*);
+            //bool initcitygeoip(const char*);
+            //char *citygeoip(const char*);
 
             void newcommand(const char*, const char*, int, void (*)(int, char**, int), int);
             bool isCommand(char*);
@@ -103,6 +107,7 @@ namespace server {
             void resetMsg(int);
         protected:
             GeoIP *m_geoip;
+            GeoIP *city_geoip;
             int m_lastcommand;
             SCommand m_command[50];
             int m_oLangWarn[1000];
@@ -123,7 +128,6 @@ namespace server {
 #define toip(cn) qs.cntoip(cn)
 
 extern server::QServ qs;
-
 
 extern int count;
 extern int msgcount[128];

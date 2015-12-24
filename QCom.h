@@ -34,12 +34,17 @@ namespace server {
     extern QSERV_CALLBACK sendprivs_cmd(p);
     extern QSERV_CALLBACK forgive_cmd(p);
     extern QSERV_CALLBACK forcespectator_cmd(p);
+    extern QSERV_CALLBACK unspectate_cmd(p);
     extern QSERV_CALLBACK mute_cmd(p);
     extern QSERV_CALLBACK unmute_cmd(p);
+    extern QSERV_CALLBACK editmute_cmd(p);
+    extern QSERV_CALLBACK uneditmute_cmd(p);
     extern QSERV_CALLBACK togglelockspec_cmd(p);
     extern QSERV_CALLBACK uptime_cmd(p);
     extern QSERV_CALLBACK info_cmd(p);
     extern QSERV_CALLBACK tournament_cmd(p);
+    extern QSERV_CALLBACK help_cmd(p);
+    extern QSERV_CALLBACK cheater_cmd(p);
 }
 
 #endif

@@ -372,7 +372,7 @@ struct fpsstate
     int ammo[NUMGUNS];
     int aitype, skill;
 
-    fpsstate() : maxhealth(500), aitype(AI_NONE), skill(0) {} //zombie maxhealth is 500 not 100
+    fpsstate() : maxhealth(100), aitype(AI_NONE), skill(0) {}
 
     void baseammo(int gun, int k = 2, int scale = 1)
     {
@@ -490,32 +490,22 @@ struct fpsstate
                 //ammo[GUN_FIST] = 1;
             } else {
              */
-
                 armour = 0;
                 health = 1;
                 gunselect = GUN_RIFLE;
                 ammo[GUN_RIFLE] = 100;
+             
             //}
         }
         else if(m_regencapture)
         {
-            /*Regular regencapture mode
+
             armourtype = A_BLUE;
             armour = 25;
             gunselect = GUN_PISTOL;
             ammo[GUN_PISTOL] = 40;
             ammo[GUN_GL] = 1;
-            */
-            
-            //zombie regencapture mode
-            health = 500;
-            armourtype = A_YELLOW;
-            armour = 150;
-            gunselect = GUN_GL;
-            ammo[GUN_GL] = 999;
-            ammo[GUN_CG] = 999;
-            ai::aiinfo *ai;
-            if(aitype) {gunselect = GUN_FIST;ammo[GUN_GL] = 1;ammo[GUN_CG] = 1; health = 100;}
+
         }
         else if(m_tactics)
         {
@@ -902,6 +892,8 @@ namespace server
     extern int msgsizelookup(int msg);
     extern bool serveroption(const char *arg);
     extern bool delayspawn(int type);
+    extern void clearbans();
+    extern void privilegemsg(int min_privilege, const char *fmt, ...);
 
     struct clientinfo;
 }

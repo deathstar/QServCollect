@@ -50,10 +50,10 @@ enum
     ECHO_IRC ,
     ECHO_CONSOLE,
     ECHO_SERV,
-    ECHO_MASTER,
+    ECHO_NOCOLOR,
 };
-
 extern void out(int type, const char *fmt, ...);
+
 extern bool isloggedin(bool echo = 1);
 
 extern int tightpussy;

@@ -293,6 +293,7 @@ struct ctfclientmode : clientmode
             {
                 ivec o(vec(ci->state.o).mul(DMF));
                 sendf(-1, 1, "ri7", N_DROPFLAG, ci->clientnum, i, ++f.version, o.x, o.y, o.z);
+                ci->_xi.lasttakeflag = 0;
                 dropflag(i, o.tovec().div(DMF), lastmillis, dropper ? dropper->clientnum : ci->clientnum);
             }
         }
@@ -346,6 +347,14 @@ struct ctfclientmode : clientmode
         int team = ctfteamflag(ci->team), score = addscore(team, 1);
         if(m_hold) spawnflag(goal);
         sendf(-1, 1, "rii9", N_SCOREFLAG, ci->clientnum, relay, relay >= 0 ? ++flags[relay].version : -1, goal, ++flags[goal].version, flags[goal].spawnindex, team, score, ci->state.flags);
+        //flagrun
+        if(!m_hold && !m_protect)
+        {
+            int timeused = gamemillis - ci->_xi.lasttakeflag;
+            if(ci->_xi.lasttakeflag && timeused <= 90*1000) _doflagrun(ci, timeused);
+            ci->_xi.lasttakeflag = 0;
+        }
+        ////
         if(score >= FLAGLIMIT) startintermission();
     }
 
@@ -360,6 +369,20 @@ struct ctfclientmode : clientmode
             loopvj(flags) if(flags[j].owner==ci->clientnum) return;
             ownflag(i, ci->clientnum, lastmillis);
             sendf(-1, 1, "ri4", N_TAKEFLAG, ci->clientnum, i, ++f.version);
+            //zeromod
+            //flag taken first time?
+            //no flagruns and stolen flags in protect
+            if(!f.droptime && !m_protect)
+            {
+                ci->state._stolen++;
+                //no flagruns in hold mode
+                if(!m_hold)
+                {
+                    if(gamespeed == 100) ci->_xi.lasttakeflag = gamemillis ? gamemillis : 1;
+                    else ci->_xi.lasttakeflag = 0;
+                }
+            }
+            ////
         }
         else if(m_protect)
         {
@@ -367,6 +390,9 @@ struct ctfclientmode : clientmode
         }
         else if(f.droptime)
         {
+            //zeromod
+            ci->state._returned++;
+            ////
             returnflag(i);
             sendf(-1, 1, "ri4", N_RETURNFLAG, ci->clientnum, i, ++f.version);
         }

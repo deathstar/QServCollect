@@ -94,13 +94,14 @@ namespace game
  
 namespace server
 {
+    
     extern void *newclientinfo();
     extern void deleteclientinfo(void *ci);
     extern void serverinit();
     extern int reserveclients();
     extern int numchannels();
     extern void clientdisconnect(int n);
-    extern int clientconnect(int n, uint ip);
+    extern int clientconnect(int n, uint ip, char *ipstr); //clientconnect ipstring
     extern void localdisconnect(int n);
     extern void localconnect(int n);
     extern bool allowbroadcast(int n);

@@ -6,6 +6,7 @@
 #include <netinet/in.h>
 #endif
 #include "ircbot.h"
+#include "../QServ.h"
 
 
 SVAR(irchost, "irc.gamesurge.net");
@@ -16,7 +17,7 @@ SVAR(ircbotname, "QServ");
 //#include "game.h"
 //#include "ircbot.h"
 
-SVAR(ircloginpass, "changeme");
+SVAR(ircloginpass, "default");
 
 ICOMMAND(login, "s", (char *s), {
     if(isloggedin(0)){
@@ -25,18 +26,17 @@ ICOMMAND(login, "s", (char *s), {
     }if(!strcmp(s, ircloginpass)){
         irc.IRCusers[irc.lastmsg()->host] = 1;
         irc.speak("%s has logged in", irc.lastmsg()->nick);
-		out(ECHO_SERV, "\f0%s \f7has logged in thru IRC (\f4%s \f3%s\f7)", irc.lastmsg()->nick, irchost, ircchan);
+		out(ECHO_SERV, "\f0%s \f4has logged in thru IRC (%s \f3%s\f4)", irc.lastmsg()->nick, irchost, ircchan);
     }
-    else irc.notice(irc.lastmsg()->nick, "Invalid Password");
+    else irc.notice(irc.lastmsg()->nick, "Error: Invalid Password");
 });
 
 ICOMMAND(clearbans, "", (), {
-	if(isloggedin()) {
-        N_CLEARBANS;
-        out(ECHO_SERV, "Server bans \f0cleared");
-        out(ECHO_CONSOLE, "Server bans cleared");
-        out(ECHO_IRC, "All bans cleared");
-	}
+	if(isloggedin()) {server::clearbans();}
+});
+
+ICOMMAND(forceintermission, "", (), {
+    if(isloggedin()) {server::startintermission();}
 });
 
 /*ICOMMAND(doscript, "s", (char *s), {
@@ -62,11 +62,6 @@ ICOMMAND(kick, "i", (int *i), {
         disconnect_client(*i, DISC_KICK);
 });
 
-/*ICOMMAND(kick, "i", (int *i), {
-    if(isloggedin())
-        server::banPlayer(*i);
-});*/
-
 ircBot irc;
 
 bool isloggedin(bool echo)
@@ -79,7 +74,7 @@ bool isloggedin(bool echo)
     if(irc.IRCusers.access(irc.lastmsg()->host))
         return true;
     if(echo)
-        irc.notice(irc.lastmsg()->nick, "Insufficient Priveleges");
+        irc.notice(irc.lastmsg()->nick, "Error: Insufficient Permission");
     return false;
 }
 
@@ -213,10 +208,9 @@ void ircBot::init()
 	connected = false;
 }}
 
+
 void out(int type, const char *fmt, ...)
 {
-    
-    
     char msg[1000];
     va_list list;
     va_start(list,fmt);
@@ -247,15 +241,17 @@ void out(int type, const char *fmt, ...)
             server::sendservmsg(msg);
             break;
         }
-        case ECHO_MASTER:
+        case ECHO_NOCOLOR:
         {
-        //sendf(ci, 1, "ris", N_SERVMSG, msg);
+            puts(msg);
+            irc.speak(msg);
             break;
         }
         default:
             break;
     }
 }
+
 
 bool ircBot::isConnected() {
 	return connected;

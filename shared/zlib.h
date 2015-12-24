@@ -1564,16 +1564,11 @@ ZEXTERN int ZEXPORT inflateBackInit_ OF((z_streamp strm, int windowBits,
  */
 #if defined(_LARGEFILE64_SOURCE) && _LFS64_LARGEFILE-0
    ZEXTERN gzFile ZEXPORT gzopen64 OF((const char *, const char *));
-    
-//Apple dependencies
-#ifdef __APPLE__
    ZEXTERN z_off64_t ZEXPORT gzseek64 OF((gzFile, z_off64_t, int));
    ZEXTERN z_off64_t ZEXPORT gztell64 OF((gzFile));
    ZEXTERN z_off64_t ZEXPORT gzoffset64 OF((gzFile));
    ZEXTERN uLong ZEXPORT adler32_combine64 OF((uLong, uLong, z_off64_t));
    ZEXTERN uLong ZEXPORT crc32_combine64 OF((uLong, uLong, z_off64_t));
-#endif
-    
 #endif
 
 #if !defined(ZLIB_INTERNAL) && _FILE_OFFSET_BITS-0 == 64 && _LFS64_LARGEFILE-0
@@ -1582,23 +1577,15 @@ ZEXTERN int ZEXPORT inflateBackInit_ OF((z_streamp strm, int windowBits,
 #  define gztell gztell64
 #  define gzoffset gzoffset64
 #  define adler32_combine adler32_combine64
-    
-#ifdef __APPLE__
 #  define crc32_combine crc32_combine64
-#endif
-    
 #  ifdef _LARGEFILE64_SOURCE
-    #ifdef __APPLE__
      ZEXTERN gzFile ZEXPORT gzopen64 OF((const char *, const char *));
-
      ZEXTERN z_off_t ZEXPORT gzseek64 OF((gzFile, z_off_t, int));
      ZEXTERN z_off_t ZEXPORT gztell64 OF((gzFile));
      ZEXTERN z_off_t ZEXPORT gzoffset64 OF((gzFile));
      ZEXTERN uLong ZEXPORT adler32_combine64 OF((uLong, uLong, z_off_t));
      ZEXTERN uLong ZEXPORT crc32_combine64 OF((uLong, uLong, z_off_t));
-#endif
-    
-# endif
+#  endif
 #else
    ZEXTERN gzFile ZEXPORT gzopen OF((const char *, const char *));
    ZEXTERN z_off_t ZEXPORT gzseek OF((gzFile, z_off_t, int));

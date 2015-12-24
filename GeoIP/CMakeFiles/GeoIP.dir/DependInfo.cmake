@@ -4,12 +4,12 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_C
-  "/Users/user/Desktop/QServ/cp/GeoIP/libGeoIP/GeoIP.c" "/Users/user/Desktop/QServ/cp/GeoIP/CMakeFiles/GeoIP.dir/libGeoIP/GeoIP.c.o"
-  "/Users/user/Desktop/QServ/cp/GeoIP/libGeoIP/GeoIPCity.c" "/Users/user/Desktop/QServ/cp/GeoIP/CMakeFiles/GeoIP.dir/libGeoIP/GeoIPCity.c.o"
-  "/Users/user/Desktop/QServ/cp/GeoIP/libGeoIP/GeoIPUpdate.c" "/Users/user/Desktop/QServ/cp/GeoIP/CMakeFiles/GeoIP.dir/libGeoIP/GeoIPUpdate.c.o"
-  "/Users/user/Desktop/QServ/cp/GeoIP/libGeoIP/md5.c" "/Users/user/Desktop/QServ/cp/GeoIP/CMakeFiles/GeoIP.dir/libGeoIP/md5.c.o"
-  "/Users/user/Desktop/QServ/cp/GeoIP/libGeoIP/regionName.c" "/Users/user/Desktop/QServ/cp/GeoIP/CMakeFiles/GeoIP.dir/libGeoIP/regionName.c.o"
-  "/Users/user/Desktop/QServ/cp/GeoIP/libGeoIP/timeZone.c" "/Users/user/Desktop/QServ/cp/GeoIP/CMakeFiles/GeoIP.dir/libGeoIP/timeZone.c.o"
+  "/Users/user/Desktop/QServCollect/GeoIP/libGeoIP/GeoIP.c" "/Users/user/Desktop/QServCollect/GeoIP/CMakeFiles/GeoIP.dir/libGeoIP/GeoIP.c.o"
+  "/Users/user/Desktop/QServCollect/GeoIP/libGeoIP/GeoIPCity.c" "/Users/user/Desktop/QServCollect/GeoIP/CMakeFiles/GeoIP.dir/libGeoIP/GeoIPCity.c.o"
+  "/Users/user/Desktop/QServCollect/GeoIP/libGeoIP/GeoIPUpdate.c" "/Users/user/Desktop/QServCollect/GeoIP/CMakeFiles/GeoIP.dir/libGeoIP/GeoIPUpdate.c.o"
+  "/Users/user/Desktop/QServCollect/GeoIP/libGeoIP/md5.c" "/Users/user/Desktop/QServCollect/GeoIP/CMakeFiles/GeoIP.dir/libGeoIP/md5.c.o"
+  "/Users/user/Desktop/QServCollect/GeoIP/libGeoIP/regionName.c" "/Users/user/Desktop/QServCollect/GeoIP/CMakeFiles/GeoIP.dir/libGeoIP/regionName.c.o"
+  "/Users/user/Desktop/QServCollect/GeoIP/libGeoIP/timeZone.c" "/Users/user/Desktop/QServCollect/GeoIP/CMakeFiles/GeoIP.dir/libGeoIP/timeZone.c.o"
   )
 set(CMAKE_C_COMPILER_ID "Clang")
 

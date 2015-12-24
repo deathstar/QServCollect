@@ -6,5 +6,5 @@ C_FLAGS =
 
 C_DEFINES = -DGEOIPDATADIR=\"\" -DSTANDALONE
 
-C_INCLUDES = -I/Users/user/Desktop/QServ/cp/src/engine -I/Users/user/Desktop/QServ/cp/fpsgame -I/Users/user/Desktop/QServ/cp/GeoIP/libGeoIP -I/Users/user/Desktop/QServ/cp/shared -I/Users/user/Desktop/QServ/cp/tools -I/Users/user/Desktop/QServ/cp/QServ -I/Users/user/Desktop/QServ/cp/enet/include 
+C_INCLUDES = -I/Users/user/Desktop/QServCollect/src/engine -I/Users/user/Desktop/QServCollect/fpsgame -I/Users/user/Desktop/QServCollect/GeoIP/libGeoIP -I/Users/user/Desktop/QServCollect/shared -I/Users/user/Desktop/QServCollect/tools -I/Users/user/Desktop/QServCollect/QServ -I/Users/user/Desktop/QServCollect/enet/include 
 

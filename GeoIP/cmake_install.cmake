@@ -1,4 +1,4 @@
-# Install script for directory: /Users/user/Desktop/QServ/cp/GeoIP
+# Install script for directory: /Users/user/Desktop/QServCollect/GeoIP
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

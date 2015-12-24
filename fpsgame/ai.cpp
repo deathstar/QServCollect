@@ -578,10 +578,7 @@ namespace ai
     else if(allweaponinsta) {
         if(m_insta) d->ai->weappref = GUN_CG;
         }*/
-        
-        if(m_insta) {
-        d->ai->weappref = GUN_RIFLE;
-        }
+    if(m_insta) d->ai->weappref = GUN_RIFLE;
     
         else
         {

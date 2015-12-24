@@ -6,45 +6,45 @@
 
 #IncludeRegexTransform: 
 
-/Users/user/Desktop/QServ/cp/enet/callbacks.c
+/Users/user/Desktop/QServCollect/enet/callbacks.c
 enet/enet.h
-/Users/user/Desktop/QServ/cp/enet/enet/enet.h
+/Users/user/Desktop/QServCollect/enet/enet/enet.h
 
-/Users/user/Desktop/QServ/cp/enet/host.c
+/Users/user/Desktop/QServCollect/enet/host.c
 string.h
 -
 enet/enet.h
-/Users/user/Desktop/QServ/cp/enet/enet/enet.h
+/Users/user/Desktop/QServCollect/enet/enet/enet.h
 
-/Users/user/Desktop/QServ/cp/enet/list.c
+/Users/user/Desktop/QServCollect/enet/list.c
 enet/enet.h
-/Users/user/Desktop/QServ/cp/enet/enet/enet.h
+/Users/user/Desktop/QServCollect/enet/enet/enet.h
 
-/Users/user/Desktop/QServ/cp/enet/packet.c
+/Users/user/Desktop/QServCollect/enet/packet.c
 string.h
 -
 enet/enet.h
-/Users/user/Desktop/QServ/cp/enet/enet/enet.h
+/Users/user/Desktop/QServCollect/enet/enet/enet.h
 
-/Users/user/Desktop/QServ/cp/enet/peer.c
+/Users/user/Desktop/QServCollect/enet/peer.c
 string.h
 -
 enet/enet.h
-/Users/user/Desktop/QServ/cp/enet/enet/enet.h
+/Users/user/Desktop/QServCollect/enet/enet/enet.h
 
-/Users/user/Desktop/QServ/cp/enet/protocol.c
+/Users/user/Desktop/QServCollect/enet/protocol.c
 stdio.h
 -
 string.h
 -
 enet/utility.h
-/Users/user/Desktop/QServ/cp/enet/enet/utility.h
+/Users/user/Desktop/QServCollect/enet/enet/utility.h
 enet/time.h
-/Users/user/Desktop/QServ/cp/enet/enet/time.h
+/Users/user/Desktop/QServCollect/enet/enet/time.h
 enet/enet.h
-/Users/user/Desktop/QServ/cp/enet/enet/enet.h
+/Users/user/Desktop/QServCollect/enet/enet/enet.h
 
-/Users/user/Desktop/QServ/cp/enet/unix.c
+/Users/user/Desktop/QServCollect/enet/unix.c
 sys/types.h
 -
 sys/socket.h
@@ -68,17 +68,17 @@ errno.h
 time.h
 -
 enet/enet.h
-/Users/user/Desktop/QServ/cp/enet/enet/enet.h
+/Users/user/Desktop/QServCollect/enet/enet/enet.h
 fcntl.h
 -
 sys/poll.h
 -
 
-/Users/user/Desktop/QServ/cp/enet/win32.c
+/Users/user/Desktop/QServCollect/enet/win32.c
 time.h
 -
 enet/enet.h
-/Users/user/Desktop/QServ/cp/enet/enet/enet.h
+/Users/user/Desktop/QServCollect/enet/enet/enet.h
 
 enet/include/enet/callbacks.h
 stdlib.h

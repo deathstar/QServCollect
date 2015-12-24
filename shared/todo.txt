@@ -4,19 +4,20 @@
 
 COMMANDS
 
-    addgametime
-    cheater
     mapsucks
     setmaxhealth
     setmaxammo
-—-  tournament countdown
+    setbotbalance command 
+   clientinfo *self = qs.getClient(CMD_SENDER);
+   aiman::setbotbalance(self,1);
+    tournament countdown
     persistteams
     editmute
 
 MODES
 
     chainsaw insta 
--—  zombie mode DONE
+    zombie mode 
 
 PROTECTION
 
@@ -25,9 +26,7 @@ PROTECTION
     See “ENet Cookies” at https://github.com/pisto/spaghettimod for info.
 
 FEATURES
-
-—-  Lua integration DONE
-    tournament countdown
+    
     name instead of cn
     timestamp for console commands 
     local time by GeoIP loc
@@ -38,15 +37,28 @@ FEATURES
     intermission mapvote
     livestats xml website integration
     cubescript integration?
-—-  cross compatable clients DONE
+    cross compatable clients (zlib.h file needs linux #ifdef/backwards check from win to mac)
+   #ifdef APPLE
+   //Code commented out to compile on linux
+   //ZEXTERN z_off64_t ZEXPORT gzseek64 OF((gzFile, z_off64_t, int));
+   //ZEXTERN z_off64_t ZEXPORT gztell64 OF((gzFile));
+   //ZEXTERN z_off64_t ZEXPORT gzoffset64 OF((gzFile));
+   //ZEXTERN uLong ZEXPORT adler32_combine64 OF((uLong, uLong, z_off64_t));
+   //ZEXTERN uLong ZEXPORT crc32_combine64 OF((uLong, uLong, z_off64_t));
+
+   //#  define crc32_combine crc32_combine64
+   //ZEXTERN z_off_t ZEXPORT gzseek64 OF((gzFile, z_off_t, int));
+   //ZEXTERN z_off_t ZEXPORT gztell64 OF((gzFile));
+   //ZEXTERN z_off_t ZEXPORT gzoffset64 OF((gzFile));
+   //ZEXTERN uLong ZEXPORT adler32_combine64 OF((uLong, uLong, z_off_t));
+   //ZEXTERN uLong ZEXPORT crc32_combine64 OF((uLong, uLong, z_off_t));
+   #endif
 
 OTHER
-    
-    If(zombie mode) handler 
     forced getmap from server possibility in init with mapname
     info command tells how long client has been connected for 
     uptime function needs fixing
     time/timezone commands issue wrong times
-—-  when client connect echo cn to irc DONE
+    when client connect echo cn to irc
     default mode setting, default map, mode rotation
     github page

@@ -6,7 +6,7 @@
 
 #IncludeRegexTransform: 
 
-/Users/user/Desktop/QServ/cp/GeoIP/libGeoIP/GeoIP.h
+/Users/user/Desktop/QServCollect/GeoIP/libGeoIP/GeoIP.h
 sys/types.h
 -
 sys/socket.h
@@ -32,41 +32,47 @@ sys/types.h
 sys/stat.h
 -
 
-/Users/user/Desktop/QServ/cp/QCom.cpp
+/Users/user/Desktop/QServCollect/GeoIP/libGeoIP/GeoIPCity.h
+GeoIP.h
+/Users/user/Desktop/QServCollect/GeoIP/libGeoIP/GeoIP.h
+
+/Users/user/Desktop/QServCollect/QCom.cpp
 QCom.h
-/Users/user/Desktop/QServ/cp/QCom.h
+/Users/user/Desktop/QServCollect/QCom.h
 stdio.h
 -
 time.h
 -
 
-/Users/user/Desktop/QServ/cp/QCom.h
+/Users/user/Desktop/QServCollect/QCom.h
 QServ.h
-/Users/user/Desktop/QServ/cp/QServ.h
+/Users/user/Desktop/QServCollect/QServ.h
 
-/Users/user/Desktop/QServ/cp/QServ.cpp
+/Users/user/Desktop/QServCollect/QServ.cpp
 QServ.h
-/Users/user/Desktop/QServ/cp/QServ.h
+/Users/user/Desktop/QServCollect/QServ.h
+GeoIP/libGeoIP/GeoIPCity.h
+/Users/user/Desktop/QServCollect/GeoIP/libGeoIP/GeoIPCity.h
 
-/Users/user/Desktop/QServ/cp/QServ.h
+/Users/user/Desktop/QServCollect/QServ.h
 game.h
-/Users/user/Desktop/QServ/cp/game.h
+/Users/user/Desktop/QServCollect/game.h
 fpsgame.h
-/Users/user/Desktop/QServ/cp/fpsgame.h
+/Users/user/Desktop/QServCollect/fpsgame.h
 GeoIP/libGeoIP/GeoIP.h
-/Users/user/Desktop/QServ/cp/GeoIP/libGeoIP/GeoIP.h
+/Users/user/Desktop/QServCollect/GeoIP/libGeoIP/GeoIP.h
 time.h
 -
 pthread.h
 -
 ircbot/ircbot.h
-/Users/user/Desktop/QServ/cp/ircbot/ircbot.h
+/Users/user/Desktop/QServCollect/ircbot/ircbot.h
 
-/Users/user/Desktop/QServ/cp/engine/command.cpp
+/Users/user/Desktop/QServCollect/engine/command.cpp
 engine.h
-/Users/user/Desktop/QServ/cp/engine/engine.h
+/Users/user/Desktop/QServCollect/engine/engine.h
 
-/Users/user/Desktop/QServ/cp/engine/cube.h
+/Users/user/Desktop/QServCollect/engine/cube.h
 math.h
 -
 string.h
@@ -86,79 +92,75 @@ assert.h
 time.h
 -
 windows.h
-/Users/user/Desktop/QServ/cp/engine/windows.h
+/Users/user/Desktop/QServCollect/engine/windows.h
 eh.h
 -
 dbghelp.h
 -
 enet/enet.h
-/Users/user/Desktop/QServ/cp/engine/enet/enet.h
+/Users/user/Desktop/QServCollect/engine/enet/enet.h
 zlib.h
 -
 tools.h
-/Users/user/Desktop/QServ/cp/engine/tools.h
+/Users/user/Desktop/QServCollect/engine/tools.h
 geom.h
-/Users/user/Desktop/QServ/cp/engine/geom.h
+/Users/user/Desktop/QServCollect/engine/geom.h
 ents.h
-/Users/user/Desktop/QServ/cp/engine/ents.h
+/Users/user/Desktop/QServCollect/engine/ents.h
 command.h
-/Users/user/Desktop/QServ/cp/engine/command.h
+/Users/user/Desktop/QServCollect/engine/command.h
 iengine.h
-/Users/user/Desktop/QServ/cp/engine/iengine.h
+/Users/user/Desktop/QServCollect/engine/iengine.h
 igame.h
-/Users/user/Desktop/QServ/cp/engine/igame.h
+/Users/user/Desktop/QServCollect/engine/igame.h
 ../engine/world.h
-/Users/user/Desktop/QServ/cp/engine/world.h
+/Users/user/Desktop/QServCollect/engine/world.h
 
-/Users/user/Desktop/QServ/cp/engine/engine.h
+/Users/user/Desktop/QServCollect/engine/engine.h
 cube.h
-/Users/user/Desktop/QServ/cp/engine/cube.h
+/Users/user/Desktop/QServCollect/engine/cube.h
 
-/Users/user/Desktop/QServ/cp/engine/server.cpp
+/Users/user/Desktop/QServCollect/engine/server.cpp
 ../QServ.h
-/Users/user/Desktop/QServ/cp/QServ.h
+/Users/user/Desktop/QServCollect/QServ.h
 shellapi.h
-/Users/user/Desktop/QServ/cp/engine/shellapi.h
+/Users/user/Desktop/QServCollect/engine/shellapi.h
 ../QCom.h
-/Users/user/Desktop/QServ/cp/QCom.h
+/Users/user/Desktop/QServCollect/QCom.h
 
-/Users/user/Desktop/QServ/cp/engine/world.h
+/Users/user/Desktop/QServCollect/engine/world.h
 
-/Users/user/Desktop/QServ/cp/fpsgame.h
-game.h
-/Users/user/Desktop/QServ/cp/game.h
+/Users/user/Desktop/QServCollect/fpsgame/aiman.h
 
-/Users/user/Desktop/QServ/cp/fpsgame/aiman.h
+/Users/user/Desktop/QServCollect/fpsgame/capture.h
 
-/Users/user/Desktop/QServ/cp/fpsgame/capture.h
+/Users/user/Desktop/QServCollect/fpsgame/collect.h
 
-/Users/user/Desktop/QServ/cp/fpsgame/collect.h
+/Users/user/Desktop/QServCollect/fpsgame/ctf.h
 
-/Users/user/Desktop/QServ/cp/fpsgame/ctf.h
+/Users/user/Desktop/QServCollect/fpsgame/extinfo.h
 
-/Users/user/Desktop/QServ/cp/fpsgame/extinfo.h
-
-/Users/user/Desktop/QServ/cp/fpsgame/server.cpp
+/Users/user/Desktop/QServCollect/fpsgame/server.cpp
 ../QServ.h
-/Users/user/Desktop/QServ/cp/QServ.h
+/Users/user/Desktop/QServCollect/QServ.h
 capture.h
-/Users/user/Desktop/QServ/cp/fpsgame/capture.h
+/Users/user/Desktop/QServCollect/fpsgame/capture.h
 ctf.h
-/Users/user/Desktop/QServ/cp/fpsgame/ctf.h
+/Users/user/Desktop/QServCollect/fpsgame/ctf.h
 collect.h
-/Users/user/Desktop/QServ/cp/fpsgame/collect.h
+/Users/user/Desktop/QServCollect/fpsgame/collect.h
 capture.h
-/Users/user/Desktop/QServ/cp/fpsgame/capture.h
+/Users/user/Desktop/QServCollect/fpsgame/capture.h
 ctf.h
-/Users/user/Desktop/QServ/cp/fpsgame/ctf.h
+/Users/user/Desktop/QServCollect/fpsgame/ctf.h
 collect.h
-/Users/user/Desktop/QServ/cp/fpsgame/collect.h
+/Users/user/Desktop/QServCollect/fpsgame/collect.h
 extinfo.h
-/Users/user/Desktop/QServ/cp/fpsgame/extinfo.h
+/Users/user/Desktop/QServCollect/fpsgame/extinfo.h
 aiman.h
-/Users/user/Desktop/QServ/cp/fpsgame/aiman.h
+/Users/user/Desktop/QServCollect/fpsgame/aiman.h
 
-/Users/user/Desktop/QServ/cp/ircbot/ircbot.cpp
+/Users/user/Desktop/QServCollect/ircbot/ircbot.cpp
 sys/socket.h
 -
 arpa/inet.h
@@ -168,19 +170,21 @@ netdb.h
 netinet/in.h
 -
 ircbot.h
-/Users/user/Desktop/QServ/cp/ircbot/ircbot.h
+/Users/user/Desktop/QServCollect/ircbot/ircbot.h
+../QServ.h
+/Users/user/Desktop/QServCollect/QServ.h
 
-/Users/user/Desktop/QServ/cp/ircbot/ircbot.h
+/Users/user/Desktop/QServCollect/ircbot/ircbot.h
 game.h
-/Users/user/Desktop/QServ/cp/ircbot/game.h
+/Users/user/Desktop/QServCollect/ircbot/game.h
 
-/Users/user/Desktop/QServ/cp/shared/command.h
+/Users/user/Desktop/QServCollect/shared/command.h
 
-/Users/user/Desktop/QServ/cp/shared/crypto.cpp
+/Users/user/Desktop/QServCollect/shared/crypto.cpp
 cube.h
-/Users/user/Desktop/QServ/cp/shared/cube.h
+/Users/user/Desktop/QServCollect/shared/cube.h
 
-/Users/user/Desktop/QServ/cp/shared/cube.h
+/Users/user/Desktop/QServCollect/shared/cube.h
 math.h
 -
 string.h
@@ -200,41 +204,41 @@ assert.h
 time.h
 -
 windows.h
-/Users/user/Desktop/QServ/cp/shared/windows.h
+/Users/user/Desktop/QServCollect/shared/windows.h
 eh.h
 -
 dbghelp.h
 -
 enet/enet.h
-/Users/user/Desktop/QServ/cp/shared/enet/enet.h
+/Users/user/Desktop/QServCollect/shared/enet/enet.h
 zlib.h
 -
 tools.h
-/Users/user/Desktop/QServ/cp/shared/tools.h
+/Users/user/Desktop/QServCollect/shared/tools.h
 geom.h
-/Users/user/Desktop/QServ/cp/shared/geom.h
+/Users/user/Desktop/QServCollect/shared/geom.h
 ents.h
-/Users/user/Desktop/QServ/cp/shared/ents.h
+/Users/user/Desktop/QServCollect/shared/ents.h
 command.h
-/Users/user/Desktop/QServ/cp/shared/command.h
+/Users/user/Desktop/QServCollect/shared/command.h
 iengine.h
-/Users/user/Desktop/QServ/cp/shared/iengine.h
+/Users/user/Desktop/QServCollect/shared/iengine.h
 igame.h
-/Users/user/Desktop/QServ/cp/shared/igame.h
+/Users/user/Desktop/QServCollect/shared/igame.h
 ../engine/world.h
-/Users/user/Desktop/QServ/cp/engine/world.h
+/Users/user/Desktop/QServCollect/engine/world.h
 
-/Users/user/Desktop/QServ/cp/shared/ents.h
+/Users/user/Desktop/QServCollect/shared/ents.h
 
-/Users/user/Desktop/QServ/cp/shared/geom.h
+/Users/user/Desktop/QServCollect/shared/geom.h
 
-/Users/user/Desktop/QServ/cp/shared/iengine.h
+/Users/user/Desktop/QServCollect/shared/iengine.h
 
-/Users/user/Desktop/QServ/cp/shared/igame.h
+/Users/user/Desktop/QServCollect/shared/igame.h
 
-/Users/user/Desktop/QServ/cp/shared/stream.cpp
+/Users/user/Desktop/QServCollect/shared/stream.cpp
 cube.h
-/Users/user/Desktop/QServ/cp/shared/cube.h
+/Users/user/Desktop/QServCollect/shared/cube.h
 shlobj.h
 -
 unistd.h
@@ -246,13 +250,13 @@ sys/types.h
 dirent.h
 -
 
-/Users/user/Desktop/QServ/cp/shared/tools.cpp
+/Users/user/Desktop/QServCollect/shared/tools.cpp
 cube.h
-/Users/user/Desktop/QServ/cp/shared/cube.h
+/Users/user/Desktop/QServCollect/shared/cube.h
 unistd.h
 -
 
-/Users/user/Desktop/QServ/cp/shared/tools.h
+/Users/user/Desktop/QServCollect/shared/tools.h
 
 enet/include/enet/callbacks.h
 stdlib.h
@@ -307,6 +311,10 @@ winsock2.h
 engine/world.h
 
 fpsgame/ai.h
+
+fpsgame/fpsgame.h
+game.h
+fpsgame/game.h
 
 fpsgame/game.h
 cube.h
