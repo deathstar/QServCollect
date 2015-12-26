@@ -337,7 +337,7 @@ namespace server {
         
         if(strlen(location) > 2 && strlen(ip) > 2) {
             const char clientip = getclientip(ci->clientnum);
-            unsigned int ip = getclientip(ci->clientnum);
+            //unsigned int ip = getclientip(ci->clientnum);
             if(ci->ip == "127.0.0.1") {
                 type = 0;
                 typeconsole = 0;

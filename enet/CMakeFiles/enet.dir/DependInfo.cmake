@@ -4,14 +4,14 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_C
-  "/Users/user/Desktop/QServCollect/enet/callbacks.c" "/Users/user/Desktop/QServCollect/enet/CMakeFiles/enet.dir/callbacks.c.o"
-  "/Users/user/Desktop/QServCollect/enet/host.c" "/Users/user/Desktop/QServCollect/enet/CMakeFiles/enet.dir/host.c.o"
-  "/Users/user/Desktop/QServCollect/enet/list.c" "/Users/user/Desktop/QServCollect/enet/CMakeFiles/enet.dir/list.c.o"
-  "/Users/user/Desktop/QServCollect/enet/packet.c" "/Users/user/Desktop/QServCollect/enet/CMakeFiles/enet.dir/packet.c.o"
-  "/Users/user/Desktop/QServCollect/enet/peer.c" "/Users/user/Desktop/QServCollect/enet/CMakeFiles/enet.dir/peer.c.o"
-  "/Users/user/Desktop/QServCollect/enet/protocol.c" "/Users/user/Desktop/QServCollect/enet/CMakeFiles/enet.dir/protocol.c.o"
-  "/Users/user/Desktop/QServCollect/enet/unix.c" "/Users/user/Desktop/QServCollect/enet/CMakeFiles/enet.dir/unix.c.o"
-  "/Users/user/Desktop/QServCollect/enet/win32.c" "/Users/user/Desktop/QServCollect/enet/CMakeFiles/enet.dir/win32.c.o"
+  "/Users/user/Desktop/QServ/QServCollect/enet/callbacks.c" "/Users/user/Desktop/QServ/QServCollect/enet/CMakeFiles/enet.dir/callbacks.c.o"
+  "/Users/user/Desktop/QServ/QServCollect/enet/host.c" "/Users/user/Desktop/QServ/QServCollect/enet/CMakeFiles/enet.dir/host.c.o"
+  "/Users/user/Desktop/QServ/QServCollect/enet/list.c" "/Users/user/Desktop/QServ/QServCollect/enet/CMakeFiles/enet.dir/list.c.o"
+  "/Users/user/Desktop/QServ/QServCollect/enet/packet.c" "/Users/user/Desktop/QServ/QServCollect/enet/CMakeFiles/enet.dir/packet.c.o"
+  "/Users/user/Desktop/QServ/QServCollect/enet/peer.c" "/Users/user/Desktop/QServ/QServCollect/enet/CMakeFiles/enet.dir/peer.c.o"
+  "/Users/user/Desktop/QServ/QServCollect/enet/protocol.c" "/Users/user/Desktop/QServ/QServCollect/enet/CMakeFiles/enet.dir/protocol.c.o"
+  "/Users/user/Desktop/QServ/QServCollect/enet/unix.c" "/Users/user/Desktop/QServ/QServCollect/enet/CMakeFiles/enet.dir/unix.c.o"
+  "/Users/user/Desktop/QServ/QServCollect/enet/win32.c" "/Users/user/Desktop/QServ/QServCollect/enet/CMakeFiles/enet.dir/win32.c.o"
   )
 set(CMAKE_C_COMPILER_ID "Clang")
 

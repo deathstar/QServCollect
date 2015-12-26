@@ -6,9 +6,9 @@
 
 #IncludeRegexTransform: 
 
-/Users/user/Desktop/QServCollect/GeoIP/libGeoIP/GeoIP.c
+/Users/user/Desktop/QServ/QServCollect/GeoIP/libGeoIP/GeoIP.c
 GeoIP.h
-/Users/user/Desktop/QServCollect/GeoIP/libGeoIP/GeoIP.h
+/Users/user/Desktop/QServ/QServCollect/GeoIP/libGeoIP/GeoIP.h
 netdb.h
 -
 sys/mman.h
@@ -32,7 +32,7 @@ sys/time.h
 stdint.h
 -
 
-/Users/user/Desktop/QServCollect/GeoIP/libGeoIP/GeoIP.h
+/Users/user/Desktop/QServ/QServCollect/GeoIP/libGeoIP/GeoIP.h
 sys/types.h
 -
 sys/socket.h
@@ -58,7 +58,7 @@ sys/types.h
 sys/stat.h
 -
 
-/Users/user/Desktop/QServCollect/GeoIP/libGeoIP/GeoIPCity.c
+/Users/user/Desktop/QServ/QServCollect/GeoIP/libGeoIP/GeoIPCity.c
 GeoIP.h
 -
 GeoIP_internal.h
@@ -78,23 +78,23 @@ sys/types.h
 stdint.h
 -
 
-/Users/user/Desktop/QServCollect/GeoIP/libGeoIP/GeoIPCity.h
+/Users/user/Desktop/QServ/QServCollect/GeoIP/libGeoIP/GeoIPCity.h
 GeoIP.h
-/Users/user/Desktop/QServCollect/GeoIP/libGeoIP/GeoIP.h
+/Users/user/Desktop/QServ/QServCollect/GeoIP/libGeoIP/GeoIP.h
 
-/Users/user/Desktop/QServCollect/GeoIP/libGeoIP/GeoIPUpdate.c
+/Users/user/Desktop/QServ/QServCollect/GeoIP/libGeoIP/GeoIPUpdate.c
 GeoIPCity.h
-/Users/user/Desktop/QServCollect/GeoIP/libGeoIP/GeoIPCity.h
+/Users/user/Desktop/QServ/QServCollect/GeoIP/libGeoIP/GeoIPCity.h
 GeoIP.h
-/Users/user/Desktop/QServCollect/GeoIP/libGeoIP/GeoIP.h
+/Users/user/Desktop/QServ/QServCollect/GeoIP/libGeoIP/GeoIP.h
 GeoIPUpdate.h
-/Users/user/Desktop/QServCollect/GeoIP/libGeoIP/GeoIPUpdate.h
+/Users/user/Desktop/QServ/QServCollect/GeoIP/libGeoIP/GeoIPUpdate.h
 GeoIP_internal.h
-/Users/user/Desktop/QServCollect/GeoIP/libGeoIP/GeoIP_internal.h
+/Users/user/Desktop/QServ/QServCollect/GeoIP/libGeoIP/GeoIP_internal.h
 global.h
-/Users/user/Desktop/QServCollect/GeoIP/libGeoIP/global.h
+/Users/user/Desktop/QServ/QServCollect/GeoIP/libGeoIP/global.h
 md5.h
-/Users/user/Desktop/QServCollect/GeoIP/libGeoIP/md5.h
+/Users/user/Desktop/QServ/QServCollect/GeoIP/libGeoIP/md5.h
 sys/types.h
 -
 netinet/in.h
@@ -118,19 +118,19 @@ stdio.h
 unistd.h
 -
 
-/Users/user/Desktop/QServCollect/GeoIP/libGeoIP/GeoIPUpdate.h
+/Users/user/Desktop/QServ/QServCollect/GeoIP/libGeoIP/GeoIPUpdate.h
 stdarg.h
 -
 stdio.h
 -
 
-/Users/user/Desktop/QServCollect/GeoIP/libGeoIP/GeoIP_internal.h
+/Users/user/Desktop/QServ/QServCollect/GeoIP/libGeoIP/GeoIP_internal.h
 GeoIP.h
-/Users/user/Desktop/QServCollect/GeoIP/libGeoIP/GeoIP.h
+/Users/user/Desktop/QServ/QServCollect/GeoIP/libGeoIP/GeoIP.h
 
-/Users/user/Desktop/QServCollect/GeoIP/libGeoIP/global.h
+/Users/user/Desktop/QServ/QServCollect/GeoIP/libGeoIP/global.h
 
-/Users/user/Desktop/QServCollect/GeoIP/libGeoIP/md5.c
+/Users/user/Desktop/QServ/QServCollect/GeoIP/libGeoIP/md5.c
 stdio.h
 -
 stdlib.h
@@ -140,23 +140,23 @@ string.h
 assert.h
 -
 types.h
-/Users/user/Desktop/QServCollect/GeoIP/libGeoIP/types.h
+/Users/user/Desktop/QServ/QServCollect/GeoIP/libGeoIP/types.h
 
-/Users/user/Desktop/QServCollect/GeoIP/libGeoIP/md5.h
+/Users/user/Desktop/QServ/QServCollect/GeoIP/libGeoIP/md5.h
 types.h
-/Users/user/Desktop/QServCollect/GeoIP/libGeoIP/types.h
+/Users/user/Desktop/QServ/QServCollect/GeoIP/libGeoIP/types.h
 
-/Users/user/Desktop/QServCollect/GeoIP/libGeoIP/regionName.c
+/Users/user/Desktop/QServ/QServCollect/GeoIP/libGeoIP/regionName.c
 string.h
 -
 stdio.h
 -
 
-/Users/user/Desktop/QServCollect/GeoIP/libGeoIP/timeZone.c
+/Users/user/Desktop/QServ/QServCollect/GeoIP/libGeoIP/timeZone.c
 string.h
 -
 
-/Users/user/Desktop/QServCollect/GeoIP/libGeoIP/types.h
+/Users/user/Desktop/QServ/QServCollect/GeoIP/libGeoIP/types.h
 inttypes.h
 -
 sys/types.h

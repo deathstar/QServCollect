@@ -3,6 +3,7 @@
 // includes threading for QServ and IRC
 
 #include "../QServ.h"
+#include <pthread.h>
 
 
 void timer() {
@@ -765,6 +766,7 @@ void serverslice(bool dedicated, uint timeout)   // main server update, called f
                 char hn[1024];
                 copystring(c.hostname, (enet_address_get_host_ip(&c.peer->address, hn, sizeof(hn))==0) ? hn : "unknown");
                 logoutf("\nJoin: (%s)", c.hostname);
+                out(ECHO_IRC, "Join: (%s)", c.hostname);
                 int reason = server::clientconnect(c.num, c.peer->address.host, c.hostname); //ipstring for QServ
                 if(reason) disconnect_client(c.num, reason);
                 break;
@@ -1066,7 +1068,7 @@ void logoutfv(const char *fmt, va_list args)
 
 #endif
 
-static bool dedicatedserver = false;
+static bool dedicatedserver = true;
 
 bool isdedicatedserver() { return dedicatedserver; }
 
@@ -1077,7 +1079,7 @@ void *main_thread(void *) {
 	for(;;) {
 		serverslice(true, 5);
 		
-		//timer(); //causes segfault when timer is broken 
+		//timer(); //causes segfault when timer is broken (recently uncommented)
 	}
 	
 }
@@ -1089,35 +1091,30 @@ void *main_thread_s(void *) {
 		MSG msg;
 		while(PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
 		{
-			if(msg.message == WM_QUIT) exit(EXIT_SUCCESS);
+			//if(msg.message == WM_QUIT) exit(EXIT_SUCCESS);
 			TranslateMessage(&msg);
 			DispatchMessage(&msg);
 		}
 		#endif
 		serverslice(true, 5);
 		//timer
-		timer();
+		//timer();
 
 	}
 }
 
 void rundedicatedserver()
 {
-    dedicatedserver = true;
-    logoutf("[ OK ] QServ Started, waiting for clients...");
 #ifdef WIN32
     SetPriorityClass(GetCurrentProcess(), HIGH_PRIORITY_CLASS);
-
-	
-			thread2 = pthread_t();
-		pthread_create(&thread2, NULL, main_thread_s, NULL);
+	thread2 = pthread_t();
+    pthread_create(&thread2, NULL, main_thread_s, NULL);
 #else
+    thread2 = pthread_t();
+    pthread_create(&thread2, NULL, main_thread, NULL);
+#endif
 
-		thread2 = pthread_t();
-		pthread_create(&thread2, NULL, main_thread, NULL);
-
-	#endif
-    dedicatedserver = false;
+logoutf("[ OK ] QServ Started, waiting for clients...");
 }
 
 bool servererror(bool dedicated, const char *desc)
@@ -1158,13 +1155,13 @@ bool setuplistenserver(bool dedicated)
     return true;
 }
 
-void initserver(bool listen, bool dedicated, const char *path)
+void initserver(bool listen, bool dedicated) //, const char *path
 {
     if(dedicated)
     {
-#ifdef WIN32
-        setupwindow("QServ", path);
-#endif
+//#ifdef WIN32
+ //       setupwindow("QServ", path);
+//#endif
     }
 
     /**
@@ -1215,46 +1212,36 @@ vector<const char *> gameargs;
 #include "../QCom.h"
 
 void *irc_thread(void *) {
-        sleep(3); //Wait 3 seconds before starting IRC otherwise IRC doesn't start (previously 5)
+        //sleep(1);
         irc.init();
-
 }
 
 int main(int argc, char **argv) {
     int ticks = 0;
     #ifdef _WIN32
     ticks = GetTickCount();
-    #else
+    //#else commented out
     #endif
     srand(ticks);
     qs.initCommands(server::initCmds);
 	
     setlogfile(NULL);
-
-    if(enet_initialize()<0) fatal("Unable to initialise network module");
+    if(enet_initialize()<0) fatal("[FATAL ERROR]: Unable to initialise network module");
     atexit(enet_deinitialize);
     enet_time_set(0);
     for(int i = 1; i<argc; i++) if(argv[i][0]!='-' || !serveroption(argv[i])) gameargs.add(argv[i]);
     game::parseoptions(gameargs);
+    //initserver(true, true, argv[0]); for windows
+    initserver(true, true);
     
-    initserver(true, true, argv[0]);
+    pthread_t thread1 = pthread_t();
     
+    pthread_create(&thread1, NULL, irc_thread, NULL);
     
- 
- 	//#ifdef LINUX 
-	pthread_t thread1 = pthread_t();
-
-	pthread_create(&thread1, NULL, irc_thread, NULL);
-	
-	
-pthread_join(thread2, NULL);
-	
-	pthread_join(thread1, NULL);
-	
-	
-	///irc.init();
-	//#endif
-
+    pthread_join(thread2, NULL);
+    
+    pthread_join(thread1, NULL);
+    
 	pthread_exit(NULL);
     
 	return EXIT_SUCCESS;

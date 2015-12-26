@@ -43,10 +43,10 @@ RM = /usr/local/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /Users/user/Desktop/QServCollect
+CMAKE_SOURCE_DIR = /Users/user/Desktop/QServ/QServCollect
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /Users/user/Desktop/QServCollect
+CMAKE_BINARY_DIR = /Users/user/Desktop/QServ/QServCollect
 
 # Include any dependencies generated for this target.
 include CMakeFiles/qserv.dir/depend.make
@@ -59,16 +59,16 @@ include CMakeFiles/qserv.dir/flags.make
 
 CMakeFiles/qserv.dir/engine/server.cpp.o: CMakeFiles/qserv.dir/flags.make
 CMakeFiles/qserv.dir/engine/server.cpp.o: engine/server.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/user/Desktop/QServCollect/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/qserv.dir/engine/server.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/qserv.dir/engine/server.cpp.o -c /Users/user/Desktop/QServCollect/engine/server.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/user/Desktop/QServ/QServCollect/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/qserv.dir/engine/server.cpp.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/qserv.dir/engine/server.cpp.o -c /Users/user/Desktop/QServ/QServCollect/engine/server.cpp
 
 CMakeFiles/qserv.dir/engine/server.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/qserv.dir/engine/server.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/user/Desktop/QServCollect/engine/server.cpp > CMakeFiles/qserv.dir/engine/server.cpp.i
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/user/Desktop/QServ/QServCollect/engine/server.cpp > CMakeFiles/qserv.dir/engine/server.cpp.i
 
 CMakeFiles/qserv.dir/engine/server.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/qserv.dir/engine/server.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/user/Desktop/QServCollect/engine/server.cpp -o CMakeFiles/qserv.dir/engine/server.cpp.s
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/user/Desktop/QServ/QServCollect/engine/server.cpp -o CMakeFiles/qserv.dir/engine/server.cpp.s
 
 CMakeFiles/qserv.dir/engine/server.cpp.o.requires:
 
@@ -83,16 +83,16 @@ CMakeFiles/qserv.dir/engine/server.cpp.o.provides.build: CMakeFiles/qserv.dir/en
 
 CMakeFiles/qserv.dir/engine/command.cpp.o: CMakeFiles/qserv.dir/flags.make
 CMakeFiles/qserv.dir/engine/command.cpp.o: engine/command.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/user/Desktop/QServCollect/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/qserv.dir/engine/command.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/qserv.dir/engine/command.cpp.o -c /Users/user/Desktop/QServCollect/engine/command.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/user/Desktop/QServ/QServCollect/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/qserv.dir/engine/command.cpp.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/qserv.dir/engine/command.cpp.o -c /Users/user/Desktop/QServ/QServCollect/engine/command.cpp
 
 CMakeFiles/qserv.dir/engine/command.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/qserv.dir/engine/command.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/user/Desktop/QServCollect/engine/command.cpp > CMakeFiles/qserv.dir/engine/command.cpp.i
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/user/Desktop/QServ/QServCollect/engine/command.cpp > CMakeFiles/qserv.dir/engine/command.cpp.i
 
 CMakeFiles/qserv.dir/engine/command.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/qserv.dir/engine/command.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/user/Desktop/QServCollect/engine/command.cpp -o CMakeFiles/qserv.dir/engine/command.cpp.s
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/user/Desktop/QServ/QServCollect/engine/command.cpp -o CMakeFiles/qserv.dir/engine/command.cpp.s
 
 CMakeFiles/qserv.dir/engine/command.cpp.o.requires:
 
@@ -107,16 +107,16 @@ CMakeFiles/qserv.dir/engine/command.cpp.o.provides.build: CMakeFiles/qserv.dir/e
 
 CMakeFiles/qserv.dir/fpsgame/server.cpp.o: CMakeFiles/qserv.dir/flags.make
 CMakeFiles/qserv.dir/fpsgame/server.cpp.o: fpsgame/server.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/user/Desktop/QServCollect/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/qserv.dir/fpsgame/server.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/qserv.dir/fpsgame/server.cpp.o -c /Users/user/Desktop/QServCollect/fpsgame/server.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/user/Desktop/QServ/QServCollect/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/qserv.dir/fpsgame/server.cpp.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/qserv.dir/fpsgame/server.cpp.o -c /Users/user/Desktop/QServ/QServCollect/fpsgame/server.cpp
 
 CMakeFiles/qserv.dir/fpsgame/server.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/qserv.dir/fpsgame/server.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/user/Desktop/QServCollect/fpsgame/server.cpp > CMakeFiles/qserv.dir/fpsgame/server.cpp.i
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/user/Desktop/QServ/QServCollect/fpsgame/server.cpp > CMakeFiles/qserv.dir/fpsgame/server.cpp.i
 
 CMakeFiles/qserv.dir/fpsgame/server.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/qserv.dir/fpsgame/server.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/user/Desktop/QServCollect/fpsgame/server.cpp -o CMakeFiles/qserv.dir/fpsgame/server.cpp.s
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/user/Desktop/QServ/QServCollect/fpsgame/server.cpp -o CMakeFiles/qserv.dir/fpsgame/server.cpp.s
 
 CMakeFiles/qserv.dir/fpsgame/server.cpp.o.requires:
 
@@ -131,16 +131,16 @@ CMakeFiles/qserv.dir/fpsgame/server.cpp.o.provides.build: CMakeFiles/qserv.dir/f
 
 CMakeFiles/qserv.dir/QServ.cpp.o: CMakeFiles/qserv.dir/flags.make
 CMakeFiles/qserv.dir/QServ.cpp.o: QServ.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/user/Desktop/QServCollect/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/qserv.dir/QServ.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/qserv.dir/QServ.cpp.o -c /Users/user/Desktop/QServCollect/QServ.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/user/Desktop/QServ/QServCollect/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/qserv.dir/QServ.cpp.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/qserv.dir/QServ.cpp.o -c /Users/user/Desktop/QServ/QServCollect/QServ.cpp
 
 CMakeFiles/qserv.dir/QServ.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/qserv.dir/QServ.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/user/Desktop/QServCollect/QServ.cpp > CMakeFiles/qserv.dir/QServ.cpp.i
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/user/Desktop/QServ/QServCollect/QServ.cpp > CMakeFiles/qserv.dir/QServ.cpp.i
 
 CMakeFiles/qserv.dir/QServ.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/qserv.dir/QServ.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/user/Desktop/QServCollect/QServ.cpp -o CMakeFiles/qserv.dir/QServ.cpp.s
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/user/Desktop/QServ/QServCollect/QServ.cpp -o CMakeFiles/qserv.dir/QServ.cpp.s
 
 CMakeFiles/qserv.dir/QServ.cpp.o.requires:
 
@@ -155,16 +155,16 @@ CMakeFiles/qserv.dir/QServ.cpp.o.provides.build: CMakeFiles/qserv.dir/QServ.cpp.
 
 CMakeFiles/qserv.dir/QCom.cpp.o: CMakeFiles/qserv.dir/flags.make
 CMakeFiles/qserv.dir/QCom.cpp.o: QCom.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/user/Desktop/QServCollect/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/qserv.dir/QCom.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/qserv.dir/QCom.cpp.o -c /Users/user/Desktop/QServCollect/QCom.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/user/Desktop/QServ/QServCollect/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/qserv.dir/QCom.cpp.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/qserv.dir/QCom.cpp.o -c /Users/user/Desktop/QServ/QServCollect/QCom.cpp
 
 CMakeFiles/qserv.dir/QCom.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/qserv.dir/QCom.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/user/Desktop/QServCollect/QCom.cpp > CMakeFiles/qserv.dir/QCom.cpp.i
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/user/Desktop/QServ/QServCollect/QCom.cpp > CMakeFiles/qserv.dir/QCom.cpp.i
 
 CMakeFiles/qserv.dir/QCom.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/qserv.dir/QCom.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/user/Desktop/QServCollect/QCom.cpp -o CMakeFiles/qserv.dir/QCom.cpp.s
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/user/Desktop/QServ/QServCollect/QCom.cpp -o CMakeFiles/qserv.dir/QCom.cpp.s
 
 CMakeFiles/qserv.dir/QCom.cpp.o.requires:
 
@@ -179,16 +179,16 @@ CMakeFiles/qserv.dir/QCom.cpp.o.provides.build: CMakeFiles/qserv.dir/QCom.cpp.o
 
 CMakeFiles/qserv.dir/shared/tools.cpp.o: CMakeFiles/qserv.dir/flags.make
 CMakeFiles/qserv.dir/shared/tools.cpp.o: shared/tools.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/user/Desktop/QServCollect/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/qserv.dir/shared/tools.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/qserv.dir/shared/tools.cpp.o -c /Users/user/Desktop/QServCollect/shared/tools.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/user/Desktop/QServ/QServCollect/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/qserv.dir/shared/tools.cpp.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/qserv.dir/shared/tools.cpp.o -c /Users/user/Desktop/QServ/QServCollect/shared/tools.cpp
 
 CMakeFiles/qserv.dir/shared/tools.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/qserv.dir/shared/tools.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/user/Desktop/QServCollect/shared/tools.cpp > CMakeFiles/qserv.dir/shared/tools.cpp.i
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/user/Desktop/QServ/QServCollect/shared/tools.cpp > CMakeFiles/qserv.dir/shared/tools.cpp.i
 
 CMakeFiles/qserv.dir/shared/tools.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/qserv.dir/shared/tools.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/user/Desktop/QServCollect/shared/tools.cpp -o CMakeFiles/qserv.dir/shared/tools.cpp.s
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/user/Desktop/QServ/QServCollect/shared/tools.cpp -o CMakeFiles/qserv.dir/shared/tools.cpp.s
 
 CMakeFiles/qserv.dir/shared/tools.cpp.o.requires:
 
@@ -203,16 +203,16 @@ CMakeFiles/qserv.dir/shared/tools.cpp.o.provides.build: CMakeFiles/qserv.dir/sha
 
 CMakeFiles/qserv.dir/shared/stream.cpp.o: CMakeFiles/qserv.dir/flags.make
 CMakeFiles/qserv.dir/shared/stream.cpp.o: shared/stream.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/user/Desktop/QServCollect/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/qserv.dir/shared/stream.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/qserv.dir/shared/stream.cpp.o -c /Users/user/Desktop/QServCollect/shared/stream.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/user/Desktop/QServ/QServCollect/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/qserv.dir/shared/stream.cpp.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/qserv.dir/shared/stream.cpp.o -c /Users/user/Desktop/QServ/QServCollect/shared/stream.cpp
 
 CMakeFiles/qserv.dir/shared/stream.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/qserv.dir/shared/stream.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/user/Desktop/QServCollect/shared/stream.cpp > CMakeFiles/qserv.dir/shared/stream.cpp.i
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/user/Desktop/QServ/QServCollect/shared/stream.cpp > CMakeFiles/qserv.dir/shared/stream.cpp.i
 
 CMakeFiles/qserv.dir/shared/stream.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/qserv.dir/shared/stream.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/user/Desktop/QServCollect/shared/stream.cpp -o CMakeFiles/qserv.dir/shared/stream.cpp.s
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/user/Desktop/QServ/QServCollect/shared/stream.cpp -o CMakeFiles/qserv.dir/shared/stream.cpp.s
 
 CMakeFiles/qserv.dir/shared/stream.cpp.o.requires:
 
@@ -227,16 +227,16 @@ CMakeFiles/qserv.dir/shared/stream.cpp.o.provides.build: CMakeFiles/qserv.dir/sh
 
 CMakeFiles/qserv.dir/shared/crypto.cpp.o: CMakeFiles/qserv.dir/flags.make
 CMakeFiles/qserv.dir/shared/crypto.cpp.o: shared/crypto.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/user/Desktop/QServCollect/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/qserv.dir/shared/crypto.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/qserv.dir/shared/crypto.cpp.o -c /Users/user/Desktop/QServCollect/shared/crypto.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/user/Desktop/QServ/QServCollect/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/qserv.dir/shared/crypto.cpp.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/qserv.dir/shared/crypto.cpp.o -c /Users/user/Desktop/QServ/QServCollect/shared/crypto.cpp
 
 CMakeFiles/qserv.dir/shared/crypto.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/qserv.dir/shared/crypto.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/user/Desktop/QServCollect/shared/crypto.cpp > CMakeFiles/qserv.dir/shared/crypto.cpp.i
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/user/Desktop/QServ/QServCollect/shared/crypto.cpp > CMakeFiles/qserv.dir/shared/crypto.cpp.i
 
 CMakeFiles/qserv.dir/shared/crypto.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/qserv.dir/shared/crypto.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/user/Desktop/QServCollect/shared/crypto.cpp -o CMakeFiles/qserv.dir/shared/crypto.cpp.s
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/user/Desktop/QServ/QServCollect/shared/crypto.cpp -o CMakeFiles/qserv.dir/shared/crypto.cpp.s
 
 CMakeFiles/qserv.dir/shared/crypto.cpp.o.requires:
 
@@ -251,16 +251,16 @@ CMakeFiles/qserv.dir/shared/crypto.cpp.o.provides.build: CMakeFiles/qserv.dir/sh
 
 CMakeFiles/qserv.dir/ircbot/ircbot.cpp.o: CMakeFiles/qserv.dir/flags.make
 CMakeFiles/qserv.dir/ircbot/ircbot.cpp.o: ircbot/ircbot.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/user/Desktop/QServCollect/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/qserv.dir/ircbot/ircbot.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/qserv.dir/ircbot/ircbot.cpp.o -c /Users/user/Desktop/QServCollect/ircbot/ircbot.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/user/Desktop/QServ/QServCollect/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/qserv.dir/ircbot/ircbot.cpp.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/qserv.dir/ircbot/ircbot.cpp.o -c /Users/user/Desktop/QServ/QServCollect/ircbot/ircbot.cpp
 
 CMakeFiles/qserv.dir/ircbot/ircbot.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/qserv.dir/ircbot/ircbot.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/user/Desktop/QServCollect/ircbot/ircbot.cpp > CMakeFiles/qserv.dir/ircbot/ircbot.cpp.i
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/user/Desktop/QServ/QServCollect/ircbot/ircbot.cpp > CMakeFiles/qserv.dir/ircbot/ircbot.cpp.i
 
 CMakeFiles/qserv.dir/ircbot/ircbot.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/qserv.dir/ircbot/ircbot.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/user/Desktop/QServCollect/ircbot/ircbot.cpp -o CMakeFiles/qserv.dir/ircbot/ircbot.cpp.s
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/user/Desktop/QServ/QServCollect/ircbot/ircbot.cpp -o CMakeFiles/qserv.dir/ircbot/ircbot.cpp.s
 
 CMakeFiles/qserv.dir/ircbot/ircbot.cpp.o.requires:
 
@@ -302,7 +302,7 @@ qserv: enet/libenet.a
 qserv: GeoIP/libGeoIP.a
 qserv: /usr/lib/libz.dylib
 qserv: CMakeFiles/qserv.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/user/Desktop/QServCollect/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Linking CXX executable qserv"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/user/Desktop/QServ/QServCollect/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Linking CXX executable qserv"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/qserv.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -327,6 +327,6 @@ CMakeFiles/qserv.dir/clean:
 .PHONY : CMakeFiles/qserv.dir/clean
 
 CMakeFiles/qserv.dir/depend:
-	cd /Users/user/Desktop/QServCollect && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /Users/user/Desktop/QServCollect /Users/user/Desktop/QServCollect /Users/user/Desktop/QServCollect /Users/user/Desktop/QServCollect /Users/user/Desktop/QServCollect/CMakeFiles/qserv.dir/DependInfo.cmake --color=$(COLOR)
+	cd /Users/user/Desktop/QServ/QServCollect && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /Users/user/Desktop/QServ/QServCollect /Users/user/Desktop/QServ/QServCollect /Users/user/Desktop/QServ/QServCollect /Users/user/Desktop/QServ/QServCollect /Users/user/Desktop/QServ/QServCollect/CMakeFiles/qserv.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/qserv.dir/depend
 
