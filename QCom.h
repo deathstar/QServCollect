@@ -46,6 +46,8 @@ namespace server {
     extern QSERV_CALLBACK help_cmd(p);
     extern QSERV_CALLBACK cheater_cmd(p);
     extern QSERV_CALLBACK mapsucks_cmd(p);
+    extern QSERV_CALLBACK gban_cmd(p);
+    extern QSERV_CALLBACK cleargbans_cmd(p);
 }
 
 #endif

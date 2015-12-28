@@ -50,24 +50,46 @@ namespace server {
         ncommand("help", "\f4Lists the #cmd command and more information. Usage: #help", PRIV_NONE, help_cmd, 0);
         ncommand("cheater", "\f4Accuses someone of cheating and alerts moderators. Usage: #cheater <cn>", PRIV_NONE, cheater_cmd, 1);
         ncommand("mapsucks", "\f4Votes for an intermission to change the map. Usage: #mapsucks", PRIV_NONE, mapsucks_cmd, 0);
+        ncommand("gban", "\f4Bans a client. Usage: #gban <cn>", PRIV_ADMIN, gban_cmd, 1);
+        ncommand("cleargbans", "\f4Clears all server bans stored and issued. Usage: #cleargbans", PRIV_ADMIN, gban_cmd, 0);
         //ncommand("owords", "View list of offensive words. Usage: #owords",
         ///         PRIV_NONE, owords_cmd, 0);
         //ncommand("olangfilter", "Turn the offensive language filter on or off. Usage: #olang <off/on> (0/1) and #olang to see if it's activated",
         //         PRIV_MASTER, olangfilter_cmd, 1);
     }
+    
+    QSERV_CALLBACK cleargbans_cmd(p) {
+        server::cleargbans();
+        out(ECHO_SERV, "\f4All game bans \f0cleared\f4!");
+        out(ECHO_NOCOLOR, "All Game bans cleared");
+    }
+    
+    QSERV_CALLBACK gban_cmd(p) {
+        int cn = atoi(args[1]);
+        clientinfo *ci = qs.getClient(cn);
+        if(cn!=CMD_SENDER && cn >= 0 && cn <= 1000 && ci != NULL && ci->connected && args[1] != NULL && cn!=CMD_SENDER) {
+            clientinfo *ci = qs.getClient(cn);
+            server::addgban(ci->ip);
+            disconnect_client(ci->clientnum, DISC_IPBAN);
+        } else {
+            sendf(CMD_SENDER, 1, "ris", N_SERVMSG, "\f3Error: \f4Incorrect client number/no cn specified or you're trying to ban yourself.");
+            sendf(CMD_SENDER, 1, "ris", N_SERVMSG, CMD_DESC(cid));
+        }
+    }
+   
     VAR(votestopassmapsucks, 2, 10, INT_MAX);
     int mapsucksvotes = 0;
     QSERV_CALLBACK mapsucks_cmd(p) {
         clientinfo *ci = qs.getClient(CMD_SENDER);
         if(!ci->votedmapsucks) {
             mapsucksvotes++;
-            out(ECHO_SERV, "\f0%s \f4thinks this map sucks, use \f2#mapsucks \f4to vote.", colorname(ci));
+            out(ECHO_SERV, "\f0%s \f4thinks this map sucks, use \f2#mapsucks \f4to vote for an intermission to skip it.", colorname(ci));
             if(mapsucksvotes>=getvar("votestopassmapsucks")) {
-                out(ECHO_SERV, "\f7%d \f4people voted that this map sucks. Changing...", votestopassmapsucks);
                 startintermission();
                 int mapsucksvotes = 0;
+                ci->votedmapsucks = true;
+                out(ECHO_SERV, "\f4Changing map: That map sucked (\f7%d \f4votes to skip)", votestopassmapsucks);
             }
-            ci->votedmapsucks = true;
         }
         else if(ci->votedmapsucks) sendf(ci->clientnum, 1, "ris", N_SERVMSG, "\f3Error: You have already voted");
     }
@@ -77,7 +99,7 @@ namespace server {
         int color = -1;
         
         strcpy(commandList, "");
-        sprintf(commandList, "%s", "\f7Commands: ");
+        sprintf(commandList, "%s", "\f1Commands: ");
         
         for(int i = 0; i < CMD_LAST; i++) {
             if(CMD_PRIV(i) == PRIV_NONE) {
@@ -568,7 +590,7 @@ namespace server {
         clientinfo *ci = qs.getClient(cn);
         clientinfo *self = qs.getClient(CMD_SENDER);
         if(cn!=CMD_SENDER && cn >= 0 && cn <= 1000 && ci != NULL && ci->connected && strlen(fulltext) > 0) {
-            defformatstring(shareprivsmsg)("\f4Ok, %s\f4. Sharing your privileges with \f0%s\f4. You are now an invisible administrator, however you can reclaim to reveal.", colorname(self), colorname(ci));
+            defformatstring(shareprivsmsg)("\f4Ok, %s\f4. Sharing your privileges with \f0%s\f4. They now have invisible privileges.", colorname(self), colorname(ci));
             sendf(CMD_SENDER, 1, "ris", N_SERVMSG, shareprivsmsg);
             if(self->privilege==PRIV_MASTER) {
                 defformatstring(sendprivsmsg)("\f4You have recieved \f0master \f4from \f0%s\f4.", colorname(self));
@@ -619,7 +641,7 @@ namespace server {
             int color = -1;
 
             strcpy(commandList, "");
-            sprintf(commandList, "%s", "\f7Commands: ");
+            sprintf(commandList, "%s", "\f1Commands: ");
 
             for(int i = 0; i < CMD_LAST; i++) {
                 if(CMD_PRIV(i) == PRIV_NONE) {

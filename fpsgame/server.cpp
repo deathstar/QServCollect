@@ -2817,7 +2817,7 @@ best.add(clients[i]); \
 
     int clientconnect(int n, uint ip, char *ipstr)
     {
-        privilegemsg(PRIV_MASTER, "\f4Detected joining client...");
+        privilegemsg(PRIV_MASTER, "\f4Client detected...");
         clientinfo *ci = getinfo(n);
         ci->ip=ipstr; //ipstring for QServ
         ci->clientnum = ci->ownernum = n;
@@ -2842,7 +2842,7 @@ best.add(clients[i]); \
             clients.removeobj(ci);
             aiman::removeai(ci);
             if(clearbansonempty) {
-            if(!numclients(-1, false, true)) noclients(); //bans clear when server empties
+            if(!numclients(-1, false, true)) noclients(); //define noclients
             }
             if(ci->local) checkpausegame();
 
@@ -2915,7 +2915,7 @@ best.add(clients[i]); \
         if(numclients(-1, false, true)>=maxclients) return DISC_MAXCLIENTS;
         uint ip = getclientip(ci->clientnum);
         loopv(bannedips) if(bannedips[i].ip==ip) return DISC_IPBAN;
-        if(checkgban(ip)) return DISC_IPBAN;
+        if(checkgban(ip)) return DISC_IPBAN; //Checks for game ban
         if(mastermode>=MM_PRIVATE && allowedips.find(ip)<0) return DISC_PRIVATE;
         return DISC_NONE;
     }
@@ -3102,10 +3102,10 @@ best.add(clients[i]); \
         aiman::addclient(ci);
         
         if(m_demo) setupdemoplayback();
-
+        
         if(servermotd[0]) {
-            defformatstring(welcomemsg)("\f4Welcome to \f7%s, \f0%s\f4! \n%s",serverdesc, colorname(ci), servermotd);
-            sendf(ci->clientnum, 1, "ris", N_SERVMSG, welcomemsg);
+            defformatstring(welcomemsg)("\f4Welcome to \f7%s, \f0%s\f4! %s",serverdesc,colorname(ci),servermotd);
+            sendf(ci->clientnum,1,"ris",N_SERVMSG,welcomemsg);
         }
         qs.getLocation(ci);
     }
