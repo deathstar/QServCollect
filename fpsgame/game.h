@@ -843,7 +843,9 @@ namespace server
     extern bool serveroption(const char *arg);
     extern bool delayspawn(int type);
     extern void clearbans();
+    extern void cleargbans();
     extern void privilegemsg(int min_privilege, const char *fmt, ...);
+    extern void addgban(const char *name);
 
     struct clientinfo;
 }

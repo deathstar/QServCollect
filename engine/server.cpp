@@ -1113,7 +1113,6 @@ void rundedicatedserver()
     thread2 = pthread_t();
     pthread_create(&thread2, NULL, main_thread, NULL);
 #endif
-    
     logoutf("[ OK ] QServ Started, waiting for clients...");
 }
 
