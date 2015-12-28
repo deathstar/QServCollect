@@ -49,13 +49,29 @@ namespace server {
         ncommand("tournament", "\f4Start a tournament with a timer. Usage: #tournament <mode> <map>", PRIV_MASTER, tournament_cmd, 2);
         ncommand("help", "\f4Lists the #cmd command and more information. Usage: #help", PRIV_NONE, help_cmd, 0);
         ncommand("cheater", "\f4Accuses someone of cheating and alerts moderators. Usage: #cheater <cn>", PRIV_NONE, cheater_cmd, 1);
+        ncommand("mapsucks", "\f4Votes for an intermission to change the map. Usage: #mapsucks", PRIV_NONE, mapsucks_cmd, 0);
         //ncommand("owords", "View list of offensive words. Usage: #owords",
         ///         PRIV_NONE, owords_cmd, 0);
         //ncommand("olangfilter", "Turn the offensive language filter on or off. Usage: #olang <off/on> (0/1) and #olang to see if it's activated",
         //         PRIV_MASTER, olangfilter_cmd, 1);
     }
+    VAR(votestopassmapsucks, 2, 10, INT_MAX);
+    int mapsucksvotes = 0;
+    QSERV_CALLBACK mapsucks_cmd(p) {
+        clientinfo *ci = qs.getClient(CMD_SENDER);
+        if(!ci->votedmapsucks) {
+            mapsucksvotes++;
+            out(ECHO_SERV, "\f0%s \f4thinks this map sucks, use \f2#mapsucks \f4to vote.", colorname(ci));
+            if(mapsucksvotes>=getvar("votestopassmapsucks")) {
+                out(ECHO_SERV, "\f7%d \f4people voted that this map sucks. Changing...", votestopassmapsucks);
+                startintermission();
+                int mapsucksvotes = 0;
+            }
+            ci->votedmapsucks = true;
+        }
+        else if(ci->votedmapsucks) sendf(ci->clientnum, 1, "ris", N_SERVMSG, "\f3Error: You have already voted");
+    }
     
-
     QSERV_CALLBACK help_cmd(p) {
         static char colors[2], commandList[2056] = {0};
         int color = -1;
@@ -152,12 +168,12 @@ namespace server {
         string msg, buf;
         uint t, months, weeks, days, hours, minutes, seconds;
         
-        copystring(msg,"\f3QServ \f4(DeathStar/Mamasita): \f1https://github.com/deathstar/QServCollect");
+        copystring(msg,"\f4Server Mod: \f3QServ\f4: \f1https://github.com/deathstar/QServCollect");
         sendf(ci ? ci->clientnum : -1, 1, "ris", N_SERVMSG, msg);
-        copystring(msg, "\f4Architecture: \f0"
-                   /* Firstly determine OS */
+        copystring(msg, "\f4Server Architecture: \f0"
+/* Firstly determine OS */
 #if !(defined(_WIN32) || defined(WIN32) || defined(WIN64) || defined(_WIN64))
-                   /* unix/posix compilant os */
+/* unix/posix compilant os */
 #   if defined(__linux__) || defined(__linux) || defined(linux) || defined(__gnu_linux__)
                    "GNU/Linux"
 #   elif defined(__GNU__) || defined(__gnu_hurd__)
@@ -192,7 +208,6 @@ namespace server {
                    "Windows"
 #endif
                    " "
-                   
                    );
         concatstring(msg, (sizeof(void *) == 8) ? "x86 (64 bit)" : "i386");
         concatstring(msg, "\n\f4Server Uptime:");
@@ -553,19 +568,22 @@ namespace server {
         clientinfo *ci = qs.getClient(cn);
         clientinfo *self = qs.getClient(CMD_SENDER);
         if(cn!=CMD_SENDER && cn >= 0 && cn <= 1000 && ci != NULL && ci->connected && strlen(fulltext) > 0) {
-            defformatstring(shareprivsmsg)("\f4Ok, %s\f4. Sharing your privileges with \f0%s\f4.", colorname(self), colorname(ci));
+            defformatstring(shareprivsmsg)("\f4Ok, %s\f4. Sharing your privileges with \f0%s\f4. You are now an invisible administrator, however you can reclaim to reveal.", colorname(self), colorname(ci));
             sendf(CMD_SENDER, 1, "ris", N_SERVMSG, shareprivsmsg);
-            defformatstring(sendprivsmsg)("\f4You have recieved privileges from \f0%s\f4.", colorname(self));
-            sendf(cn, 1, "ris", N_SERVMSG, sendprivsmsg);
             if(self->privilege==PRIV_MASTER) {
+                defformatstring(sendprivsmsg)("\f4You have recieved \f0master \f4from \f0%s\f4.", colorname(self));
+                sendf(cn, 1, "ris", N_SERVMSG, sendprivsmsg);
                 ci->privilege=PRIV_MASTER;
+                self->privilege=PRIV_ADMIN;
             }
             else if(self->privilege==PRIV_ADMIN) {
+                defformatstring(sendprivsmsg)("\f4You have recieved \f6admin from \f6%s\f4.", colorname(self));
+                sendf(cn, 1, "ris", N_SERVMSG, sendprivsmsg);
                 ci->privilege=PRIV_ADMIN;
+                self->privilege=PRIV_ADMIN;
             }
-            /*The commented code calls the actual master change message and changes the color of the player, above just changes privileges.
-            currentmaster = ci->clientnum;
-            sendf(-1, 1, "ri4", N_CURRENTMASTER, currentmaster, currentmaster >= 0 ? cn->privilege : 0, mastermode);*/
+            /*The commented code calls the actual master change message and changes the color of the player, above just changes privileges.*/
+            //sendf(-1, 1, "ri4", N_CURRENTMASTER, ci->clientnum, ci->clientnum >= 0 ? self->privilege : 0, mastermode);
         } else {
             sendf(CMD_SENDER, 1, "ris", N_SERVMSG, "\f3Error: Command variables incorrect or client is not connected/existant.");
             sendf(CMD_SENDER, 1, "ris", N_SERVMSG, CMD_DESC(cid));
@@ -623,7 +641,6 @@ namespace server {
             sendf(CMD_SENDER, 1, "ris", N_SERVMSG, commandList);
         }
     }
-    
     
     QSERV_CALLBACK localtime_cmd(p) {
         time_t rawtime;

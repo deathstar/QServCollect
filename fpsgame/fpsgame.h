@@ -252,49 +252,18 @@ namespace server {
         void *authchallenge;
         int authkickvictim;
         char *authkickreason;
-        extrainfo _xi; //xi 
+        extrainfo _xi; //xi for QServ
         
-        
-        
-        /*********************/
+        /********************QServ*/
         bool isMuted = false;
         bool isSpecLocked = false;
         bool isEditMuted = false;
         bool pingwarned = false;
+        bool votedmapsucks = false;
         
-        //Spam protection
-        int64_t lasttext; // spam protection
-        int spamlines; // number of lines that you can type in the spam interval without getting blocked. useful for people who talk fast :P
-        bool spamwarned; // only warn once within the interval
-        int64_t lastremip, lastnewmap; // protect against remip and newmap attacks
-        
-        // protect against large selections
-        int64_t lastbigselspam;
-        bool bigselwarned;
-        // protect against fast scrolling
-        int64_t lastscrollspam;
-        ivec editspamsize[2]; // it's edit spam if at least one dimension of this box is too big (this box gets expanded when fast scrolling)
-        bool scrollspamwarned;
-        // protect against fast Y+scroll
-        int64_t lasttexturespam;
-        int texturespamtimes;
-        bool texturespamwarned;
-        
-        //protect against fast mapmodel change
-        int lastmapmodeltype;
-        int64_t lastmapmodelchange;
-        int mapmodelspamtimes;
-        bool mapmodelspamwarned;
-        
-        // edit recording
-        ivec playorigin;
-        //stream *recording, *playing;
-        
-        // protect against mass kicking
-        //int64_t lastkick;
-
-        /*********************/
-        
+        int64_t lasttext;
+        int spamlines;
+        bool spamwarned;
     
         clientinfo() : getdemo(NULL), getmap(NULL), clipboard(NULL), authchallenge(NULL), authkickreason(NULL) { reset(); }
         ~clientinfo() { events.deletecontents(); cleanclipboard(); cleanauth(); }
@@ -406,23 +375,8 @@ namespace server {
             cleanauth();
             mapchange();
             
-            //spam protection
-            //recording = playing = NULL;
-            playorigin.x = playorigin.y = playorigin.z = 512; //middle of a size 10 map, I guess
-            lastremip = lastnewmap = 0;
+            //QServ Anti message flood
             lasttext = spamlines = 0;
-            lastbigselspam = 0;
-            bigselwarned = false;
-            lastscrollspam = 0;
-            editspamsize[0].x = editspamsize[0].y = editspamsize[0].z = 0;
-            scrollspamwarned = false;
-            lasttexturespam = 0;
-            texturespamtimes = 0;
-            texturespamwarned = 0;
-            lastmapmodeltype = 0;
-            lastmapmodelchange = 0;
-            mapmodelspamwarned = 0;
-            mapmodelspamtimes = 0;
         }
 
         int geteventmillis(int servmillis, int clientmillis)

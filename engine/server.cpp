@@ -7,14 +7,14 @@
 
 
 void timer() {
-	if(count == 500) {
-		count = 0;
-		
-		for(int i = 0; i < 128; i++) {
-			msgcount[i] = 0;
-		}
-	}
-	count++;
+    if(count == 500) {
+        count = 0;
+        
+        for(int i = 0; i < 128; i++) {
+            msgcount[i] = 0;
+        }
+    }
+    count++;
 }
 
 server::QServ qs(olanguagewarn, maxolangwarnings, commandprefix);
@@ -80,10 +80,10 @@ void fatal(const char *fmt, ...)
 {
     void cleanupserver();
     cleanupserver();
-	defvformatstring(msg,fmt,fmt);
-	if(logfile) logoutf("%s", msg);
+    defvformatstring(msg,fmt,fmt);
+    if(logfile) logoutf("%s", msg);
 #ifdef WIN32
-	MessageBox(NULL, msg, "Cube 2: Sauerbraten fatal error", MB_OK|MB_SYSTEMMODAL);
+    MessageBox(NULL, msg, "Cube 2: Sauerbraten fatal error", MB_OK|MB_SYSTEMMODAL);
 #else
     fprintf(stderr, "server error: %s\n", msg);
 #endif
@@ -302,7 +302,7 @@ void cleanupserver()
 {
     if(serverhost) enet_host_destroy(serverhost);
     serverhost = NULL;
-
+    
     if(pongsock != ENET_SOCKET_NULL) enet_socket_destroy(pongsock);
     if(lansock != ENET_SOCKET_NULL) enet_socket_destroy(lansock);
     pongsock = lansock = ENET_SOCKET_NULL;
@@ -348,7 +348,7 @@ ENetPacket *sendf(int cn, int chan, const char *format, ...)
         case 'x':
             exclude = va_arg(args, int);
             break;
-
+            
         case 'v':
         {
             int n = va_arg(args, int);
@@ -356,7 +356,7 @@ ENetPacket *sendf(int cn, int chan, const char *format, ...)
             loopi(n) putint(p, v[i]);
             break;
         }
-
+            
         case 'i':
         {
             int n = isdigit(*format) ? *format++-'0' : 1;
@@ -390,10 +390,10 @@ ENetPacket *sendfile(int cn, int chan, stream *file, const char *format, ...)
         return NULL;
     }
     else if(!clients.inrange(cn)) return NULL;
-
+    
     int len = (int)min(file->size(), stream::offset(INT_MAX));
     if(len <= 0 || len > 16<<20) return NULL;
-
+    
     packetbuf p(MAXTRANS+len, ENET_PACKET_FLAG_RELIABLE);
     va_list args;
     va_start(args, format);
@@ -409,10 +409,10 @@ ENetPacket *sendfile(int cn, int chan, stream *file, const char *format, ...)
         case 'l': putint(p, len); break;
     }
     va_end(args);
-
+    
     file->seek(0, SEEK_SET);
     file->read(p.subbuf(len).buf, len);
-
+    
     ENetPacket *packet = p.finalize();
     if(cn >= 0) sendpacket(cn, chan, packet, -1);
     return packet->referenceCount > 0 ? packet : NULL;
@@ -508,14 +508,14 @@ void disconnectmaster()
         enet_socket_destroy(mastersock);
         mastersock = ENET_SOCKET_NULL;
     }
-
+    
     masterout.setsize(0);
     masterin.setsize(0);
     masteroutpos = masterinpos = 0;
-
+    
     masteraddress.host = ENET_HOST_ANY;
     masteraddress.port = ENET_PORT_ANY;
-
+    
     lastupdatemaster = 0;
 }
 
@@ -525,7 +525,7 @@ VARF(masterport, 1, server::masterport(), 0xFFFF, disconnectmaster());
 ENetSocket connectmaster()
 {
     if(!mastername[0]) return ENET_SOCKET_NULL;
-
+    
     if(masteraddress.host == ENET_HOST_ANY)
     {
         logoutf("[ OK ] looking up %s...", mastername);
@@ -543,7 +543,7 @@ ENetSocket connectmaster()
         logoutf(sock==ENET_SOCKET_NULL ? "[ FATAL ] could not open socket" : "[ FATAL ] could not connect");
         return ENET_SOCKET_NULL;
     }
-
+    
     enet_socket_set_option(sock, ENET_SOCKOPT_NONBLOCK, 1);
     return sock;
 }
@@ -555,7 +555,7 @@ bool requestmaster(const char *req)
         mastersock = connectmaster();
         if(mastersock == ENET_SOCKET_NULL) return false;
     }
-
+    
     masterout.put(req, strlen(req));
     return true;
 }
@@ -569,28 +569,28 @@ bool requestmasterf(const char *fmt, ...)
 void processmasterinput()
 {
     if(masterinpos >= masterin.length()) return;
-
+    
     char *input = &masterin[masterinpos], *end = (char *)memchr(input, '\n', masterin.length() - masterinpos);
     while(end)
     {
         *end++ = '\0';
-
+        
         const char *args = input;
         while(args < end && !iscubespace(*args)) args++;
         int cmdlen = args - input;
         while(args < end && iscubespace(*args)) args++;
-
+        
         if(!strncmp(input, "failreg", cmdlen))
             conoutf(CON_ERROR, "master server registration failed: %s", args);
         else if(!strncmp(input, "succreg", cmdlen))
             conoutf("[ OK ] Registered to masterserver");
         else server::processmasterinput(input, cmdlen, args);
-
+        
         masterinpos = end - masterin.getbuf();
         input = end;
         end = (char *)memchr(input, '\n', masterin.length() - masterinpos);
     }
-
+    
     if(masterinpos >= masterin.length())
     {
         masterin.setsize(0);
@@ -601,7 +601,7 @@ void processmasterinput()
 void flushmasteroutput()
 {
     if(masterout.empty()) return;
-
+    
     ENetBuffer buf;
     buf.data = &masterout[masteroutpos];
     buf.dataLength = masterout.length() - masteroutpos;
@@ -622,7 +622,7 @@ void flushmasterinput()
 {
     if(masterin.length() >= masterin.capacity())
         masterin.reserve(4096);
-
+    
     ENetBuffer buf;
     buf.data = masterin.getbuf() + masterin.length();
     buf.dataLength = masterin.capacity() - masterin.length();
@@ -662,14 +662,14 @@ void checkserversockets()        // reply all server info requests
         ENET_SOCKETSET_ADD(sockset, lansock);
     }
     if(enet_socketset_select(maxsock, &sockset, NULL, 0) <= 0) return;
-
+    
     ENetBuffer buf;
     uchar pong[MAXTRANS];
     loopi(2)
     {
         ENetSocket sock = i ? lansock : pongsock;
         if(sock == ENET_SOCKET_NULL || !ENET_SOCKETSET_CHECK(sockset, sock)) continue;
-
+        
         buf.data = pong;
         buf.dataLength = sizeof(pong);
         int len = enet_socket_receive(sock, &pongaddr, &buf, 1);
@@ -678,7 +678,7 @@ void checkserversockets()        // reply all server info requests
         p.len += len;
         server::serverinforeply(req, p);
     }
-
+    
     if(mastersock != ENET_SOCKET_NULL && ENET_SOCKETSET_CHECK(sockset, mastersock)) flushmasterinput();
 }
 
@@ -718,9 +718,9 @@ void serverslice(bool dedicated, uint timeout)   // main server update, called f
         server::sendpackets();
         return;
     }
-
+    
     // below is network only
-
+    
     if(dedicated)
     {
         int millis = (int)enet_time_get(), elapsed = millis - totalmillis;
@@ -734,10 +734,10 @@ void serverslice(bool dedicated, uint timeout)   // main server update, called f
         updatetime();
     }
     server::serverupdate();
-
+    
     flushmasteroutput();
     checkserversockets();
-
+    
     if(!lastupdatemaster || totalmillis-lastupdatemaster>60*60*1000)       // send alive signal to masterserver every hour of uptime
         updatemasterserver();
     
@@ -827,16 +827,16 @@ static void cleanupsystemtray()
 
 static bool setupsystemtray(UINT uCallbackMessage)
 {
-	NOTIFYICONDATA nid;
-	memset(&nid, 0, sizeof(nid));
-	nid.cbSize = sizeof(nid);
-	nid.hWnd = appwindow;
-	nid.uID = IDI_ICON1;
-	nid.uCallbackMessage = uCallbackMessage;
-	nid.uFlags = NIF_MESSAGE | NIF_ICON | NIF_TIP;
-	nid.hIcon = appicon;
-	strcpy(nid.szTip, apptip);
-	if(Shell_NotifyIcon(NIM_ADD, &nid) != TRUE)
+    NOTIFYICONDATA nid;
+    memset(&nid, 0, sizeof(nid));
+    nid.cbSize = sizeof(nid);
+    nid.hWnd = appwindow;
+    nid.uID = IDI_ICON1;
+    nid.uCallbackMessage = uCallbackMessage;
+    nid.uFlags = NIF_MESSAGE | NIF_ICON | NIF_TIP;
+    nid.hIcon = appicon;
+    strcpy(nid.szTip, apptip);
+    if(Shell_NotifyIcon(NIM_ADD, &nid) != TRUE)
         return false;
     atexit(cleanupsystemtray);
     return true;
@@ -845,30 +845,30 @@ static bool setupsystemtray(UINT uCallbackMessage)
 #if 0
 static bool modifysystemtray()
 {
-	NOTIFYICONDATA nid;
-	memset(&nid, 0, sizeof(nid));
-	nid.cbSize = sizeof(nid);
-	nid.hWnd = appwindow;
-	nid.uID = IDI_ICON1;
-	nid.uFlags = NIF_TIP;
-	strcpy(nid.szTip, apptip);
-	return Shell_NotifyIcon(NIM_MODIFY, &nid) == TRUE;
+    NOTIFYICONDATA nid;
+    memset(&nid, 0, sizeof(nid));
+    nid.cbSize = sizeof(nid);
+    nid.hWnd = appwindow;
+    nid.uID = IDI_ICON1;
+    nid.uFlags = NIF_TIP;
+    strcpy(nid.szTip, apptip);
+    return Shell_NotifyIcon(NIM_MODIFY, &nid) == TRUE;
 }
 #endif
 
 static void cleanupwindow()
 {
-	if(!appinstance) return;
-	if(appmenu)
-	{
-		DestroyMenu(appmenu);
-		appmenu = NULL;
-	}
-	if(wndclass)
-	{
-		UnregisterClass(MAKEINTATOM(wndclass), appinstance);
-		wndclass = 0;
-	}
+    if(!appinstance) return;
+    if(appmenu)
+    {
+        DestroyMenu(appmenu);
+        appmenu = NULL;
+    }
+    if(wndclass)
+    {
+        UnregisterClass(MAKEINTATOM(wndclass), appinstance);
+        wndclass = 0;
+    }
 }
 
 static BOOL WINAPI consolehandler(DWORD dwCtrlType)
@@ -898,13 +898,13 @@ static void writeline(logline &line)
 
 static void setupconsole()
 {
-	if(conwindow) return;
+    if(conwindow) return;
     if(!AllocConsole()) return;
-	SetConsoleCtrlHandler(consolehandler, TRUE);
-	conwindow = GetConsoleWindow();
+    SetConsoleCtrlHandler(consolehandler, TRUE);
+    conwindow = GetConsoleWindow();
     SetConsoleTitle(apptip);
-	SendMessage(conwindow, WM_SETICON, ICON_SMALL, (LPARAM)appicon);
-	SendMessage(conwindow, WM_SETICON, ICON_BIG, (LPARAM)appicon);
+    SendMessage(conwindow, WM_SETICON, ICON_SMALL, (LPARAM)appicon);
+    SendMessage(conwindow, WM_SETICON, ICON_BIG, (LPARAM)appicon);
     outhandle = GetStdHandle(STD_OUTPUT_HANDLE);
     CONSOLE_SCREEN_BUFFER_INFO coninfo;
     GetConsoleScreenBufferInfo(outhandle, &coninfo);
@@ -917,99 +917,99 @@ static void setupconsole()
 
 enum
 {
-	MENU_OPENCONSOLE = 0,
-	MENU_SHOWCONSOLE,
-	MENU_HIDECONSOLE,
-	MENU_EXIT
+    MENU_OPENCONSOLE = 0,
+    MENU_SHOWCONSOLE,
+    MENU_HIDECONSOLE,
+    MENU_EXIT
 };
 
 static LRESULT CALLBACK handlemessages(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
-	switch(uMsg)
-	{
-		case WM_APP:
-			SetForegroundWindow(hWnd);
-			switch(lParam)
-			{
-				case WM_MOUSEMOVE:
-				break;
-				case WM_LBUTTONUP:
-				case WM_RBUTTONUP:
-				{
-					POINT pos;
-					GetCursorPos(&pos);
-					TrackPopupMenu(appmenu, TPM_CENTERALIGN|TPM_BOTTOMALIGN|TPM_RIGHTBUTTON, pos.x, pos.y, 0, hWnd, NULL);
-					PostMessage(hWnd, WM_NULL, 0, 0);
-					break;
-				}
-			}
-			return 0;
-		case WM_COMMAND:
-			switch(LOWORD(wParam))
-			{
-                case MENU_OPENCONSOLE:
-					setupconsole();
-					if(conwindow) ModifyMenu(appmenu, 0, MF_BYPOSITION|MF_STRING, MENU_HIDECONSOLE, "Hide Console");
-                    break;
-				case MENU_SHOWCONSOLE:
-					ShowWindow(conwindow, SW_SHOWNORMAL);
-					ModifyMenu(appmenu, 0, MF_BYPOSITION|MF_STRING, MENU_HIDECONSOLE, "Hide Console");
-					break;
-				case MENU_HIDECONSOLE:
-					ShowWindow(conwindow, SW_HIDE);
-					ModifyMenu(appmenu, 0, MF_BYPOSITION|MF_STRING, MENU_SHOWCONSOLE, "Show Console");
-					break;
-				case MENU_EXIT:
-					PostMessage(hWnd, WM_CLOSE, 0, 0);
-					break;
-			}
-			return 0;
-		case WM_CLOSE:
-			PostQuitMessage(0);
-			return 0;
-	}
-	return DefWindowProc(hWnd, uMsg, wParam, lParam);
+    switch(uMsg)
+    {
+        case WM_APP:
+            SetForegroundWindow(hWnd);
+            switch(lParam)
+        {
+            case WM_MOUSEMOVE:
+                break;
+            case WM_LBUTTONUP:
+            case WM_RBUTTONUP:
+            {
+                POINT pos;
+                GetCursorPos(&pos);
+                TrackPopupMenu(appmenu, TPM_CENTERALIGN|TPM_BOTTOMALIGN|TPM_RIGHTBUTTON, pos.x, pos.y, 0, hWnd, NULL);
+                PostMessage(hWnd, WM_NULL, 0, 0);
+                break;
+            }
+        }
+            return 0;
+        case WM_COMMAND:
+            switch(LOWORD(wParam))
+        {
+            case MENU_OPENCONSOLE:
+                setupconsole();
+                if(conwindow) ModifyMenu(appmenu, 0, MF_BYPOSITION|MF_STRING, MENU_HIDECONSOLE, "Hide Console");
+                break;
+            case MENU_SHOWCONSOLE:
+                ShowWindow(conwindow, SW_SHOWNORMAL);
+                ModifyMenu(appmenu, 0, MF_BYPOSITION|MF_STRING, MENU_HIDECONSOLE, "Hide Console");
+                break;
+            case MENU_HIDECONSOLE:
+                ShowWindow(conwindow, SW_HIDE);
+                ModifyMenu(appmenu, 0, MF_BYPOSITION|MF_STRING, MENU_SHOWCONSOLE, "Show Console");
+                break;
+            case MENU_EXIT:
+                PostMessage(hWnd, WM_CLOSE, 0, 0);
+                break;
+        }
+            return 0;
+        case WM_CLOSE:
+            PostQuitMessage(0);
+            return 0;
+    }
+    return DefWindowProc(hWnd, uMsg, wParam, lParam);
 }
 
 static void setupwindow(const char *title, const char *path)
 {
-	copystring(apptip, title);
-
-	appinstance = GetModuleHandle(path);
-	if(!appinstance) fatal("failed getting application instance");
-	appicon = LoadIcon(appinstance, MAKEINTRESOURCE(IDI_ICON1));
+    copystring(apptip, title);
+    
+    appinstance = GetModuleHandle(path);
+    if(!appinstance) fatal("failed getting application instance");
+    appicon = LoadIcon(appinstance, MAKEINTRESOURCE(IDI_ICON1));
     (HICON)LoadImage(appinstance, MAKEINTRESOURCE(IDI_ICON1), IMAGE_ICON, 0, 0, LR_DEFAULTSIZE);
-	if(!appicon) fatal("failed loading icon");
-
-	appmenu = CreatePopupMenu();
-	if(!appmenu) fatal("failed creating popup menu");
+    if(!appicon) fatal("failed loading icon");
+    
+    appmenu = CreatePopupMenu();
+    if(!appmenu) fatal("failed creating popup menu");
     AppendMenu(appmenu, MF_STRING, MENU_OPENCONSOLE, "Open Console");
     AppendMenu(appmenu, MF_SEPARATOR, 0, NULL);
-	AppendMenu(appmenu, MF_STRING, MENU_EXIT, "Exit");
-	SetMenuDefaultItem(appmenu, 0, FALSE);
-
-	WNDCLASS wc;
-	memset(&wc, 0, sizeof(wc));
-	wc.hCursor = NULL;
+    AppendMenu(appmenu, MF_STRING, MENU_EXIT, "Exit");
+    SetMenuDefaultItem(appmenu, 0, FALSE);
+    
+    WNDCLASS wc;
+    memset(&wc, 0, sizeof(wc));
+    wc.hCursor = NULL;
     LoadCursor(NULL, IDC_ARROW);
-
-	wc.hIcon = appicon;
-	wc.hIcon = LoadIcon(0, IDI_EXCLAMATION);
-	wc.lpszMenuName = NULL;
-	wc.lpszClassName = title;
-	wc.style = 0;
-	wc.hInstance = appinstance;
-	wc.lpfnWndProc = handlemessages;
-	wc.cbWndExtra = 0;
-	wc.cbClsExtra = 0;
-	wndclass = RegisterClass(&wc);
-	if(!wndclass) fatal("failed registering window class");
-
-	appwindow = CreateWindow(MAKEINTATOM(wndclass), title, 0, CW_USEDEFAULT, CW_USEDEFAULT, 0, 0, HWND_MESSAGE, NULL, appinstance, NULL);
-	if(!appwindow) fatal("failed creating window");
-
-	atexit(cleanupwindow);
-
+    
+    wc.hIcon = appicon;
+    wc.hIcon = LoadIcon(0, IDI_EXCLAMATION);
+    wc.lpszMenuName = NULL;
+    wc.lpszClassName = title;
+    wc.style = 0;
+    wc.hInstance = appinstance;
+    wc.lpfnWndProc = handlemessages;
+    wc.cbWndExtra = 0;
+    wc.cbClsExtra = 0;
+    wndclass = RegisterClass(&wc);
+    if(!wndclass) fatal("failed registering window class");
+    
+    appwindow = CreateWindow(MAKEINTATOM(wndclass), title, 0, CW_USEDEFAULT, CW_USEDEFAULT, 0, 0, HWND_MESSAGE, NULL, appinstance, NULL);
+    if(!appwindow) fatal("failed creating window");
+    
+    atexit(cleanupwindow);
+    
     if(!setupsystemtray(WM_APP)) fatal("failed adding to system tray");
 }
 
@@ -1021,13 +1021,13 @@ static char *parsecommandline(const char *src, vector<char *> &args)
         while(isspace(*src)) src++;
         if(!*src) break;
         args.add(dst);
-		for(bool quoted = false; *src && (quoted || !isspace(*src)); src++)
+        for(bool quoted = false; *src && (quoted || !isspace(*src)); src++)
         {
             if(*src != '"') *dst++ = *src;
-			else if(dst > buf && src[-1] == '\\') dst[-1] = '"';
-			else quoted = !quoted;
-		}
-		*dst++ = '\0';
+            else if(dst > buf && src[-1] == '\\') dst[-1] = '"';
+            else quoted = !quoted;
+        }
+        *dst++ = '\0';
     }
     args.add(NULL);
     return buf;
@@ -1038,7 +1038,7 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrev, LPSTR szCmdLine, int sw)
 {
     vector<char *> args;
     char *buf = parsecommandline(GetCommandLine(), args);
-	appinstance = hInst;
+    appinstance = hInst;
     delete[] buf;
     exit(0);
     return 0;
@@ -1076,45 +1076,45 @@ bool isdedicatedserver() { return dedicatedserver; }
 pthread_t thread2;
 
 void *main_thread(void *) {
-	for(;;) {
-		serverslice(true, 5);
-		
-		//timer(); //causes segfault when timer is broken (recently uncommented)
-	}
-	
+    for(;;) {
+        serverslice(true, 5);
+        
+        //timer(); //causes segfault when timer is broken (recently uncommented)
+    }
+    
 }
 
 void *main_thread_s(void *) {
-	for(;;)
-	{
-		#ifdef WIN32
-		MSG msg;
-		while(PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
-		{
-			//if(msg.message == WM_QUIT) exit(EXIT_SUCCESS);
-			TranslateMessage(&msg);
-			DispatchMessage(&msg);
-		}
-		#endif
-		serverslice(true, 5);
-		//timer
-		//timer();
-
-	}
+    for(;;)
+    {
+#ifdef WIN32
+        MSG msg;
+        while(PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
+        {
+            //if(msg.message == WM_QUIT) exit(EXIT_SUCCESS);
+            TranslateMessage(&msg);
+            DispatchMessage(&msg);
+        }
+#endif
+        serverslice(true, 5);
+        //timer
+        //timer();
+        
+    }
 }
 
 void rundedicatedserver()
 {
 #ifdef WIN32
     SetPriorityClass(GetCurrentProcess(), HIGH_PRIORITY_CLASS);
-	thread2 = pthread_t();
+    thread2 = pthread_t();
     pthread_create(&thread2, NULL, main_thread_s, NULL);
 #else
     thread2 = pthread_t();
     pthread_create(&thread2, NULL, main_thread, NULL);
 #endif
-
-logoutf("[ OK ] QServ Started, waiting for clients...");
+    
+    logoutf("[ OK ] QServ Started, waiting for clients...");
 }
 
 bool servererror(bool dedicated, const char *desc)
@@ -1159,31 +1159,31 @@ void initserver(bool listen, bool dedicated) //, const char *path
 {
     if(dedicated)
     {
-//#ifdef WIN32
- //       setupwindow("QServ", path);
-//#endif
+        //#ifdef WIN32
+        //       setupwindow("QServ", path);
+        //#endif
     }
-
+    
     /**
-        Load/Check GeoIP databases
-    **/
+     Load/Check GeoIP databases
+     **/
     if(qs.initgeoip("./GeoIP/GeoIP.dat")) {printf("[ OK ] GeoIP Initalized succesfully\n");}
     else if(!qs.initgeoip("./GeoIP/GeoIP.dat")) {
         logoutf("[FATAL ERROR] Failed to load GeoIP database from GeoIP.dat file");
     }
     /*
-    if(qs.initcitygeoip("./GeoIP/GeoLiteCity.dat")) {printf("[ OK ] GeoLite City Initalized succesfully\n");}
-    else if(!qs.initcitygeoip("./GeoIP/GeoLiteCity.dat")) {
-        logoutf("[FATAL ERROR] Failed to load GeoLite database from GeoLiteCity.dat file");
-    }
-    /**/
-
+     if(qs.initcitygeoip("./GeoIP/GeoLiteCity.dat")) {printf("[ OK ] GeoLite City Initalized succesfully\n");}
+     else if(!qs.initcitygeoip("./GeoIP/GeoLiteCity.dat")) {
+     logoutf("[FATAL ERROR] Failed to load GeoLite database from GeoLiteCity.dat file");
+     }
+     /**/
+    
     execfile("server-init.cfg", false);
-
+    
     if(listen) setuplistenserver(dedicated);
-
+    
     server::serverinit();
-
+    
     if(listen)
     {
         updatemasterserver();
@@ -1212,19 +1212,19 @@ vector<const char *> gameargs;
 #include "../QCom.h"
 
 void *irc_thread(void *) {
-        //sleep(1);
-        irc.init();
+    sleep(1); //wait so we can register to master serv before irc_init
+    irc.init();
 }
 
 int main(int argc, char **argv) {
     int ticks = 0;
-    #ifdef _WIN32
+#ifdef _WIN32
     ticks = GetTickCount();
     //#else commented out
-    #endif
+#endif
     srand(ticks);
     qs.initCommands(server::initCmds);
-	
+    
     setlogfile(NULL);
     if(enet_initialize()<0) fatal("[FATAL ERROR]: Unable to initialise network module");
     atexit(enet_deinitialize);
@@ -1242,7 +1242,7 @@ int main(int argc, char **argv) {
     
     pthread_join(thread1, NULL);
     
-	pthread_exit(NULL);
+    pthread_exit(NULL);
     
-	return EXIT_SUCCESS;
+    return EXIT_SUCCESS;
 }

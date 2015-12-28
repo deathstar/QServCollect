@@ -48,10 +48,10 @@ RM = /usr/local/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /Users/user/Desktop/QServ/QServCollect
+CMAKE_SOURCE_DIR = /Users/user/Desktop/QServCollect
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /Users/user/Desktop/QServ/QServCollect
+CMAKE_BINARY_DIR = /Users/user/Desktop/QServCollect
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -113,9 +113,9 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/user/Desktop/QServ/QServCollect/CMakeFiles /Users/user/Desktop/QServ/QServCollect/CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/user/Desktop/QServCollect/CMakeFiles /Users/user/Desktop/QServCollect/CMakeFiles/progress.marks
 	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/user/Desktop/QServ/QServCollect/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/user/Desktop/QServCollect/CMakeFiles 0
 .PHONY : all
 
 # The main clean target

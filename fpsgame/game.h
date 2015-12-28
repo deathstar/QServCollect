@@ -213,8 +213,10 @@ enum
 
 // network messages codes, c2s, c2c, s2c
 
+//Privileges
 enum { PRIV_NONE = 0, PRIV_MASTER, PRIV_AUTH, PRIV_ADMIN };
 
+//Enumerations 
 enum
 {
     N_CONNECT = 0, N_SERVINFO, N_WELCOME, N_INITCLIENT, N_POS, N_TEXT, N_SOUND, N_CDIS,
@@ -445,14 +447,6 @@ struct fpsstate
         loopi(NUMGUNS) ammo[i] = 0;
         ammo[GUN_FIST] = 1;
     }
-    //QServ Modes
-    VAR(allweaponinsta, 0, 0, 1);
-    VAR(chainguninsta, 0, 0, 1);
-    VAR(rocketinsta, 0, 0, 1);
-    VAR(chainsawinsta, 0, 0, 1);
-    VAR(glctf, 0, 0, 1);
-    VAR(minigunctf, 0, 0, 1);
-    
     void spawnstate(int gamemode)
     {
         if(m_demo)
@@ -461,41 +455,10 @@ struct fpsstate
         }
         else if(m_insta)
         {
-            /*
-            if(getvar("chainguninsta")) {
-                armourtype = A_BLUE;
-                armour = 100;
-                health = 250;
-                gunselect = GUN_CG;
-                ammo[GUN_CG] = 200;
-                ammo[GUN_GL] = 20;
-            } else if(getvar("allweaponinsta")) {
-                armourtype = A_BLUE;
-                armour = 100;
-                health = 250;
-                gunselect = GUN_CG;
-                ammo[GUN_CG] = 999;
-                ammo[GUN_GL] = 999;
-                ammo[GUN_RL] = 999;
-                ammo[GUN_RIFLE] = 999;
-            } else if(getvar("rocketinsta")) {
-                armour = 0;
-                health = 1;
-                gunselect = GUN_RL;
-                ammo[GUN_RL] = 100;
-            } else if(getvar("chainsawinsta")) {
-                armour = 0;
-                health = 1;
-                gunselect = GUN_FIST;
-                //ammo[GUN_FIST] = 1;
-            } else {
-             */
-                armour = 0;
-                health = 1;
-                gunselect = GUN_RIFLE;
-                ammo[GUN_RIFLE] = 100;
-             
-            //}
+            armour = 0;
+            health = 1;
+            gunselect = GUN_RIFLE;
+            ammo[GUN_RIFLE] = 100;
         }
         else if(m_regencapture)
         {
@@ -529,24 +492,10 @@ struct fpsstate
         }
         else if(m_ctf || m_collect)
         {
-            if(getvar("minigunctf")) {
-                armourtype = A_BLUE;
-                armour = 50;
-                //ammo[GUN_PISTOL] = 0;
-                ammo[GUN_CG] = 1000;
-            }
-            else if(getvar("glctf")) {
-                armourtype = A_BLUE;
-                armour = 50;
-                //ammo[GUN_PISTOL] = 0;
-                ammo[GUN_GL] = 1000;
-            }
-            else {
             armourtype = A_BLUE;
             armour = 50;
             ammo[GUN_PISTOL] = 40;
             ammo[GUN_GL] = 1;
-            }
         }
         else if(m_sp)
         {
@@ -781,7 +730,7 @@ namespace game
     const char *mastermodecolor(int n, const char *unknown);
     const char *mastermodeicon(int n, const char *unknown);
 
-    // client
+    //client
     extern bool connected, remote, demoplayback;
     extern string servinfo;
 
@@ -799,7 +748,7 @@ namespace game
     extern void c2sinfo(bool force = false);
     extern void sendposition(fpsent *d, bool reliable = false);
 
-    // monster
+    //monster
     struct monster;
     extern vector<monster *> monsters;
 
@@ -814,7 +763,7 @@ namespace game
     extern void endsp(bool allkilled);
     extern void spsummary(int accuracy);
 
-    // movable
+    //movable
     struct movable;
     extern vector<movable *> movables;
 
@@ -825,7 +774,7 @@ namespace game
     extern void suicidemovable(movable *m);
     extern void hitmovable(int damage, movable *m, fpsent *at, const vec &vel, int gun);
 
-    // weapon
+    //weapon
     extern int getweapon(const char *name);
     extern void shoot(fpsent *d, const vec &targ);
     extern void shoteffects(int gun, const vec &from, const vec &to, fpsent *d, bool local, int id, int prevaction);
@@ -851,14 +800,14 @@ namespace game
     extern void weaponswitch(fpsent *d);
     extern void avoidweapons(ai::avoidset &obstacles, float radius);
 
-    // scoreboard
+    //scoreboard
     extern void showscores(bool on);
     extern void getbestplayers(vector<fpsent *> &best);
     extern void getbestteams(vector<const char *> &best);
     extern void clearteaminfo();
     extern void setteaminfo(const char *team, int frags);
 
-    // render
+    //render
     struct playermodelinfo
     {
         const char *ffa, *blueteam, *redteam, *hudguns,
@@ -879,6 +828,7 @@ namespace game
     extern vec hudgunorigin(int gun, const vec &from, const vec &to, fpsent *d);
 }
 
+//server namespace
 namespace server
 {
     extern const char *modename(int n, const char *unknown = "unknown");

@@ -45,6 +45,7 @@ namespace server {
     extern QSERV_CALLBACK tournament_cmd(p);
     extern QSERV_CALLBACK help_cmd(p);
     extern QSERV_CALLBACK cheater_cmd(p);
+    extern QSERV_CALLBACK mapsucks_cmd(p);
 }
 
 #endif

@@ -48,10 +48,10 @@ RM = /usr/local/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /Users/user/Desktop/QServ/QServCollect
+CMAKE_SOURCE_DIR = /Users/user/Desktop/QServCollect
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /Users/user/Desktop/QServ/QServCollect
+CMAKE_BINARY_DIR = /Users/user/Desktop/QServCollect
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -113,14 +113,14 @@ install/local/fast: install/local
 
 # The main all target
 all: cmake_check_build_system
-	cd /Users/user/Desktop/QServ/QServCollect && $(CMAKE_COMMAND) -E cmake_progress_start /Users/user/Desktop/QServ/QServCollect/CMakeFiles /Users/user/Desktop/QServ/QServCollect/GeoIP/CMakeFiles/progress.marks
-	cd /Users/user/Desktop/QServ/QServCollect && $(MAKE) -f CMakeFiles/Makefile2 GeoIP/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/user/Desktop/QServ/QServCollect/CMakeFiles 0
+	cd /Users/user/Desktop/QServCollect && $(CMAKE_COMMAND) -E cmake_progress_start /Users/user/Desktop/QServCollect/CMakeFiles /Users/user/Desktop/QServCollect/GeoIP/CMakeFiles/progress.marks
+	cd /Users/user/Desktop/QServCollect && $(MAKE) -f CMakeFiles/Makefile2 GeoIP/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/user/Desktop/QServCollect/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	cd /Users/user/Desktop/QServ/QServCollect && $(MAKE) -f CMakeFiles/Makefile2 GeoIP/clean
+	cd /Users/user/Desktop/QServCollect && $(MAKE) -f CMakeFiles/Makefile2 GeoIP/clean
 .PHONY : clean
 
 # The main clean target
@@ -130,22 +130,22 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	cd /Users/user/Desktop/QServ/QServCollect && $(MAKE) -f CMakeFiles/Makefile2 GeoIP/preinstall
+	cd /Users/user/Desktop/QServCollect && $(MAKE) -f CMakeFiles/Makefile2 GeoIP/preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	cd /Users/user/Desktop/QServ/QServCollect && $(MAKE) -f CMakeFiles/Makefile2 GeoIP/preinstall
+	cd /Users/user/Desktop/QServCollect && $(MAKE) -f CMakeFiles/Makefile2 GeoIP/preinstall
 .PHONY : preinstall/fast
 
 # clear depends
 depend:
-	cd /Users/user/Desktop/QServ/QServCollect && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
+	cd /Users/user/Desktop/QServCollect && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
 # Convenience name for target.
 GeoIP/CMakeFiles/GeoIP.dir/rule:
-	cd /Users/user/Desktop/QServ/QServCollect && $(MAKE) -f CMakeFiles/Makefile2 GeoIP/CMakeFiles/GeoIP.dir/rule
+	cd /Users/user/Desktop/QServCollect && $(MAKE) -f CMakeFiles/Makefile2 GeoIP/CMakeFiles/GeoIP.dir/rule
 .PHONY : GeoIP/CMakeFiles/GeoIP.dir/rule
 
 # Convenience name for target.
@@ -155,7 +155,7 @@ GeoIP: GeoIP/CMakeFiles/GeoIP.dir/rule
 
 # fast build rule for target.
 GeoIP/fast:
-	cd /Users/user/Desktop/QServ/QServCollect && $(MAKE) -f GeoIP/CMakeFiles/GeoIP.dir/build.make GeoIP/CMakeFiles/GeoIP.dir/build
+	cd /Users/user/Desktop/QServCollect && $(MAKE) -f GeoIP/CMakeFiles/GeoIP.dir/build.make GeoIP/CMakeFiles/GeoIP.dir/build
 .PHONY : GeoIP/fast
 
 libGeoIP/GeoIP.o: libGeoIP/GeoIP.c.o
@@ -164,7 +164,7 @@ libGeoIP/GeoIP.o: libGeoIP/GeoIP.c.o
 
 # target to build an object file
 libGeoIP/GeoIP.c.o:
-	cd /Users/user/Desktop/QServ/QServCollect && $(MAKE) -f GeoIP/CMakeFiles/GeoIP.dir/build.make GeoIP/CMakeFiles/GeoIP.dir/libGeoIP/GeoIP.c.o
+	cd /Users/user/Desktop/QServCollect && $(MAKE) -f GeoIP/CMakeFiles/GeoIP.dir/build.make GeoIP/CMakeFiles/GeoIP.dir/libGeoIP/GeoIP.c.o
 .PHONY : libGeoIP/GeoIP.c.o
 
 libGeoIP/GeoIP.i: libGeoIP/GeoIP.c.i
@@ -173,7 +173,7 @@ libGeoIP/GeoIP.i: libGeoIP/GeoIP.c.i
 
 # target to preprocess a source file
 libGeoIP/GeoIP.c.i:
-	cd /Users/user/Desktop/QServ/QServCollect && $(MAKE) -f GeoIP/CMakeFiles/GeoIP.dir/build.make GeoIP/CMakeFiles/GeoIP.dir/libGeoIP/GeoIP.c.i
+	cd /Users/user/Desktop/QServCollect && $(MAKE) -f GeoIP/CMakeFiles/GeoIP.dir/build.make GeoIP/CMakeFiles/GeoIP.dir/libGeoIP/GeoIP.c.i
 .PHONY : libGeoIP/GeoIP.c.i
 
 libGeoIP/GeoIP.s: libGeoIP/GeoIP.c.s
@@ -182,7 +182,7 @@ libGeoIP/GeoIP.s: libGeoIP/GeoIP.c.s
 
 # target to generate assembly for a file
 libGeoIP/GeoIP.c.s:
-	cd /Users/user/Desktop/QServ/QServCollect && $(MAKE) -f GeoIP/CMakeFiles/GeoIP.dir/build.make GeoIP/CMakeFiles/GeoIP.dir/libGeoIP/GeoIP.c.s
+	cd /Users/user/Desktop/QServCollect && $(MAKE) -f GeoIP/CMakeFiles/GeoIP.dir/build.make GeoIP/CMakeFiles/GeoIP.dir/libGeoIP/GeoIP.c.s
 .PHONY : libGeoIP/GeoIP.c.s
 
 libGeoIP/GeoIPCity.o: libGeoIP/GeoIPCity.c.o
@@ -191,7 +191,7 @@ libGeoIP/GeoIPCity.o: libGeoIP/GeoIPCity.c.o
 
 # target to build an object file
 libGeoIP/GeoIPCity.c.o:
-	cd /Users/user/Desktop/QServ/QServCollect && $(MAKE) -f GeoIP/CMakeFiles/GeoIP.dir/build.make GeoIP/CMakeFiles/GeoIP.dir/libGeoIP/GeoIPCity.c.o
+	cd /Users/user/Desktop/QServCollect && $(MAKE) -f GeoIP/CMakeFiles/GeoIP.dir/build.make GeoIP/CMakeFiles/GeoIP.dir/libGeoIP/GeoIPCity.c.o
 .PHONY : libGeoIP/GeoIPCity.c.o
 
 libGeoIP/GeoIPCity.i: libGeoIP/GeoIPCity.c.i
@@ -200,7 +200,7 @@ libGeoIP/GeoIPCity.i: libGeoIP/GeoIPCity.c.i
 
 # target to preprocess a source file
 libGeoIP/GeoIPCity.c.i:
-	cd /Users/user/Desktop/QServ/QServCollect && $(MAKE) -f GeoIP/CMakeFiles/GeoIP.dir/build.make GeoIP/CMakeFiles/GeoIP.dir/libGeoIP/GeoIPCity.c.i
+	cd /Users/user/Desktop/QServCollect && $(MAKE) -f GeoIP/CMakeFiles/GeoIP.dir/build.make GeoIP/CMakeFiles/GeoIP.dir/libGeoIP/GeoIPCity.c.i
 .PHONY : libGeoIP/GeoIPCity.c.i
 
 libGeoIP/GeoIPCity.s: libGeoIP/GeoIPCity.c.s
@@ -209,7 +209,7 @@ libGeoIP/GeoIPCity.s: libGeoIP/GeoIPCity.c.s
 
 # target to generate assembly for a file
 libGeoIP/GeoIPCity.c.s:
-	cd /Users/user/Desktop/QServ/QServCollect && $(MAKE) -f GeoIP/CMakeFiles/GeoIP.dir/build.make GeoIP/CMakeFiles/GeoIP.dir/libGeoIP/GeoIPCity.c.s
+	cd /Users/user/Desktop/QServCollect && $(MAKE) -f GeoIP/CMakeFiles/GeoIP.dir/build.make GeoIP/CMakeFiles/GeoIP.dir/libGeoIP/GeoIPCity.c.s
 .PHONY : libGeoIP/GeoIPCity.c.s
 
 libGeoIP/GeoIPUpdate.o: libGeoIP/GeoIPUpdate.c.o
@@ -218,7 +218,7 @@ libGeoIP/GeoIPUpdate.o: libGeoIP/GeoIPUpdate.c.o
 
 # target to build an object file
 libGeoIP/GeoIPUpdate.c.o:
-	cd /Users/user/Desktop/QServ/QServCollect && $(MAKE) -f GeoIP/CMakeFiles/GeoIP.dir/build.make GeoIP/CMakeFiles/GeoIP.dir/libGeoIP/GeoIPUpdate.c.o
+	cd /Users/user/Desktop/QServCollect && $(MAKE) -f GeoIP/CMakeFiles/GeoIP.dir/build.make GeoIP/CMakeFiles/GeoIP.dir/libGeoIP/GeoIPUpdate.c.o
 .PHONY : libGeoIP/GeoIPUpdate.c.o
 
 libGeoIP/GeoIPUpdate.i: libGeoIP/GeoIPUpdate.c.i
@@ -227,7 +227,7 @@ libGeoIP/GeoIPUpdate.i: libGeoIP/GeoIPUpdate.c.i
 
 # target to preprocess a source file
 libGeoIP/GeoIPUpdate.c.i:
-	cd /Users/user/Desktop/QServ/QServCollect && $(MAKE) -f GeoIP/CMakeFiles/GeoIP.dir/build.make GeoIP/CMakeFiles/GeoIP.dir/libGeoIP/GeoIPUpdate.c.i
+	cd /Users/user/Desktop/QServCollect && $(MAKE) -f GeoIP/CMakeFiles/GeoIP.dir/build.make GeoIP/CMakeFiles/GeoIP.dir/libGeoIP/GeoIPUpdate.c.i
 .PHONY : libGeoIP/GeoIPUpdate.c.i
 
 libGeoIP/GeoIPUpdate.s: libGeoIP/GeoIPUpdate.c.s
@@ -236,7 +236,7 @@ libGeoIP/GeoIPUpdate.s: libGeoIP/GeoIPUpdate.c.s
 
 # target to generate assembly for a file
 libGeoIP/GeoIPUpdate.c.s:
-	cd /Users/user/Desktop/QServ/QServCollect && $(MAKE) -f GeoIP/CMakeFiles/GeoIP.dir/build.make GeoIP/CMakeFiles/GeoIP.dir/libGeoIP/GeoIPUpdate.c.s
+	cd /Users/user/Desktop/QServCollect && $(MAKE) -f GeoIP/CMakeFiles/GeoIP.dir/build.make GeoIP/CMakeFiles/GeoIP.dir/libGeoIP/GeoIPUpdate.c.s
 .PHONY : libGeoIP/GeoIPUpdate.c.s
 
 libGeoIP/md5.o: libGeoIP/md5.c.o
@@ -245,7 +245,7 @@ libGeoIP/md5.o: libGeoIP/md5.c.o
 
 # target to build an object file
 libGeoIP/md5.c.o:
-	cd /Users/user/Desktop/QServ/QServCollect && $(MAKE) -f GeoIP/CMakeFiles/GeoIP.dir/build.make GeoIP/CMakeFiles/GeoIP.dir/libGeoIP/md5.c.o
+	cd /Users/user/Desktop/QServCollect && $(MAKE) -f GeoIP/CMakeFiles/GeoIP.dir/build.make GeoIP/CMakeFiles/GeoIP.dir/libGeoIP/md5.c.o
 .PHONY : libGeoIP/md5.c.o
 
 libGeoIP/md5.i: libGeoIP/md5.c.i
@@ -254,7 +254,7 @@ libGeoIP/md5.i: libGeoIP/md5.c.i
 
 # target to preprocess a source file
 libGeoIP/md5.c.i:
-	cd /Users/user/Desktop/QServ/QServCollect && $(MAKE) -f GeoIP/CMakeFiles/GeoIP.dir/build.make GeoIP/CMakeFiles/GeoIP.dir/libGeoIP/md5.c.i
+	cd /Users/user/Desktop/QServCollect && $(MAKE) -f GeoIP/CMakeFiles/GeoIP.dir/build.make GeoIP/CMakeFiles/GeoIP.dir/libGeoIP/md5.c.i
 .PHONY : libGeoIP/md5.c.i
 
 libGeoIP/md5.s: libGeoIP/md5.c.s
@@ -263,7 +263,7 @@ libGeoIP/md5.s: libGeoIP/md5.c.s
 
 # target to generate assembly for a file
 libGeoIP/md5.c.s:
-	cd /Users/user/Desktop/QServ/QServCollect && $(MAKE) -f GeoIP/CMakeFiles/GeoIP.dir/build.make GeoIP/CMakeFiles/GeoIP.dir/libGeoIP/md5.c.s
+	cd /Users/user/Desktop/QServCollect && $(MAKE) -f GeoIP/CMakeFiles/GeoIP.dir/build.make GeoIP/CMakeFiles/GeoIP.dir/libGeoIP/md5.c.s
 .PHONY : libGeoIP/md5.c.s
 
 libGeoIP/regionName.o: libGeoIP/regionName.c.o
@@ -272,7 +272,7 @@ libGeoIP/regionName.o: libGeoIP/regionName.c.o
 
 # target to build an object file
 libGeoIP/regionName.c.o:
-	cd /Users/user/Desktop/QServ/QServCollect && $(MAKE) -f GeoIP/CMakeFiles/GeoIP.dir/build.make GeoIP/CMakeFiles/GeoIP.dir/libGeoIP/regionName.c.o
+	cd /Users/user/Desktop/QServCollect && $(MAKE) -f GeoIP/CMakeFiles/GeoIP.dir/build.make GeoIP/CMakeFiles/GeoIP.dir/libGeoIP/regionName.c.o
 .PHONY : libGeoIP/regionName.c.o
 
 libGeoIP/regionName.i: libGeoIP/regionName.c.i
@@ -281,7 +281,7 @@ libGeoIP/regionName.i: libGeoIP/regionName.c.i
 
 # target to preprocess a source file
 libGeoIP/regionName.c.i:
-	cd /Users/user/Desktop/QServ/QServCollect && $(MAKE) -f GeoIP/CMakeFiles/GeoIP.dir/build.make GeoIP/CMakeFiles/GeoIP.dir/libGeoIP/regionName.c.i
+	cd /Users/user/Desktop/QServCollect && $(MAKE) -f GeoIP/CMakeFiles/GeoIP.dir/build.make GeoIP/CMakeFiles/GeoIP.dir/libGeoIP/regionName.c.i
 .PHONY : libGeoIP/regionName.c.i
 
 libGeoIP/regionName.s: libGeoIP/regionName.c.s
@@ -290,7 +290,7 @@ libGeoIP/regionName.s: libGeoIP/regionName.c.s
 
 # target to generate assembly for a file
 libGeoIP/regionName.c.s:
-	cd /Users/user/Desktop/QServ/QServCollect && $(MAKE) -f GeoIP/CMakeFiles/GeoIP.dir/build.make GeoIP/CMakeFiles/GeoIP.dir/libGeoIP/regionName.c.s
+	cd /Users/user/Desktop/QServCollect && $(MAKE) -f GeoIP/CMakeFiles/GeoIP.dir/build.make GeoIP/CMakeFiles/GeoIP.dir/libGeoIP/regionName.c.s
 .PHONY : libGeoIP/regionName.c.s
 
 libGeoIP/timeZone.o: libGeoIP/timeZone.c.o
@@ -299,7 +299,7 @@ libGeoIP/timeZone.o: libGeoIP/timeZone.c.o
 
 # target to build an object file
 libGeoIP/timeZone.c.o:
-	cd /Users/user/Desktop/QServ/QServCollect && $(MAKE) -f GeoIP/CMakeFiles/GeoIP.dir/build.make GeoIP/CMakeFiles/GeoIP.dir/libGeoIP/timeZone.c.o
+	cd /Users/user/Desktop/QServCollect && $(MAKE) -f GeoIP/CMakeFiles/GeoIP.dir/build.make GeoIP/CMakeFiles/GeoIP.dir/libGeoIP/timeZone.c.o
 .PHONY : libGeoIP/timeZone.c.o
 
 libGeoIP/timeZone.i: libGeoIP/timeZone.c.i
@@ -308,7 +308,7 @@ libGeoIP/timeZone.i: libGeoIP/timeZone.c.i
 
 # target to preprocess a source file
 libGeoIP/timeZone.c.i:
-	cd /Users/user/Desktop/QServ/QServCollect && $(MAKE) -f GeoIP/CMakeFiles/GeoIP.dir/build.make GeoIP/CMakeFiles/GeoIP.dir/libGeoIP/timeZone.c.i
+	cd /Users/user/Desktop/QServCollect && $(MAKE) -f GeoIP/CMakeFiles/GeoIP.dir/build.make GeoIP/CMakeFiles/GeoIP.dir/libGeoIP/timeZone.c.i
 .PHONY : libGeoIP/timeZone.c.i
 
 libGeoIP/timeZone.s: libGeoIP/timeZone.c.s
@@ -317,7 +317,7 @@ libGeoIP/timeZone.s: libGeoIP/timeZone.c.s
 
 # target to generate assembly for a file
 libGeoIP/timeZone.c.s:
-	cd /Users/user/Desktop/QServ/QServCollect && $(MAKE) -f GeoIP/CMakeFiles/GeoIP.dir/build.make GeoIP/CMakeFiles/GeoIP.dir/libGeoIP/timeZone.c.s
+	cd /Users/user/Desktop/QServCollect && $(MAKE) -f GeoIP/CMakeFiles/GeoIP.dir/build.make GeoIP/CMakeFiles/GeoIP.dir/libGeoIP/timeZone.c.s
 .PHONY : libGeoIP/timeZone.c.s
 
 # Help Target
@@ -361,6 +361,6 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	cd /Users/user/Desktop/QServ/QServCollect && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
+	cd /Users/user/Desktop/QServCollect && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 
