@@ -48,6 +48,8 @@ namespace server {
     extern QSERV_CALLBACK mapsucks_cmd(p);
     extern QSERV_CALLBACK gban_cmd(p);
     extern QSERV_CALLBACK cleargbans_cmd(p);
+    extern QSERV_CALLBACK teampersist_cmd(p);
+    extern QSERV_CALLBACK invadmin_cmd(p);
 }
 
 #endif

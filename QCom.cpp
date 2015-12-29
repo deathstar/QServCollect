@@ -22,21 +22,14 @@ namespace server {
                  PRIV_NONE, time_cmd, 1);
         ncommand("bunny", "\f4Broadcast a helper message to all players. Usage: #bunny <helpmessage>",
                  PRIV_ADMIN, bunny_cmd, 0);
-        ncommand("echo", "\f4Broadcast a message to all players. Usage: #echo <message>",
-                 PRIV_MASTER, echo_cmd, 1);
-		ncommand("revokepriv", "\f4Revoke the privileges of a player. Usage: #revokepriv <cn>",
-				PRIV_ADMIN, revokepriv_cmd, 1);
-        ncommand("forceintermission", "\f4Force an intermission. Usage: #forceintermission",
-                 PRIV_MASTER, forceintermission_cmd, 0);
-        ncommand("getversion", "\f4Get the current QServ Version. Usage: #getversion",
-                 PRIV_NONE, getversion_cmd, 0);
-        ncommand("callops", "\f4Call all operators on the Internet Relay Chat Server. Usage: #callops",
-                 PRIV_NONE, callops_cmd, 0);
+        ncommand("echo", "\f4Broadcast a message to all players. Usage: #echo <message>", PRIV_MASTER, echo_cmd, 1);
+		ncommand("revokepriv", "\f4Revoke the privileges of a player. Usage: #revokepriv <cn>", PRIV_ADMIN, revokepriv_cmd, 1);
+        ncommand("forceintermission", "\f4Force an intermission. Usage: #forceintermission", PRIV_MASTER, forceintermission_cmd, 0);
+        ncommand("getversion", "\f4Get the current QServ Version. Usage: #getversion", PRIV_NONE, getversion_cmd, 0);
+        ncommand("callops", "\f4Call all operators on the Internet Relay Chat Server. Usage: #callops", PRIV_NONE, callops_cmd, 0);
         ncommand("msg", "\f4Send a private message. Usage #msg <cn> <msg>", PRIV_NONE, msg_cmd,2);
-        ncommand("sendprivs", "\f4Share power with another player. Usage: #sendprivs <cn>",
-                 PRIV_ADMIN, sendprivs_cmd, 1);
-        ncommand("forgive", "\f4Forgive a player for teamkilling or just in general. Usage: #forgive <cn>",
-                 PRIV_NONE, forgive_cmd, 1);
+        ncommand("sendprivs", "\f4Share power with another player. Usage: #sendprivs <cn>", PRIV_ADMIN, sendprivs_cmd, 1);
+        ncommand("forgive", "\f4Forgive a player for teamkilling or just in general. Usage: #forgive <cn>", PRIV_NONE, forgive_cmd, 1);
         ncommand("forcespectator", "\f4Forces a player to become a spectator. Usage: #forcespectator <cn>", PRIV_ADMIN, forcespectator_cmd, 1);
         ncommand("unspectate", "\f4Removes a player from spectator mode. Usage: #unspectate <cn>", PRIV_ADMIN, unspectate_cmd, 1);
         ncommand("mute", "\f4Mutes a client. Usage #mute <cn>", PRIV_ADMIN, mute_cmd, 1);
@@ -52,10 +45,45 @@ namespace server {
         ncommand("mapsucks", "\f4Votes for an intermission to change the map. Usage: #mapsucks", PRIV_NONE, mapsucks_cmd, 0);
         ncommand("gban", "\f4Bans a client. Usage: #gban <cn>", PRIV_ADMIN, gban_cmd, 1);
         ncommand("cleargbans", "\f4Clears all server bans stored and issued. Usage: #cleargbans", PRIV_ADMIN, gban_cmd, 0);
+        ncommand("teampersist", "\f4Toggle persistant teams on or off. Usage: #teampersist <0/1>", PRIV_ADMIN, teampersist_cmd, 1);
+        ncommand("invadmin", "\f4Claim invisible administrator. Usage: #invadmin <adminpass>", PRIV_ADMIN, invadmin_cmd, 0);
         //ncommand("owords", "View list of offensive words. Usage: #owords",
         ///         PRIV_NONE, owords_cmd, 0);
         //ncommand("olangfilter", "Turn the offensive language filter on or off. Usage: #olang <off/on> (0/1) and #olang to see if it's activated",
         //         PRIV_MASTER, olangfilter_cmd, 1);
+    }
+    
+    QSERV_CALLBACK invadmin_cmd(p) {
+        clientinfo *ci = qs.getClient(CMD_SENDER);
+        if(ci->privilege == PRIV_ADMIN) {
+            ci->privilege = PRIV_ADMIN;
+            sendf(-1, 1, "ri4", N_CURRENTMASTER, ci->clientnum, ci->clientnum >= 0 ? ci->privilege : 0, mastermode);
+            sendf(ci->clientnum, 1, "ris", N_SERVMSG, "\f4You became an invisible \f6Admin\f4. Relinguish and reclaim to reveal your privileges.");
+            out(ECHO_IRC, "%s claimed invisible admin", colorname(ci));
+            out(ECHO_CONSOLE, "%s claimed invisible admin", colorname(ci));
+            }
+        else {
+            sendf(ci->clientnum, 1, "ris", N_SERVMSG, "\f3Error: \f7You must first claim admin to go invisible.");
+        }
+    }
+    
+    QSERV_CALLBACK teampersist_cmd(p) {
+        int togglenum = atoi(args[1]);
+        if(togglenum==1) {
+            if(!persist) {
+                persist = true; out(ECHO_SERV, "\f4Persistant teams are now \f0enabled");
+            }
+        }
+        else if(togglenum==0) {
+            if(persist) {
+                persist = false; out(ECHO_SERV, "\f4Persistant teams are now \f3disabled");
+            }
+        }
+        else {
+            if(persist) sendf(CMD_SENDER, 1, "ris", N_SERVMSG, "\f3Error: \f4Persistant teams already \f0enabled");
+            else sendf(CMD_SENDER, 1, "ris", N_SERVMSG, "\f3Error: \f4Persistant teams already \f3disabled");
+            sendf(CMD_SENDER, 1, "ris", N_SERVMSG, CMD_DESC(cid));
+        }
     }
     
     QSERV_CALLBACK cleargbans_cmd(p) {
