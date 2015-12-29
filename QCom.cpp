@@ -10,18 +10,12 @@ namespace server {
             @Command argument count
         **/
 
-        ncommand("me", "\f4Echo your name and message to everyone. Usage: #me <message>",
-                 PRIV_NONE, me_cmd, 0);
-        ncommand("cmd", "\f4View command list or command usage. Usage: #cmd for command list and #cmd <commandname> for command usage",
-                 PRIV_NONE, cmd_cmd, 1);
-        ncommand("stats", "\f4View the stats of a player or yourself. Usage: #stats <cn> or #stats",
-                 PRIV_NONE, stats_cmd, 1);
-        ncommand("localtime", "\f4Get the local time of the Server. Usage: #localtime",
-                 PRIV_NONE, localtime_cmd, 0);
-        ncommand("time", "\f4View the current time. Usage: #time <zone>",
-                 PRIV_NONE, time_cmd, 1);
-        ncommand("bunny", "\f4Broadcast a helper message to all players. Usage: #bunny <helpmessage>",
-                 PRIV_ADMIN, bunny_cmd, 0);
+        ncommand("me", "\f4Echo your name and message to everyone. Usage: #me <message>", PRIV_NONE, me_cmd, 0);
+        ncommand("cmd", "\f4View command list or command usage. Usage: #cmd for command list and #cmd <commandname> for command usage", PRIV_NONE, cmd_cmd, 1);
+        ncommand("stats", "\f4View the stats of a player or yourself. Usage: #stats <cn> or #stats", PRIV_NONE, stats_cmd, 1);
+        ncommand("localtime", "\f4Get the local time of the Server. Usage: #localtime", PRIV_NONE, localtime_cmd, 0);
+        ncommand("time", "\f4View the current time. Usage: #time <zone>", PRIV_NONE, time_cmd, 1);
+        ncommand("bunny", "\f4Broadcast a helper message to all players. Usage: #bunny <helpmessage>", PRIV_ADMIN, bunny_cmd, 0);
         ncommand("echo", "\f4Broadcast a message to all players. Usage: #echo <message>", PRIV_MASTER, echo_cmd, 1);
 		ncommand("revokepriv", "\f4Revoke the privileges of a player. Usage: #revokepriv <cn>", PRIV_ADMIN, revokepriv_cmd, 1);
         ncommand("forceintermission", "\f4Force an intermission. Usage: #forceintermission", PRIV_MASTER, forceintermission_cmd, 0);
@@ -44,24 +38,39 @@ namespace server {
         ncommand("cheater", "\f4Accuses someone of cheating and alerts moderators. Usage: #cheater <cn>", PRIV_NONE, cheater_cmd, 1);
         ncommand("mapsucks", "\f4Votes for an intermission to change the map. Usage: #mapsucks", PRIV_NONE, mapsucks_cmd, 0);
         ncommand("gban", "\f4Bans a client. Usage: #gban <cn>", PRIV_ADMIN, gban_cmd, 1);
-        ncommand("cleargbans", "\f4Clears all server bans stored and issued. Usage: #cleargbans", PRIV_ADMIN, gban_cmd, 0);
-        ncommand("teampersist", "\f4Toggle persistant teams on or off. Usage: #teampersist <0/1>", PRIV_ADMIN, teampersist_cmd, 1);
+        ncommand("cleargbans", "\f4Clears all server bans stored and issued. Usage: #cleargbans", PRIV_ADMIN, cleargbans_cmd, 0);
+        ncommand("teampersist", "\f4Toggle persistant teams on or off. Usage: #teampersist <0/1> (0 for off, 1 for on)", PRIV_ADMIN, teampersist_cmd, 1);
         ncommand("invadmin", "\f4Claim invisible administrator. Usage: #invadmin <adminpass>", PRIV_ADMIN, invadmin_cmd, 0);
+        ncommand("allowmaster", "\f4Allows clients to claim master. Usage: #allowmaster <0/1> (0 for off, 1 for on)", PRIV_ADMIN, allowmaster_cmd, 1);
         //ncommand("owords", "View list of offensive words. Usage: #owords",
         ///         PRIV_NONE, owords_cmd, 0);
         //ncommand("olangfilter", "Turn the offensive language filter on or off. Usage: #olang <off/on> (0/1) and #olang to see if it's activated",
         //         PRIV_MASTER, olangfilter_cmd, 1);
     }
+    QSERV_CALLBACK allowmaster_cmd(p) {
+        int togglenum = atoi(args[1]);
+        if(togglenum==1) {
+            switchallowmaster();
+            out(ECHO_SERV, "\f4Master is now \f0enabled");
+        }
+        else if(togglenum==0) {
+            switchdisallowmaster();
+            out(ECHO_SERV, "\f4Master is now \f3disabled");
+        }
+        else {
+            sendf(CMD_SENDER, 1, "ris", N_SERVMSG, CMD_DESC(cid));
+        }
+    }
     
     QSERV_CALLBACK invadmin_cmd(p) {
         clientinfo *ci = qs.getClient(CMD_SENDER);
         if(ci->privilege == PRIV_ADMIN) {
+            server::setmaster(ci, 0, "", NULL, NULL,PRIV_MASTER,false, false, true);
             ci->privilege = PRIV_ADMIN;
-            sendf(-1, 1, "ri4", N_CURRENTMASTER, ci->clientnum, ci->clientnum >= 0 ? ci->privilege : 0, mastermode);
-            sendf(ci->clientnum, 1, "ris", N_SERVMSG, "\f4You became an invisible \f6Admin\f4. Relinguish and reclaim to reveal your privileges.");
-            out(ECHO_IRC, "%s claimed invisible admin", colorname(ci));
-            out(ECHO_CONSOLE, "%s claimed invisible admin", colorname(ci));
-            }
+            sendf(ci->clientnum, 1, "ris", N_SERVMSG, "\f4You became an invisible \f6Admin\f4. Relinguish and reclaim to become visible.");
+            out(ECHO_IRC, "%s became a invisible admin", colorname(ci));
+            out(ECHO_CONSOLE, "%s became a invisible admin", colorname(ci));
+        }
         else {
             sendf(ci->clientnum, 1, "ris", N_SERVMSG, "\f3Error: \f7You must first claim admin to go invisible.");
         }
@@ -80,8 +89,6 @@ namespace server {
             }
         }
         else {
-            if(persist) sendf(CMD_SENDER, 1, "ris", N_SERVMSG, "\f3Error: \f4Persistant teams already \f0enabled");
-            else sendf(CMD_SENDER, 1, "ris", N_SERVMSG, "\f3Error: \f4Persistant teams already \f3disabled");
             sendf(CMD_SENDER, 1, "ris", N_SERVMSG, CMD_DESC(cid));
         }
     }
@@ -112,10 +119,10 @@ namespace server {
         if(!ci->votedmapsucks) {
             mapsucksvotes++;
             out(ECHO_SERV, "\f0%s \f4thinks this map sucks, use \f2#mapsucks \f4to vote for an intermission to skip it.", colorname(ci));
+            ci->votedmapsucks = true;
             if(mapsucksvotes>=getvar("votestopassmapsucks")) {
                 startintermission();
                 int mapsucksvotes = 0;
-                ci->votedmapsucks = true;
                 out(ECHO_SERV, "\f4Changing map: That map sucked (\f7%d \f4votes to skip)", votestopassmapsucks);
             }
         }

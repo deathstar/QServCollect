@@ -63,6 +63,9 @@ namespace server {
     int gamemode = 0;
     int gamemillis = 0, gamelimit = 0, nextexceeded = 0, gamespeed = 100;
     int interm = 0;
+    
+    //QServ
+    bool persist = false;
 
     string smapname = "";
     enet_uint32 lastsend = 0;
@@ -377,7 +380,15 @@ namespace server {
 			case 2: mastermask = MM_COOPSERV; break;
 		}
 	});
-
+    
+    //QServ
+    void switchallowmaster() {
+        mastermask = MM_PRIVSERV;
+    }
+    void switchdisallowmaster() {
+        mastermask = MM_PUBSERV;
+    }
+    
     struct teamkillinfo
     {
         uint ip;
@@ -1124,8 +1135,7 @@ namespace server {
     }
     extern void connected(clientinfo *ci);
 
-    bool setmaster(clientinfo *ci, bool val, const char *pass = "", const char *authname = NULL, const char *authdesc = NULL, int authpriv = PRIV_MASTER, bool force = false, bool trial = false,
-					bool revoke = false)
+    bool setmaster(clientinfo *ci, bool val, const char *pass = "", const char *authname = NULL, const char *authdesc = NULL, int authpriv = PRIV_MASTER, bool force = false, bool trial = false, bool revoke = false)
     {
         if(authname && !val) return false;
         const char *name = "";
@@ -1151,7 +1161,7 @@ namespace server {
                 }
                 if(!authname && !(mastermask&MM_AUTOAPPROVE) && !ci->privilege && !ci->local)
                 {
-                    sendf(ci->clientnum, 1, "ris", N_SERVMSG, "\f3Error: Server requires authentication with \"/auth\"");
+                    sendf(ci->clientnum, 1, "ris", N_SERVMSG, "\f3Error: Master is disabled. \"/auth\" is enabled.");
                     return false;
                 }
             }
@@ -1688,6 +1698,7 @@ namespace server {
         packetbuf p(MAXTRANS, ENET_PACKET_FLAG_RELIABLE);
         putinitclient(ci, p);
         sendpacket(-1, 1, p.finalize(), ci->clientnum);
+        if(persist && m_teammode) out(ECHO_SERV, "Persistant teams currently enabled");
     }
     
     void cutogz(char *s)
@@ -1919,9 +1930,8 @@ namespace server {
         
         sendf(-1, 1, "risii", N_MAPCHANGE, smapname, gamemode, 1);
         
-        
         clearteaminfo();
-        if(m_teammode) autoteam();
+        if(m_teammode && !persist) autoteam();
         
         if(m_capture) smode = &capturemode;
         else if(m_ctf) smode = &ctfmode;
@@ -1938,11 +1948,6 @@ namespace server {
         }
         
         aiman::changemap();
-        if(getvar("glctf")) {out(ECHO_SERV,"\f4Enabled mode: \f0Grenade Launcher CTF: \f6Capture flags with grenades!");}
-        if(getvar("shotguninsta")) {out(ECHO_SERV,"\f4Enabled mode: \f0Shotgun Instagib: \f6Shotgun your opponents to death!");}
-        if(getvar("rocketinsta")) {out(ECHO_SERV,"\f4Enabled mode: \f0Rocket Instagib: \f6Shoot your opponent in the face with rockets!");}
-        if(getvar("chainsawinsta")) {out(ECHO_SERV,"\f4Enabled mode: \f0Chainsaw Insta: \f6Use chainsaw during instagib!");}
-        if(getvar("minigunctf")) {out(ECHO_SERV,"\f4Enabled mode: \f0Minigun Capture the flag: \f6Use your machine gun and score flags!");}
         
         if(m_demo)
         {

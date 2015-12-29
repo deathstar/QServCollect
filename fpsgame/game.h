@@ -846,6 +846,9 @@ namespace server
     extern void cleargbans();
     extern void privilegemsg(int min_privilege, const char *fmt, ...);
     extern void addgban(const char *name);
+    extern void switchallowmaster();
+    extern void switchdisallowmaster();
+    extern bool persist;
 
     struct clientinfo;
 }

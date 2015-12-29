@@ -26,7 +26,7 @@ namespace server {
     extern QSERV_CALLBACK owords_cmd(p);
     extern QSERV_CALLBACK olangfilter_cmd(p);
     extern QSERV_CALLBACK echo_cmd(p);
-	extern QSERV_CALLBACK revokepriv_cmd(p);
+    extern QSERV_CALLBACK revokepriv_cmd(p);
     extern QSERV_CALLBACK forceintermission_cmd(p);
     extern QSERV_CALLBACK getversion_cmd(p);
     extern QSERV_CALLBACK callops_cmd(p);
@@ -50,6 +50,7 @@ namespace server {
     extern QSERV_CALLBACK cleargbans_cmd(p);
     extern QSERV_CALLBACK teampersist_cmd(p);
     extern QSERV_CALLBACK invadmin_cmd(p);
+    extern QSERV_CALLBACK allowmaster_cmd(p);
 }
 
 #endif
