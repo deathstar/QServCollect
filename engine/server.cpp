@@ -746,6 +746,9 @@ void serverslice(bool dedicated, uint timeout)   // main server update, called f
         laststatus = totalmillis;
         if(nonlocalclients || serverhost->totalSentData || serverhost->totalReceivedData) logoutf("QServ Heartbeat: %d remote client(s), %.1f sent, %.1f rec (K/sec)", nonlocalclients, serverhost->totalSentData/60.0f/1024, serverhost->totalReceivedData/60.0f/1024);
         serverhost->totalSentData = serverhost->totalReceivedData = 0;
+        
+        if(nonlocalclients || serverhost->totalSentData || serverhost->totalReceivedData) out(ECHO_IRC,"QServ Heartbeat: %d remote client(s), %.1f sent, %.1f rec (K/sec)", nonlocalclients, serverhost->totalSentData/60.0f/1024, serverhost->totalReceivedData/60.0f/1024);
+        serverhost->totalSentData = serverhost->totalReceivedData = 0;
     }
     ENetEvent event;
     bool serviced = false;
