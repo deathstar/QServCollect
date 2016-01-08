@@ -33,7 +33,7 @@ namespace server {
         ncommand("togglelockspec", "\f4Forces a client to be locked in spectator mode. Usage #togglelockspec <cn>", PRIV_ADMIN, togglelockspec_cmd, 1);
         ncommand("uptime", "\f4View how long the server has been up for. Usage: #uptime", PRIV_NONE, uptime_cmd, 0);
         ncommand("info", "\f4View information about a player. Usage: #info <cn>", PRIV_NONE, info_cmd, 1);
-        ncommand("tournament", "\f4Start a tournament with a timer. Usage: #tournament <mode> <map>", PRIV_MASTER, tournament_cmd, 2);
+        ncommand("tournament", "\f4Forces a tournament regardless of mode/etc. Usage: #tournament <mode> <map>", PRIV_MASTER, tournament_cmd, 2);
         ncommand("help", "\f4Lists the #cmd command and more information. Usage: #help", PRIV_NONE, help_cmd, 0);
         ncommand("cheater", "\f4Accuses someone of cheating and alerts moderators. Usage: #cheater <cn>", PRIV_NONE, cheater_cmd, 1);
         ncommand("mapsucks", "\f4Votes for an intermission to change the map. Usage: #mapsucks", PRIV_NONE, mapsucks_cmd, 0);
@@ -51,11 +51,12 @@ namespace server {
         int togglenum = atoi(args[1]);
         if(togglenum==1) {
             switchallowmaster();
-            out(ECHO_SERV, "\f4Master is now \f0enabled");
+            clientinfo *ci = qs.getClient(CMD_SENDER);
+            out(ECHO_SERV, "\f4Claiming \f0master \f4with \"/setmaster 1\" is now \f0enabled");
         }
         else if(togglenum==0) {
             switchdisallowmaster();
-            out(ECHO_SERV, "\f4Master is now \f3disabled");
+            out(ECHO_SERV, "\f4Claiming \f0master \f4is now \f3disabled");
         }
         else {
             sendf(CMD_SENDER, 1, "ris", N_SERVMSG, CMD_DESC(cid));
@@ -67,9 +68,9 @@ namespace server {
         if(ci->privilege == PRIV_ADMIN) {
             server::setmaster(ci, 0, "", NULL, NULL,PRIV_MASTER,false, false, true);
             ci->privilege = PRIV_ADMIN;
-            sendf(ci->clientnum, 1, "ris", N_SERVMSG, "\f4You became an invisible \f6Admin\f4. Relinguish and reclaim to become visible.");
-            out(ECHO_IRC, "%s became a invisible admin", colorname(ci));
-            out(ECHO_CONSOLE, "%s became a invisible admin", colorname(ci));
+            sendf(ci->clientnum, 1, "ris", N_SERVMSG, "\f4You became an invisible \f6Admin\f4. Relinguish and reclaim to reveal your privilege.");
+            out(ECHO_IRC, "%s became an invisible admin", colorname(ci));
+            out(ECHO_CONSOLE, "%s became an invisible admin", colorname(ci));
         }
         else {
             sendf(ci->clientnum, 1, "ris", N_SERVMSG, "\f3Error: \f7You must first claim admin to go invisible.");
@@ -95,7 +96,7 @@ namespace server {
     
     QSERV_CALLBACK cleargbans_cmd(p) {
         server::cleargbans();
-        out(ECHO_SERV, "\f4All game bans \f0cleared\f4!");
+        out(ECHO_SERV, "\f0All game bans cleared!");
         out(ECHO_NOCOLOR, "All Game bans cleared");
     }
     
@@ -106,6 +107,8 @@ namespace server {
             clientinfo *ci = qs.getClient(cn);
             server::addgban(ci->ip);
             disconnect_client(ci->clientnum, DISC_IPBAN);
+            out(ECHO_SERV, "\f0%s \f4has been added to the permanent banlist.", colorname(ci));
+            out(ECHO_NOCOLOR, "%s has been added to the permanent banlist.", colorname(ci));
         } else {
             sendf(CMD_SENDER, 1, "ris", N_SERVMSG, "\f3Error: \f4Incorrect client number/no cn specified or you're trying to ban yourself.");
             sendf(CMD_SENDER, 1, "ris", N_SERVMSG, CMD_DESC(cid));
@@ -155,7 +158,7 @@ namespace server {
         }
         sendf(CMD_SENDER, 1, "ris", N_SERVMSG, commandList);
         clientinfo *ci = qs.getClient(CMD_SENDER);
-        defformatstring(f)("\f7Help\f4: Type \f2#cmd \f4to list commands, or use \f2#cmd <commandname> \f4for information about a specific command.");
+        defformatstring(f)("\f1Help\f4: Type \f2#cmd \f4to list commands, or use \f2#cmd <commandname> \f4for information about a specific command.");
         sendf(ci->clientnum, 1, "ris", N_SERVMSG, f);
         }
     
@@ -167,7 +170,8 @@ namespace server {
         "regencapture", "ctf", "instactf", "efficctf", "protect",
         "instaprotect", "efficprotect", "hold", "instahold", "effichold",
         "collect", "instacollect", "efficcollect"
-    }; // custom mode names remember to type them like this if you want that mode
+    }; 
+    // custom mode names remember to type them like this if you want that mode
     
     int mc = 22;
     
@@ -175,6 +179,7 @@ namespace server {
     extern void pausegame(bool val, clientinfo *ci = NULL);
     
     bool time_elapsed = false;
+    /*
     int t_timer() {
         int cm = 10; 
         
@@ -186,8 +191,9 @@ namespace server {
         }
         time_elapsed = true;
     }
+    */
     QSERV_CALLBACK tournament_cmd(p) {
-		t_timer();
+		//t_timer();
         const char *mapname = args[2];
         char *mn = args[1];
         if(args[1] != NULL && args[2] != NULL && *mapname !=NULL && *mn!=NULL) {
@@ -388,9 +394,9 @@ namespace server {
                         if(location) sprintf(lmsg[1], "%s", location);
                         (CMD_SCI.privilege == PRIV_ADMIN) ? sprintf(lmsg[0], "%s (%s)", lmsg[1], ip) :
                         sprintf(lmsg[0], "%s", lmsg[1]);
-                        int sec = (ci->connectmillis/1000);
-                        int min = (sec / 60);
-                        int hour = (min / 60);
+                        int sec = (ci->connectmillis/1000) % 60;
+                        int min = ((ci->connectmillis/(1000*60)) % 60);
+                        int hour = ((ci->connectmillis / (100*60*60)) % 24);
                         int cn = atoi(args[1]);
                         clientinfo *ci = qs.getClient(cn);
                         defformatstring(f)("\f0%s \f4(\f2%d\f4) [\f1%s\f4] \f4Connected for: \f6%d \f2Hour(s)\f4, \f6%d \f2Minute(s)\f4, \f6%d \f2Second(s)", colorname(ci), ci->clientnum,lmsg[0], hour, min, sec);
@@ -536,9 +542,8 @@ namespace server {
     	int cn = atoi(args[1]);
         clientinfo *ci = qs.getClient(cn);
         clientinfo *self = qs.getClient(CMD_SENDER);
-        if(cn!=CMD_SENDER && cn >= 0 && cn <= 1000 && ci != NULL && ci->connected && args[1]!=NULL) {
+        if(cn!=CMD_SENDER && cn >= 0 && cn <= 1000 && cn != NULL && ci != NULL && ci->connected && args[1]!=NULL) {
         	int accuracy = (ci->state.damage*100)/max(ci->state.shotdamage, 1);
-        	
         	//send it to admins and log
             privilegemsg(PRIV_MASTER,"\f4Something's fishy! A cheater has been reported.");
              out(ECHO_SERV, "\f0%s \f4accuses \f3%s \f4(CN: \f6%d \f4| Accuracy: \f6%d%\f4) of cheating.", colorname(self), colorname(ci), ci->clientnum, accuracy);
@@ -546,7 +551,7 @@ namespace server {
             
             //Acknowledge we got the report
             defformatstring(nocolorcheatermsg)("\f3%s \f4has been reported.", colorname(ci));
-            sendf(CMD_SENDER, 1, "ris", N_SERVMSG,nocolorcheatermsg);
+            sendf(CMD_SENDER, 1, "ris", N_SERVMSG, nocolorcheatermsg);
         } else {
             sendf(CMD_SENDER, 1, "ris", N_SERVMSG, "\f3Error: \f4Incorrect client number/no cn specified or you're trying to accuse yourself.");
             sendf(CMD_SENDER, 1, "ris", N_SERVMSG, CMD_DESC(cid));
@@ -803,7 +808,7 @@ namespace server {
                             sendf(CMD_SENDER, 1, "ris", N_SERVMSG, s);
                         }
                     } else {
-                        sendf(CMD_SENDER, 1, "ris", N_SERVMSG, "Played not connected");
+                        sendf(CMD_SENDER, 1, "ris", N_SERVMSG, "\f3Error: Player not connected");
                     }
                 /*} else {
                     usage = true;
@@ -859,7 +864,7 @@ namespace server {
 						//scheckpausegame();
 					}
 				} else {
-					sendf(CMD_SENDER, 1, "ris", N_SERVMSG, "Played not connected");
+					sendf(CMD_SENDER, 1, "ris", N_SERVMSG, "\f3Error: Player not connected");
                 } 
 			}
 		} else {
