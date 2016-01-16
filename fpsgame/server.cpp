@@ -349,6 +349,7 @@ namespace server {
     SVAR(spreesuicidemsg, "");
     SVAR(spreefinmsg, "");
     SVAR(defmultikillmsg, "MULTI KILL");
+    SVAR(defaultmap, "");
     
     //Other
     int64_t lastfragmillis;
@@ -369,6 +370,7 @@ namespace server {
     VAR(restrictdemos, 0, 1, 1);
     VAR(restrictpausegame, 0, 1, 1);
     VAR(restrictgamespeed, 0, 1, 1);
+    VAR(defaultmodenum, 0, 0, 22);
     
     //Variable Switches
     VARF(publicserver, 0, 0, 2, {
@@ -571,12 +573,20 @@ namespace server {
         }
     }
     
+    extern void changemap(const char *s, int mode);
     //Server initalizer
     void serverinit()
     {
         smapname[0] = '\0';
         resetitems();
         if(serverflagruns) execfile("./flagruns.cfg", false);
+        changemap(defaultmap,defaultmodenum); //add enum
+    }
+    
+    //Server deinitalizer
+    void serverclose()
+    {
+        _storeflagruns();
     }
 
     int numclients(int exclude = -1, bool nospec = true, bool noai = true, bool priv = false)
@@ -588,11 +598,6 @@ namespace server {
             if(ci->clientnum!=exclude && (!nospec || ci->state.state!=CS_SPECTATOR || (priv && (ci->privilege || ci->local))) && (!noai || ci->state.aitype == AI_NONE)) n++;
         }
         return n;
-    }
-    
-    void serverclose()
-    {
-        _storeflagruns();
     }
 
     struct servmode
