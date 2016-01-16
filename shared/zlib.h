@@ -1588,15 +1588,16 @@ ZEXTERN int ZEXPORT inflateBackInit_ OF((z_streamp strm, int windowBits,
 #endif
     
 #  ifdef _LARGEFILE64_SOURCE
+    
+    ZEXTERN gzFile ZEXPORT gzopen64 OF((const char *, const char *));
+    
     #ifdef __APPLE__
-     ZEXTERN gzFile ZEXPORT gzopen64 OF((const char *, const char *));
-
      ZEXTERN z_off_t ZEXPORT gzseek64 OF((gzFile, z_off_t, int));
      ZEXTERN z_off_t ZEXPORT gztell64 OF((gzFile));
      ZEXTERN z_off_t ZEXPORT gzoffset64 OF((gzFile));
      ZEXTERN uLong ZEXPORT adler32_combine64 OF((uLong, uLong, z_off_t));
      ZEXTERN uLong ZEXPORT crc32_combine64 OF((uLong, uLong, z_off_t));
-#endif
+    #endif
     
 # endif
 #else

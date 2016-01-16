@@ -3,6 +3,15 @@
 #ifndef _TOOLS_H
 #define _TOOLS_H
 
+#include <new>
+
+//QServ Sleep function
+#ifdef _WIN32
+#define qsleep(x) Sleep(x*1000);
+#else
+#define qsleep(x) sleep(x);
+#endif
+
 #ifdef NULL
 #undef NULL
 #endif
@@ -26,7 +35,7 @@ typedef unsigned long long int ullong;
 #define RESTRICT
 #endif
 
-inline void *operator new(size_t size)
+/*inline void *operator new(size_t size)
 {
     void *p = malloc(size);
     if(!p) abort();
@@ -38,6 +47,7 @@ inline void *operator new[](size_t size)
     if(!p) abort();
     return p;
 }
+
 inline void operator delete(void *p) { if(p) free(p); }
 inline void operator delete[](void *p) { if(p) free(p); }
 
@@ -45,6 +55,7 @@ inline void *operator new(size_t, void *p) { return p; }
 inline void *operator new[](size_t, void *p) { return p; }
 inline void operator delete(void *, void *) {}
 inline void operator delete[](void *, void *) {}
+*/
 
 #ifdef swap
 #undef swap
@@ -124,6 +135,12 @@ static inline T clamp(T a, U b, U c)
 #define PATHDIV '/'
 #endif
 
+#ifdef __GNUC__
+#define PRINTFARGS(fmt, args) __attribute__((format(printf, fmt, args)))
+#else
+#define PRINTFARGS(fmt, args)
+#endif
+
 // easy safe strings
 
 #define MAXSTRLEN 260
@@ -137,7 +154,7 @@ struct stringformatter
 {
     char *buf;
     stringformatter(char *buf): buf((char *)buf) {}
-    void operator()(const char *fmt, ...)
+    void operator()(const char *fmt, ...) PRINTFARGS(2, 3)
     {
         va_list v;
         va_start(v, fmt);
@@ -410,7 +427,6 @@ static inline bool htcmp(int x, int y)
 {
     return x==y;
 }
-
 
 template <class T> struct vector
 {
@@ -1080,7 +1096,7 @@ struct stream
     virtual bool getline(char *str, int len);
     virtual bool putstring(const char *str) { int len = (int)strlen(str); return write(str, len) == len; }
     virtual bool putline(const char *str) { return putstring(str) && putchar('\n'); }
-    virtual int printf(const char *fmt, ...);
+    virtual int printf(const char *fmt, ...) PRINTFARGS(2, 3);
     virtual uint getcrc() { return 0; }
 
     template<class T> int put(const T *v, int n) { return write(v, n*sizeof(T))/sizeof(T); }
@@ -1136,8 +1152,8 @@ static inline uchar uni2cube(int c)
     extern const uchar uni2cubechars[];
     return uint(c) <= 0x7FF ? uni2cubechars[uni2cubeoffsets[c>>8] + (c&0xFF)] : 0;
 }
-extern int decodeutf8(uchar *dst, int dstlen, uchar *src, int srclen, int *carry = NULL);
-extern int encodeutf8(uchar *dstbuf, int dstlen, uchar *srcbuf, int srclen, int *carry = NULL);
+extern int decodeutf8(uchar *dst, int dstlen, const uchar *src, int srclen, int *carry = NULL);
+extern int encodeutf8(uchar *dstbuf, int dstlen, const uchar *srcbuf, int srclen, int *carry = NULL);
 
 extern char *makerelpath(const char *dir, const char *file, const char *prefix = NULL, const char *cmd = NULL);
 extern char *path(char *s);
@@ -1162,11 +1178,25 @@ extern int listzipfiles(const char *dir, const char *ext, vector<char *> &files)
 extern void seedMT(uint seed);
 extern uint randomMT();
 extern int guessnumcpus();
-//filtertext
-extern void filtertext(char *dst, const char *src, bool whitespace, bool forcespace, size_t len);
-template<size_t N> static inline void filtertext(char (&dst)[N], const char *src, bool whitespace = true, bool forcespace = false) { filtertext(dst, src, whitespace, forcespace, N-1); }
 
-
+extern void putint(ucharbuf &p, int n);
+extern void putint(packetbuf &p, int n);
+extern void putint(vector<uchar> &p, int n);
+extern int getint(ucharbuf &p);
+extern void putuint(ucharbuf &p, int n);
+extern void putuint(packetbuf &p, int n);
+extern void putuint(vector<uchar> &p, int n);
+extern int getuint(ucharbuf &p);
+extern void putfloat(ucharbuf &p, float f);
+extern void putfloat(packetbuf &p, float f);
+extern void putfloat(vector<uchar> &p, float f);
+extern float getfloat(ucharbuf &p);
+extern void sendstring(const char *t, ucharbuf &p);
+extern void sendstring(const char *t, packetbuf &p);
+extern void sendstring(const char *t, vector<uchar> &p);
+extern void getstring(char *t, ucharbuf &p, int len);
+template<size_t N> static inline void getstring(char (&t)[N], ucharbuf &p) { getstring(t, p, int(N)); }
+extern void filtertext(char *dst, const char *src, bool whitespace = true, int len = sizeof(string)-1);
 
 #endif
 
