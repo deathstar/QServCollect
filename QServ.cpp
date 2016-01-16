@@ -1,5 +1,6 @@
 #include "QServ.h"
 #include "GeoIP/libGeoIP/GeoIPCity.h"
+#include "GeoIP/libGeoIP/GeoIP.h"
 
 namespace server {
 
@@ -21,19 +22,14 @@ namespace server {
         if(m_geoip == NULL) return false;
         return true;
     }
-    /*bool QServ::initcitygeoip(const char *filename) {
+    bool QServ::initcitygeoip(const char *filename) {
     city_geoip = GeoIP_open(filename, GEOIP_STANDARD);
     if(city_geoip == NULL) return false;
     return true;
     }
-    char *QServ::citygeoip(const char *ip) {
-    	//GeoIPRecordTag *city;
-    	//GeoIP_record_by_name(city_geoip,ip);
-    	//GeoIPRecord *city;
-    	//return (char *) city;
-    	
+     char *QServ::citygeoip(const char *ip) {
+    	return (char*)GeoIP_record_by_addr(city_geoip, ip);
     }
-    */
     
     char *QServ::congeoip(const char *ip) {
         return (char*)GeoIP_country_name_by_name(m_geoip, ip);
@@ -313,11 +309,8 @@ namespace server {
     }
 
     void QServ::getLocation(clientinfo *ci) {
-
         char *ip = toip(ci->clientnum);
-        defformatstring(location)("%s",congeoip(ip));
-        //defformatstring(citylocation)("%s",citygeoip(ip));
-        //out(ECHO_NOCOLOR, "%s", citylocation);
+        defformatstring(location)("%s %s",congeoip(ip), citygeoip(ip));
         
         int type = 0;
         const char *types[] = {
@@ -338,7 +331,7 @@ namespace server {
         if(strlen(location) > 2 && strlen(ip) > 2) {
             const char clientip = getclientip(ci->clientnum);
             //unsigned int ip = getclientip(ci->clientnum);
-            if(ci->ip == "127.0.0.1") {
+            if(ci->local) {
                 type = 0;
                 typeconsole = 0;
             } else if(!strcmp("(null)", location)) {
@@ -354,7 +347,6 @@ namespace server {
             defformatstring(nocolormsg)("%s%s", ci->name, (typeconsole < 2) ? typesconsole[typeconsole] : pmsg);
             out(ECHO_SERV,"%s",msg);
             out(ECHO_NOCOLOR, "%s",nocolormsg);
-
         }
     }
 

@@ -1,24 +1,10 @@
 // server.cpp: little more than enhanced multicaster
 // runs dedicated or as client coroutine
-// includes threading for QServ and IRC
+// includes threading for QServ and IRC, and GeoIP db init
 
 #include "../QServ.h"
-#include <pthread.h>
-
-
-void timer() {
-    if(count == 500) {
-        count = 0;
-        
-        for(int i = 0; i < 128; i++) {
-            msgcount[i] = 0;
-        }
-    }
-    count++;
-}
 
 server::QServ qs(olanguagewarn, maxolangwarnings, commandprefix);
-/****************/
 
 #define LOGSTRLEN 512
 
@@ -216,24 +202,6 @@ void getstring(char *text, ucharbuf &p, int len)
     while(*t++);
 }
 
-void filtertext(char *dst, const char *src, bool whitespace, int len)
-{
-    for(int c = uchar(*src); c; c = uchar(*++src))
-    {
-        if(c == '\f')
-        {
-            if(!*++src) break;
-            continue;
-        }
-        if(iscubeprint(c) || (iscubespace(c) && whitespace))
-        {
-            *dst++ = c;
-            if(!--len) break;
-        }
-    }
-    *dst = '\0';
-}
-
 enum { ST_EMPTY, ST_LOCAL, ST_TCPIP };
 
 struct client                   // server side version of "dynent" type
@@ -309,7 +277,7 @@ void cleanupserver()
 }
 
 void process(ENetPacket *packet, int sender, int chan);
-void disconnect_client(int n, int reason);
+//void disconnect_client(int n, int reason);
 
 int getservermtu() { return serverhost ? serverhost->mtu : -1; }
 void *getclientinfo(int i) { return !clients.inrange(i) || clients[i]->type==ST_EMPTY ? NULL : clients[i]->info; }
@@ -319,6 +287,9 @@ uint getclientip(int n)    { return clients.inrange(n) && clients[n]->type==ST_T
 
 void sendpacket(int n, int chan, ENetPacket *packet, int exclude)
 {
+    #ifdef QDEBUG
+    out(ECHO_CONSOLE, "chan: %d, packetData: %s\n\n", chan, packet->data);
+    #endif
     if(n<0)
     {
         server::recordpacket(chan, packet->data, packet->dataLength);
@@ -430,7 +401,7 @@ const char *disconnectreason(int reason)
         case DISC_PRIVATE: return "server is in private mode";
         case DISC_MAXCLIENTS: return "server FULL";
         case DISC_TIMEOUT: return "connection timed out";
-        case DISC_OVERFLOW: return "spam";
+        case DISC_OVERFLOW: return "overflow";
         case DISC_PASSWORD: return "invalid password";
         default: return NULL;
     }
@@ -1078,45 +1049,41 @@ bool isdedicatedserver() { return dedicatedserver; }
 
 pthread_t thread2;
 
-void *main_thread(void *) {
+void *main_thread(void*t) {
     for(;;) {
         serverslice(true, 5);
         
-        //timer(); //causes segfault when timer is broken (recently uncommented)
     }
-    
+    pthread_exit((void*)t);
 }
 
-void *main_thread_s(void *) {
+void *main_thread_s(void *t) {
     for(;;)
     {
 #ifdef WIN32
         MSG msg;
         while(PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
         {
-            //if(msg.message == WM_QUIT) exit(EXIT_SUCCESS);
+            if(msg.message == WM_QUIT) exit(EXIT_SUCCESS);
             TranslateMessage(&msg);
             DispatchMessage(&msg);
         }
 #endif
         serverslice(true, 5);
-        //timer
-        //timer();
         
     }
+    pthread_exit((void*)t);
 }
 
 void rundedicatedserver()
 {
 #ifdef WIN32
     SetPriorityClass(GetCurrentProcess(), HIGH_PRIORITY_CLASS);
-    thread2 = pthread_t();
-    pthread_create(&thread2, NULL, main_thread_s, NULL);
+
 #else
-    thread2 = pthread_t();
-    pthread_create(&thread2, NULL, main_thread, NULL);
 #endif
     logoutf("[ OK ] QServ Started, waiting for clients...");
+    server::serverclose();
 }
 
 bool servererror(bool dedicated, const char *desc)
@@ -1161,9 +1128,9 @@ void initserver(bool listen, bool dedicated) //, const char *path
 {
     if(dedicated)
     {
-        //#ifdef WIN32
-        //       setupwindow("QServ", path);
-        //#endif
+        #ifdef WIN32
+               setupwindow("QServ", path);
+        #endif
     }
     
     /**
@@ -1173,12 +1140,11 @@ void initserver(bool listen, bool dedicated) //, const char *path
     else if(!qs.initgeoip("./GeoIP/GeoIP.dat")) {
         logoutf("[FATAL ERROR] Failed to load GeoIP database from GeoIP.dat file");
     }
-    /*
-     if(qs.initcitygeoip("./GeoIP/GeoLiteCity.dat")) {printf("[ OK ] GeoLite City Initalized succesfully\n");}
-     else if(!qs.initcitygeoip("./GeoIP/GeoLiteCity.dat")) {
-     logoutf("[FATAL ERROR] Failed to load GeoLite database from GeoLiteCity.dat file");
-     }
-     /**/
+    if(qs.initcitygeoip("./GeoIP/GeoLiteCity.dat")) {printf("[ OK ] GeoLite City Initalized succesfully\n");}
+    else if(!qs.initcitygeoip("./GeoIP/GeoLiteCity.dat")) {
+    logoutf("[FATAL ERROR] Failed to load GeoLite database from GeoLiteCity.dat file");
+    }
+     
     
     execfile("server-init.cfg", false);
     
@@ -1213,38 +1179,47 @@ vector<const char *> gameargs;
 
 #include "../QCom.h"
 
-void *irc_thread(void *) {
-    sleep(1); //wait so we can register to master serv before irc_init
+//main irc init
+void *irc_thread(void *t) {
     irc.init();
+    pthread_exit((void*)t);
 }
 
 int main(int argc, char **argv) {
-    int ticks = 0;
-#ifdef _WIN32
-    ticks = GetTickCount();
-    //#else commented out
-#endif
-    srand(ticks);
     qs.initCommands(server::initCmds);
-    
     setlogfile(NULL);
     if(enet_initialize()<0) fatal("[FATAL ERROR]: Unable to initialise network module");
     atexit(enet_deinitialize);
     enet_time_set(0);
     for(int i = 1; i<argc; i++) if(argv[i][0]!='-' || !serveroption(argv[i])) gameargs.add(argv[i]);
     game::parseoptions(gameargs);
-    //initserver(true, true, argv[0]); for windows
+    
+    //main server init
     initserver(true, true);
     
-    pthread_t thread1 = pthread_t();
+    pthread_t thread[2];
+    int c; long t;
+    pthread_attr_t attr;
+    void *status;
     
-    pthread_create(&thread1, NULL, irc_thread, NULL);
+    pthread_attr_init(&attr);
+    pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_JOINABLE);
+       
+  	#ifdef _WIN32
+    	c = pthread_create(&thread[0], &attr, main_thread_s, (void*)&t);
+    #else
+    	c = pthread_create(&thread[0], &attr, main_thread, (void*)&t);
+    #endif
     
-    pthread_join(thread2, NULL);
+    c = pthread_create(&thread[1], &attr, irc_thread, (void*)&t);
     
-    pthread_join(thread1, NULL);
-    
+    pthread_attr_destroy(&attr);   
+
+	for(int i = 0; i < 2; i++) {
+		c = pthread_join(thread[i], &status);
+        qsleep(5);
+	}
+
     pthread_exit(NULL);
-    
     return EXIT_SUCCESS;
 }

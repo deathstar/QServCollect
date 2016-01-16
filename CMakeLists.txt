@@ -1,4 +1,7 @@
 cmake_minimum_required(VERSION 2.7)
+
+SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+
 project(qserv)
 subdirs(enet GeoIP)
 find_package(ZLIB REQUIRED)
@@ -25,8 +28,6 @@ set(qserv_LIBS
 IF(WIN32)
 set(qserv_LIBS ${qserv_LIBS} GeoIP)
 ENDIF(WIN32)
-
-
 
 include(CheckFunctionExists)
 include(CheckSymbolExists)

@@ -47,6 +47,7 @@ namespace server {
         //ncommand("olangfilter", "Turn the offensive language filter on or off. Usage: #olang <off/on> (0/1) and #olang to see if it's activated",
         //         PRIV_MASTER, olangfilter_cmd, 1);
     }
+    
     QSERV_CALLBACK allowmaster_cmd(p) {
         int togglenum = atoi(args[1]);
         if(togglenum==1) {
@@ -57,6 +58,9 @@ namespace server {
         else if(togglenum==0) {
             switchdisallowmaster();
             out(ECHO_SERV, "\f4Claiming \f0master \f4is now \f3disabled");
+        }
+        else if(togglenum==NULL) {
+        	sendf(CMD_SENDER, 1, "ris", N_SERVMSG, CMD_DESC(cid));
         }
         else {
             sendf(CMD_SENDER, 1, "ris", N_SERVMSG, CMD_DESC(cid));
@@ -88,6 +92,9 @@ namespace server {
             if(persist) {
                 persist = false; out(ECHO_SERV, "\f4Persistant teams are now \f3disabled");
             }
+        }
+        else if(togglenum==NULL) {
+        	 sendf(CMD_SENDER, 1, "ris", N_SERVMSG, CMD_DESC(cid));
         }
         else {
             sendf(CMD_SENDER, 1, "ris", N_SERVMSG, CMD_DESC(cid));
@@ -178,22 +185,7 @@ namespace server {
     extern void changemap(const char *s, int mode);
     extern void pausegame(bool val, clientinfo *ci = NULL);
     
-    bool time_elapsed = false;
-    /*
-    int t_timer() {
-        int cm = 10; 
-        
-        while(cm >= 10) {
-            for(int i = 10; i <= 0; i--) {
-                out(ECHO_SERV, "Tournament starting in %d seconds", i);
-            }
-            cm--;
-        }
-        time_elapsed = true;
-    }
-    */
     QSERV_CALLBACK tournament_cmd(p) {
-		//t_timer();
         const char *mapname = args[2];
         char *mn = args[1];
         if(args[1] != NULL && args[2] != NULL && *mapname !=NULL && *mn!=NULL) {
@@ -205,7 +197,7 @@ namespace server {
             if(!strcmp(mn, qserv_modenames[i]))  {
                 gm = i;
                 // use other list to send full name of mode
-                if(time_elapsed) {changemap(mapname, gm);}
+                changemap(mapname, gm);
                 valid = true;
                 break;
             }
@@ -224,52 +216,49 @@ namespace server {
         }
     }
     
-    int servuptime = 0;
-
     QSERV_CALLBACK uptime_cmd(p) {
         clientinfo *ci = qs.getClient(CMD_SENDER);
         string msg, buf;
         uint t, months, weeks, days, hours, minutes, seconds;
-        
         copystring(msg,"\f4Server Mod: \f3QServ\f4: \f1https://github.com/deathstar/QServCollect");
         sendf(ci ? ci->clientnum : -1, 1, "ris", N_SERVMSG, msg);
         copystring(msg, "\f4Server Architecture: \f0"
-/* Firstly determine OS */
-#if !(defined(_WIN32) || defined(WIN32) || defined(WIN64) || defined(_WIN64))
-/* unix/posix compilant os */
-#   if defined(__linux__) || defined(__linux) || defined(linux) || defined(__gnu_linux__)
+		/* Firstly determine OS */
+		#if !(defined(_WIN32) || defined(WIN32) || defined(WIN64) || defined(_WIN64))
+		/* unix/posix compilant os */
+		#   if defined(__linux__) || defined(__linux) || defined(linux) || defined(__gnu_linux__)
                    "GNU/Linux"
-#   elif defined(__GNU__) || defined(__gnu_hurd__)
+		#   elif defined(__GNU__) || defined(__gnu_hurd__)
                    "GNU/Hurd"
-#   elif defined(__FreeBSD_kernel__) && defined(__GLIBC__)
+		#   elif defined(__FreeBSD_kernel__) && defined(__GLIBC__)
                    "GNU/FreeBSD"
-#   elif defined(__FreeBSD__) || defined(__FreeBSD_kernel__)
+		#   elif defined(__FreeBSD__) || defined(__FreeBSD_kernel__)
                    "FreeBSD"
-#   elif defined(__OpenBSD__)
+		#   elif defined(__OpenBSD__)
                    "OpenBSD"
-#   elif defined(__NetBSD__)
+		#   elif defined(__NetBSD__)
                    "NetBSD"
-#   elif defined(__sun) || defined(sun)
+		#   elif defined(__sun) || defined(sun)
                    "Solaris"
-#   elif defined(__DragonFly__)
+		#   elif defined(__DragonFly__)
                    "DragonFlyBSD"
-#   elif defined(__MACH__)
-#       if defined(__APPLE__)      
+		#   elif defined(__MACH__)
+		#       if defined(__APPLE__)      
                    "Apple"     
-#       else   
+		#       else   
                    "Mach"  
-#       endif  
-#   elif defined(__CYGWIN__)  
+		#       endif  
+		#   elif defined(__CYGWIN__)  
                    "Cygwin"  
-#   elif defined(__unix__) || defined(__unix) || defined(unix) || defined(_POSIX_VERSION)  
+		#   elif defined(__unix__) || defined(__unix) || defined(unix) || defined(_POSIX_VERSION)  
                    "UNIX"  
-#   else  
+		#   else  
                    "unknown"   
-#   endif     
-#else      
+		#   endif     
+		#else      
                    /* Windows */
                    "Windows"
-#endif
+		#endif
                    " "
                    );
         concatstring(msg, (sizeof(void *) == 8) ? "x86 (64 bit)" : "i386");
@@ -298,74 +287,45 @@ namespace server {
         
         seconds = t;
     
-        if(months)
-            
+        if(months)    
         {
-            
             formatstring(buf)(" %u month%s", months, months > 1 ? "s" : "");
-            
             concatstring(msg, buf);
-            
         }
         
         if(weeks)
-            
-        {
-            
+        { 
             formatstring(buf)(" %u week%s", weeks, weeks > 1 ? "s" : "");
-            
-            concatstring(msg, buf);
-            
+            concatstring(msg, buf);  
         }
-        
 
         if(days)
-            
         {
-            
             formatstring(buf)(" %u day%s", days, days > 1 ? "s" : "");
-            
             concatstring(msg, buf);
-            
         }
         
-        if(hours)
-            
-        {
-            
+        if(hours)  
+        { 
             formatstring(buf)(" %u hour%s", hours, hours > 1 ? "s" : "");
-            
-            concatstring(msg, buf);
-            
+            concatstring(msg, buf);  
         }
           
-        
-        if(minutes)
-            
+        if(minutes)   
         {
-            
             formatstring(buf)(" %u minute%s", minutes, minutes > 1 ? "s" : "");
-            
-            concatstring(msg, buf);
-            
+            concatstring(msg, buf);  
         }
         
         if(seconds)
-            
         {
-            
             formatstring(buf)(" %u second%s", seconds, seconds > 1 ? "s" : "");
-            
-            concatstring(msg, buf);
-            
+            concatstring(msg, buf);    
         }
         
         sendf(ci ? ci->clientnum : -1, 1, "ris", N_SERVMSG, msg);
-        
     }
 
-
-    
     //Check to see if args 1 is blank, if not causes seg fault on linux when #info is issued
     QSERV_CALLBACK info_cmd(p) {
         bool usage = false;
@@ -647,7 +607,7 @@ namespace server {
             /*The commented code calls the actual master change message and changes the color of the player, above just changes privileges.*/
             //sendf(-1, 1, "ri4", N_CURRENTMASTER, ci->clientnum, ci->clientnum >= 0 ? self->privilege : 0, mastermode);
         } else {
-            sendf(CMD_SENDER, 1, "ris", N_SERVMSG, "\f3Error: Command variables incorrect or client is not connected/existant.");
+            sendf(CMD_SENDER, 1, "ris", N_SERVMSG, "\f3Error: \f4Command variables incorrect or client is not connected/existant.");
             sendf(CMD_SENDER, 1, "ris", N_SERVMSG, CMD_DESC(cid));
         }
     }
@@ -671,7 +631,7 @@ namespace server {
                 if(lastcmd > -1) {
                     sendf(CMD_SENDER, 1, "ris", N_SERVMSG, CMD_DESC(lastcmd));
                 } else {
-                    sendf(CMD_SENDER, 1, "ris", N_SERVMSG, "\f3Error: Command not found. Use \f2\"#cmd\" \f3for a list of commands.");
+                    sendf(CMD_SENDER, 1, "ris", N_SERVMSG, "\f3Error: \f4Command not found. Use \f2\"#cmd\" \f3for a list of commands.");
                 }
             } else {
                 sendf(CMD_SENDER, 1, "ris", N_SERVMSG, "\f3Error: Insufficient permissions to view command info");

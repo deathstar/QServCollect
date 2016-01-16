@@ -388,22 +388,16 @@ namespace server {
         mastermask = MM_PUBSERV;
     }
     
-    struct teamkillinfo
-    {
-        uint ip;
-        int teamkills;
-    };
-    vector<teamkillinfo> teamkills;
-
+    
     struct teamkillkick
     {
         int modes, limit, ban;
-
+        
         bool match(int mode) const
         {
             return (modes&(1<<(mode-STARTGAMEMODE)))!=0;
         }
-
+        
         bool includes(const teamkillkick &tk) const
         {
             return tk.modes != modes && (tk.modes & modes) == tk.modes;
@@ -411,27 +405,11 @@ namespace server {
     };
     vector<teamkillkick> teamkillkicks;
     
-    void addteamkill(clientinfo *actor, int n)
-    {
-        if(!m_timed || actor->state.aitype != AI_NONE) return;
-        uint ip = getclientip(actor->clientnum);
-        teamkillkick *kick = NULL;
-        loopv(teamkillkicks) if(teamkillkicks[i].match(gamemode) && (!kick || kick->includes(teamkillkicks[i])))
-            kick = &teamkillkicks[i];
-        if(!kick) return;
-        teamkillinfo *tk = NULL;
-        loopv(teamkills) if(teamkills[i].ip == ip) { tk = &teamkills[i]; tk->teamkills += n; break; }
-        if(!tk) { tk = &teamkills.add(); tk->ip = ip; tk->teamkills = n; }
-        if(actor->local || actor->privilege || tk->teamkills < kick->limit) return;
-        if(kick->ban > 0) addban(ip, kick->ban);
-        kickclients(ip);
-    }
-
     void teamkillkickreset()
     {
         teamkillkicks.setsize(0);
     }
-
+    
     void addteamkillkick(char *modestr, int *limit, int *ban)
     {
         vector<char *> modes;
@@ -442,9 +420,33 @@ namespace server {
         kick.ban = *ban > 0 ? *ban*60000 : (*ban < 0 ? 0 : 30*60000);
         modes.deletearrays();
     }
-
+    
     COMMAND(teamkillkickreset, "");
     COMMANDN(teamkillkick, addteamkillkick, "sii");
+    
+    struct teamkillinfo
+    {
+        uint ip;
+        int teamkills;
+    };
+    vector<teamkillinfo> teamkills;
+    bool shouldcheckteamkills = false;
+    
+    void addteamkill(clientinfo *actor, clientinfo *victim, int n)
+    {
+        if(!m_timed || actor->state.aitype != AI_NONE || actor->local || actor->privilege || (victim && victim->state.aitype != AI_NONE)) return;
+        shouldcheckteamkills = true;
+        uint ip = getclientip(actor->clientnum);
+        loopv(teamkills) if(teamkills[i].ip == ip)
+        {
+            teamkills[i].teamkills += n;
+            return;
+        }
+        teamkillinfo &tk = teamkills.add();
+        tk.ip = ip;
+        tk.teamkills = n;
+    }
+
     
     void checkteamkills()
     {
@@ -523,7 +525,6 @@ namespace server {
         ments.setsize(0);
         sents.setsize(0);
         //cps.reset();
-        _storeflagruns();
         
     }
 
@@ -587,6 +588,11 @@ namespace server {
             if(ci->clientnum!=exclude && (!nospec || ci->state.state!=CS_SPECTATOR || (priv && (ci->privilege || ci->local))) && (!noai || ci->state.aitype == AI_NONE)) n++;
         }
         return n;
+    }
+    
+    void serverclose()
+    {
+        _storeflagruns();
     }
 
     struct servmode
@@ -2430,12 +2436,15 @@ best.add(clients[i]); \
             if(actor!=target && isteam(actor->team, target->team))
             {
                 actor->state.teamkills++;
-                addteamkill(actor, 1);
+                addteamkill(actor, target, 1);
                 defformatstring(msg)("\f4Say sorry to \f1%s\f4. You have teamkilled (%d/%d times). You will be banned if you teamkill %d more times.", colorname(target), actor->state.teamkills, maxteamkills, maxteamkills-actor->state.teamkills);
+                
+                if(actor->clientnum < 128) { //no bots
                 sendf(actor->clientnum, 1, "ris", N_SERVMSG, msg);
+                }
                 
                 defformatstring(srryfrag)("\f4You were teamkilled by: \f0%s \f4(\f3%d\f4). Use \f2#forgive %d \f4or use \f2#callops \f4to make a report.", colorname(actor), actor->state.teamkills, actor->clientnum);
-                if(target->clientnum < 100 && target->clientnum >= 0) { //Don't sent sorry to bots
+                if(target->clientnum < 128) { //no bots
                     sendf(target->clientnum, 1, "ris", N_SERVMSG, srryfrag);
                 }
                 out(ECHO_IRC, "Teamkiller: %s (%d)", colorname(actor), actor->state.teamkills);
@@ -2735,7 +2744,7 @@ best.add(clients[i]); \
     void privilegemsg(int min_privilege, const char *fmt, ...) {
         va_list ap;
         va_start(ap, fmt);
-        loopv(clients) if(clients[i]->privilege >= min_privilege) vmessage(clients[i]->clientnum, fmt, ap);
+        loopv(clients) if(clients[i]->privilege >= min_privilege && clients[i]) vmessage(clients[i]->clientnum, fmt, ap);
         va_end(ap);
     }
     
@@ -2799,6 +2808,7 @@ best.add(clients[i]); \
     {
         if(clearbansonempty) bannedips.shrink(0);
         aiman::clearai();
+        if(_newflagrun) { _storeflagruns(); _newflagrun = 0; }
     }
 
     void localconnect(int n)
@@ -2901,12 +2911,14 @@ best.add(clients[i]); \
             if(ci->local || ci->privilege >= PRIV_ADMIN) continue;
             if(checkgban(getclientip(ci->clientnum))) disconnect_client(ci->clientnum, DISC_IPBAN);
             
+            //extern stream *openutf8file(const char *filename, const char *mode, stream *file = NULL);
+            
             //adding to banlist
             stream *banfile = openutf8file(path("./banlist.cfg", true), "w");
             if(banfile)
             {
                 banfile->printf("//Automatically generated by QServ live (during bans): lists bans\n\n");
-                loopv(gbans)
+                //loopv(gbans)
                 banfile->printf("addgban %s\n", ci->ip);
                 delete banfile;
             }
@@ -2984,7 +2996,8 @@ best.add(clients[i]); \
         ci->cleanauth();
         if(!nextauthreq) nextauthreq = 1;
         ci->authreq = nextauthreq++;
-        filtertext(ci->authname, user, false, false, 100);
+        //filtertext(ci->authname, user, false, false, 100); buggy poo
+        filtertext(ci->authname, user, false, 100);
         copystring(ci->authdesc, desc);
         if(ci->authdesc[0])
         {
@@ -3148,8 +3161,8 @@ best.add(clients[i]); \
                 case N_CONNECT:
                 {
                     getstring(text, p);
-                    filtertext(text, text, false, false, MAXNAMELEN);
-                    //filtertext(text, text, false, MAXNAMELEN);
+                    //filtertext(text, text, false, false, MAXNAMELEN); buggy poo
+                    filtertext(text, text, false, MAXNAMELEN);
                     if(!text[0]) copystring(text, "unnamed");
                     copystring(ci->name, text, MAXNAMELEN+1);
                     ci->playermodel = getint(p);
@@ -3455,8 +3468,7 @@ best.add(clients[i]); \
             case N_TEXT:
             {
                 getstring(text, p);
-                filtertext(text, text, true, true);
-                
+                filtertext(text, text, true);
                 /*msgcount[ci->clientnum] += 1;
                 bool spam = false;
                 if(msgcount[ci->clientnum] > 1 && count <= 500) {
@@ -3466,6 +3478,20 @@ best.add(clients[i]); \
                 }
                 //if(!spam) {
                  */
+                if(totalmillis - ci->lasttext < (int64_t)spammillis) {
+                    ci->spamlines++;
+                    if(ci->spamlines >= maxspam) {
+                        defformatstring(blockedmsginfo)("\f3[Overflow Protection]: \"%s\" was blocked",text);
+                        if(!ci->spamwarned) sendf(sender, 1, "ris", N_SERVMSG, blockedmsginfo);
+                        ci->spamwarned = true;
+                        break;
+                    }
+                } else {
+                    ci->spamwarned = false;
+                    ci->spamlines = 0;
+                }
+                ci->lasttext = totalmillis;
+                
                 if(text[0] == '#') {
                     char *c = text;
                     while(*c && isspace(*c)) c++;
@@ -3478,32 +3504,18 @@ best.add(clients[i]); \
                         textblk(blkmsg[a], text, ci);
                     }
                     if(!ci->isMuted) {
-                        if(totalmillis - ci->lasttext < (int64_t)spammillis) {
-                            ci->spamlines++;
-                            if(ci->spamlines >= maxspam) {
-                                defformatstring(blockedmsginfo)("\f3[Spam Protection]: \"%s\" was blocked",text);
-                                if(!ci->spamwarned) sendf(sender, 1, "ris", N_SERVMSG, blockedmsginfo);
-                                ci->spamwarned = true;
-                                break;
-                    }
-                    } else {
-                            ci->spamwarned = false;
-                            ci->spamlines = 0;
-                        }
-                        ci->lasttext = totalmillis;
+
                         QUEUE_AI;
                         QUEUE_INT(N_TEXT);
                         QUEUE_STR(text);
                     }
                     else {sendf(ci->clientnum, 1, "ris", N_SERVMSG, "\f3Error: Failed to send message: you are muted.");}
                 }
-                
                 //	}
                 //} else {
                 //   sendf(ci->clientnum, 1, "ris", N_SERVMSG, "\f3Please wait to send more messages");
                 //  break;
                 //}
-                
                 logoutf("%s: %s", colorname(cq),text);
                 out(ECHO_IRC, "%s: %s", colorname(cq),text);
                 break;
@@ -3658,7 +3670,7 @@ best.add(clients[i]); \
                     loopv(ci->bots) {ci->bots[i]->ping = ping;}
                     if((ci->ping)>getvar("maxpingwarn")) {
                     	if(!ci->pingwarned) {
-                    		sendf(ci->clientnum, 1, "ris", N_SERVMSG, "\f3[Warning]: You are lagging, please lower internet usage");
+                    		if(ci->clientnum < 128) {sendf(ci->clientnum, 1, "ris", N_SERVMSG, "\f3[Warning]: You are lagging, please lower internet usage");}
                     		out(ECHO_NOCOLOR, "[Warning]: Lagspike - %s has a ping in excess of %d", colorname(ci), maxpingwarn);
                     		out(ECHO_SERV, "\f3[Warning]: Lagspike - %s has a ping in excess of %d", colorname(ci), maxpingwarn);
                             ci->pingwarned = true;
@@ -3835,12 +3847,18 @@ best.add(clients[i]); \
                 if(!ci->privilege && !ci->local && ci->state.state==CS_SPECTATOR) break;
                 if(size>=0)
                 {
+                    if(!ci->isEditMuted) {
                     smapname[0] = '\0';
                     resetitems();
                     notgotitems = false;
                     if(smode) smode->newmap();
+                    }
+                    else sendf(sender, 1, "ris", N_SERVMSG, "\f3Error: You may not create a new map while you are edit muted.");
                 }
+                if(!ci->isEditMuted) {
                 QUEUE_MSG;
+                }
+                else sendf(sender, 1, "ris", N_SERVMSG, "\f3Error: You may not create a new map while you are edit muted.");
                 break;
             }
 
@@ -3862,8 +3880,22 @@ best.add(clients[i]); \
 
             case N_ADDBOT:
             {
-                aiman::reqadd(ci, getint(p));
-                break;
+                    /*if(totalmillis - ci->lasttext < (int64_t)spammillis) {
+                        ci->spamlines++;
+                        if(ci->spamlines >= maxspam) {
+                            defformatstring(blockedmsginfo)("\f3Adding bots too fast");
+                            if(!ci->spamwarned) sendf(ci->clientnum, 1, "ris", N_SERVMSG, blockedmsginfo);
+                            ci->spamwarned = true;
+                            break;
+                        }
+                    } else {
+                        ci->spamwarned = false;
+                        ci->spamlines = 0;
+                    }
+                    ci->lasttext = totalmillis;
+                    */
+					aiman::reqadd(ci, getint(p));
+                    break;
             }
 
             case N_DELBOT:
@@ -4023,7 +4055,6 @@ best.add(clients[i]); \
             extserverinforeply(req, p);
             return;
         }
-
         putint(p, numclients(-1, false, true));
         putint(p, gamepaused || gamespeed != 100 ? 7 : 5);                   // number of attrs following
         putint(p, PROTOCOL_VERSION);    // generic attributes, passed back below

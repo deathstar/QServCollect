@@ -51,8 +51,8 @@ namespace server {
 
             bool initgeoip(const char*);
             char *congeoip(const char*);
-            //bool initcitygeoip(const char*);
-            //char *citygeoip(const char*);
+            bool initcitygeoip(const char*);
+            char *citygeoip(const char*);
 
             void newcommand(const char*, const char*, int, void (*)(int, char**, int), int);
             bool isCommand(char*);
@@ -131,5 +131,6 @@ extern server::QServ qs;
 
 extern int count;
 extern int msgcount[128];
+
 
 #endif
