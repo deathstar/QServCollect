@@ -3,8 +3,6 @@
 #include "GeoIP/libGeoIP/GeoIP.h"
 
 namespace server {
-
-    
     clientinfo QServ::m_lastCI;
     bool m_olangcheck = false;
     QServ::QServ(bool olangcheck, int maxolangwarns,
@@ -15,7 +13,7 @@ namespace server {
         m_cmdprefix = cmdprefix;
 }
 
-    QServ::~QServ() { ; }
+   QServ::~QServ() { ; }
 
    bool QServ::initgeoip(const char *filename) {
         m_geoip = GeoIP_open(filename, GEOIP_STANDARD);
@@ -23,19 +21,27 @@ namespace server {
         return true;
     }
     bool QServ::initcitygeoip(const char *filename) {
-    city_geoip = GeoIP_open(filename, GEOIP_STANDARD);
-    if(city_geoip == NULL) return false;
-    return true;
+    	city_geoip = GeoIP_open(filename, GEOIP_STANDARD);
+    	if(city_geoip == NULL) return false;
+    	return true;
     }
-     char *QServ::citygeoip(const char *ip) {
-    	return (char*)GeoIP_record_by_addr(city_geoip, ip);
+    
+    char *QServ::citygeoip(const char *ip)
+    {
+        char* city = NULL;
+        GeoIPRecord *gir = GeoIP_record_by_addr(city_geoip, ip);
+        if(gir != NULL)
+        {
+            city = gir->city;
+            GeoIPRecord_delete(gir);
+        }
+        return city;
     }
     
     char *QServ::congeoip(const char *ip) {
         return (char*)GeoIP_country_name_by_name(m_geoip, ip);
     }
-
-
+    
     void QServ::newcommand(const char *name, const char *desc, int priv, void (*callback)(int, char **args, int),
                            int args) {
         sprintf(m_command[m_lastcommand].name, "%c%s", m_cmdprefix, name);
@@ -310,19 +316,20 @@ namespace server {
 
     void QServ::getLocation(clientinfo *ci) {
         char *ip = toip(ci->clientnum);
-        defformatstring(location)("%s %s",congeoip(ip), citygeoip(ip));
+        defformatstring(location)("%s",congeoip(ip));
+        defformatstring(citymsg)("%s",citygeoip(ip));
         
         int type = 0;
         const char *types[] = {
             " connected from \f3Unknown",
             " \f4connected from \f1Localhost",
-            " \f4connected from \f0"
+            " \f4connected near \f0"
         };
         int typeconsole = 0;
         const char *typesconsole[] = {
             " connected from Unknown",
             " connected from Localhost",
-            " connected from "
+            " connected near "
         };
         
         char lmsg[255];
@@ -340,8 +347,8 @@ namespace server {
             } else {
                 type = 2;
                 typeconsole=2;
-                sprintf(lmsg, "%s\f2%s", types[type], location);
-                sprintf(pmsg, "%s%s", typesconsole[typeconsole], location);
+                sprintf(lmsg, "%s\f2%s, %s", types[type], citymsg, location);
+                sprintf(pmsg, "%s%s, %s", typesconsole[typeconsole], citymsg, location);
             }
             defformatstring(msg)("\f0%s\f4%s", ci->name, (type < 2) ? types[type] : lmsg);
             defformatstring(nocolormsg)("%s%s", ci->name, (typeconsole < 2) ? typesconsole[typeconsole] : pmsg);

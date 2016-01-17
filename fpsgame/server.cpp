@@ -57,15 +57,12 @@ namespace server {
         bannedips.add(b);
     }
     
-    bool notgotitems = true; //true when map has changed and waiting for clients to send item
-    bool gamepaused = false, shouldstep = true;
-    int gamemode = 0;
-    int gamemillis = 0, gamelimit = 0, nextexceeded = 0, gamespeed = 100;
-    int interm = 0;
-    
     //QServ
     bool persist = false;
-
+    bool notgotitems = true; //true when map has changed and waiting for clients to send item
+    bool gamepaused = false, shouldstep = true;
+    int gamemillis = 0, gamelimit = 0, nextexceeded = 0, connectedtime = 0;
+    int gamespeed = 100, interm = 0, gamemode = 0;
     string smapname = "";
     enet_uint32 lastsend = 0;
     int mastermode = MM_OPEN, mastermask = MM_PRIVSERV;
@@ -350,6 +347,7 @@ namespace server {
     SVAR(spreefinmsg, "");
     SVAR(defmultikillmsg, "MULTI KILL");
     SVAR(defaultmap, "");
+    SVAR(defaultmodename, "");
     
     //Other
     int64_t lastfragmillis;
@@ -370,7 +368,7 @@ namespace server {
     VAR(restrictdemos, 0, 1, 1);
     VAR(restrictpausegame, 0, 1, 1);
     VAR(restrictgamespeed, 0, 1, 1);
-    VAR(defaultmodenum, 0, 0, 22);
+    VAR(welcomewithname, 0, 1, 1);
     
     //Variable Switches
     VARF(publicserver, 0, 0, 2, {
@@ -580,7 +578,14 @@ namespace server {
         smapname[0] = '\0';
         resetitems();
         if(serverflagruns) execfile("./flagruns.cfg", false);
-        changemap(defaultmap,defaultmodenum); //add enum
+        int mc = 22; int gm;
+        for(int i = 0; i < mc; i++) {
+            if(!strcmp(defaultmodename, qserv_modenames[i]))  {
+                gm = i;
+                changemap(defaultmap, gm);
+                break;
+            }
+        }
     }
     
     //Server deinitalizer
@@ -1912,12 +1917,14 @@ namespace server {
         notgotitems = false;
     }
     
+    VAR(defaultgamespeed, 10, 100, 1000);
     void changemap(const char *s, int mode)
     {
-
+        out(ECHO_NOCOLOR, "Map changed to: %s | Modenum: %d", s, mode);
+        out(ECHO_NOCOLOR, "Gamespeed is: %d", defaultgamespeed);
         stopdemo();
         pausegame(false);
-        changegamespeed(100);
+        changegamespeed(defaultgamespeed);
         if(smode) smode->cleanup();
         aiman::clearai();
         
@@ -2830,6 +2837,8 @@ best.add(clients[i]); \
 
     void localdisconnect(int n)
     {
+        clientinfo *ci = getinfo(n);
+        int connectedtime = 0; //reset connected time on disconnect
         if(m_demo) enddemoplayback();
         clientdisconnect(n);
     }
@@ -2838,7 +2847,7 @@ best.add(clients[i]); \
     {
         privilegemsg(PRIV_MASTER, "\f4Client detected...");
         clientinfo *ci = getinfo(n);
-        ci->ip=ipstr; //ipstring for QServ
+        ci->ip=ipstr; //QServ ci->ip
         ci->clientnum = ci->ownernum = n;
         ci->connectmillis = totalmillis;
         ci->sessionid = (rnd(0x1000000)*((totalmillis%10000)+1))&0xFFFFFF;
@@ -2856,6 +2865,7 @@ best.add(clients[i]); \
             if(ci->privilege) setmaster(ci, false);
             if(smode) smode->leavegame(ci, true);
             ci->state.timeplayed += lastmillis - ci->state.lasttimeplayed;
+            int connectedtime = 0; //reset connected time on disconnect
             savescore(ci);
             sendf(-1, 1, "ri2", N_CDIS, n);
             clients.removeobj(ci);
@@ -3137,8 +3147,14 @@ best.add(clients[i]); \
         if(m_demo) setupdemoplayback();
         
         if(servermotd[0]) {
-            defformatstring(welcomemsg)("\f4Welcome to \f7%s, \f0%s\f4! %s",serverdesc,colorname(ci),servermotd);
+            if(welcomewithname) {
+            defformatstring(welcomemsg)("\f4Welcome to %s, %s. %s",serverdesc,colorname(ci),servermotd);
             sendf(ci->clientnum,1,"ris",N_SERVMSG,welcomemsg);
+            }
+            else {
+                defformatstring(welcomenonamemsg)("\f4Welcome to %s. %s",serverdesc,servermotd);
+                sendf(ci->clientnum,1,"ris",N_SERVMSG,welcomenonamemsg);
+            }
         }
         qs.getLocation(ci);
     }

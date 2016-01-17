@@ -1,11 +1,7 @@
 #ifndef QSERV_H_INCLUDED
 #define QSERV_H_INCLUDED
 
-/** detect uppercase letters for bad words (fix filter)
-    make spam protection
-
-    add ban list flat file
-**/
+//detect uppercase letters for bad words (fix filter)
 
 #include "game.h"
 #include "fpsgame.h"
@@ -16,27 +12,38 @@
 
 const bool olanguagewarn = false;
 const int maxolangwarnings = 5;
-
 const char commandprefix = '#';
 
+// restrict modes certain modes only for a tournament, not coop etc.
+static char *qserv_modenames[] = {
+    "ffa",
+    "coop", "teamplay", "insta", "instateam", "effic",
+    "efficteam", "tactics", "tacticsteam", "capture",
+    "regencapture", "ctf", "instactf", "efficctf", "protect",
+    "instaprotect", "efficprotect", "hold", "instahold", "effichold",
+    "collect", "instacollect", "efficcollect"
+};
 
-    static string owords[] = {"fuck", "shit", "cunt", "bitch", "whore", "twat",
-                              "faggot", "retard", "pussy", "ass",
-                              "vagina", "slut", "nigger", "queer", "gaylord", "gay",
-                              "homosexual", "semen", "creampie", "dick",
-                              "handjob", "blowjob", "cock", "tits", "penis"};
 
-    static char bunny[] = "\f1('\\_/')\n(\f5=\f1'.'\f5=\f1)\n('')_('')";
+static string owords[] = {
+	"fuck", "shit", "cunt", "bitch", "whore", "twat",
+    "faggot", "retard", "pussy", "ass",
+    "vagina", "slut", "nigger", "queer", "gaylord", "gay",
+    "homosexual", "semen", "creampie", "dick",
+    "handjob", "blowjob", "cock", "tits", "penis"
+};
 
-    struct SCommand {
-        char name[50];
-        char desc[500];
-        int priv;
-        int id;
-        void (*func)(int, char**, int);
-        bool hasargs;
-        int args;
-    };
+static char bunny[] = "\f1('\\_/')\n(\f5=\f1'.'\f5=\f1)\n('')_('')";
+
+struct SCommand {
+    char name[50];
+    char desc[500];
+    int priv;
+    int id;
+    void (*func)(int, char**, int);
+    bool hasargs;
+    int args;
+};
 
 namespace server {
     struct msg {
@@ -50,8 +57,8 @@ namespace server {
             ~QServ();
 
             bool initgeoip(const char*);
-            char *congeoip(const char*);
             bool initcitygeoip(const char*);
+            char *congeoip(const char*);
             char *citygeoip(const char*);
 
             void newcommand(const char*, const char*, int, void (*)(int, char**, int), int);
@@ -131,6 +138,5 @@ extern server::QServ qs;
 
 extern int count;
 extern int msgcount[128];
-
 
 #endif

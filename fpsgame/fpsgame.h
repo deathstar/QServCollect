@@ -204,30 +204,15 @@ namespace server {
     
     struct extrainfo
     {
-        int mute;
-        int editmute;
-        int editmutewarn;
-        int forcedspectator;
-        int namemute;
-        //int teammute;
-        //bool fakeprivon;
-        //int fakepriv;
         bool spy;
-        int failpass;
-        clientinfo *tkiller;
-        int votekickvictim;
-        int lastmsg, msgnum;
-        int lastremip, remipnum;
-        int teamkillmessageindex;
         int lasttakeflag;
-        bool slay;
 
     };
     
     struct clientinfo
     {
         char *ip; //ipstring for QServ
-        int clientnum, ownernum, connectmillis, sessionid, overflow, connectedmillis;
+        int clientnum, ownernum, connectmillis, sessionid, overflow, connectedmillis; //qserv
         string name, team, mapvote;
         int playermodel;
         int modevote;
@@ -252,9 +237,9 @@ namespace server {
         void *authchallenge;
         int authkickvictim;
         char *authkickreason;
-        extrainfo _xi; //xi for QServ
+        extrainfo _xi; //xi for QServ flagrun stats
         
-        /********************QServ*/
+        /*QServ*/
         bool isMuted = false;
         bool isSpecLocked = false;
         bool isEditMuted = false;
@@ -374,9 +359,7 @@ namespace server {
             cleanclipboard();
             cleanauth();
             mapchange();
-            
-            //QServ Anti message flood
-            lasttext = spamlines = 0;
+            lasttext = spamlines = 0; //QServ Anti message flood
         }
 
         int geteventmillis(int servmillis, int clientmillis)
@@ -417,9 +400,9 @@ namespace server {
     #define MM_PUBSERV ((1<<MM_OPEN) | (1<<MM_VETO))
     #define MM_COOPSERV (MM_AUTOAPPROVE | MM_PUBSERV | (1<<MM_LOCKED))
 
-    /**************/
     extern vector<clientinfo *> connects, clients, bots;
 	extern int mastermode;
+    
 	/****/
 	
 	extern int vmessage(int cn, const char *fmt, va_list ap);
@@ -430,7 +413,6 @@ namespace server {
 	extern void checkpausegame();
 	extern bool setmaster(clientinfo *ci, bool val, const char *pass, const char *authname, const char *authdesc, int authpriv, bool force, bool trial,
 							bool revoke);
-	/*********/
 }
 
 #endif

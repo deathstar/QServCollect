@@ -42,10 +42,29 @@ namespace server {
         ncommand("teampersist", "\f4Toggle persistant teams on or off. Usage: #teampersist <0/1> (0 for off, 1 for on)", PRIV_ADMIN, teampersist_cmd, 1);
         ncommand("invadmin", "\f4Claim invisible administrator. Usage: #invadmin <adminpass>", PRIV_ADMIN, invadmin_cmd, 0);
         ncommand("allowmaster", "\f4Allows clients to claim master. Usage: #allowmaster <0/1> (0 for off, 1 for on)", PRIV_ADMIN, allowmaster_cmd, 1);
+        ncommand("kill", "\f4Brutally murders a player. Usage: #kill <cn>", PRIV_ADMIN, kill_cmd, 1);
         //ncommand("owords", "View list of offensive words. Usage: #owords",
         ///         PRIV_NONE, owords_cmd, 0);
         //ncommand("olangfilter", "Turn the offensive language filter on or off. Usage: #olang <off/on> (0/1) and #olang to see if it's activated",
         //         PRIV_MASTER, olangfilter_cmd, 1);
+    }
+    
+    extern void suicide(clientinfo *ci);
+    QSERV_CALLBACK kill_cmd(p) {
+        int cn = atoi(args[1]);
+        clientinfo *ci = qs.getClient(cn);
+        if(cn!=CMD_SENDER && !isalpha(cn) && cn >= 0 && cn <= 1000 && ci != NULL && ci->connected && args[1] != NULL && cn!=CMD_SENDER) {
+            clientinfo *ci = qs.getClient(cn);
+            clientinfo *sender = qs.getClient(CMD_SENDER);
+            if(ci->state.state==CS_ALIVE) {
+            	suicide(ci);
+            	out(ECHO_SERV, "\f0%s \f4has been brutally murdered", colorname(ci));
+            	out(ECHO_NOCOLOR, "%s has been brutally murdered by %s", colorname(ci), colorname(sender));
+            }
+        } else {
+            sendf(CMD_SENDER, 1, "ris", N_SERVMSG, "\f3Error: \f4Incorrect client number/no cn specified or you're trying to kill yourself.");
+            sendf(CMD_SENDER, 1, "ris", N_SERVMSG, CMD_DESC(cid));
+        }
     }
     
     QSERV_CALLBACK allowmaster_cmd(p) {
@@ -168,23 +187,10 @@ namespace server {
         defformatstring(f)("\f1Help\f4: Type \f2#cmd \f4to list commands, or use \f2#cmd <commandname> \f4for information about a specific command.");
         sendf(ci->clientnum, 1, "ris", N_SERVMSG, f);
         }
-    
-    // restrict modes certain modes only for a tournament, not coop etc.
-    char *qserv_modenames[] = {
-        "ffa",
-        "coop", "teamplay", "insta", "instateam", "effic",
-        "efficteam", "tactics", "tacticsteam", "capture",
-        "regencapture", "ctf", "instactf", "efficctf", "protect",
-        "instaprotect", "efficprotect", "hold", "instahold", "effichold",
-        "collect", "instacollect", "efficcollect"
-    }; 
-    // custom mode names remember to type them like this if you want that mode
-    
+        
     int mc = 22;
-    
     extern void changemap(const char *s, int mode);
     extern void pausegame(bool val, clientinfo *ci = NULL);
-    
     QSERV_CALLBACK tournament_cmd(p) {
         const char *mapname = args[2];
         char *mn = args[1];
@@ -326,58 +332,63 @@ namespace server {
         sendf(ci ? ci->clientnum : -1, 1, "ris", N_SERVMSG, msg);
     }
 
-    //Check to see if args 1 is blank, if not causes seg fault on linux when #info is issued
-    QSERV_CALLBACK info_cmd(p) {
+     QSERV_CALLBACK info_cmd(p) {
         bool usage = false;
         int cn = -1;
+
         if(CMD_SA) {
             cn = atoi(args[1]);
-             clientinfo *ci = qs.getClient(cn);
-            if(cn!=-1 && cn >= 0 && cn <= 1000 && cn != NULL && args[1]!=NULL) {
+            if(cn >= 0 && cn <= 1000) {
                 //if(!isalpha(cn)) {
-            sendinfo:
-                
-                if(ci != NULL) {
-                    if(ci->connected) {
-                        char *ip = toip(cn), lmsg[3][255], *location;
-                        
-                        if(!strcmp("127.0.0.1", ip)) {
-                            location = (char*)"localhost";
-                        } else {
-                            location = qs.congeoip(ip);
-                            
-                            if(!location) {
-                                sprintf(lmsg[1], "%s", "Unknown/Localhost");
+                    sendinfo:
+                    clientinfo *ci = qs.getClient(cn);
+
+                    if(ci != NULL) {
+                        if(ci->connected) {
+                            char *ip = toip(cn), lmsg[3][255], *location;
+
+                            if(!strcmp("127.0.0.1", ip)) {
+                                location = (char*)"localhost";
+                            } else {
+                                location = qs.congeoip(ip);
+
+                                if(!location) {
+                                    sprintf(lmsg[1], "%s", "Unknown Location");
+                                }
                             }
+
+                            if(location) sprintf(lmsg[1], "%s", location);
+                            (CMD_SCI.privilege == PRIV_ADMIN) ? sprintf(lmsg[0], "%s (%s)", lmsg[1], ip) :
+                                                             sprintf(lmsg[0], "%s", lmsg[1]);                                                        
+                            int accuracy = (ci->state.damage*100)/max(ci->state.shotdamage, 1);
+                            int connectedtime = ci->connectedmillis=(gamemillis/1000)+totalsecs-(ci->connectmillis/1000);
+                            defformatstring(s)("\f4Info for \f0%s (%d): \f4Frags: \f0%i \f4Deaths: \f3%i \f4Teamkills: \f1%i \f4Flag Runs: \f2%i \f4Accuracy: \f3%i%%\n\f4Location: \f5%s \n\f4Connected for: %d seconds",
+                                                colorname(ci),
+                                                ci->clientnum,
+                                                ci->state.frags,
+                                                ci->state.deaths,
+                                                ci->state.teamkills/2,
+                                                ci->state.flags,
+                                                accuracy,
+                                                lmsg[0],
+                                                connectedtime);
+                            sendf(CMD_SENDER, 1, "ris", N_SERVMSG, s);
                         }
-                        
-                        if(location) sprintf(lmsg[1], "%s", location);
-                        (CMD_SCI.privilege == PRIV_ADMIN) ? sprintf(lmsg[0], "%s (%s)", lmsg[1], ip) :
-                        sprintf(lmsg[0], "%s", lmsg[1]);
-                        int sec = (ci->connectmillis/1000) % 60;
-                        int min = ((ci->connectmillis/(1000*60)) % 60);
-                        int hour = ((ci->connectmillis / (100*60*60)) % 24);
-                        int cn = atoi(args[1]);
-                        clientinfo *ci = qs.getClient(cn);
-                        defformatstring(f)("\f0%s \f4(\f2%d\f4) [\f1%s\f4] \f4Connected for: \f6%d \f2Hour(s)\f4, \f6%d \f2Minute(s)\f4, \f6%d \f2Second(s)", colorname(ci), ci->clientnum,lmsg[0], hour, min, sec);
-                        sendf(CMD_SENDER, 1, "ris", N_SERVMSG, f);
                     } else {
-                        sendf(CMD_SENDER, 1, "ris", N_SERVMSG, "Played not connected");
+                        sendf(CMD_SENDER, 1, "ris", N_SERVMSG, "\f3Error: Player not connected");
                     }
-                    /*} else {
-                     usage = true;
-                     }*/
-                } else {
+                /*} else {
                     usage = true;
-                }
+                }*/
             } else {
-                cn = CMD_SENDER;
-                goto sendinfo;
+                usage = true;
             }
-            
-            if(usage) sendf(CMD_SENDER, 1, "ris", N_SERVMSG, CMD_DESC(cid));
+        } else {
+            cn = CMD_SENDER;
+            goto sendinfo;
         }
-        
+
+        if(usage) sendf(CMD_SENDER, 1, "ris", N_SERVMSG, CMD_DESC(cid));
     }
     
     extern void forcespectator(clientinfo *ci);
