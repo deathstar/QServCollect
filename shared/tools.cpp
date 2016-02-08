@@ -35,7 +35,8 @@ void seedMT(uint seed)
         state[i] = seed = 1812433253U * (seed ^ (seed >> 30)) + i;
     next = 0;
 }
-void filtertext(char *dst, const char *src, bool whitespace, bool forcespace, size_t len)
+
+void filtertext(char *dst, const char *src, bool whitespace, int len)
 {
     for(int c = uchar(*src); c; c = uchar(*++src))
     {
@@ -44,13 +45,11 @@ void filtertext(char *dst, const char *src, bool whitespace, bool forcespace, si
             if(!*++src) break;
             continue;
         }
-        if(!iscubeprint(c))
+        if(iscubeprint(c) || (iscubespace(c) && whitespace))
         {
-            if(!iscubespace(c) || !whitespace) continue;
-            if(forcespace) c = ' ';
+            *dst++ = c;
+            if(!--len) break;
         }
-        *dst++ = c;
-        if(!--len) break;
     }
     *dst = '\0';
 }

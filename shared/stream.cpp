@@ -85,14 +85,15 @@ extern const uchar uni2cubechars[878] =
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 };
 
-int decodeutf8(uchar *dstbuf, int dstlen, uchar *srcbuf, int srclen, int *carry)
+int decodeutf8(uchar *dstbuf, int dstlen, const uchar *srcbuf, int srclen, int *carry)
 {
-    uchar *dst = dstbuf, *dstend = &dstbuf[dstlen], *src = srcbuf, *srcend = &srcbuf[srclen];
+    uchar *dst = dstbuf, *dstend = &dstbuf[dstlen];
+    const uchar *src = srcbuf, *srcend = &srcbuf[srclen];
     if(dstbuf == srcbuf)
     {
         int len = min(dstlen, srclen);
-        for(uchar *end4 = &srcbuf[len&~3]; src < end4; src += 4) if(*(int *)src & 0x80808080) goto decode;
-        for(uchar *end = &srcbuf[len]; src < end; src++) if(*src & 0x80) goto decode;
+        for(const uchar *end4 = &srcbuf[len&~3]; src < end4; src += 4) if(*(const int *)src & 0x80808080) goto decode;
+        for(const uchar *end = &srcbuf[len]; src < end; src++) if(*src & 0x80) goto decode;
         if(carry) *carry += len;
         return len;
     }
@@ -138,16 +139,17 @@ decode:
     return dst - dstbuf;
 }
 
-int encodeutf8(uchar *dstbuf, int dstlen, uchar *srcbuf, int srclen, int *carry)
+int encodeutf8(uchar *dstbuf, int dstlen, const uchar *srcbuf, int srclen, int *carry)
 {
-    uchar *dst = dstbuf, *dstend = &dstbuf[dstlen], *src = srcbuf, *srcend = &srcbuf[srclen];
+    uchar *dst = dstbuf, *dstend = &dstbuf[dstlen];
+    const uchar *src = srcbuf, *srcend = &srcbuf[srclen];
     if(src < srcend && dst < dstend) do
     {
         int uni = cube2uni(*src);
         if(uni <= 0x7F)
         {
             if(dst >= dstend) goto done;
-            uchar *end = min(srcend, &src[dstend-dst]);
+            const uchar *end = min(srcend, &src[dstend-dst]);
             do
             {
                 *dst++ = uni;
@@ -593,10 +595,6 @@ struct filestream : stream
     }
 };
 
-#ifndef STANDALONE
-VAR(dbggz, 0, 0, 1);
-#endif
-
 struct gzstream : stream
 {
     enum
@@ -726,18 +724,6 @@ struct gzstream : stream
     void finishreading()
     {
         if(!reading) return;
-#ifndef STANDALONE
-        if(dbggz)
-        {
-            uint checkcrc = 0, checksize = 0;
-            loopi(4) checkcrc |= uint(readbyte()) << (i*8);
-            loopi(4) checksize |= uint(readbyte()) << (i*8);
-            if(checkcrc != crc)
-                conoutf(CON_DEBUG, "gzip crc check failed: read %X, calculated %X", checkcrc, crc);
-            if(checksize != zfile.total_out)
-                conoutf(CON_DEBUG, "gzip size check failed: read %d, calculated %d", checksize, zfile.total_out);
-        }
-#endif
     }
 
     void stopreading()

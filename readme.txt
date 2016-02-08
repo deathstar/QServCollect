@@ -26,11 +26,19 @@ Direct Download link: https://codeload.github.com/deathstar/QServCollect/zip/mas
 Terminal Download Command: git clone https://github.com/deathstar/QServCollect
 
 [REQUIREMENTS]
+
+(MAC OSX): 
+
 you will need cmake, make, xCode, xCode command line tools (geoIP should come precompiled w/ dat) 
 
 xCode: https://developer.apple.com/xcode/download/
 Command Line tools: run: "xcode-select --install" from Terminal after xCode is installed
 Cmake: https://cmake.org/download/
+
+(LINUX/WINDOWS):
+
+Cmake: https://cmake.org/download/
+
 
 [CONFIGURATION]
 - All the configuration can be done in server-init.cfg
@@ -54,14 +62,16 @@ alias qclean="rm -r cmake_install.cmake CMakeCache.txt"
 alias qstart="./qserv"
 alias qall="rm -r cmake_install.cmake CMakeCache.txt; cmake .; make"
 alias qnohup="nano nohup.out"
-alias qmake="make"
+alias qcompile="make"
 alias qcmake="cmake ."
 alias qbgserv="nohup ./qserv &"
 alias qserv="./qserv"
+alias qclone=“git clone https://github.com/deathstar/QServCollect”
 
 4) now you have created a custom profile for QServ to easily issue commands
 
 5) Quit terminal to update the .profile for Terminal (do this or the commands won't work!)
+Issue qclone to download qserv with git, otherwise get it from the website
 
 6) Make sure your QServCollect server folder is on your desktop and named "QServCollect" exactly
 

@@ -841,9 +841,9 @@ namespace server
     extern bool serveroption(const char *arg);
     extern bool delayspawn(int type);
     extern void clearbans();
-    extern void cleargbans();
+    extern void cleargbans(int master);
     extern void privilegemsg(int min_privilege, const char *fmt, ...);
-    extern void addgban(const char *name);
+    extern void addgban(int master, const char *name);
     extern void switchallowmaster();
     extern void switchdisallowmaster();
     extern bool persist;

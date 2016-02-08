@@ -1,0 +1,128 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1348\cocoasubrtf170
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+\margl1440\margr1440\vieww15060\viewh10980\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural
+
+\f0\fs24 \cf0 CHANGELOG\
+- sendprivs command now works with master and admin \
+- geoip no longer returns weird locations, and has a unknown location handler\
+- kill command added\
+- help command reformatted \
+- getversion reformatted \
+- motd reformat \
+- server-init.cfg motd reformat \
+- info command fixed \
+- serverclose now initializes properly \
+- default game speed added\
+- irc only echoes if it is enabled for ECHO_NOCOLOR and ECHO_IRC\
+- editmode map title no longer causes msg error \
+- togglelockspec carries on reconnect\
+- votedmapsucks carries on reconnect\
+- linux command handlers segfault fix (15 commands needed handling)\
+- full command arguments now displayed to console on command issuing \
+- addgban cleanup\
+- geoip cleanup\
+- threading fix allows server to run independently from IRC without stopping\
+- teamkillkickreset on kick \
+- team kills shrink on change map (good for regen based modes to avoid kick for high accidental team kill amounts)\
+- map sucks votes clear on change map \
+- removed banlist and added ban by ip function\
+- added clearpban function\
+- added serverdisconnectmsg and serverconnectmsg to enable/disable the SERVER FULL and IP BANNED messages\
+- localhost handler for geoip, no more localhost seg fault (192.168.1.0-192.168.1.22 + 127.0.0.1)\
+- switched irc network to irc.espclan.eu because gamesurge kicks for excess flood and causes hang/crash\
+- longshot with gunname \
+- up close shot with gunname \
+\
+\
+TODO\
+- list ip bans \
+- mute/editmute carry on reconnect, fix togglelockspec, votedmapsucks carry on recon\
+- localhost connect seg fault \
+- eihruls ipban \
+- info command tells client connect time \
+- name reservation, account creation \
+- intermission map voting \
+- global player rankings\
+- multikillmsg fix \
+- custom racemode addition \
+- zombie mode addition \
+- new modes\
+- xml or node.js web push stats (get bot)\
+- integration of verification key system \
+- anticheat client with awesome features\
+- root user with set password in server-init next to adminpass\
+- commands for customization weapon types, armor types, game times, etc for root\
+- allow variable modification for snow, map and skybox changes for root\
+- allow modification of maxhealth and maxammo for root\
+- stop server gracefully command for root user\
+- delgban command for root\
+- graceful restart command for root\
+- debug enabled calling for root \
+\
+OLD TODO \
+=QServ Collect: compatible w/ Mac Windows & Linux\
+\
+[TODOLIST]\
+\
+COMMANDS\
+\
+    mapsucks\
+    setmaxhealth\
+    setmaxammo\
+    setbotbalance command \
+   clientinfo *self = qs.getClient(CMD_SENDER);\
+   aiman::setbotbalance(self,1);\
+    tournament countdown\
+    persistteams\
+    editmute\
+\
+MODES\
+\
+    chainsaw insta \
+    zombie mode \
+\
+PROTECTION\
+\
+    name protection\
+    dos protection from ENET send packets: \
+    See \'93ENet Cookies\'94 at https://github.com/pisto/spaghettimod for info.\
+\
+FEATURES\
+    \
+    name instead of cn\
+    timestamp for console commands \
+    local time by GeoIP loc\
+    GeoIP City geolite\
+    banlist w/ options and time (forcespec/forcemute/noconnect)\
+    sql lite implementation for online stats and banlist\
+    intermission beststats\
+    intermission mapvote\
+    livestats xml website integration\
+    cubescript integration?\
+    cross compatable clients (zlib.h file needs linux #ifdef/backwards check from win to mac)\
+   #ifdef APPLE\
+   //Code commented out to compile on linux\
+   //ZEXTERN z_off64_t ZEXPORT gzseek64 OF((gzFile, z_off64_t, int));\
+   //ZEXTERN z_off64_t ZEXPORT gztell64 OF((gzFile));\
+   //ZEXTERN z_off64_t ZEXPORT gzoffset64 OF((gzFile));\
+   //ZEXTERN uLong ZEXPORT adler32_combine64 OF((uLong, uLong, z_off64_t));\
+   //ZEXTERN uLong ZEXPORT crc32_combine64 OF((uLong, uLong, z_off64_t));\
+\
+   //#  define crc32_combine crc32_combine64\
+   //ZEXTERN z_off_t ZEXPORT gzseek64 OF((gzFile, z_off_t, int));\
+   //ZEXTERN z_off_t ZEXPORT gztell64 OF((gzFile));\
+   //ZEXTERN z_off_t ZEXPORT gzoffset64 OF((gzFile));\
+   //ZEXTERN uLong ZEXPORT adler32_combine64 OF((uLong, uLong, z_off_t));\
+   //ZEXTERN uLong ZEXPORT crc32_combine64 OF((uLong, uLong, z_off_t));\
+   #endif\
+\
+OTHER\
+    forced getmap from server possibility in init with mapname\
+    info command tells how long client has been connected for \
+    uptime function needs fixing\
+    time/timezone commands issue wrong times\
+    when client connect echo cn to irc\
+    default mode setting, default map, mode rotation\
+    github page}

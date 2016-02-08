@@ -61,7 +61,7 @@ namespace server {
     bool persist = false;
     bool notgotitems = true; //true when map has changed and waiting for clients to send item
     bool gamepaused = false, shouldstep = true;
-    int gamemillis = 0, gamelimit = 0, nextexceeded = 0, connectedtime = 0;
+    int gamemillis = 0, gamelimit = 0, nextexceeded = 0;
     int gamespeed = 100, interm = 0, gamemode = 0;
     string smapname = "";
     enet_uint32 lastsend = 0;
@@ -369,6 +369,7 @@ namespace server {
     VAR(restrictpausegame, 0, 1, 1);
     VAR(restrictgamespeed, 0, 1, 1);
     VAR(welcomewithname, 0, 1, 1);
+    VAR(serverconnectmsg, 0, 1, 1);
     
     //Variable Switches
     VARF(publicserver, 0, 0, 2, {
@@ -579,7 +580,7 @@ namespace server {
         resetitems();
         if(serverflagruns) execfile("./flagruns.cfg", false);
         int mc = 22; int gm;
-        for(int i = 0; i < mc; i++) {
+        for(int i = 0; i <= mc; i++) {
             if(!strcmp(defaultmodename, qserv_modenames[i]))  {
                 gm = i;
                 changemap(defaultmap, gm);
@@ -1918,6 +1919,7 @@ namespace server {
     }
     
     VAR(defaultgamespeed, 10, 100, 1000);
+    extern int mapsucksvotes;
     void changemap(const char *s, int mode)
     {
         out(ECHO_NOCOLOR, "Map changed to: %s | Modenum: %d", s, mode);
@@ -1927,7 +1929,6 @@ namespace server {
         changegamespeed(defaultgamespeed);
         if(smode) smode->cleanup();
         aiman::clearai();
-        
         gamemode = mode;
         gamemillis = 0;
         gamelimit = (m_overtime ? 15 : 10)*60000;
@@ -1937,10 +1938,12 @@ namespace server {
         loaditems();
         scores.shrink(0);
         teamkills.shrink(0);
+        int mapsucksvotes = 0;
         loopv(clients)
         {
             clientinfo *ci = clients[i];
             ci->state.timeplayed += lastmillis - ci->state.lasttimeplayed;
+            ci->votedmapsucks = false;
         }
         
         if(!m_mp(gamemode)) kicknonlocalclients(DISC_LOCAL);
@@ -2080,7 +2083,7 @@ namespace server {
         }
         else
         {
-            sendservmsgf("\f0%s \f4suggests \f1%s \f4on map \f6%s\f4. (Use \f2\"/<mode> <map>\" \f4to vote or use \f2\"#tournament <mode> <map>\"\f4)", colorname(ci), modename(reqmode), map[0] ? map : "[new map]");
+            sendservmsgf("\f0%s \f4votes for \f1%s \f4on map \f3%s\f4. (Use \f2\"/<mode> <map>\" \f4to vote)", colorname(ci), modename(reqmode), map[0] ? map : "[new map]");
             checkvotes();
         }
     }
@@ -2409,6 +2412,20 @@ best.add(clients[i]); \
         else if(!hitpush.iszero())
         {
             ivec v = vec(hitpush).rescale(DNF);
+            
+            //QServ longshot and close up kill (y - depth, z - height, x - left/right)
+            //written by Stephen "someguy" Caples
+            float x2 = target->state.o.x;
+            float x1 = actor->state.o.x;
+            float y2 = target->state.o.y;
+            float y1 = actor->state.o.y;
+            float z2 = target->state.o.z;
+            float z1 = actor->state.o.z;
+            float d = sqrt(((x2-x1)*(x2-x1))+((y2-y1)*(y2-y1))+((z2-z1)*(z2-z1)));
+            int distanceinteger = int(d + 0.5);
+            if(d > 700) {out(ECHO_SERV,"\f0%s \f4got a longshot on \f3%s \f4(Distance: \f7%d\f4 feet) with a \f1%s", colorname(actor), colorname(target), distanceinteger, guns[gun].name);}
+            if(d <= 20) {out(ECHO_SERV,"\f0%s \f4got up close on \f3%s \f4with a \f1%s", colorname(actor), colorname(target), (!strcmp(guns[gun].name, "fist" )) ? "chainsaw" : guns[gun].name);}
+            
             sendf(ts.health<=0 ? -1 : target->ownernum, 1, "ri7", N_HITPUSH, target->clientnum, gun, damage, v.x, v.y, v.z);
             target->setpushed();
         }
@@ -2833,25 +2850,27 @@ best.add(clients[i]); \
         ci->local = true;
         connects.add(ci);
         sendservinfo(ci);
+        if(ci->isSpecLocked) forcespectator(ci);
     }
 
     void localdisconnect(int n)
     {
         clientinfo *ci = getinfo(n);
-        int connectedtime = 0; //reset connected time on disconnect
         if(m_demo) enddemoplayback();
         clientdisconnect(n);
     }
 
     int clientconnect(int n, uint ip, char *ipstr)
     {
-        privilegemsg(PRIV_MASTER, "\f4Client detected...");
+        if(getvar("serverconnectmsg")) {privilegemsg(PRIV_MASTER, "\f4Client detected...");}
         clientinfo *ci = getinfo(n);
         ci->ip=ipstr; //QServ ci->ip
         ci->clientnum = ci->ownernum = n;
         ci->connectmillis = totalmillis;
         ci->sessionid = (rnd(0x1000000)*((totalmillis%10000)+1))&0xFFFFFF;
         connects.add(ci);
+        if(ci->isSpecLocked) forcespectator(ci);
+        if(ci->votedmapsucks) {ci->votedmapsucks = true;}
         if(!m_mp(gamemode)) return DISC_LOCAL;
         sendservinfo(ci);
         return DISC_NONE;
@@ -2865,7 +2884,6 @@ best.add(clients[i]); \
             if(ci->privilege) setmaster(ci, false);
             if(smode) smode->leavegame(ci, true);
             ci->state.timeplayed += lastmillis - ci->state.lasttimeplayed;
-            int connectedtime = 0; //reset connected time on disconnect
             savescore(ci);
             sendf(-1, 1, "ri2", N_CDIS, n);
             clients.removeobj(ci);
@@ -2884,25 +2902,32 @@ best.add(clients[i]); \
 
     int reserveclients() { return 3; }
 
-    //game bans
     struct gbaninfo
     {
         enet_uint32 ip, mask;
+        int master;
     };
-
     vector<gbaninfo> gbans;
-    void cleargbans()
+    
+    extern void cleargbans(int master)
     {
-        gbans.shrink(0);
+        if(master < 0)
+        {
+            loopvrev(gbans) if(gbans[i].master >= 0) gbans.remove(i);
+        }
+        else
+        {
+            loopvrev(gbans) if(gbans[i].master == master) gbans.remove(i);
+        }
     }
-
+    
     bool checkgban(uint ip)
     {
         loopv(gbans) if((ip & gbans[i].mask) == gbans[i].ip) return true;
         return false;
     }
-
-    void addgban(const char *name)
+    
+    void addgban(int master, const char *name)
     {
         union { uchar b[sizeof(enet_uint32)]; enet_uint32 i; } ip, mask;
         ip.i = 0;
@@ -2919,35 +2944,25 @@ best.add(clients[i]); \
         gbaninfo &ban = gbans.add();
         ban.ip = ip.i;
         ban.mask = mask.i;
-
+        ban.master = master;
+        
         loopvrev(clients)
         {
             clientinfo *ci = clients[i];
-            if(ci->local || ci->privilege >= PRIV_ADMIN) continue;
+            if(ci->privilege >= PRIV_ADMIN) continue;
             if(checkgban(getclientip(ci->clientnum))) disconnect_client(ci->clientnum, DISC_IPBAN);
-            
-            //extern stream *openutf8file(const char *filename, const char *mode, stream *file = NULL);
-            
-            //adding to banlist
-            stream *banfile = openutf8file(path("./banlist.cfg", true), "w");
-            if(banfile)
-            {
-                banfile->printf("//Automatically generated by QServ live (during bans): lists bans\n\n");
-                //loopv(gbans)
-                banfile->printf("addgban %s\n", ci->ip);
-                delete banfile;
-            }
-            //end adding to banlist
         }
-        
     }
-
-    ICOMMAND(addgban, "s", (char *s), { addgban(s);  })
-
+    
+    ICOMMAND(clearpbans, "", (), { cleargbans(-1); });
+    
+    ICOMMAND(addpban, "s", (char *s), { addgban(-1, s); });
+    
     int allowconnect(clientinfo *ci, const char *pwd = "")
     {
         if(ci->local) return DISC_NONE;
         if(!m_mp(gamemode)) return DISC_LOCAL;
+        uint ip = getclientip(ci->clientnum);
         if(serverpass[0])
         {
             if(!checkpassword(ci, serverpass, pwd)) return DISC_PASSWORD;
@@ -2955,9 +2970,7 @@ best.add(clients[i]); \
         }
         if(adminpass[0] && checkpassword(ci, adminpass, pwd)) return DISC_NONE;
         if(numclients(-1, false, true)>=maxclients) return DISC_MAXCLIENTS;
-        uint ip = getclientip(ci->clientnum);
-        loopv(bannedips) if(bannedips[i].ip==ip) return DISC_IPBAN;
-        if(checkgban(ip)) return DISC_IPBAN; //Checks for game ban
+        if(checkgban(ip)) return DISC_IPBAN;
         if(mastermode>=MM_PRIVATE && allowedips.find(ip)<0) return DISC_PRIVATE;
         return DISC_NONE;
     }
@@ -3085,9 +3098,14 @@ best.add(clients[i]); \
         else if(sscanf(cmd, "chalauth %u %255s", &id, val) == 2)
             authchallenged(id, val);
         else if(!strncmp(cmd, "cleargbans", cmdlen))
-            cleargbans();
+        {
+            cleargbans(-1);
+        }
         else if(sscanf(cmd, "addgban %100s", val) == 1)
-            addgban(val);
+        {
+            addgban(-1, val);
+        }
+         
     }
 
     void receivefile(int sender, uchar *data, int len)
@@ -3148,11 +3166,11 @@ best.add(clients[i]); \
         
         if(servermotd[0]) {
             if(welcomewithname) {
-            defformatstring(welcomemsg)("\f4Welcome to %s, %s. %s",serverdesc,colorname(ci),servermotd);
-            sendf(ci->clientnum,1,"ris",N_SERVMSG,welcomemsg);
+                defformatstring(welcomemsg)("\f4Welcome to %s\f4, \f0%s\f4. %s",serverdesc,colorname(ci),servermotd);
+                sendf(ci->clientnum,1,"ris",N_SERVMSG,welcomemsg);
             }
             else {
-                defformatstring(welcomenonamemsg)("\f4Welcome to %s. %s",serverdesc,servermotd);
+                defformatstring(welcomenonamemsg)("\f4Welcome to %s\f4. %s",serverdesc,servermotd);
                 sendf(ci->clientnum,1,"ris",N_SERVMSG,welcomenonamemsg);
             }
         }
@@ -3617,14 +3635,14 @@ best.add(clients[i]); \
                 break;
             }
                 
-            //For Editmute
-            case N_EDITF:
-            case N_EDITT:
-            case N_EDITM:
-            case N_FLIP:
-            case N_ROTATE:
-            case N_REPLACE:
-            case N_DELCUBE:
+            //Editmute
+            case N_EDITF:   //maptitle, fpush
+            case N_EDITT:   //texture
+            case N_EDITM:   //model
+            case N_FLIP:    //flipcube
+            case N_ROTATE:  //rotate
+            case N_REPLACE: //editreplace
+            case N_DELCUBE: //editdelcube
             {
                 int size = server::msgsizelookup(type);
                 if(size<=0) { disconnect_client(sender, DISC_MSGERR); return; }
@@ -3632,13 +3650,13 @@ best.add(clients[i]); \
                 if(ci->isEditMuted)
                 {
                     sendf(ci->clientnum, 1, "ris", N_SERVMSG, "\f3[Warning] Your editing is muted");
-                    QUEUE_AI;
                     break;
                 }
                 else {
-                QUEUE_MSG;
+                    QUEUE_AI;
+                    QUEUE_MSG;
+                    break;
                 }
-                break;
             }
 
             case N_EDITENT:
@@ -3670,11 +3688,11 @@ best.add(clients[i]); \
                 getstring(text, p);
                 switch(type)
                 {
-                    ID_VAR: getint(p); break;
-                    ID_FVAR: getfloat(p); break;
-                    ID_SVAR: getstring(text, p);
+                    case ID_VAR: getint(p); break;
+                    case ID_FVAR: getfloat(p); break;
+                    case ID_SVAR: getstring(text, p);
                 }
-                if(ci && ci->state.state!=CS_SPECTATOR) QUEUE_MSG; 
+                if(ci && ci->state.state!=CS_SPECTATOR) QUEUE_MSG;
                 break;
             }
 
@@ -3716,8 +3734,7 @@ best.add(clients[i]); \
                             loopv(clients) allowedips.add(getclientip(clients[i]->clientnum));
                         }
                         sendf(-1, 1, "rii", N_MASTERMODE, mastermode);
-                        out(ECHO_CONSOLE, "Mastermode: %s (%d)", mastermodename(mastermode), mastermode);
-                        out(ECHO_IRC, "Mastermode changed to: %s (%d)", mastermodename(mastermode), mastermode);
+                        out(ECHO_NOCOLOR, "Mastermode: %s (%d)", mastermodename(mastermode), mastermode);
                     }
                     else
                     {
@@ -3746,6 +3763,7 @@ best.add(clients[i]); \
                 getstring(text, p);
                 filtertext(text, text);
                 trykick(ci, victim, text);
+                teamkillkickreset();
                 break;
             }
 

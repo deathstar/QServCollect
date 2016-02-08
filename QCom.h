@@ -30,7 +30,7 @@ namespace server {
     extern QSERV_CALLBACK forceintermission_cmd(p);
     extern QSERV_CALLBACK getversion_cmd(p);
     extern QSERV_CALLBACK callops_cmd(p);
-    extern QSERV_CALLBACK msg_cmd(p);
+    extern QSERV_CALLBACK pm_cmd(p);
     extern QSERV_CALLBACK sendprivs_cmd(p);
     extern QSERV_CALLBACK forgive_cmd(p);
     extern QSERV_CALLBACK forcespectator_cmd(p);
@@ -42,7 +42,7 @@ namespace server {
     extern QSERV_CALLBACK togglelockspec_cmd(p);
     extern QSERV_CALLBACK uptime_cmd(p);
     extern QSERV_CALLBACK info_cmd(p);
-    extern QSERV_CALLBACK tournament_cmd(p);
+    //extern QSERV_CALLBACK tournament_cmd(p);
     extern QSERV_CALLBACK help_cmd(p);
     extern QSERV_CALLBACK cheater_cmd(p);
     extern QSERV_CALLBACK mapsucks_cmd(p);

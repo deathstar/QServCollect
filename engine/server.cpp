@@ -1,6 +1,6 @@
 // server.cpp: little more than enhanced multicaster
 // runs dedicated or as client coroutine
-// includes threading for QServ and IRC, and GeoIP db init
+// includes threading for QServ and IRC, and geoip database initaliziation 
 
 #include "../QServ.h"
 
@@ -407,6 +407,7 @@ const char *disconnectreason(int reason)
     }
 }
 
+VAR(serverdisconnectmsg, 0, 1, 1); //enable/disable msg
 void disconnect_client(int n, int reason) {
     qs.resetoLangWarn(n);
     if(!clients.inrange(n) || clients[n]->type!=ST_TCPIP) return;
@@ -415,10 +416,12 @@ void disconnect_client(int n, int reason) {
     delclient(clients[n]);
     const char *msg = disconnectreason(reason);
     string s;
-    if(msg) formatstring(s)("client (%s) disconnected because: %s", clients[n]->hostname, msg);
-    else formatstring(s)("client (%s) disconnected", clients[n]->hostname);
+    if(getvar("serverdisconnectmsg")) {
+        if(msg) formatstring(s)("client (%s) disconnected because: %s", clients[n]->hostname, msg);
+        else formatstring(s)("client (%s) disconnected", clients[n]->hostname);
+        server::sendservmsg(s);
+    }
     logoutf("%s", s);
-    server::sendservmsg(s);
 }
 
 void dcres(int n, const char *reason) {
@@ -715,10 +718,7 @@ void serverslice(bool dedicated, uint timeout)   // main server update, called f
     if(totalmillis-laststatus>60*1000)   // display bandwidth stats, useful for server ops
     {
         laststatus = totalmillis;
-        if(nonlocalclients || serverhost->totalSentData || serverhost->totalReceivedData) logoutf("QServ Heartbeat: %d remote client(s), %.1f sent, %.1f rec (K/sec)", nonlocalclients, serverhost->totalSentData/60.0f/1024, serverhost->totalReceivedData/60.0f/1024);
-        serverhost->totalSentData = serverhost->totalReceivedData = 0;
-        
-        if(nonlocalclients || serverhost->totalSentData || serverhost->totalReceivedData) out(ECHO_IRC,"QServ Heartbeat: %d remote client(s), %.1f sent, %.1f rec (K/sec)", nonlocalclients, serverhost->totalSentData/60.0f/1024, serverhost->totalReceivedData/60.0f/1024);
+        if(nonlocalclients || serverhost->totalSentData || serverhost->totalReceivedData) out(ECHO_NOCOLOR,"[ STATUS ] %d remote client(s), %.1f sent, %.1f rec (K/sec)", nonlocalclients, serverhost->totalSentData/60.0f/1024, serverhost->totalReceivedData/60.0f/1024);
         serverhost->totalSentData = serverhost->totalReceivedData = 0;
     }
     ENetEvent event;
@@ -1083,7 +1083,6 @@ void rundedicatedserver()
 #else
 #endif
     logoutf("[ OK ] QServ Started, waiting for clients...");
-    server::serverclose();
 }
 
 bool servererror(bool dedicated, const char *desc)
@@ -1220,6 +1219,7 @@ int main(int argc, char **argv) {
         qsleep(5);
 	}
 
+    server::serverclose();
     pthread_exit(NULL);
     return EXIT_SUCCESS;
 }
