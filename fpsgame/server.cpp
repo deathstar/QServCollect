@@ -2412,7 +2412,11 @@ best.add(clients[i]); \
         else if(!hitpush.iszero())
         {
             ivec v = vec(hitpush).rescale(DNF);
-            
+            sendf(ts.health<=0 ? -1 : target->ownernum, 1, "ri7", N_HITPUSH, target->clientnum, gun, damage, v.x, v.y, v.z);
+            target->setpushed();
+        }
+        if(ts.health<=0)
+        {
             //QServ longshot and close up kill (y - depth, z - height, x - left/right)
             //written by Stephen "someguy" Caples
             float x2 = target->state.o.x;
@@ -2423,14 +2427,9 @@ best.add(clients[i]); \
             float z1 = actor->state.o.z;
             float d = sqrt(((x2-x1)*(x2-x1))+((y2-y1)*(y2-y1))+((z2-z1)*(z2-z1)));
             int distanceinteger = int(d + 0.5);
-            if(d > 700) {out(ECHO_SERV,"\f0%s \f4got a longshot on \f3%s \f4(Distance: \f7%d\f4 feet) with a \f1%s", colorname(actor), colorname(target), distanceinteger, guns[gun].name);}
-            if(d <= 20) {out(ECHO_SERV,"\f0%s \f4got up close on \f3%s \f4with a \f1%s", colorname(actor), colorname(target), (!strcmp(guns[gun].name, "fist" )) ? "chainsaw" : guns[gun].name);}
+            if(d > 700) {out(ECHO_SERV,"\f0%s \f4got a longshot kill on \f3%s \f4(Distance: \f7%d\f4 feet) with a \f1%s", colorname(actor), colorname(target), distanceinteger, guns[gun].name);}
+            if(d <= 20) {out(ECHO_SERV,"\f0%s \f4got an up close kill on \f3%s \f4with a \f1%s", colorname(actor), colorname(target), (!strcmp(guns[gun].name, "fist" )) ? "chainsaw" : guns[gun].name);}
             
-            sendf(ts.health<=0 ? -1 : target->ownernum, 1, "ri7", N_HITPUSH, target->clientnum, gun, damage, v.x, v.y, v.z);
-            target->setpushed();
-        }
-        if(ts.health<=0)
-        {
             target->state.deaths++;
             int fragvalue = smode ? smode->fragvalue(target, actor) : (target==actor || isteam(target->team, actor->team) ? -1 : 1);
             actor->state.frags += fragvalue;
