@@ -2427,8 +2427,8 @@ best.add(clients[i]); \
             float z1 = actor->state.o.z;
             float d = sqrt(((x2-x1)*(x2-x1))+((y2-y1)*(y2-y1))+((z2-z1)*(z2-z1)));
             int distanceinteger = int(d + 0.5);
-            if(d > 700) {out(ECHO_SERV,"\f0%s \f4got a longshot kill on \f3%s \f4(Distance: \f7%d\f4 feet) with a \f1%s", colorname(actor), colorname(target), distanceinteger, guns[gun].name);}
-            if(d <= 20) {out(ECHO_SERV,"\f0%s \f4got an up close kill on \f3%s \f4with a \f1%s", colorname(actor), colorname(target), (!strcmp(guns[gun].name, "fist" )) ? "chainsaw" : guns[gun].name);}
+            if(d > 700 && actor != target) {out(ECHO_SERV,"\f0%s \f4got a longshot kill on \f3%s \f4(Distance: \f7%d\f4 feet) with a \f1%s", colorname(actor), colorname(target), distanceinteger, guns[gun].name);}
+            if(d <= 20 && actor != target) {out(ECHO_SERV,"\f0%s \f4got an up close kill on \f3%s \f4with a \f1%s", colorname(actor), colorname(target), (!strcmp(guns[gun].name, "fist" )) ? "chainsaw" : guns[gun].name);}
             
             target->state.deaths++;
             int fragvalue = smode ? smode->fragvalue(target, actor) : (target==actor || isteam(target->team, actor->team) ? -1 : 1);
