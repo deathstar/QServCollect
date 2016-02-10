@@ -61,6 +61,7 @@ namespace server {
             			persist = true;
             			clientinfo *ci = qs.getClient(CMD_SENDER);
             			out(ECHO_SERV, "\f4Persistant teams are now \f0enabled");
+            			
         			}
         			else if(togglenum==0) {
             			persist = false;
@@ -223,7 +224,10 @@ namespace server {
             if(mapsucksvotes>=getvar("votestopassmapsucks")) {
                 startintermission();
                 out(ECHO_SERV, "\f4Changing map: That map sucked (\f7%d \f4votes to skip)", votestopassmapsucks);
-                mapsucksvotes = 0;
+                mapsucksvotes--;
+                mapsucksvotes--;
+                mapsucksvotes--;
+                //int mapsucksvotes = 0;
             }
         }
         else if(ci->votedmapsucks) sendf(ci->clientnum, 1, "ris", N_SERVMSG, "\f3Error: You have already voted");
@@ -916,7 +920,6 @@ namespace server {
 				clientinfo *self = qs.getClient(CMD_SENDER);
 				
 					if(ci->connected) {
-					
 					if(cn!=CMD_SENDER && cn >= 0 && cn <= 1000 && ci != NULL && ci->connected && strlen(fulltext) > 0) {
             			const char *privatemessage = fulltext;
                 		defformatstring(recieverpmmsg)("\f4Private message from \f0%s\f4: \f3%s", colorname(self), privatemessage);
