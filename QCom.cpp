@@ -217,17 +217,20 @@ namespace server {
     int mapsucksvotes = 0;
     QSERV_CALLBACK mapsucks_cmd(p) {
         clientinfo *ci = qs.getClient(CMD_SENDER);
+        
         if(!ci->votedmapsucks) {
             mapsucksvotes++;
             out(ECHO_SERV, "\f0%s \f4thinks this map sucks, use \f2#mapsucks \f4to vote for an intermission to skip it.", colorname(ci));
             ci->votedmapsucks = true;
+            
             if(mapsucksvotes>=getvar("votestopassmapsucks")) {
                 startintermission();
                 out(ECHO_SERV, "\f4Changing map: That map sucked (\f7%d \f4votes to skip)", votestopassmapsucks);
-                mapsucksvotes--;
-                mapsucksvotes--;
-                mapsucksvotes--;
-                //int mapsucksvotes = 0;
+                
+                //clear each vote after intermission to return to 0
+                for(mapsucksvotes) {
+                    mapsucksvotes--;
+                }
             }
         }
         else if(ci->votedmapsucks) sendf(ci->clientnum, 1, "ris", N_SERVMSG, "\f3Error: You have already voted");
@@ -882,11 +885,11 @@ namespace server {
     		defformatstring(toclient)("You alerted operator(s) %s", ircoperators); 
     		sendf(CMD_SENDER, 1, "ris", N_SERVMSG, toclient);
         }
-        else {defformatstring(operatorunavailable)("\f4Sorry, No operators are available currently, please email: \f1%s \f4for more assistance.",contactemail); sendf(CMD_SENDER, 1, "ris", N_SERVMSG, operatorunavailable);}
+        else {defformatstring(operatorunavailable)("\f4Sorry, No operators are available currently. ^nEmail: \f1%s \f4for more assistance.",contactemail); sendf(CMD_SENDER, 1, "ris", N_SERVMSG, operatorunavailable);}
     }
     SVAR(qserv_version, "");
     QSERV_CALLBACK getversion_cmd(p) {
-    defformatstring(ver)("\f4Running \f3QServ \f4(\f2%s\f4): \f1www.github.com/deathstar/QServCollect \f4- a lightweight server modification with flagrun recording, a banlist, stats, GeoIP, IRC Bot + command system, server commands, customization, ease of use and much more.", qserv_version);
+    defformatstring(ver)("\f4Running \f3QServ \f4(\f2%s\f4): \f1www.github.com/deathstar/QServCollect \f4- an advanced sauerbraten server mod", qserv_version);
     sendf(CMD_SENDER, 1, "ris", N_SERVMSG, ver);
     }
     QSERV_CALLBACK forceintermission_cmd(p) {bool intermission = false; if(!intermission){startintermission(); defformatstring(msg)("\f0%s \f4forced an intermission",CMD_SCI.name);sendf(-1, 1, "ris", N_SERVMSG, msg); out(ECHO_IRC,"%s forced an intermission",CMD_SCI.name);}}
