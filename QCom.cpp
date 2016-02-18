@@ -227,9 +227,11 @@ namespace server {
                 startintermission();
                 out(ECHO_SERV, "\f4Changing map: That map sucked (\f7%d \f4votes to skip)", votestopassmapsucks);
                 
-                //clear each vote after intermission to return to 0
-                for(mapsucksvotes) {
+                while(mapsucksvotes>=getvar("votestopassmapsucks")) {
                     mapsucksvotes--;
+                    mapsucksvotes--;
+                    mapsucksvotes--;
+                    out(ECHO_SERV,"\f4Clearing votes...");
                 }
             }
         }
@@ -885,7 +887,7 @@ namespace server {
     		defformatstring(toclient)("You alerted operator(s) %s", ircoperators); 
     		sendf(CMD_SENDER, 1, "ris", N_SERVMSG, toclient);
         }
-        else {defformatstring(operatorunavailable)("\f4Sorry, No operators are available currently. ^nEmail: \f1%s \f4for more assistance.",contactemail); sendf(CMD_SENDER, 1, "ris", N_SERVMSG, operatorunavailable);}
+        else {defformatstring(operatorunavailable)("\f4Sorry, No operators are available currently. \nEmail: \f1%s \f4for more assistance.",contactemail); sendf(CMD_SENDER, 1, "ris", N_SERVMSG, operatorunavailable);}
     }
     SVAR(qserv_version, "");
     QSERV_CALLBACK getversion_cmd(p) {
