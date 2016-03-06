@@ -1212,14 +1212,14 @@ int main(int argc, char **argv) {
     
     c = pthread_create(&thread[1], &attr, irc_thread, (void*)&t);
     
-    pthread_attr_destroy(&attr);   
-
+    pthread_attr_destroy(&attr);
 	for(int i = 0; i < 2; i++) {
 		c = pthread_join(thread[i], &status);
         qsleep(5);
-	}
-
+    }
+    
     server::serverclose();
-    pthread_exit(NULL);
-    return EXIT_SUCCESS;
+    //pthread_exit(NULL); //we don't close our thread
+    //return EXIT_SUCCESS; //we don't exit
+    return 0; //instead, we return with no problems
 }
