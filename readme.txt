@@ -104,4 +104,4 @@ In Linux it's different, you should most probably see something like this: "<you
 
 16) you can stream the logfile from a VPN or SSH connection: ssh -n username@hostname 'tail -f /path/to/nohup.out' &
 
-17) you can stop the server running in the background by running top, finding the PID of QServ, then using: kill PID
+17) you can stop the server running in the background by running ps aux | grep "qserv" then using: kill PID
