@@ -20,6 +20,8 @@ Direct Download link: https://codeload.github.com/deathstar/QServCollect/zip/mas
 
 Terminal Download Command: git clone https://github.com/deathstar/QServCollect
 
+**Mac Users, simply download and run [this installer](http://techmaster.mooo.com/download/QServ-Installer.zip) to download and install QServ.**
+
 ##REQUIREMENTS
 
 **MAC OSX**
