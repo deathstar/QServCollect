@@ -26,7 +26,7 @@ ICOMMAND(login, "s", (char *s), {
     }if(!strcmp(s, ircloginpass)){
         irc.IRCusers[irc.lastmsg()->host] = 1;
         irc.speak("%s has logged in", irc.lastmsg()->nick);
-		out(ECHO_SERV, "\f0%s \f4has logged in thru IRC (%s \f3%s\f4)", irc.lastmsg()->nick, irchost, ircchan);
+		out(ECHO_SERV, "\f0%s \f7has logged in thru IRC (%s \f3%s\f7)", irc.lastmsg()->nick, irchost, ircchan);
     }
     else irc.notice(irc.lastmsg()->nick, "Error: Invalid Password");
 });
@@ -194,7 +194,7 @@ void ircBot::init()
 			if(ircstring) {
 			if(!IsCommand(mybuffer)){
 			
-					defformatstring(toserver)("\f4%s \f3%s \f7- \f0%s\f7: %s", newstring(irchost), newstring(ircchan), msg.nick, msg.message);
+					defformatstring(toserver)("\f7%s \f3%s \f7- \f0%s\f7: %s", newstring(irchost), newstring(ircchan), msg.nick, msg.message);
 					server::sendservmsg(toserver);
 			
 			}

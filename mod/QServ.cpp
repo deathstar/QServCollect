@@ -402,7 +402,7 @@ namespace server {
     void QServ::getLocation(clientinfo *ci) {
        char *ip = toip(ci->clientnum);
        /*defformatstring(location)("%s",congeoip(ip));
-       out(ECHO_SERV, "\f0%s \f4connected: \f2%s", colorname(ci), cgip(ip).c_str());     
+       out(ECHO_SERV, "\f0%s \f7connected: \f2%s", colorname(ci), cgip(ip).c_str());
        out(ECHO_NOCOLOR, "%s connected: %s", colorname(ci), cgip(ip).c_str()); 
        */
        const char *location;
@@ -417,8 +417,8 @@ namespace server {
       int type = 0;
         const char *types[] = {
             " connected from \f3Unknown",
-            " \f4connected from \f1Localhost",
-            " \f4connected near\f0"
+            " \f7connected from \f1Localhost",
+            " \f7connected near\f0"
         };
         int typeconsole = 0;
         const char *typesconsole[] = {
@@ -446,7 +446,7 @@ namespace server {
                 
             }
                 //code below moved up into else
-                defformatstring(msg)("\f0%s\f4%s", ci->name, (type < 2) ? types[type] : lmsg);
+                defformatstring(msg)("\f0%s\f7%s", ci->name, (type < 2) ? types[type] : lmsg);
             	defformatstring(nocolormsg)("%s%s", ci->name, (typeconsole < 2) ? typesconsole[typeconsole] : pmsg);
            		out(ECHO_SERV,"%s",msg);
             	out(ECHO_NOCOLOR, "%s",nocolormsg);

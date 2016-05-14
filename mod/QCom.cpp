@@ -10,39 +10,39 @@ namespace server {
             @Command argument count
         **/
 
-        ncommand("me", "\f4Echo your name and message to everyone. Usage: #me <message>", PRIV_NONE, me_cmd, 0);
-        ncommand("cmd", "\f4View command list or command usage. Usage: #cmd for command list and #cmd <name-of-command> for command usage", PRIV_NONE, cmd_cmd, 1);
-        ncommand("stats", "\f4View the stats of a player or yourself. Usage: #stats <cn> or #stats", PRIV_NONE, stats_cmd, 1);
-        ncommand("localtime", "\f4Get the local time of the Server. Usage: #localtime", PRIV_NONE, localtime_cmd, 0);
-        ncommand("time", "\f4View the current time. Usage: #time <zone>", PRIV_NONE, time_cmd, 1);
-        ncommand("bunny", "\f4Broadcast a helper message to all players. Usage: #bunny <helpmessage>", PRIV_ADMIN, bunny_cmd, 0);
-        ncommand("echo", "\f4Broadcast a message to all players. Usage: #echo <message>", PRIV_MASTER, echo_cmd, 1);
-		ncommand("revokepriv", "\f4Revoke the privileges of a player. Usage: #revokepriv <cn>", PRIV_ADMIN, revokepriv_cmd, 1);
-        ncommand("forceintermission", "\f4Force an intermission. Usage: #forceintermission", PRIV_MASTER, forceintermission_cmd, 0);
-        ncommand("getversion", "\f4Get the current QServ Version. Usage: #getversion", PRIV_NONE, getversion_cmd, 0);
-        ncommand("callops", "\f4Call all operators on the Internet Relay Chat Server. Usage: #callops", PRIV_NONE, callops_cmd, 0);
-        ncommand("pm", "\f4Send a private message. Usage #pm <cn> <msg>", PRIV_NONE, pm_cmd,2);
-        ncommand("sendprivs", "\f4Share power with another player. Usage: #sendprivs <cn>", PRIV_MASTER, sendprivs_cmd, 1);
-        ncommand("forgive", "\f4Forgive a player for teamkilling or just in general. Usage: #forgive <cn>", PRIV_NONE, forgive_cmd, 1);
-        ncommand("forcespectator", "\f4Forces a player to become a spectator. Usage: #forcespectator <cn>", PRIV_ADMIN, forcespectator_cmd, 1);
-        ncommand("unspectate", "\f4Removes a player from spectator mode. Usage: #unspectate <cn>", PRIV_ADMIN, unspectate_cmd, 1);
-        ncommand("mute", "\f4Mutes a client. Usage #mute <cn>", PRIV_ADMIN, mute_cmd, 1);
-        ncommand("unmute", "\f4Unmutes a client. Usage #mute <cn>", PRIV_ADMIN, unmute_cmd, 1);
-        ncommand("editmute", "\f4Stops a client from editing. Usage #editmute <cn>", PRIV_ADMIN, editmute_cmd, 1);
-        ncommand("uneditmute", "\f4Allows a client to edit again. Usage #uneditmute <cn>", PRIV_ADMIN, uneditmute_cmd, 1);
-        ncommand("togglelockspec", "\f4Forces a client to be locked in spectator mode. Usage #togglelockspec <cn>", PRIV_ADMIN, togglelockspec_cmd, 1);
-        ncommand("uptime", "\f4View how long the server has been up for. Usage: #uptime", PRIV_NONE, uptime_cmd, 0);
-        ncommand("info", "\f4View information about a player. Usage: #info <cn>", PRIV_NONE, info_cmd, 1);
-        //ncommand("tournament", "\f4Forces a tournament regardless of mode/etc. Usage: #tournament <mode> <map>", PRIV_MASTER, tournament_cmd, 2);
-        ncommand("help", "\f4Lists the #cmd command and more information. Usage: #help", PRIV_NONE, help_cmd, 0);
-        ncommand("cheater", "\f4Accuses someone of cheating and alerts moderators. Usage: #cheater <cn>", PRIV_NONE, cheater_cmd, 1);
-        ncommand("mapsucks", "\f4Votes for an intermission to change the map. Usage: #mapsucks", PRIV_NONE, mapsucks_cmd, 0);
-        ncommand("gban", "\f4Bans a client. Usage: #gban <cn>", PRIV_ADMIN, gban_cmd, 1);
-        ncommand("cleargbans", "\f4Clears all server bans stored and issued. Usage: #cleargbans", PRIV_ADMIN, cleargbans_cmd, 0);
-        ncommand("teampersist", "\f4Toggle persistant teams on or off. Usage: #teampersist <0/1> (0 for off, 1 for on)", PRIV_ADMIN, teampersist_cmd, 1);
-        ncommand("invadmin", "\f4Claim invisible administrator. Usage: #invadmin <adminpass>", PRIV_ADMIN, invadmin_cmd, 0);
-        ncommand("allowmaster", "\f4Allows clients to claim master. Usage: #allowmaster <0/1> (0 for off, 1 for on)", PRIV_ADMIN, allowmaster_cmd, 1);
-        ncommand("kill", "\f4Brutally murders a player. Usage: #kill <cn>", PRIV_ADMIN, kill_cmd, 1);
+        ncommand("me", "\f7Echo your name and message to everyone. Usage: #me <message>", PRIV_NONE, me_cmd, 0);
+        ncommand("cmd", "\f7View command list or command usage. Usage: #cmd for command list and #cmd <name-of-command> for command usage", PRIV_NONE, cmd_cmd, 1);
+        ncommand("stats", "\f7View the stats of a player or yourself. Usage: #stats <cn> or #stats", PRIV_NONE, stats_cmd, 1);
+        ncommand("localtime", "\f7Get the local time of the Server. Usage: #localtime", PRIV_NONE, localtime_cmd, 0);
+        ncommand("time", "\f7View the current time. Usage: #time <zone>", PRIV_NONE, time_cmd, 1);
+        ncommand("bunny", "\f7Broadcast a helper message to all players. Usage: #bunny <helpmessage>", PRIV_ADMIN, bunny_cmd, 0);
+        ncommand("echo", "\f7Broadcast a message to all players. Usage: #echo <message>", PRIV_MASTER, echo_cmd, 1);
+		ncommand("revokepriv", "\f7Revoke the privileges of a player. Usage: #revokepriv <cn>", PRIV_ADMIN, revokepriv_cmd, 1);
+        ncommand("forceintermission", "\f7Force an intermission. Usage: #forceintermission", PRIV_MASTER, forceintermission_cmd, 0);
+        ncommand("getversion", "\f7Get the current QServ Version. Usage: #getversion", PRIV_NONE, getversion_cmd, 0);
+        ncommand("callops", "\f7Call all operators on the Internet Relay Chat Server. Usage: #callops", PRIV_NONE, callops_cmd, 0);
+        ncommand("pm", "\f7Send a private message. Usage #pm <cn> <msg>", PRIV_NONE, pm_cmd,2);
+        ncommand("sendprivs", "\f7Share power with another player. Usage: #sendprivs <cn>", PRIV_MASTER, sendprivs_cmd, 1);
+        ncommand("forgive", "\f7Forgive a player for teamkilling or just in general. Usage: #forgive <cn>", PRIV_NONE, forgive_cmd, 1);
+        ncommand("forcespectator", "\f7Forces a player to become a spectator. Usage: #forcespectator <cn>", PRIV_ADMIN, forcespectator_cmd, 1);
+        ncommand("unspectate", "\f7Removes a player from spectator mode. Usage: #unspectate <cn>", PRIV_ADMIN, unspectate_cmd, 1);
+        ncommand("mute", "\f7Mutes a client. Usage #mute <cn>", PRIV_ADMIN, mute_cmd, 1);
+        ncommand("unmute", "\f7Unmutes a client. Usage #mute <cn>", PRIV_ADMIN, unmute_cmd, 1);
+        ncommand("editmute", "\f7Stops a client from editing. Usage #editmute <cn>", PRIV_ADMIN, editmute_cmd, 1);
+        ncommand("uneditmute", "\f7Allows a client to edit again. Usage #uneditmute <cn>", PRIV_ADMIN, uneditmute_cmd, 1);
+        ncommand("togglelockspec", "\f7Forces a client to be locked in spectator mode. Usage #togglelockspec <cn>", PRIV_ADMIN, togglelockspec_cmd, 1);
+        ncommand("uptime", "\f7View how long the server has been up for. Usage: #uptime", PRIV_NONE, uptime_cmd, 0);
+        ncommand("info", "\f7View information about a player. Usage: #info <cn>", PRIV_NONE, info_cmd, 1);
+        //ncommand("tournament", "\f7Forces a tournament regardless of mode/etc. Usage: #tournament <mode> <map>", PRIV_MASTER, tournament_cmd, 2);
+        ncommand("help", "\f7Lists the #cmd command and more information. Usage: #help", PRIV_NONE, help_cmd, 0);
+        ncommand("cheater", "\f7Accuses someone of cheating and alerts moderators. Usage: #cheater <cn>", PRIV_NONE, cheater_cmd, 1);
+        ncommand("mapsucks", "\f7Votes for an intermission to change the map. Usage: #mapsucks", PRIV_NONE, mapsucks_cmd, 0);
+        ncommand("gban", "\f7Bans a client. Usage: #gban <cn>", PRIV_ADMIN, gban_cmd, 1);
+        ncommand("cleargbans", "\f7Clears all server bans stored and issued. Usage: #cleargbans", PRIV_ADMIN, cleargbans_cmd, 0);
+        ncommand("teampersist", "\f7Toggle persistant teams on or off. Usage: #teampersist <0/1> (0 for off, 1 for on)", PRIV_ADMIN, teampersist_cmd, 1);
+        ncommand("invadmin", "\f7Claim invisible administrator. Usage: #invadmin <adminpass>", PRIV_ADMIN, invadmin_cmd, 0);
+        ncommand("allowmaster", "\f7Allows clients to claim master. Usage: #allowmaster <0/1> (0 for off, 1 for on)", PRIV_ADMIN, allowmaster_cmd, 1);
+        ncommand("kill", "\f7Brutally murders a player. Usage: #kill <cn>", PRIV_ADMIN, kill_cmd, 1);
         //ncommand("owords", "View list of offensive words. Usage: #owords",
         ///         PRIV_NONE, owords_cmd, 0);
         //ncommand("olangfilter", "Turn the offensive language filter on or off. Usage: #olang <off/on> (0/1) and #olang to see if it's activated",
@@ -60,12 +60,12 @@ namespace server {
         			if(togglenum==1) {
             			persist = true;
             			clientinfo *ci = qs.getClient(CMD_SENDER);
-            			out(ECHO_SERV, "\f4Persistant teams are now \f0enabled");
+            			out(ECHO_SERV, "\f7Persistant teams are now \f0enabled");
             			
         			}
         			else if(togglenum==0) {
             			persist = false;
-            			out(ECHO_SERV, "\f4Persistant teams are now \f3disabled");
+            			out(ECHO_SERV, "\f7Persistant teams are now \f3disabled");
         			}
         	        else if(togglenum==NULL || isalpha(togglenum)) {
         				sendf(CMD_SENDER, 1, "ris", N_SERVMSG, CMD_DESC(cid));
@@ -98,7 +98,7 @@ namespace server {
             				clientinfo *sender = qs.getClient(CMD_SENDER);
            		 				if(ci->state.state==CS_ALIVE) {
             						suicide(ci);
-            						out(ECHO_SERV, "\f0%s \f4has been brutally murdered", colorname(ci));
+            						out(ECHO_SERV, "\f0%s \f7has been brutally murdered", colorname(ci));
             						out(ECHO_NOCOLOR, "%s has been brutally murdered by %s", colorname(ci), colorname(sender));
             					}   
                         	}
@@ -132,11 +132,11 @@ namespace server {
         			if(togglenum==1) {
             			switchallowmaster();
             			clientinfo *ci = qs.getClient(CMD_SENDER);
-            			out(ECHO_SERV, "\f4Claiming \f0master \f4with \"/setmaster 1\" is now \f0enabled");
+            			out(ECHO_SERV, "\f7Claiming \f0master \f7with \"/setmaster 1\" is now \f0enabled");
         			}
         			else if(togglenum==0) {
             			switchdisallowmaster();
-            			out(ECHO_SERV, "\f4Claiming \f0master \f4with \"/setmaster 1\" is now \f3disabled");
+            			out(ECHO_SERV, "\f7Claiming \f0master \f7with \"/setmaster 1\" is now \f3disabled");
         			}
         	        else if(togglenum==NULL || isalpha(togglenum)) {
         				sendf(CMD_SENDER, 1, "ris", N_SERVMSG, CMD_DESC(cid));
@@ -157,7 +157,7 @@ namespace server {
         if(ci->privilege == PRIV_ADMIN) {
             server::setmaster(ci, 0, "", NULL, NULL,PRIV_MASTER,false, false, true);
             ci->privilege = PRIV_ADMIN;
-            sendf(ci->clientnum, 1, "ris", N_SERVMSG, "\f4You became an invisible \f6admin\f4. Relinguish and reclaim to reveal your privilege.");
+            sendf(ci->clientnum, 1, "ris", N_SERVMSG, "\f7You became an invisible \f6admin\f7. Relinguish and reclaim to reveal your privilege.");
             out(ECHO_IRC, "%s became an invisible admin", colorname(ci));
             out(ECHO_CONSOLE, "%s became an invisible admin", colorname(ci));
         }
@@ -190,7 +190,7 @@ namespace server {
             				clientinfo *ci = qs.getClient(cn);
             				disconnect_client(ci->clientnum, DISC_IPBAN);
             				server::addgban(1, ci->ip);
-           					 out(ECHO_SERV, "\f0%s \f4has been added to the permanent banlist.", colorname(ci));
+           					 out(ECHO_SERV, "\f0%s \f7has been added to the permanent banlist.", colorname(ci));
             				out(ECHO_NOCOLOR, "%s has been added to the permanent banlist.", colorname(ci));
         				}
                         
@@ -220,18 +220,18 @@ namespace server {
         
         if(!ci->votedmapsucks) {
             mapsucksvotes++;
-            out(ECHO_SERV, "\f0%s \f4thinks this map sucks, use \f2#mapsucks \f4to vote for an intermission to skip it.", colorname(ci));
+            out(ECHO_SERV, "\f0%s \f7thinks this map sucks, use \f2#mapsucks \f7to vote for an intermission to skip it.", colorname(ci));
             ci->votedmapsucks = true;
             
             if(mapsucksvotes>=getvar("votestopassmapsucks")) {
                 startintermission();
-                out(ECHO_SERV, "\f4Changing map: That map sucked (\f7%d \f4votes to skip)", votestopassmapsucks);
+                out(ECHO_SERV, "\f7Changing map: That map sucked (\f7%d \f7votes to skip)", votestopassmapsucks);
                 
                 while(mapsucksvotes>=getvar("votestopassmapsucks")) {
                     mapsucksvotes--;
                     mapsucksvotes--;
                     mapsucksvotes--;
-                    out(ECHO_SERV,"\f4Clearing votes...");
+                    out(ECHO_SERV,"\f7Clearing votes...");
                 }
             }
         }
@@ -243,7 +243,7 @@ namespace server {
         int color = -1;
         
         strcpy(commandList, "");
-        sprintf(commandList, "%s", "\f1Commands: ");
+        sprintf(commandList, "%s", "\f2Commands: ");
         
         for(int i = 0; i < CMD_LAST; i++) {
             if(CMD_PRIV(i) == PRIV_NONE) {
@@ -264,7 +264,7 @@ namespace server {
         }
         sendf(CMD_SENDER, 1, "ris", N_SERVMSG, commandList);
         clientinfo *ci = qs.getClient(CMD_SENDER);
-        defformatstring(f)("\f4Use \f2#cmd \f4to view a list of all available server commands.\ngrey commands are for everyone, \f0green \f4are for master and \f6orange \f4are for admin. \nUse \f2#cmd <name-of-command> \f4for specific command information. \nUse \f2#callops \f4for more help.");
+        defformatstring(f)("\f7Use \f2#cmd \f7to view a list of all available server commands.\ngrey commands are for everyone, \f0green \f7are for master and \f6orange \f7are for admin. \nUse \f2#cmd <name-of-command> \f7for specific command information. \nUse \f2#callops \f7for more help.");
         sendf(ci->clientnum, 1, "ris", N_SERVMSG, f);
     }
     
@@ -290,7 +290,7 @@ namespace server {
             }
         }
         	if(valid) {
-            defformatstring(f)("\f4Tournament has started: %s on map %s", qserv_modenames[gm], mapname);
+            defformatstring(f)("\f7Tournament has started: %s on map %s", qserv_modenames[gm], mapname);
             sendf(-1, 1, "ris", N_SERVMSG, f);
             }
             
@@ -308,9 +308,9 @@ namespace server {
         clientinfo *ci = qs.getClient(CMD_SENDER);
         string msg, buf;
         uint t, months, weeks, days, hours, minutes, seconds;
-        copystring(msg,"\f4Server Mod: \f3QServ\f4: \f1https://github.com/deathstar/QServCollect");
+        copystring(msg,"\f7Server Mod: \f3QServ\f7: \f1https://github.com/deathstar/QServCollect");
         sendf(ci ? ci->clientnum : -1, 1, "ris", N_SERVMSG, msg);
-        copystring(msg, "\f4Server Architecture: \f0"
+        copystring(msg, "\f7Server Architecture: \f0"
 		/* Firstly determine OS */
 		#if !(defined(_WIN32) || defined(WIN32) || defined(WIN64) || defined(_WIN64))
 		/* unix/posix compilant os */
@@ -350,7 +350,7 @@ namespace server {
                    " "
                    );
         concatstring(msg, (sizeof(void *) == 8) ? "x86 (64 bit)" : "i386");
-        concatstring(msg, "\n\f4Server Uptime:\f6");
+        concatstring(msg, "\n\f7Server Uptime:\f6");
         t = totalsecs;
         
         months = t / (30*24*60*60);
@@ -446,7 +446,7 @@ namespace server {
         					string conmsg, buf;
        						uint t, months, weeks, days, hours, minutes, seconds; 
         					t = (int) connectedtime;
-        					copystring(conmsg, "\f4Server has been up for:\f6");
+        					copystring(conmsg, "\f7Server has been up for:\f6");
        						months = t / (30*24*60*60);
     						t = t % (30*24*60*60);
         					weeks = t / (7*24*60*60);
@@ -493,7 +493,7 @@ namespace server {
             formatstring(buf)(" %u second%s", seconds, seconds > 1 ? "s" : "");
             concatstring(conmsg, buf);    
         }
-                            defformatstring(s)("\f4Info for \f0%s \f4(\f7%d\f4): \f4Frags: \f0%i \f4Deaths: \f3%i \f4Teamkills: \f1%i \f4Flag Runs: \f5%i \f4Accuracy: \f3%i%%\n\f4Location: \f2%s",
+                            defformatstring(s)("\f7Info for \f0%s \f7(\f7%d\f7): \f7Frags: \f0%i \f7Deaths: \f3%i \f7Teamkills: \f1%i \f7Flag Runs: \f5%i \f7Accuracy: \f3%i%%\n\f7Location: \f2%s",
                                                 colorname(ci),
                                                 ci->clientnum,
                                                 (ci->state.frags)-(ci->state.teamkills/2),
@@ -653,7 +653,7 @@ namespace server {
                         if(ci->connected) {
                         	if(cn!=CMD_SENDER && cn >= 0 && cn <= 1000 && ci != NULL && ci->connected && args[1] != NULL) {
             					ci->isMuted = true;
-            					defformatstring(mutemsg)("\f0%s \f4has been \f3muted", colorname(ci));
+            					defformatstring(mutemsg)("\f0%s \f7has been \f3muted", colorname(ci));
             					sendf(CMD_SENDER, 1, "ris", N_SERVMSG, mutemsg);
         					}
                         }
@@ -687,7 +687,7 @@ namespace server {
                         if(ci->connected) {
                         	if(cn!=CMD_SENDER && cn >= 0 && cn <= 1000 && ci != NULL && ci->connected && args[1] != NULL) {
             					ci->isMuted = false;
-            					defformatstring(unmutemsg)("\f0%s \f4has been \f0unmuted", colorname(ci));
+            					defformatstring(unmutemsg)("\f0%s \f7has been \f0unmuted", colorname(ci));
            						 sendf(CMD_SENDER, 1, "ris", N_SERVMSG, unmutemsg);
         					}
 							
@@ -724,8 +724,8 @@ namespace server {
                         if(ci->connected) {
                         	 if(cn!=CMD_SENDER && cn >= 0 && cn <= 1000 && ci != NULL && ci->connected && args[1] != NULL) {
             					ci->isEditMuted = true;
-            					sendf(ci->clientnum, 1, "ris", N_SERVMSG, "\f4Your edits \f3will not \f4show up to others.");
-           					    defformatstring(mutemsg)("\f0%s\f4's edits have been \f3muted", colorname(ci));
+            					sendf(ci->clientnum, 1, "ris", N_SERVMSG, "\f7Your edits \f3will not \f7show up to others.");
+           					    defformatstring(mutemsg)("\f0%s\f7's edits have been \f3muted", colorname(ci));
             					sendf(CMD_SENDER, 1, "ris", N_SERVMSG, mutemsg);
        						 }
                                                    
@@ -762,9 +762,9 @@ namespace server {
                         if(ci->connected) {
                         
                         	if(cn!=CMD_SENDER && cn >= 0 && cn <= 1000 && ci != NULL && ci->connected && args[1] != NULL) {
-            					sendf(ci->clientnum, 1, "ris", N_SERVMSG, "\f4Your edits \f0will \f4now show up to others.");
+            					sendf(ci->clientnum, 1, "ris", N_SERVMSG, "\f7Your edits \f0will \f7now show up to others.");
             					ci->isEditMuted = false;
-            					out(ECHO_SERV,"\f0%s\f4's edits have been \f0unmuted", colorname(ci));
+            					out(ECHO_SERV,"\f0%s\f7's edits have been \f0unmuted", colorname(ci));
         					}                         
                         }
                     } else {
@@ -799,7 +799,7 @@ namespace server {
                         if(ci->connected) {
                         	clientinfo *self = qs.getClient(CMD_SENDER);
         					if(cn!=CMD_SENDER && cn >= 0 && cn <= 1000 && ci != NULL && ci->connected && args[1] != NULL) {
-            				defformatstring(forgivemsg)("\f0%s \f4has forgiven \f3%s", colorname(self), colorname(ci));
+            				defformatstring(forgivemsg)("\f0%s \f7has forgiven \f3%s", colorname(self), colorname(ci));
             				sendf(-1, 1, "ris", N_SERVMSG, forgivemsg);
         			}
                             
@@ -839,10 +839,10 @@ namespace server {
                         clientinfo *self = qs.getClient(CMD_SENDER);
         				if(cn!=CMD_SENDER && cn >= 0 && cn <= 1000 && cn != NULL && ci != NULL && ci->connected && args[1]!=NULL) {
         				int accuracy = (ci->state.damage*100)/max(ci->state.shotdamage, 1);
-            			privilegemsg(PRIV_MASTER,"\f4Something's fishy! A cheater has been reported.");
-             			out(ECHO_SERV, "\f0%s \f4accuses \f3%s \f4(CN: \f6%d \f4| Accuracy: \f6%d%\f4) of cheating.", colorname(self), colorname(ci), ci->clientnum, accuracy);
+            			privilegemsg(PRIV_MASTER,"\f7Something's fishy! A cheater has been reported.");
+             			out(ECHO_SERV, "\f0%s \f7accuses \f3%s \f7(CN: \f6%d \f7| Accuracy: \f6%d%\f7) of cheating.", colorname(self), colorname(ci), ci->clientnum, accuracy);
             			out(ECHO_NOCOLOR, "Attention Operator(s): %s - %s accuses %s (CN: %d | Accuracy: %d%) of cheating.", ircoperators, colorname(self), colorname(ci), ci->clientnum, accuracy);
-            			defformatstring(nocolorcheatermsg)("\f3%s \f4has been reported.", colorname(ci));
+            			defformatstring(nocolorcheatermsg)("\f3%s \f7has been reported.", colorname(ci));
             			sendf(CMD_SENDER, 1, "ris", N_SERVMSG, nocolorcheatermsg);
         			}		
                            
@@ -887,14 +887,14 @@ namespace server {
     		defformatstring(toclient)("You alerted operator(s) %s", ircoperators); 
     		sendf(CMD_SENDER, 1, "ris", N_SERVMSG, toclient);
         }
-        else {defformatstring(operatorunavailable)("\f4Sorry, No operators are available currently. \nEmail: \f1%s \f4for more assistance.",contactemail); sendf(CMD_SENDER, 1, "ris", N_SERVMSG, operatorunavailable);}
+        else {defformatstring(operatorunavailable)("\f7Sorry, No operators are available currently. \nEmail: \f1%s \f7for more assistance.",contactemail); sendf(CMD_SENDER, 1, "ris", N_SERVMSG, operatorunavailable);}
     }
     SVAR(qserv_version, "");
     QSERV_CALLBACK getversion_cmd(p) {
-    defformatstring(ver)("\f4Running \f3QServ \f4(\f2%s\f4): \f1www.github.com/deathstar/QServCollect \f4- an advanced sauerbraten server mod", qserv_version);
+    defformatstring(ver)("\f7Running \f3QServ \f7(\f2%s\f7): \f1www.github.com/deathstar/QServCollect \f7- an advanced sauerbraten server mod", qserv_version);
     sendf(CMD_SENDER, 1, "ris", N_SERVMSG, ver);
     }
-    QSERV_CALLBACK forceintermission_cmd(p) {bool intermission = false; if(!intermission){startintermission(); defformatstring(msg)("\f0%s \f4forced an intermission",CMD_SCI.name);sendf(-1, 1, "ris", N_SERVMSG, msg); out(ECHO_IRC,"%s forced an intermission",CMD_SCI.name);}}
+    QSERV_CALLBACK forceintermission_cmd(p) {bool intermission = false; if(!intermission){startintermission(); defformatstring(msg)("\f0%s \f7forced an intermission",CMD_SCI.name);sendf(-1, 1, "ris", N_SERVMSG, msg); out(ECHO_IRC,"%s forced an intermission",CMD_SCI.name);}}
 
     QSERV_CALLBACK me_cmd(p) {
         if(strlen(fulltext) > 0) {
@@ -927,9 +927,9 @@ namespace server {
 					if(ci->connected) {
 					if(cn!=CMD_SENDER && cn >= 0 && cn <= 1000 && ci != NULL && ci->connected && strlen(fulltext) > 0) {
             			const char *privatemessage = fulltext;
-                		defformatstring(recieverpmmsg)("\f4Private message from \f0%s\f4: \f3%s", colorname(self), privatemessage);
+                		defformatstring(recieverpmmsg)("\f7Private message from \f0%s\f7: \f3%s", colorname(self), privatemessage);
                 		sendf(cn, 1, "ris", N_SERVMSG, recieverpmmsg);
-                		defformatstring(senderpmconf)("\f4Sent \f0%s \f4your message: \f3%s", colorname(ci), privatemessage);
+                		defformatstring(senderpmconf)("\f7Sent \f0%s \f7your message: \f3%s", colorname(ci), privatemessage);
                 		sendf(CMD_SENDER, 1, "ris", N_SERVMSG, senderpmconf);
 					   
 				}
@@ -953,16 +953,16 @@ namespace server {
 				
                 if(ci != NULL) {
 					if(ci->connected) {
-					   defformatstring(shareprivsmsg)("\f4Ok, %s\f4. Sharing your privileges with \f0%s\f4. They now have invisible privileges.", colorname(self), colorname(ci));
+					   defformatstring(shareprivsmsg)("\f7Ok, %s\f7. Sharing your privileges with \f0%s\f7. They now have invisible privileges.", colorname(self), colorname(ci));
             		   sendf(CMD_SENDER, 1, "ris", N_SERVMSG, shareprivsmsg);
                        if(self->privilege==PRIV_MASTER) {
-                       defformatstring(sendprivsmsg)("\f4You have received invisible \f0master \f4from \f0%s\f4. Relinquish and reclaim to reveal your privileges.", colorname(self));
+                       defformatstring(sendprivsmsg)("\f7You have received invisible \f0master \f7from \f0%s\f7. Relinquish and reclaim to reveal your privileges.", colorname(self));
                        sendf(cn, 1, "ris", N_SERVMSG, sendprivsmsg);
                        ci->privilege=PRIV_MASTER;
                 	   self->privilege=PRIV_MASTER;
             		   }
             		   else if(self->privilege==PRIV_ADMIN) {
-                       defformatstring(sendprivsmsg)("\f4You have received invisible \f6admin \f4from \f6%s\f4. Relinquish and reclaim to reveal your privileges.", colorname(self));
+                       defformatstring(sendprivsmsg)("\f7You have received invisible \f6admin \f7from \f6%s\f7. Relinquish and reclaim to reveal your privileges.", colorname(self));
                        sendf(cn, 1, "ris", N_SERVMSG, sendprivsmsg);
                        ci->privilege=PRIV_ADMIN;
                        self->privilege=PRIV_ADMIN;
@@ -1015,7 +1015,7 @@ namespace server {
                 if(lastcmd > -1) {
                     sendf(CMD_SENDER, 1, "ris", N_SERVMSG, CMD_DESC(lastcmd));
                 } else {
-                    sendf(CMD_SENDER, 1, "ris", N_SERVMSG, "\f3Error: \f4Command not found. Use \f2\"#cmd\" \f3for a list of commands.");
+                    sendf(CMD_SENDER, 1, "ris", N_SERVMSG, "\f3Error: \f7Command not found. Use \f2\"#cmd\" \f3for a list of commands.");
                 }
             } else {
                 sendf(CMD_SENDER, 1, "ris", N_SERVMSG, "\f3Error: Insufficient permissions to view command info");
@@ -1029,7 +1029,7 @@ namespace server {
 
             for(int i = 0; i < CMD_LAST; i++) {
                 if(CMD_PRIV(i) == PRIV_NONE) {
-                    color = 4;
+                    color = 7;
                 } else if(CMD_PRIV(i) == PRIV_MASTER) {
                     color = 0;
                 } else if(CMD_PRIV(i) == PRIV_ADMIN) {
@@ -1056,7 +1056,7 @@ namespace server {
         char buffer [80];
         time (&rawtime);
         timeinfo = localtime (&rawtime);
-        strftime (buffer,80,"\f4Local Time \f1%I:%M%p.",timeinfo);
+        strftime (buffer,80,"\f7Local Time \f1%I:%M%p.",timeinfo);
         sendf(-1, 1, "ris", N_SERVMSG, buffer);
     }
 
@@ -1139,7 +1139,7 @@ namespace server {
                                                              sprintf(lmsg[0], "%s", lmsg[1]);
 
                             int accuracy = (ci->state.damage*100)/max(ci->state.shotdamage, 1);
-                            defformatstring(s)("\f4Stats for \f0%s: \f4Frags: \f0%i \f4Deaths: \f3%i \f4Teamkills: \f1%i \f4Flag Runs: \f5%i \f4Accuracy: \f3%i%%\n\f4Location: \f2%s",
+                            defformatstring(s)("\f7Stats for \f0%s: \f7Frags: \f0%i \f7Deaths: \f3%i \f7Teamkills: \f1%i \f7Flag Runs: \f5%i \f7Accuracy: \f3%i%%\n\f7Location: \f2%s",
                                                 colorname(ci),
                                                 ci->state.frags,
                                                 ci->state.deaths,

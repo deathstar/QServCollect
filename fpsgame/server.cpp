@@ -129,9 +129,9 @@ namespace server {
                 fr->timeused = timeused;
             }
             string msg;
-            if(isbest) formatstring(msg)("\f0%s \f4scored a flagrun in \f7%i.%02i \f4seconds (\f2best\f4)",
+            if(isbest) formatstring(msg)("\f0%s \f7scored a flagrun in \f7%i.%02i \f7seconds (\f2best\f7)",
                                          colorname(ci), timeused/1000, (timeused%1000)/10);
-            else formatstring(msg)("\f0%s \f4scored a flagrun in \f7%i.%02i \f4seconds (\f2best: \f0%s \f7%i.%02i\f4)",
+            else formatstring(msg)("\f0%s \f7scored a flagrun in \f7%i.%02i \f7seconds (\f2best: \f0%s \f7%i.%02i\f7)",
                                    colorname(ci), timeused/1000, (timeused%1000)/10, fr->name, fr->timeused/1000, (fr->timeused%1000)/10);
             sendservmsg(msg);
         }
@@ -861,7 +861,7 @@ namespace server {
         char *timestr = ctime(&t), *trim = timestr + strlen(timestr);
         while(trim>timestr && iscubespace(*--trim)) *trim = '\0';
         formatstring(d.info)("%s: %s, %s, %.2f%s", timestr, modename(gamemode), smapname, len > 1024*1024 ? len/(1024*1024.f) : len/1024.0f, len > 1024*1024 ? "MB" : "kB");
-        sendservmsgf("\f4Demo \"%s\" recorded", d.info);
+        sendservmsgf("\f7Demo \"%s\" recorded", d.info);
         d.data = new uchar[len];
         d.len = len;
         demotmp->seek(0, SEEK_SET);
@@ -910,7 +910,7 @@ namespace server {
         stream *f = opengzfile(NULL, "wb", demotmp);
         if(!f) { DELETEP(demotmp); return; }
         
-        sendservmsg("\f4Recording demo...");
+        sendservmsg("\f7Recording demo...");
         
         demorecord = f;
         
@@ -941,13 +941,13 @@ namespace server {
         {
             loopv(demos) delete[] demos[i].data;
             demos.shrink(0);
-            sendservmsg("\f4Deleted all demos");
+            sendservmsg("\f7Deleted all demos");
         }
         else if(demos.inrange(n-1))
         {
             delete[] demos[n-1].data;
             demos.remove(n-1);
-            sendservmsgf("\f4Deleted demo: \f2%d", n);
+            sendservmsgf("\f7Deleted demo: \f2%d", n);
         }
     }
     
@@ -986,7 +986,7 @@ namespace server {
         
         loopv(clients) sendf(clients[i]->clientnum, 1, "ri3", N_DEMOPLAYBACK, 0, clients[i]->clientnum);
         
-        sendservmsg("\f4Demo finished playing");
+        sendservmsg("\f7Demo finished playing");
         
         loopv(clients) sendwelcome(clients[i]);
     }
@@ -1015,7 +1015,7 @@ namespace server {
             return;
         }
         
-        sendservmsgf("\f4Playing demo \"%s\"", file);
+        sendservmsgf("\f7Playing demo \"%s\"", file);
         demomillis = 0;
         sendf(-1, 1, "ri3", N_DEMOPLAYBACK, 1, -1);
         
@@ -1224,10 +1224,10 @@ namespace server {
         string msg;
         if(val && authname)
         {
-            if(authdesc && authdesc[0]) formatstring(msg)("\f0%s \f4claimed \f6%s \f4as '\fs\f5%s\fr' [\fs\f0%s\fr]", colorname(ci), name, authname, authdesc);
-            else formatstring(msg)("\f0%s \f4claimed %s as '\fs\f5%s\fr'", colorname(ci), name, authname);
+            if(authdesc && authdesc[0]) formatstring(msg)("\f0%s \f7claimed \f6%s \f7as '\fs\f5%s\fr' [\fs\f0%s\fr]", colorname(ci), name, authname, authdesc);
+            else formatstring(msg)("\f0%s \f7claimed %s as '\fs\f5%s\fr'", colorname(ci), name, authname);
         }
-        else if(!revoke) formatstring(msg)("\f0%s \f4%s \f4%s", colorname(ci), val ? "claimed" : "relinquished", name);
+        else if(!revoke) formatstring(msg)("\f0%s \f7%s \f7%s", colorname(ci), val ? "claimed" : "relinquished", name);
         packetbuf p(MAXTRANS, ENET_PACKET_FLAG_RELIABLE);
         
         if(!revoke) {
@@ -1269,8 +1269,8 @@ namespace server {
                     else formatstring(kicker)("%s as '\fs\f5%s\fr'", colorname(ci), authname);
                 }
                 else copystring(kicker, colorname(ci));
-                if(reason && reason[0]) sendservmsgf("\f0%s \f4kicked \f3%s \f4because: %s", kicker, colorname(vinfo), reason);
-                else sendservmsgf("\f0%s \f4kicked \f3%s", kicker, colorname(vinfo));
+                if(reason && reason[0]) sendservmsgf("\f0%s \f7kicked \f3%s \f7because: %s", kicker, colorname(vinfo), reason);
+                else sendservmsgf("\f0%s \f7kicked \f3%s", kicker, colorname(vinfo));
                 uint ip = getclientip(victim);
                 addban(ip, 4*60*60000);
                 kickclients(ip, ci);
@@ -2051,7 +2051,7 @@ namespace server {
             if(demorecord) enddemorecord();
             if(best && (best->count > (force ? 1 : maxvotes/2)))
             {
-                sendservmsg(force ? "\f4vote passed by default" : "\f4vote passed by majority");
+                sendservmsg(force ? "\f7vote passed by default" : "\f7vote passed by majority");
                 changemap(best->map, best->mode);
             }
             else rotatemap(true);
@@ -2068,7 +2068,7 @@ namespace server {
             if(idx < 0) return;
             map = maprotations[idx].map;
         }
-        if(hasnonlocalclients()) sendservmsgf("\f4Local player forced \f1%s \f4on map \f6%s", modename(mode), map[0] ? map : "[new map]");
+        if(hasnonlocalclients()) sendservmsgf("\f7Local player forced \f1%s \f7on map \f6%s", modename(mode), map[0] ? map : "[new map]");
         changemap(map, mode);
     }
     
@@ -2095,12 +2095,12 @@ namespace server {
         {
             if(demorecord) enddemorecord();
             if(!ci->local || hasnonlocalclients())
-                sendservmsgf("\f0%s \f4forced \f1%s \f4on map \f6%s", colorname(ci), modename(ci->modevote), ci->mapvote[0] ? ci->mapvote : "[new map]");
+                sendservmsgf("\f0%s \f7forced \f1%s \f7on map \f6%s", colorname(ci), modename(ci->modevote), ci->mapvote[0] ? ci->mapvote : "[new map]");
             changemap(ci->mapvote, ci->modevote);
         }
         else
         {
-            sendservmsgf("\f0%s \f4votes for \f1%s \f4on map \f3%s\f4. (Use \f2\"/<mode> <map>\" \f4to vote)", colorname(ci), modename(reqmode), map[0] ? map : "[new map]");
+            sendservmsgf("\f0%s \f7votes for \f1%s \f7on map \f3%s\f7. (Use \f2\"/<mode> <map>\" \f7to vote)", colorname(ci), modename(reqmode), map[0] ? map : "[new map]");
             checkvotes();
         }
     }
@@ -2143,8 +2143,8 @@ best.add(clients[i]); \
         int besti;
         char msg[MAXTRANS];
         
-        static char const * const bestkills = "\f0The Good:\f4";
-        static char const * const worstkills = "\f3The Bad:\f4";
+        static char const * const bestkills = "\f0The Good:\f7";
+        static char const * const worstkills = "\f3The Bad:\f7";
         
         // Best kills
         msg[0] = '\0';
@@ -2154,7 +2154,7 @@ best.add(clients[i]); \
         if(besti)
         {
             copystring(msg, bestkills, MAXTRANS);
-            concatstring(msg, " \f4frags: \f7", MAXTRANS);
+            concatstring(msg, " \f7frags: \f7", MAXTRANS);
             _printbest(best, besti, msg);
         }
         
@@ -2163,7 +2163,7 @@ best.add(clients[i]); \
         if(besti > 0)
         {
             if(!msg[0]) copystring(msg, bestkills, MAXTRANS);
-            concatstring(msg, " \f4damage dealt: \f7", MAXTRANS);
+            concatstring(msg, " \f7damage dealt: \f7", MAXTRANS);
             _printbest(best, besti, msg);
         }
         
@@ -2190,14 +2190,14 @@ best.add(clients[i]); \
             if(bestf >= 0.01f || bestf <= -0.01f)   // non 0
             {
                 if(!msg[0]) copystring(msg, bestkills, MAXTRANS);
-                concatstring(msg, " \f4kpd: \f7", MAXTRANS);
+                concatstring(msg, " \f7kpd: \f7", MAXTRANS);
                 int l = min(best.length(), 3);
                 loopi(l)
                 {
                     concatstring(msg, colorname(best[i]), MAXTRANS);
                     if(i + 1 < l) concatstring(msg, ", ", MAXTRANS);
                 }
-                defformatstring(buf)(" \f4(\f0%.2f\f4)", bestf);
+                defformatstring(buf)(" \f7(\f0%.2f\f7)", bestf);
                 concatstring(msg, buf, MAXTRANS);
             }
         }
@@ -2223,14 +2223,14 @@ best.add(clients[i]); \
         if(besti)
         {
             if(!msg[0]) copystring(msg, bestkills, MAXTRANS);
-            concatstring(msg, " \f4accuracy: \f7", MAXTRANS);
+            concatstring(msg, " \f7accuracy: \f7", MAXTRANS);
             int l = min(best.length(), 3);
             loopi(l)
             {
                 concatstring(msg, colorname(best[i]), MAXTRANS);
                 if(i + 1 < l) concatstring(msg, ", ", MAXTRANS);
             }
-            defformatstring(buf)(" \f4(\f0%i%%\f4)", besti);
+            defformatstring(buf)(" \f7(\f0%i%%\f7)", besti);
             concatstring(msg, buf, MAXTRANS);
         }
         
@@ -2245,7 +2245,7 @@ best.add(clients[i]); \
         if(besti)
         {
             copystring(msg, worstkills, MAXTRANS);
-            concatstring(msg, " \f4deaths: \f7", MAXTRANS);
+            concatstring(msg, " \f7deaths: \f7", MAXTRANS);
             _printbest(best, besti, msg);
         }
         
@@ -2254,7 +2254,7 @@ best.add(clients[i]); \
         if(besti)
         {
             if(!msg[0]) copystring(msg, worstkills, MAXTRANS);
-            concatstring(msg, " \f4suicides: \f7", MAXTRANS);
+            concatstring(msg, " \f7suicides: \f7", MAXTRANS);
             _printbest(best, besti, msg);
         }
         
@@ -2265,7 +2265,7 @@ best.add(clients[i]); \
             if(besti)
             {
                 if(!msg[0]) copystring(msg, worstkills, MAXTRANS);
-                concatstring(msg, " \f4teamkills: \f7", MAXTRANS);
+                concatstring(msg, " \f7teamkills: \f7", MAXTRANS);
                 _printbest(best, besti, msg);
             }
         }
@@ -2291,7 +2291,7 @@ best.add(clients[i]); \
         if(besti > 0)
         {
             if(!msg[0]) copystring(msg, worstkills, MAXTRANS);
-            concatstring(msg, " \f4damage wasted: \f7", MAXTRANS);
+            concatstring(msg, " \f7damage wasted: \f7", MAXTRANS);
             _printbest(best, besti, msg);
         }
         
@@ -2301,12 +2301,12 @@ best.add(clients[i]); \
         // Print statuses for ctf modes
         if(m_ctf)
         {
-            static char const * const bestflags = "\f4The Flags:\f4";
+            static char const * const bestflags = "\f7The Flags:\f7";
             _BESTSTAT(flags);
             if(besti)
             {
                 copystring(msg, bestflags, MAXTRANS);
-                concatstring(msg, " \f4scored: \f7", MAXTRANS);
+                concatstring(msg, " \f7scored: \f7", MAXTRANS);
                 _printbest(best, besti, msg);
             }
             else msg[0] = 0;
@@ -2317,7 +2317,7 @@ best.add(clients[i]); \
                 if(besti)
                 {
                     if(!msg[0]) copystring(msg, bestflags, MAXTRANS);
-                    concatstring(msg, " \f4taken: \f7", MAXTRANS);
+                    concatstring(msg, " \f7taken: \f7", MAXTRANS);
                     _printbest(best, besti, msg);
                 }
             }
@@ -2327,7 +2327,7 @@ best.add(clients[i]); \
                 if(besti)
                 {
                     if(!msg[0]) copystring(msg, bestflags, MAXTRANS);
-                    concatstring(msg, " \f4stolen: \f7", MAXTRANS);
+                    concatstring(msg, " \f7stolen: \f7", MAXTRANS);
                     _printbest(best, besti, msg);
                 }
                 
@@ -2335,7 +2335,7 @@ best.add(clients[i]); \
                 if(besti)
                 {
                     if(!msg[0]) copystring(msg, bestflags, MAXTRANS);
-                    concatstring(msg, " \f4returned: \f7", MAXTRANS);
+                    concatstring(msg, " \f7returned: \f7", MAXTRANS);
                     _printbest(best, besti, msg);
                 }
             }
@@ -2343,12 +2343,12 @@ best.add(clients[i]); \
         }
         else if(m_collect)
         {
-            static char const * const bestskulls = "\f4Best skulls:\f4";
+            static char const * const bestskulls = "\f7Best skulls:\f7";
             _BESTSTAT(flags);
             if(besti)
             {
                 copystring(msg, bestskulls, MAXTRANS);
-                concatstring(msg, " \f4scored: \f7", MAXTRANS);
+                concatstring(msg, " \f7scored: \f7", MAXTRANS);
                 _printbest(best, besti, msg);
             }
             else msg[0] = 0;
@@ -2356,14 +2356,14 @@ best.add(clients[i]); \
             if(besti)
             {
                 if(!msg[0]) copystring(msg, bestskulls, MAXTRANS);
-                concatstring(msg, " \f4stolen: \f7", MAXTRANS);
+                concatstring(msg, " \f7stolen: \f7", MAXTRANS);
                 _printbest(best, besti, msg);
             }
             _BESTSTAT(_returned);
             if(besti)
             {
                 if(!msg[0]) copystring(msg, bestskulls, MAXTRANS);
-                concatstring(msg, " \f4returned: \f7", MAXTRANS);
+                concatstring(msg, " \f7returned: \f7", MAXTRANS);
                 _printbest(best, besti, msg);
             }
             if(msg[0]) sendservmsg(msg);
@@ -2453,8 +2453,8 @@ best.add(clients[i]); \
             int distanceinteger = int(d + 0.5);
             
             //no teamkills, or weird negative float
-            if(d > 700.0 && d > 0 && actor != target && !strcmp(target->team, actor->team)) {out(ECHO_SERV,"\f0%s \f4got a longshot kill on \f3%s \f4(Distance: \f7%d\f4 feet) with a \f1%s", colorname(actor), colorname(target), distanceinteger, guns[gun].name);}
-            if(d <= 20.0 && actor != target && !strcmp(target->team, actor->team)) {out(ECHO_SERV,"\f0%s \f4got an up close kill on \f3%s \f4with a \f1%s", colorname(actor), colorname(target), (!strcmp(guns[gun].name, "fist" )) ? "chainsaw" : guns[gun].name);}
+            if(d > 700.0 && d > 0 && actor != target && !strcmp(target->team, actor->team)) {out(ECHO_SERV,"\f0%s \f7got a longshot kill on \f3%s \f7(Distance: \f7%d\f7 feet) with a \f1%s", colorname(actor), colorname(target), distanceinteger, guns[gun].name);}
+            if(d <= 20.0 && actor != target && !strcmp(target->team, actor->team)) {out(ECHO_SERV,"\f0%s \f7got an up close kill on \f3%s \f7with a \f1%s", colorname(actor), colorname(target), (!strcmp(guns[gun].name, "fist" )) ? "chainsaw" : guns[gun].name);}
             
             target->state.deaths++;
             int fragvalue = smode ? smode->fragvalue(target, actor) : (target==actor || isteam(target->team, actor->team) ? -1 : 1);
@@ -2469,19 +2469,19 @@ best.add(clients[i]); \
             teaminfo *t = m_teammode ? teaminfos.access(actor->team) : NULL;
             if(t) t->frags += fragvalue;
             sendf(-1, 1, "ri5", N_DIED, target->clientnum, actor->clientnum, actor->state.frags, t ? t->frags : 0);
-            if(!firstblood && actor != target) { firstblood = true; out(ECHO_SERV, "\f0%s \f4drew \f6FIRST BLOOD!", colorname(actor)); }
+            if(!firstblood && actor != target) { firstblood = true; out(ECHO_SERV, "\f0%s \f7drew \f6FIRST BLOOD!", colorname(actor)); }
             if(actor != target) actor->state.spreefrags++;
             if(target->state.spreefrags >= minspreefrags) {
                 if(actor == target)
-                    out(ECHO_SERV, "\f0%s \f4%s", colorname(target), spreesuicidemsg);
+                    out(ECHO_SERV, "\f0%s \f7%s", colorname(target), spreesuicidemsg);
                 else
-                    out(ECHO_SERV, "\f0%s's \f4%s \f6%s", colorname(target), spreefinmsg, colorname(actor));
+                    out(ECHO_SERV, "\f0%s's \f7%s \f6%s", colorname(target), spreefinmsg, colorname(actor));
             }
             target->state.spreefrags = 0;
             target->state.multifrags = 0;
             target->state.lastfragmillis = 0;
             loopv(spreemessages) {
-                if(actor->state.spreefrags == spreemessages[i].frags && !isteam(actor->team, target->team)) out(ECHO_SERV, "\f0%s \f4%s \f6%s", colorname(actor), spreemessages[i].msg1, spreemessages[i].msg2);
+                if(actor->state.spreefrags == spreemessages[i].frags && !isteam(actor->team, target->team)) out(ECHO_SERV, "\f0%s \f7%s \f6%s", colorname(actor), spreemessages[i].msg1, spreemessages[i].msg2);
             }
             target->position.setsize(0);
             if(smode) smode->died(target, actor);
@@ -2491,13 +2491,13 @@ best.add(clients[i]); \
             {
                 actor->state.teamkills++;
                 addteamkill(actor, target, 1);
-                defformatstring(msg)("\f4Say sorry to \f1%s\f4. You have teamkilled (%d/%d times). You will be banned if you teamkill %d more times.", colorname(target), actor->state.teamkills, maxteamkills, maxteamkills-actor->state.teamkills);
+                defformatstring(msg)("\f7Say sorry to \f1%s\f7. You have teamkilled (%d/%d times). You will be banned if you teamkill %d more times.", colorname(target), actor->state.teamkills, maxteamkills, maxteamkills-actor->state.teamkills);
                 
                 if(actor->clientnum < 128) { //don't send msg to bots
                     sendf(actor->clientnum, 1, "ris", N_SERVMSG, msg);
                 }
                 
-                defformatstring(srryfrag)("\f4You were teamkilled by: \f0%s \f4(\f3%d\f4). Use \f2#forgive %d \f4or use \f2#callops \f4to make a report.", colorname(actor), actor->state.teamkills, actor->clientnum);
+                defformatstring(srryfrag)("\f7You were teamkilled by: \f0%s \f7(\f3%d\f7). Use \f2#forgive %d \f7or use \f2#callops \f7to make a report.", colorname(actor), actor->state.teamkills, actor->clientnum);
                 if(target->clientnum < 128) {
                     sendf(target->clientnum, 1, "ris", N_SERVMSG, srryfrag);
                 }
@@ -2525,7 +2525,7 @@ best.add(clients[i]); \
         gs.state = CS_DEAD;
         gs.lastdeath = gamemillis;
         gs.respawn();
-        out(ECHO_SERV, "\f0%s \f4%s", colorname(ci), spreesuicidemsg);
+        out(ECHO_SERV, "\f0%s \f7%s", colorname(ci), spreesuicidemsg);
     }
     
     void suicideevent::process(clientinfo *ci) { suicide(ci); }
@@ -2827,7 +2827,7 @@ best.add(clients[i]); \
         {
             clientinfo *ci = clients[i];
             if(ci->state.state==CS_SPECTATOR || ci->state.aitype != AI_NONE || ci->clientmap[0] || ci->mapcrc >= 0 || (req < 0 && ci->warned)) continue;
-            formatstring(msg)("\f3[Warning]: \f0%s \f4has a conflicting map file (someone has modified \"%s\")", colorname(ci), smapname);
+            formatstring(msg)("\f3[Warning]: \f0%s \f7has a conflicting map file (someone has modified \"%s\")", colorname(ci), smapname);
             sendf(req, 1, "ris", N_SERVMSG, msg);
             if(req < 0) ci->warned = true;
         }
@@ -2839,7 +2839,7 @@ best.add(clients[i]); \
             {
                 clientinfo *ci = clients[j];
                 if(ci->state.state==CS_SPECTATOR || ci->state.aitype != AI_NONE || !ci->clientmap[0] || ci->mapcrc != info.crc || (req < 0 && ci->warned)) continue;
-                formatstring(msg)("\f3[Warning]: \f0%s \f4has a conflicting map file (someone has modified \"%s\")", colorname(ci), smapname);
+                formatstring(msg)("\f3[Warning]: \f0%s \f7has a conflicting map file (someone has modified \"%s\")", colorname(ci), smapname);
                 sendf(req, 1, "ris", N_SERVMSG, msg);
                 if(req < 0) ci->warned = true;
             }
@@ -2862,7 +2862,7 @@ best.add(clients[i]); \
     void localconnect(int n)
     {
         clientinfo *ci = getinfo(n);
-        privilegemsg(PRIV_MASTER, "\f4Connected from host IP");
+        privilegemsg(PRIV_MASTER, "\f7Connected from host IP");
         ci->clientnum = ci->ownernum = n;
         ci->connectmillis = totalmillis;
         ci->sessionid = (rnd(0x1000000)*((totalmillis%10000)+1))&0xFFFFFF;
@@ -2881,7 +2881,7 @@ best.add(clients[i]); \
     
     int clientconnect(int n, uint ip, char *ipstr)
     {
-        if(getvar("serverconnectmsg")) {privilegemsg(PRIV_MASTER, "\f4Client detected...");}
+        if(getvar("serverconnectmsg")) {privilegemsg(PRIV_MASTER, "\f7Client detected...");}
         clientinfo *ci = getinfo(n);
         ci->ip=ipstr; //QServ ci->ip
         ci->clientnum = ci->ownernum = n;
@@ -3136,7 +3136,7 @@ best.add(clients[i]); \
         mapdata = opentempfile("mapdata", "w+b");
         if(!mapdata) {sendf(sender, 1, "ris", N_SERVMSG, "\f3Error: Failed to open temporary file for map"); return;}
         mapdata->write(data, len);
-        sendservmsgf("\f0%s \f4uploaded a map to the server, type \f2\"/getmap\" \f4to receive it", colorname(ci));
+        sendservmsgf("\f0%s \f7uploaded a map to the server, type \f2\"/getmap\" \f7to receive it", colorname(ci));
     }
     
     void sendclipboard(clientinfo *ci)
@@ -3184,7 +3184,7 @@ best.add(clients[i]); \
         
         if(servermotd[0]) {
             if(welcomewithname) {
-                defformatstring(welcomemsg)("\f4Welcome to %s\f4, \f0%s\f4. %s",serverdesc,colorname(ci),servermotd);
+                defformatstring(welcomemsg)("\f7Welcome to %s\f7, \f0%s\f7. %s",serverdesc,colorname(ci),servermotd);
                 sendf(ci->clientnum,1,"ris",N_SERVMSG,welcomemsg);
             }
             else {
@@ -3813,7 +3813,7 @@ curmsg = p.length(); \
                     spinfo->state.state = CS_SPECTATOR;
                     spinfo->state.timeplayed += lastmillis - spinfo->state.lasttimeplayed;
                     if(!spinfo->local && !spinfo->privilege) aiman::removeai(spinfo);
-                    out(ECHO_SERV,"\f0%s \f4is now a spectator", colorname(spinfo));
+                    out(ECHO_SERV,"\f0%s \f7is now a spectator", colorname(spinfo));
                 }
                 else if(spinfo->state.state==CS_SPECTATOR && !val)
                 {
@@ -3822,7 +3822,7 @@ curmsg = p.length(); \
                     spinfo->state.lasttimeplayed = lastmillis;
                     aiman::addclient(spinfo);
                     if(spinfo->clientmap[0] || spinfo->mapcrc) checkmaps();
-                    out(ECHO_SERV,"\f0%s \f4is no longer a spectator", colorname(spinfo));
+                    out(ECHO_SERV,"\f0%s \f7is no longer a spectator", colorname(spinfo));
                     
                 }
                 if(!spinfo->isSpecLocked) {
@@ -3866,7 +3866,7 @@ curmsg = p.length(); \
                     break;
                 }
                 demonextmatch = val!=0;
-                sendservmsgf("\f4demo recording is %s \f4for next match", demonextmatch ? "\f0enabled" : "\f3disabled");
+                sendservmsgf("\f7demo recording is %s \f7for next match", demonextmatch ? "\f0enabled" : "\f3disabled");
                 break;
             }
                 
@@ -3900,10 +3900,10 @@ curmsg = p.length(); \
                 
             case N_GETMAP:
                 if(!mapdata) sendf(sender, 1, "ris", N_SERVMSG, "\f3Error: no map to send");
-                else if(ci->getmap) sendf(sender, 1, "ris", N_SERVMSG, "\f4Map is already downloading... be patient");
+                else if(ci->getmap) sendf(sender, 1, "ris", N_SERVMSG, "\f7Map is already downloading... be patient");
                 else
                 {
-                    sendservmsgf("\f0%s \f4is downloading the map...", colorname(ci));
+                    sendservmsgf("\f0%s \f7is downloading the map...", colorname(ci));
                     if((ci->getmap = sendfile(sender, 2, mapdata, "ri", N_SENDMAP)))
                         ci->getmap->freeCallback = freegetmap;
                     ci->needclipboard = totalmillis ? totalmillis : 1;

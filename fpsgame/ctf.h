@@ -887,7 +887,7 @@ struct ctfclientmode : clientmode
             particle_textcopy(d->abovehead(), ds, PART_TEXT, 2000, 0x32FF64, 4.0f, -8);
         }
         d->flags = dflags;
-        conoutf(CON_GAMEINFO, "\f0%s \f4scored for \fs%s team\fr", teamcolorname(d), team==ctfteamflag(player1->team) ? "\f1your" : "\f3the enemy");
+        conoutf(CON_GAMEINFO, "\f0%s \f7scored for \fs%s team\fr", teamcolorname(d), team==ctfteamflag(player1->team) ? "\f1your" : "\f3the enemy");
         playsound(team==ctfteamflag(player1->team) ? S_FLAGSCORE : S_FLAGFAIL);
 
         if(score >= FLAGLIMIT) conoutf(CON_GAMEINFO, "\fs%s team\fr captured %d flags", team==ctfteamflag(player1->team) ? "\f1your" : "\f3the enemy", score);
@@ -900,7 +900,7 @@ struct ctfclientmode : clientmode
         f.version = version;
         f.interploc = interpflagpos(f, f.interpangle);
         f.interptime = lastmillis;
-        conoutf(CON_GAMEINFO, "\f0%s \f4%s %s", teamcolorname(d), m_hold || m_protect || f.droptime ? "picked up" : "stole", m_hold ? (ctfteamflag(d->team)==ctfteamflag(player1->team) ? "the flag for \fs\f1your team\fr" : "the flag for \fs\f3the enemy team\fr") : (f.team==ctfteamflag(player1->team) ? "\fs\f1your flag\fr" : "\fs\f3the enemy flag\fr"));
+        conoutf(CON_GAMEINFO, "\f0%s \f7%s %s", teamcolorname(d), m_hold || m_protect || f.droptime ? "picked up" : "stole", m_hold ? (ctfteamflag(d->team)==ctfteamflag(player1->team) ? "the flag for \fs\f1your team\fr" : "the flag for \fs\f3the enemy team\fr") : (f.team==ctfteamflag(player1->team) ? "\fs\f1your flag\fr" : "\fs\f3the enemy flag\fr"));
         ownflag(i, d, lastmillis);
         playsound(S_FLAGPICKUP);
     }
