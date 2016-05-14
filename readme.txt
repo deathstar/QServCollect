@@ -54,7 +54,9 @@ Cmake: https://cmake.org/download/
 
 [CUSTOM QSERV TERMINAL COMMANDS]
 1) Open your terminal (Applications/Utilities/Terminal)
+Alt. 1) If you use Linux, you can most probably find your Terminal with your specific software manager (Konsole for KDE, Terminal for GNOME, others have others, check your distribution specific manuals.
 2) type: nano .profile
+Alt. 2) If you use BASH, there should be a .bash_rc, if zsh, there should be a zshrc and so on.
 3) paste the following lines in the your profile:
 
 alias qlive="cd Desktop/QServCollect"
@@ -78,10 +80,11 @@ Issue qclone to download qserv with git, otherwise get it from the website
 7) Reopen terminal and type: qlive
 
 8) If this worked, you will have changed directories to QServCollect and should see "Users-MacBook-Pro:QServCollect"
+In Linux it's different, you should most probably see something like this: "<your hostname> : bash". Of course, change the bash with your shell.
 
 [TROUBLESHOOTING]: make sure you are in the directory just before desktop, use "cd .." to go back a directory
 
-9) type: qcmake;qmake
+9) type: qcmake;qcompile
 
 10) if this worked, you will have compiled QServ sucesfully! You are ready to configure in server-init.cfg and start
 
@@ -101,4 +104,4 @@ Issue qclone to download qserv with git, otherwise get it from the website
 
 16) you can stream the logfile from a VPN or SSH connection: ssh -n username@hostname 'tail -f /path/to/nohup.out' &
 
-17) you can stop the server running in the background by running top, finding the PID of QServ, then using: kill PID
+17) you can stop the server running in the background by running ps aux | grep "qserv" then using: kill PID
