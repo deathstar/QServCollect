@@ -2,7 +2,7 @@
 // runs dedicated or as client coroutine
 // includes threading for QServ and IRC, and geoip database initaliziation 
 
-#include "../QServ.h"
+#include "../mod/QServ.h"
 
 server::QServ qs(olanguagewarn, maxolangwarnings, commandprefix);
 
@@ -1145,7 +1145,7 @@ void initserver(bool listen, bool dedicated) //, const char *path
     }
      
     
-    execfile("server-init.cfg", false);
+    execfile("../config/server-init.cfg", false);
     
     if(listen) setuplistenserver(dedicated);
     
@@ -1176,7 +1176,7 @@ bool serveroption(char *opt)
 
 vector<const char *> gameargs;
 
-#include "../QCom.h"
+#include "../mod/QCom.h"
 
 //main irc init
 void *irc_thread(void *t) {

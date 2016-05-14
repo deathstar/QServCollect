@@ -1,17 +1,16 @@
 ###README
-Thank you for downloading QServ, the most up to date server for Sauerbraten!
-
 We hope you enjoy the modification. A full documentation is included here.
 
-For further assistance, please view the Wiki: https://github.com/deathstar/QServ/wiki
+For further assistance, please view the Wiki: https://github.com/deathstar/QServCollect/wiki
 
-if you still need help, email: gscottmalibu@gmail.com, or join #QServ @ irc.gamesurge.net.
+if you still need help, email: gscottmalibu@gmail.com, join #QServ @ irc.gamesurge.net, or leave an issue on the github page.
 
 ##OVERVIEW
-
 QServ is a standalone server modification for Cube 2: Sauerbraten. It is completely compatible with Mac OSX and Linux.
 
-Windows support has been implemented with ifdef’s for the os, however QServ has not been tested on recently on Windows.
+You can download install, configure and start QServ in less than 5 minutes (if you have the prerequisites).
+
+Windows support has been implemented, however, it is not tested.
 
 
 ##DOWNLOAD
@@ -32,12 +31,12 @@ Terminal Download Command: git clone https://github.com/deathstar/QServCollect
 - Cmake: https://cmake.org/download/
 
 ##CONFIGURATION
-- Configure general attributes in server-init.cfg
-- Configure authkeys in users.cfg
-- Flagruns are stored in flagruns.cfg 
-Note: you may want to type: "chmod 777 flagruns.cfg" from command line if flagruns aren’t writing (for full file permissions)
+- Configure general attributes in config/server-init.cfg
+- Add authkeys in config/users.cfg
+- Type `chmod 777 config/flagruns.cfg` from command line to give QServ permission to store flagruns
 
 ##QUICK SETUP
+- Forward the ports on your router to the internal IP address of the computer which has QServ (28785 and 28786 TCP/UDP are standard)
 - download QServ from https://codeload.github.com/deathstar/QServCollect/zip/master
 - place the QServCollect folder on your Desktop
 - change directories into it: cd Desktop/QServCollect

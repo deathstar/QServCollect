@@ -1,6 +1,6 @@
 #include "QServ.h"
-#include "GeoIP/libGeoIP/GeoIPCity.h"
-#include "GeoIP/libGeoIP/GeoIP.h"
+#include "../GeoIP/libGeoIP/GeoIPCity.h"
+#include "../GeoIP/libGeoIP/GeoIP.h"
 
 //includes geoip handling, command system and a lot of useful tools
 

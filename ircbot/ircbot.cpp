@@ -6,7 +6,7 @@
 #include <netinet/in.h>
 #endif
 #include "ircbot.h"
-#include "../QServ.h"
+#include "../mod/QServ.h"
 
 
 SVAR(irchost, "irc.gamesurge.net");

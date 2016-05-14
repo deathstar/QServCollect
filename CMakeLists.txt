@@ -10,8 +10,8 @@ set(qserv_srcs
 	engine/server.cpp
 	engine/command.cpp
 	fpsgame/server.cpp
-	QServ.cpp
-	QCom.cpp
+	mod/QServ.cpp
+	mod/QCom.cpp
 	shared/tools.cpp
 	shared/stream.cpp
 	shared/crypto.cpp

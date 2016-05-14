@@ -5,10 +5,10 @@
 
 #include "game.h"
 #include "fpsgame.h"
-#include "GeoIP/libGeoIP/GeoIP.h"
+#include "../GeoIP/libGeoIP/GeoIP.h"
 #include <time.h>
 #include <pthread.h>
-#include "ircbot/ircbot.h"
+#include "../ircbot/ircbot.h"
 #include <iostream>
 #include <sstream>
 
