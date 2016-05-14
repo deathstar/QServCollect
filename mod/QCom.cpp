@@ -1025,7 +1025,7 @@ namespace server {
             int color = -1;
 
             strcpy(commandList, "");
-            sprintf(commandList, "%s", "\f1Commands: ");
+            sprintf(commandList, "%s", "\f2Commands: ");
 
             for(int i = 0; i < CMD_LAST; i++) {
                 if(CMD_PRIV(i) == PRIV_NONE) {

@@ -1145,7 +1145,7 @@ void initserver(bool listen, bool dedicated) //, const char *path
     }
      
     
-    execfile("../config/server-init.cfg", false);
+    execfile("./config/server-init.cfg", false);
     
     if(listen) setuplistenserver(dedicated);
     
