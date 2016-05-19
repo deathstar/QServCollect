@@ -2387,6 +2387,7 @@ best.add(clients[i]); \
             if(smode) smode->intermission();
             changegamespeed(100);
             interm = gamemillis + 10000;
+            printbeststats();
         }
     }
     
