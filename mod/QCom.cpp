@@ -40,7 +40,7 @@ namespace server {
         ncommand("gban", "\f7Bans a client. Usage: #gban <cn>", PRIV_ADMIN, gban_cmd, 1);
         ncommand("cleargbans", "\f7Clears all server bans stored and issued. Usage: #cleargbans", PRIV_ADMIN, cleargbans_cmd, 0);
         ncommand("teampersist", "\f7Toggle persistant teams on or off. Usage: #teampersist <0/1> (0 for off, 1 for on)", PRIV_ADMIN, teampersist_cmd, 1);
-        ncommand("invadmin", "\f7Claim invisible administrator. Usage: #invadmin <adminpass>", PRIV_ADMIN, invadmin_cmd, 0);
+        ncommand("invadmin", "\f7Claim invisible administrator. Usage: #invadmin <adminpass>", PRIV_NONE, invadmin_cmd, 1);
         ncommand("allowmaster", "\f7Allows clients to claim master. Usage: #allowmaster <0/1> (0 for off, 1 for on)", PRIV_ADMIN, allowmaster_cmd, 1);
         ncommand("kill", "\f7Brutally murders a player. Usage: #kill <cn>", PRIV_ADMIN, kill_cmd, 1);
         //ncommand("owords", "View list of offensive words. Usage: #owords",
@@ -152,24 +152,24 @@ namespace server {
         if(usage) sendf(CMD_SENDER, 1, "ris", N_SERVMSG, CMD_DESC(cid));
     }
     
+    SVAR(invadminpass, "");
     QSERV_CALLBACK invadmin_cmd(p) {
-        clientinfo *ci = qs.getClient(CMD_SENDER);
-        if(ci->privilege == PRIV_ADMIN) {
-            server::setmaster(ci, 0, "", NULL, NULL,PRIV_MASTER,false, false, true);
-            ci->privilege = PRIV_ADMIN;
-            sendf(ci->clientnum, 1, "ris", N_SERVMSG, "\f7You became an invisible \f6admin\f7. Relinguish and reclaim to reveal your privilege.");
-            out(ECHO_IRC, "%s became an invisible admin", colorname(ci));
-            out(ECHO_CONSOLE, "%s became an invisible admin", colorname(ci));
+        if(CMD_SA) {
+            clientinfo *ci = qs.getClient(CMD_SENDER);
+            if(!strcmp(invadminpass, args[1]) || invadminpass == args[1]) {
+                server::setmaster(ci, 0, "", NULL, NULL,PRIV_MASTER,false, false, true);
+                ci->privilege = PRIV_ADMIN;
+                sendf(ci->clientnum, 1, "ris", N_SERVMSG, "Invisible \f6admin \f7activated");
+                out(ECHO_IRC, "%s became an invisible admin", colorname(ci));
+                out(ECHO_CONSOLE, "%s became an invisible admin", colorname(ci));
+            }
+            else sendf(ci->clientnum, 1, "ris", N_SERVMSG, "\f3Error: Incorrect admin password");
         }
-        else {
-            sendf(ci->clientnum, 1, "ris", N_SERVMSG, "\f3Error: \f7You must first claim admin to go invisible.");
-        }
-    }
-    
+        
     QSERV_CALLBACK cleargbans_cmd(p) {
         server::cleargbans(-1);
-        out(ECHO_SERV, "\f3Error: Host must clearbans.");
-        out(ECHO_NOCOLOR, "You need to use clearpbans in server-init.cfg, uncomment out the line and restart the server");
+        out(ECHO_SERV, "Cleared permanent game bans");
+        out(ECHO_NOCOLOR, "[NOTICE]: You need to use clearpbans in server-init.cfg to unban users, uncomment out the line and restart the server");
     }
     
     QSERV_CALLBACK gban_cmd(p) {
