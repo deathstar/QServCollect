@@ -165,6 +165,7 @@ namespace server {
             }
             else sendf(ci->clientnum, 1, "ris", N_SERVMSG, "\f3Error: Incorrect admin password");
         }
+    }
         
     QSERV_CALLBACK cleargbans_cmd(p) {
         server::cleargbans(-1);
