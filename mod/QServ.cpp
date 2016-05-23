@@ -365,7 +365,7 @@ namespace server {
                     return false;
                 }
             } else {
-                sendf(ci->clientnum, 1, "ris", N_SERVMSG, "\f3Error: Command not found. Use \f2\"#cmd\" \f3for a list of commands.");
+                sendf(ci->clientnum, 1, "ris", N_SERVMSG, "\f3Error: Command not found. Use \f2\"#help\" \f3for a list of commands.");
                 return false;
             }
         } else {

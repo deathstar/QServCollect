@@ -9,21 +9,26 @@ namespace server {
             @Command callback function
             @Command argument count
         **/
-
+        ncommand("help", "\f7View command list or command usage. \nUsage: #help for command list and #help <name-of-command> for usage", PRIV_NONE, help_cmd, 1);
         ncommand("me", "\f7Echo your name and message to everyone. Usage: #me <message>", PRIV_NONE, me_cmd, 0);
-        ncommand("cmd", "\f7View command list or command usage. Usage: #cmd for command list and #cmd <name-of-command> for command usage", PRIV_NONE, cmd_cmd, 1);
         ncommand("stats", "\f7View the stats of a player or yourself. Usage: #stats <cn> or #stats", PRIV_NONE, stats_cmd, 1);
         ncommand("localtime", "\f7Get the local time of the Server. Usage: #localtime", PRIV_NONE, localtime_cmd, 0);
-        ncommand("time", "\f7View the current time. Usage: #time <zone>", PRIV_NONE, time_cmd, 1);
-        ncommand("bunny", "\f7Broadcast a helper message to all players. Usage: #bunny <helpmessage>", PRIV_ADMIN, bunny_cmd, 0);
-        ncommand("echo", "\f7Broadcast a message to all players. Usage: #echo <message>", PRIV_MASTER, echo_cmd, 1);
-		ncommand("revokepriv", "\f7Revoke the privileges of a player. Usage: #revokepriv <cn>", PRIV_ADMIN, revokepriv_cmd, 1);
-        ncommand("forceintermission", "\f7Force an intermission. Usage: #forceintermission", PRIV_MASTER, forceintermission_cmd, 0);
         ncommand("getversion", "\f7Get the current QServ Version. Usage: #getversion", PRIV_NONE, getversion_cmd, 0);
-        ncommand("callops", "\f7Call all operators on the Internet Relay Chat Server. Usage: #callops", PRIV_NONE, callops_cmd, 0);
+        ncommand("uptime", "\f7View how long the server has been up for. Usage: #uptime", PRIV_NONE, uptime_cmd, 0);
+        ncommand("invadmin", "\f7Claim invisible administrator. Usage: #invadmin <adminpass>", PRIV_NONE, invadmin_cmd, 1);
+        ncommand("cheater", "\f7Accuses someone of cheating and alerts moderators. Usage: #cheater <cn>", PRIV_NONE, cheater_cmd, 1);
+        ncommand("info", "\f7View information about a player. Usage: #info <cn>", PRIV_NONE, info_cmd, 1);
+        ncommand("time", "\f7View the current time. Usage: #time", PRIV_NONE, time_cmd, 0);
         ncommand("pm", "\f7Send a private message to someone. Usage #pm <cn> <private message>", PRIV_NONE, pm_cmd,2);
-        ncommand("sendprivs", "\f7Share power with another player. Usage: #sendprivs <cn>", PRIV_MASTER, sendprivs_cmd, 1);
+        ncommand("callops", "\f7Call all operators on the Internet Relay Chat Server. Usage: #callops", PRIV_NONE, callops_cmd, 0);
+        ncommand("mapsucks", "\f7Votes for an intermission to change the map. Usage: #mapsucks", PRIV_NONE, mapsucks_cmd, 0);
         ncommand("forgive", "\f7Forgive a player for teamkilling or just in general. Usage: #forgive <cn>", PRIV_NONE, forgive_cmd, 1);
+        ncommand("forceintermission", "\f7Force an intermission. Usage: #forceintermission", PRIV_MASTER, forceintermission_cmd, 0);
+        ncommand("echo", "\f7Broadcast a message to all players. Usage: #echo <message>", PRIV_MASTER, echo_cmd, 1);
+        ncommand("sendprivs", "\f7Share power with another player. Usage: #sendprivs <cn>", PRIV_MASTER, sendprivs_cmd, 1);
+        //ncommand("tournament", "\f7Forces a tournament regardless of mode/etc. Usage: #tournament <mode> <map>", PRIV_MASTER, tournament_cmd, 2);
+        ncommand("bunny", "\f7Broadcast a helper message to all players. Usage: #bunny <helpmessage>", PRIV_ADMIN, bunny_cmd, 0);
+		ncommand("revokepriv", "\f7Revoke the privileges of a player. Usage: #revokepriv <cn>", PRIV_ADMIN, revokepriv_cmd, 1);
         ncommand("forcespectator", "\f7Forces a player to become a spectator. Usage: #forcespectator <cn>", PRIV_ADMIN, forcespectator_cmd, 1);
         ncommand("unspectate", "\f7Removes a player from spectator mode. Usage: #unspectate <cn>", PRIV_ADMIN, unspectate_cmd, 1);
         ncommand("mute", "\f7Mutes a client. Usage #mute <cn>", PRIV_ADMIN, mute_cmd, 1);
@@ -31,22 +36,13 @@ namespace server {
         ncommand("editmute", "\f7Stops a client from editing. Usage #editmute <cn>", PRIV_ADMIN, editmute_cmd, 1);
         ncommand("uneditmute", "\f7Allows a client to edit again. Usage #uneditmute <cn>", PRIV_ADMIN, uneditmute_cmd, 1);
         ncommand("togglelockspec", "\f7Forces a client to be locked in spectator mode. Usage #togglelockspec <cn>", PRIV_ADMIN, togglelockspec_cmd, 1);
-        ncommand("uptime", "\f7View how long the server has been up for. Usage: #uptime", PRIV_NONE, uptime_cmd, 0);
-        ncommand("info", "\f7View information about a player. Usage: #info <cn>", PRIV_NONE, info_cmd, 1);
-        //ncommand("tournament", "\f7Forces a tournament regardless of mode/etc. Usage: #tournament <mode> <map>", PRIV_MASTER, tournament_cmd, 2);
-        ncommand("help", "\f7Lists the #cmd command and more information. Usage: #help", PRIV_NONE, help_cmd, 0);
-        ncommand("cheater", "\f7Accuses someone of cheating and alerts moderators. Usage: #cheater <cn>", PRIV_NONE, cheater_cmd, 1);
-        ncommand("mapsucks", "\f7Votes for an intermission to change the map. Usage: #mapsucks", PRIV_NONE, mapsucks_cmd, 0);
         ncommand("gban", "\f7Bans a client. Usage: #gban <cn>", PRIV_ADMIN, gban_cmd, 1);
         ncommand("cleargbans", "\f7Clears all server bans stored and issued. Usage: #cleargbans", PRIV_ADMIN, cleargbans_cmd, 0);
         ncommand("teampersist", "\f7Toggle persistant teams on or off. Usage: #teampersist <0/1> (0 for off, 1 for on)", PRIV_ADMIN, teampersist_cmd, 1);
-        ncommand("invadmin", "\f7Claim invisible administrator. Usage: #invadmin <adminpass>", PRIV_NONE, invadmin_cmd, 1);
         ncommand("allowmaster", "\f7Allows clients to claim master. Usage: #allowmaster <0/1> (0 for off, 1 for on)", PRIV_ADMIN, allowmaster_cmd, 1);
         ncommand("kill", "\f7Brutally murders a player. Usage: #kill <cn>", PRIV_ADMIN, kill_cmd, 1);
-        //ncommand("owords", "View list of offensive words. Usage: #owords",
-        ///         PRIV_NONE, owords_cmd, 0);
-        //ncommand("olangfilter", "Turn the offensive language filter on or off. Usage: #olang <off/on> (0/1) and #olang to see if it's activated",
-        //         PRIV_MASTER, olangfilter_cmd, 1);
+        //ncommand("owords", "View list of offensive words. Usage: #owords",PRIV_NONE, owords_cmd, 0);
+        //ncommand("olangfilter", "Turn the offensive language filter on or off. Usage: #olang <off/on> (0/1) and #olang to see if it's activated", PRIV_MASTER, olangfilter_cmd, 1);
     }
     QSERV_CALLBACK teampersist_cmd(p) {
         bool usage = false;
@@ -237,36 +233,6 @@ namespace server {
             }
         }
         else if(ci->votedmapsucks) sendf(ci->clientnum, 1, "ris", N_SERVMSG, "\f3Error: You have already voted");
-    }
-    
-    QSERV_CALLBACK help_cmd(p) {
-        static char colors[2], commandList[2056] = {0};
-        int color = -1;
-        
-        strcpy(commandList, "");
-        sprintf(commandList, "%s", "\f2Commands: ");
-        
-        for(int i = 0; i < CMD_LAST; i++) {
-            if(CMD_PRIV(i) == PRIV_NONE) {
-                color = 4;
-            } else if(CMD_PRIV(i) == PRIV_MASTER) {
-                color = 0;
-            } else if(CMD_PRIV(i) == PRIV_ADMIN) {
-                color = 6;
-            }
-            
-            sprintf(colors, "\f%d", color);
-            strcat(commandList, colors);
-            strcat(commandList, CMD_NAME(i));
-            
-            if(i != CMD_LAST-1) {
-                strcat(commandList, "\f7, ");
-            }
-        }
-        sendf(CMD_SENDER, 1, "ris", N_SERVMSG, commandList);
-        clientinfo *ci = qs.getClient(CMD_SENDER);
-        defformatstring(f)("\f7Use \f2#cmd \f7to view a list of all available server commands.\ngrey commands are for everyone, \f0green \f7are for master and \f6orange \f7are for admin. \nUse \f2#cmd <name-of-command> \f7for specific command information. \nUse \f2#callops \f7for more help.");
-        sendf(ci->clientnum, 1, "ris", N_SERVMSG, f);
     }
     
     /*    
@@ -892,7 +858,7 @@ namespace server {
     }
     SVAR(qserv_version, "");
     QSERV_CALLBACK getversion_cmd(p) {
-    defformatstring(ver)("\f7Running \f3QServ \f7(\f2%s\f7): \f1www.github.com/deathstar/QServCollect \f7- an advanced sauerbraten server mod", qserv_version);
+    defformatstring(ver)("\f7Running \f3QServ \f7(\f2%s\f7): \f1www.github.com/deathstar/QServCollect", qserv_version);
     sendf(CMD_SENDER, 1, "ris", N_SERVMSG, ver);
     }
     QSERV_CALLBACK forceintermission_cmd(p) {bool intermission = false; if(!intermission){startintermission(); defformatstring(msg)("\f0%s \f7forced an intermission",CMD_SCI.name);sendf(-1, 1, "ris", N_SERVMSG, msg); out(ECHO_IRC,"%s forced an intermission",CMD_SCI.name);}}
@@ -987,7 +953,7 @@ namespace server {
         }
     }
     
-    QSERV_CALLBACK cmd_cmd(p) {
+    QSERV_CALLBACK help_cmd(p) {
         if(CMD_SA) {
             int lastcmd = -1;
             char command[50];
@@ -1006,10 +972,10 @@ namespace server {
                 if(lastcmd > -1) {
                     sendf(CMD_SENDER, 1, "ris", N_SERVMSG, CMD_DESC(lastcmd));
                 } else {
-                    sendf(CMD_SENDER, 1, "ris", N_SERVMSG, "\f3Error: \f7Command not found. Use \f2\"#cmd\" \f3for a list of commands.");
+                    sendf(CMD_SENDER, 1, "ris", N_SERVMSG, "\f3Error: Command not found. \nUse \f2\"#help\" \f3for a list of commands or \f2\"#help <name-ofcommand>\" \f3for usage.");
                 }
             } else {
-                sendf(CMD_SENDER, 1, "ris", N_SERVMSG, "\f3Error: Insufficient permissions to view command info");
+                sendf(CMD_SENDER, 1, "ris", N_SERVMSG, "\f3Error: Insufficient permissions to view command info or command not found. \nUse \f2\"#help\" \f3for a list of commands or \f2\"#help <name-ofcommand>\" \f3for usage.");
             }
         } else {
             static char colors[2], commandList[2056] = {0};
@@ -1040,40 +1006,39 @@ namespace server {
     }
     
     QSERV_CALLBACK localtime_cmd(p) {
-        time_t rawtime;
-        #include <stdio.h>      
+        #include <stdio.h>
         #include <time.h>
-        struct tm * timeinfo;
-        char buffer [80];
-        time (&rawtime);
-        timeinfo = localtime (&rawtime);
-        strftime (buffer,80,"\f7Local Time \f1%I:%M%p.",timeinfo);
+        struct tm newtime;
+        time_t ltime;
+        char buf[50];
+        ltime=time(&ltime);
+        localtime_r(&ltime, &newtime); //localtime__r and asctime_r are both threadsafe
+        defformatstring(buffer)("\f4The local date and time is \f1%s", asctime_r(&newtime, buf));
         sendf(-1, 1, "ris", N_SERVMSG, buffer);
     }
-
+    
+    #define EST (-4)
+    #define CCT (+8)
+    #define PST (-7)
+    #define ENGLAND (+1)
+    #define GERMANY (+2)
     QSERV_CALLBACK time_cmd(p) {
-        if(CMD_SA) {
-            
-            int zone = atoi(args[1]);
-
-            time_t rawtime;
-            struct tm *ztm;
-
-            time(&rawtime);
-            ztm = gmtime(&rawtime);
-
-            //\n\f7Date: \f0%s, %s, %d, 20%d\n\f7Day of year: \f0%d
-            defformatstring(msgtime)("\f7Time:\f0 %2d:%02d:%d",
-                                     (ztm->tm_hour+zone)%24, ztm->tm_min, ztm->tm_sec);
-                                     /*days[ztm->tm_wday-1],
-                                     months[ztm->tm_mon], ztm->tm_mday, ztm->tm_year-100,
-                                     ztm->tm_yday);*/
-            sendf(CMD_SENDER, 1, "ris", N_SERVMSG, msgtime);
-        } else {
-            sendf(CMD_SENDER, 1, "ris", N_SERVMSG, CMD_DESC(cid));
-        }
+        time_t rawtime;
+        struct tm * ptm;
+        time ( &rawtime );
+        ptm = gmtime (&rawtime); //threadsafe implementation (gmtime_r) causes segfault on mass_spam
+        char pst = (ptm->tm_hour+PST)%24;
+        char est = (ptm->tm_hour+EST)%24;
+        char cct = (ptm->tm_hour+CCT)%24;
+        char uk = (ptm->tm_hour+ENGLAND)%24;
+        char de = (ptm->tm_hour+GERMANY)%24;
+        out(ECHO_SERV, "Los Angeles (U.S./PST): \f2%2d:%02d", pst, ptm->tm_min);
+        out(ECHO_SERV, "New York, NY (U.S./EST): \f2%2d:%02d", est, ptm->tm_min);
+        out(ECHO_SERV, "Beijing (China/CCT): \f2%2d:%02d", cct, ptm->tm_min);
+        out(ECHO_SERV, "England (GMT+1): \f2%2d:%02d", uk, ptm->tm_min);
+        out(ECHO_SERV, "Germany (GMT+2): \f2%2d:%02d", de, ptm->tm_min);
     }
-
+    
     QSERV_CALLBACK bunny_cmd(p) {
         if(strlen(fulltext) > 0) {
             

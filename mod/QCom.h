@@ -18,7 +18,6 @@
 namespace server {
     extern void initCmds();
     extern QSERV_CALLBACK me_cmd(p);
-    extern QSERV_CALLBACK cmd_cmd(p);
     extern QSERV_CALLBACK stats_cmd(p);
     extern QSERV_CALLBACK localtime_cmd(p);
     extern QSERV_CALLBACK time_cmd(p);
