@@ -32,6 +32,14 @@ Terminal Download Command: git clone https://github.com/deathstar/QServCollect
 **LINUX/WINDOWS**
 - Cmake: https://cmake.org/download/
 
+**UBUNTU**
+
+- Cmake: [https://cmake.org/download/]((download a binary client))
+- install Zlib from command line: `sudo apt-get install zlib1g-dev`
+- install compiler: `sudo apt-get install build-essential`
+- update: `sudo apt-get update`
+
+
 ##CONFIGURATION
 - Configure general attributes in config/server-init.cfg
 - Add authkeys in config/users.cfg
