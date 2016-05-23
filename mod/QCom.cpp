@@ -21,7 +21,7 @@ namespace server {
         ncommand("forceintermission", "\f7Force an intermission. Usage: #forceintermission", PRIV_MASTER, forceintermission_cmd, 0);
         ncommand("getversion", "\f7Get the current QServ Version. Usage: #getversion", PRIV_NONE, getversion_cmd, 0);
         ncommand("callops", "\f7Call all operators on the Internet Relay Chat Server. Usage: #callops", PRIV_NONE, callops_cmd, 0);
-        ncommand("pm", "\f7Send a private message. Usage #pm <cn> <msg>", PRIV_NONE, pm_cmd,2);
+        ncommand("pm", "\f7Send a private message to someone. Usage #pm <cn> <private message>", PRIV_NONE, pm_cmd,2);
         ncommand("sendprivs", "\f7Share power with another player. Usage: #sendprivs <cn>", PRIV_MASTER, sendprivs_cmd, 1);
         ncommand("forgive", "\f7Forgive a player for teamkilling or just in general. Usage: #forgive <cn>", PRIV_NONE, forgive_cmd, 1);
         ncommand("forcespectator", "\f7Forces a player to become a spectator. Usage: #forcespectator <cn>", PRIV_ADMIN, forcespectator_cmd, 1);
@@ -917,31 +917,21 @@ namespace server {
         }
     }
     
-        QSERV_CALLBACK pm_cmd(p) {
-		int cn = -1;
-        if(CMD_SA) {
-			cn = atoi(args[1]);
-            if(cn >= 0 && cn <= 1000) {
-				clientinfo *ci = qs.getClient(cn);
-				clientinfo *self = qs.getClient(CMD_SENDER);
-				
-					if(ci->connected) {
-					if(cn!=CMD_SENDER && cn >= 0 && cn <= 1000 && ci != NULL && ci->connected && strlen(fulltext) > 0) {
-            			const char *privatemessage = fulltext;
-                		defformatstring(recieverpmmsg)("\f7Private message from \f0%s\f7: \f3%s", colorname(self), privatemessage);
-                		sendf(cn, 1, "ris", N_SERVMSG, recieverpmmsg);
-                		defformatstring(senderpmconf)("\f7Sent \f0%s \f7your message: \f3%s", colorname(ci), privatemessage);
-                		sendf(CMD_SENDER, 1, "ris", N_SERVMSG, senderpmconf);
-					   
-				}
-					}
-			} else {
-				sendf(CMD_SENDER, 1, "ris", N_SERVMSG, "\f3Error: Player not connected");
-        } 	
-		} /*else {
+    QSERV_CALLBACK pm_cmd(p) {
+        int cn = -1;
+        cn = atoi(args[1]);
+        clientinfo *ci = qs.getClient(cn);
+        if(cn!=CMD_SENDER && ci != NULL && cn >= 0 && cn <= 128 && args[1] != NULL) {
+            clientinfo *self = qs.getClient(CMD_SENDER);
+            if(strlen(fulltext) > 0 && ci->connected) {
+                defformatstring(recieverpmmsg)("\f7Private message from \f0%s\f7: \f3%s", colorname(self), fulltext);
+                sendf(cn, 1, "ris", N_SERVMSG, recieverpmmsg);
+                defformatstring(senderpmconf)("\f7Sent \f0%s \f7your message: \f3%s", colorname(ci), fulltext);
+                sendf(CMD_SENDER, 1, "ris", N_SERVMSG, senderpmconf);
+            }
+        } else {
             sendf(CMD_SENDER, 1, "ris", N_SERVMSG, CMD_DESC(cid));
         }
-        */
     }
     
     QSERV_CALLBACK sendprivs_cmd(p) {
