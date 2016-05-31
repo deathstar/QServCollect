@@ -957,7 +957,7 @@ namespace server {
         if(CMD_SA) {
             int lastcmd = -1;
             char command[50];
-
+            
             sprintf(command, "%c%s", commandprefix, args[1]);
             if(strlen(command) > 0) {
                 for(int i = 0; i < CMD_LAST; i++) {
@@ -967,7 +967,7 @@ namespace server {
                     }
                 }
             }
-
+            
             if(CMD_SCI.privilege >= qs.getCommandPriv(lastcmd)) {
                 if(lastcmd > -1) {
                     sendf(CMD_SENDER, 1, "ris", N_SERVMSG, CMD_DESC(lastcmd));
@@ -975,39 +975,67 @@ namespace server {
                     sendf(CMD_SENDER, 1, "ris", N_SERVMSG, "\f3Error: Command not found. \nUse \f2\"#help\" \f3for a list of commands or \f2\"#help <name-ofcommand>\" \f3for usage.");
                 }
             } else {
-                sendf(CMD_SENDER, 1, "ris", N_SERVMSG, "\f3Error: Insufficient permissions to view command info or command not found. \nUse \f2\"#help\" \f3for a list of commands or \f2\"#help <name-ofcommand>\" \f3for usage.");
+                sendf(CMD_SENDER, 1, "ris", N_SERVMSG, "\f3Error: Insufficient permissions to view command info");
             }
         } else {
             static char colors[2], commandList[2056] = {0};
             int color = -1;
-
             strcpy(commandList, "");
-            sprintf(commandList, "%s", "\f2Commands: ");
-
-            for(int i = 0; i < CMD_LAST; i++) {
-                if(CMD_PRIV(i) == PRIV_NONE) {
-                    color = 7;
-                } else if(CMD_PRIV(i) == PRIV_MASTER) {
-                    color = 0;
-                } else if(CMD_PRIV(i) == PRIV_ADMIN) {
-                    color = 6;
+            clientinfo *ci = qs.getClient(CMD_SENDER);
+            if(ci->privilege==PRIV_ADMIN) {
+                sprintf(commandList, "%s", "\f2Commands: \f6");
+                for(int i = 0; i < CMD_LAST; i++) {
+                    if(CMD_PRIV(i) == PRIV_ADMIN || CMD_PRIV(i) == PRIV_MASTER || CMD_PRIV(i) == PRIV_NONE) {
+                        strcat(commandList, CMD_NAME(i));
+                        if(i != CMD_LAST-1) {
+                            strcat(commandList, " ");
+                        }
+                    }
                 }
-
-                sprintf(colors, "\f%d", color);
-                strcat(commandList, colors);
-                strcat(commandList, CMD_NAME(i));
-
-                if(i != CMD_LAST-1) {
-                    strcat(commandList, "\f7, ");
+            }
+            else if(ci->privilege==PRIV_MASTER) {
+                sprintf(commandList, "%s", "\f2Commands: \f0");
+                for(int i = 0; i < CMD_LAST; i++) {
+                    if(CMD_PRIV(i) == PRIV_MASTER || CMD_PRIV(i) == PRIV_NONE) {
+                        strcat(commandList, CMD_NAME(i));
+                        if(i != CMD_LAST-1) {
+                            strcat(commandList, " ");
+                        }
+                    }
                 }
+            }
+            else if(ci->privilege==PRIV_NONE) {
+                sprintf(commandList, "%s", "\f2Commands: \f7");
+                for(int i = 0; i < CMD_LAST; i++) {
+                    if(CMD_PRIV(i) == PRIV_NONE) {
+                        strcat(commandList, CMD_NAME(i));
+                        if(i != CMD_LAST-1) {
+                            strcat(commandList, " ");
+                        }
+                    }
+                }
+                
+                /*for(int i = 0; i < CMD_LAST; i++) {
+                 if(CMD_PRIV(i) == PRIV_NONE) {
+                 color = 7;
+                 } else if(CMD_PRIV(i) == PRIV_MASTER) {
+                 color = 0;
+                 } else if(CMD_PRIV(i) == PRIV_ADMIN) {
+                 color = 6;
+                 }
+                 sprintf(colors, "\f%d", color);
+                 strcat(commandList, colors);
+                 //strcat(commandList, CMD_NAME(i));
+                 }
+                 */
             }
             sendf(CMD_SENDER, 1, "ris", N_SERVMSG, commandList);
         }
     }
     
     QSERV_CALLBACK localtime_cmd(p) {
-        #include <stdio.h>
-        #include <time.h>
+    #include <stdio.h>
+    #include <time.h>
         struct tm newtime;
         time_t ltime;
         char buf[50];
