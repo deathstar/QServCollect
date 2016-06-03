@@ -885,15 +885,17 @@ namespace server {
     
     QSERV_CALLBACK pm_cmd(p) {
         int cn = -1;
-        cn = atoi(args[1]);
-        clientinfo *ci = qs.getClient(cn);
-        if(cn!=CMD_SENDER && ci != NULL && cn >= 0 && cn <= 128 && args[1] != NULL) {
-            clientinfo *self = qs.getClient(CMD_SENDER);
-            if(strlen(fulltext) > 0 && ci->connected) {
-                defformatstring(recieverpmmsg)("\f7Private message from \f0%s\f7: \f3%s", colorname(self), fulltext);
-                sendf(cn, 1, "ris", N_SERVMSG, recieverpmmsg);
-                defformatstring(senderpmconf)("\f7Sent \f0%s \f7your message: \f3%s", colorname(ci), fulltext);
-                sendf(CMD_SENDER, 1, "ris", N_SERVMSG, senderpmconf);
+        if(args[1] != NULL && strlen(fulltext) > 0) {
+            cn = atoi(args[1]);
+            clientinfo *ci = qs.getClient(cn);
+            if(strlen(fulltext) > 0 && cn!=CMD_SENDER && ci != NULL && cn >= 0 && cn <= 128 && args[1] != NULL) {
+                clientinfo *self = qs.getClient(CMD_SENDER);
+                if(strlen(fulltext) > 0 && ci->connected && args[1] != NULL && ci != NULL) {
+                    defformatstring(recieverpmmsg)("\f7Private message from \f0%s\f7: \f3%s", colorname(self), fulltext);
+                    sendf(cn, 1, "ris", N_SERVMSG, recieverpmmsg);
+                    defformatstring(senderpmconf)("\f7Sent \f0%s \f7your message: \f3%s", colorname(ci), fulltext);
+                    sendf(CMD_SENDER, 1, "ris", N_SERVMSG, senderpmconf);
+                }
             }
         } else {
             sendf(CMD_SENDER, 1, "ris", N_SERVMSG, CMD_DESC(cid));
