@@ -417,14 +417,14 @@ namespace server {
       int type = 0;
         const char *types[] = {
             " connected from \f3Unknown",
-            " \f7connected from \f1Localhost",
-            " \f7connected near\f0"
+            " \f7connected (\f2Host\f7)",
+            " \f7connected from\f0"
         };
         int typeconsole = 0;
         const char *typesconsole[] = {
             " connected from Unknown",
-            " connected from Localhost",
-            " connected near "
+            " connected (\f2Host\f7)",
+            " connected from "
         };
         
         char lmsg[255];
