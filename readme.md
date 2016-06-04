@@ -73,4 +73,6 @@ QServ IRC not launching at all (excess flood): you either restarted the server t
 
 If you are experiencing issues with IRC, simply use the "ircignore 1" command in the server-init.cfg to disable it.
 
+The IRC Bot is not fully functional, as it does not handle IRC disconnects. Please keep it disabled until it is fixed.
+
 No such file or directory "GeoIP.h": geoIP come precompiled w/ dat, this means some GeoIP file is missing, most likely your download was corrupt.
