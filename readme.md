@@ -29,16 +29,15 @@ Terminal Download Command: git clone https://github.com/deathstar/QServCollect
 - Command Line tools: run: "xcode-select --install" from Terminal after xCode is installed
 - Cmake: https://cmake.org/download/
 
-**LINUX/WINDOWS**
-- Cmake: https://cmake.org/download/
-
-**UBUNTU**
-
+**LINUX**
 - Cmake: [https://cmake.org/download/]((download a binary client))
 - install Zlib from command line: `sudo apt-get install zlib1g-dev`
 - install compiler: `sudo apt-get install build-essential`
 - update: `sudo apt-get update`
 
+**WINDOWS**
+- Cmake: [https://cmake.org/download/]((download a binary client))
+- Zlib: [http://gnuwin32.sourceforge.net/packages/zlib.htm]((download the libary))
 
 ##CONFIGURATION
 - Configure general attributes in config/server-init.cfg
