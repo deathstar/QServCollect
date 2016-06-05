@@ -1036,37 +1036,41 @@ namespace server {
     }
     
     QSERV_CALLBACK localtime_cmd(p) {
-    #include <stdio.h>
-    #include <time.h>
-        struct tm newtime;
-        time_t ltime;
-        char buf[50];
-        ltime=time(&ltime);
-        localtime_r(&ltime, &newtime); //localtime__r and asctime_r are both threadsafe
-        defformatstring(buffer)("\f4The local date and time is \f1%s", asctime_r(&newtime, buf));
-        sendf(-1, 1, "ris", N_SERVMSG, buffer);
+        #include <stdio.h>
+        #include <time.h>
+        
+        //time
+        time_t rawtime;
+        struct tm * timeinfo;
+        char buffer [80];
+        time (&rawtime);
+        timeinfo = localtime (&rawtime);
+        strftime (buffer,80,"\f7Local Time: \f1%I:%M%p",timeinfo);
+        sendf(CMD_SENDER, 1, "ris", N_SERVMSG, buffer);
+        
+        //date (ISO)
+        time_t secs=time(0);
+        tm *t=localtime(&secs);
+        defformatstring(localdate)("Local Date: \f1%04d-%02d-%02d",t->tm_year+1900,t->tm_mon+1,t->tm_mday);
+        sendf(CMD_SENDER, 1, "ris", N_SERVMSG, localdate);
     }
     
-    #define EST (-4)
-    #define CCT (+8)
-    #define PST (-7)
-    #define ENGLAND (+1)
-    #define GERMANY (+2)
+    
     QSERV_CALLBACK time_cmd(p) {
+        #define MST (-7)
         time_t rawtime;
         struct tm * ptm;
+        
         time ( &rawtime );
-        ptm = gmtime (&rawtime); //threadsafe implementation (gmtime_r) causes segfault on mass_spam
-        char pst = (ptm->tm_hour+PST)%24;
-        char est = (ptm->tm_hour+EST)%24;
-        char cct = (ptm->tm_hour+CCT)%24;
-        char uk = (ptm->tm_hour+ENGLAND)%24;
-        char de = (ptm->tm_hour+GERMANY)%24;
-        out(ECHO_SERV, "Los Angeles (U.S./PST): \f2%2d:%02d", pst, ptm->tm_min);
-        out(ECHO_SERV, "New York, NY (U.S./EST): \f2%2d:%02d", est, ptm->tm_min);
-        out(ECHO_SERV, "Beijing (China/CCT): \f2%2d:%02d", cct, ptm->tm_min);
-        out(ECHO_SERV, "England (GMT+1): \f2%2d:%02d", uk, ptm->tm_min);
-        out(ECHO_SERV, "Germany (GMT+2): \f2%2d:%02d", de, ptm->tm_min);
+        
+        ptm = gmtime ( &rawtime );
+        
+        defformatstring(la_time)(" Los Angeles, CA (U.S.):    \f1%2d:%02d\n", (ptm->tm_hour+MST)%24, ptm->tm_min);
+        defformatstring(uk_time)("\f7United Kingdom (GMT+1):  \f1%2d:%02d\n", (ptm->tm_hour+MST+8)%24, ptm->tm_min);
+        defformatstring(ru_time)("\f7Moscow, Russia (GMT+3):  \f1%2d:%02d\n", (ptm->tm_hour+MST+10)%24, ptm->tm_min);
+        defformatstring(gf_time)("\f7Germany/France (GMT+2):  \f1%2d:%02d",   (ptm->tm_hour+MST+9)%24, ptm->tm_min);
+        defformatstring(timebuff)("World Times (Military Format) \n%s %s %s %s", la_time, uk_time, ru_time, gf_time);
+        sendf(CMD_SENDER, 1, "ris", N_SERVMSG, timebuff);
     }
     
     QSERV_CALLBACK bunny_cmd(p) {
