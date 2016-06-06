@@ -122,7 +122,7 @@ namespace server {
             sendnearstatement = true;
     	
         }
-        else if(gipr->city == NULL || (gipr->region == NULL && gipr->country_name != NULL && isalpha(*gipr->region))) {
+        else if(gipr->city == NULL || gipr->region == NULL && gipr->country_name != NULL) {
         	gipi << gipr->country_name;
             sendnearstatement = false;
         }
