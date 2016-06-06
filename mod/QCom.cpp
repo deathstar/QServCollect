@@ -1038,21 +1038,12 @@ namespace server {
     QSERV_CALLBACK localtime_cmd(p) {
         #include <stdio.h>
         #include <time.h>
-        
-        //time
         time_t rawtime;
         struct tm * timeinfo;
-        char buffer [80];
         time (&rawtime);
         timeinfo = localtime (&rawtime);
-        strftime (buffer,80,"\f7Local Time: \f1%I:%M%p",timeinfo);
+        defformatstring(buffer)("Local Time and Date: \f1%s", asctime(timeinfo));
         sendf(CMD_SENDER, 1, "ris", N_SERVMSG, buffer);
-        
-        //date (ISO)
-        time_t secs=time(0);
-        tm *t=localtime(&secs);
-        defformatstring(localdate)("Local Date: \f1%04d-%02d-%02d",t->tm_year+1900,t->tm_mon+1,t->tm_mday);
-        sendf(CMD_SENDER, 1, "ris", N_SERVMSG, localdate);
     }
     
     

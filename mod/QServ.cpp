@@ -42,47 +42,56 @@ namespace server {
         char unknown[] = "Unknown";
         GeoIPRecord *gipr = GeoIP_record_by_addr(city_geoip, ip);
         
-        //city, region, and country (ommit region numbers)
+        //city, region, and country (omit region numbers)
         if(gipr->city != NULL && gipr->region != NULL && gipr->country_name != NULL && isalpha(*gipr->region)) {
         	gipi << gipr->city << delimiter << gipr->region << delimiter << gipr->country_name;
-        	//GeoIPRecord_delete(gipr);
-        	gipr->city=0;
-    		gipr->region=0;
-            sendnearstatement = true;
-    	
-        }
-        //country name only
-        else if(gipr->city == NULL || gipr->region == NULL && gipr->country_name != NULL) {
-        	gipi << gipr->country_name;
-            sendnearstatement = false;
-        }
-        //ommit region numbers, get city and country if possible
-        else if(!isalpha(*gipr->region) && gipr->country_name != NULL && gipr->city != NULL) {
-            gipi << gipr->city << delimiter << gipr->country_name;
             sendnearstatement = true;
         }
-        //ommit region numbers, get country
-        else if(!isalpha(*gipr->region) && gipr->country_name != NULL && gipr->city == NULL) {
-            gipi << gipr->city << delimiter << gipr->country_name;
-            sendnearstatement = false;
-        }
-        //ommit region numbers, get city
-        else if(!isalpha(*gipr->region) && gipr->country_name == NULL && gipr->city != NULL) {
-            gipi << gipr->city << delimiter << gipr->country_name;
-            sendnearstatement = true;
-        }
+        
         //city only
         else if(gipr->country_name == NULL && gipr->region == NULL && gipr->city != NULL) {
             gipi << gipr->city;
             sendnearstatement = true;
         }
+        
+        //country name only
+        else if(gipr->city == NULL || (gipr->region == NULL && gipr->country_name != NULL)) {
+        	gipi << gipr->country_name;
+            sendnearstatement = false;
+        }
+        
+        //omit region numbers, get city and country if possible
+        else if(!isalpha(*gipr->region) && gipr->city != NULL && gipr->country_name != NULL) {
+            gipi << gipr->city << delimiter << gipr->country_name;
+            sendnearstatement = true;
+        }
+        
+        //omit region numbers, get country
+        else if(!isalpha(*gipr->region) && gipr->country_name != NULL && gipr->city == NULL) {
+            gipi << gipr->country_name;
+            sendnearstatement = false;
+        }
+        
+        //omit region numbers, get city
+        else if(!isalpha(*gipr->region) && gipr->country_name == NULL && gipr->city != NULL) {
+            gipi << gipr->city;
+            sendnearstatement = true;
+        }
+        
         //unknown location
         else {
         	gipi << unknown;
             sendnearstatement = false;
         }
+        
         return gipi.str();
-    } 
+        
+        //cleanup
+        if(gipr) GeoIPRecord_delete(gipr);
+        if(gipr->city != NULL) gipr->city=0;
+        if(gipr->region != NULL) gipr->region=0;
+        if(gipr->country_name != NULL) gipr->country_name=0;
+    }
     
     void QServ::newcommand(const char *name, const char *desc, int priv, void (*callback)(int, char **args, int),
                            int args) {
