@@ -100,6 +100,7 @@ namespace server {
         //reset - https://github.com/andrius4669/zeromod/blob/fc017aba9a1114c4db7553c3b3a6846a44ccc486/src/modules/geoip/main.c      
     }*/
     
+    bool sendnearstatement = false;
     char *QServ::congeoip(const char *ip) {
 		return (char*)GeoIP_country_name_by_name(m_geoip, ip);
     }
@@ -110,22 +111,24 @@ namespace server {
         
         char delimiter[] = ", ";
         char unknown[] = "Unknown";
-    	
         GeoIPRecord *gipr = GeoIP_record_by_addr(city_geoip, ip);
-		
-        if(gipr->city != NULL && gipr->region != NULL && gipr->country_name != NULL) {
-        	gipi << gipr->city << delimiter << gipr->region << delimiter << gipr->country_name; 
+        
+        //no region codes
+        if(gipr->city != NULL && gipr->region != NULL && gipr->country_name != NULL && isalpha(*gipr->region)) {
+        	gipi << gipr->city << delimiter << gipr->region << delimiter << gipr->country_name;
         	//GeoIPRecord_delete(gipr);
-        	//gipr->city=NULL; gipr->region=NULL;
         	gipr->city=0;
-    		gipr->region=0; 
+    		gipr->region=0;
+            sendnearstatement = true;
     	
         }
-        else if(gipr->city == NULL || gipr->region == NULL && gipr->country_name != NULL) {
+        else if(gipr->city == NULL || (gipr->region == NULL && gipr->country_name != NULL && isalpha(*gipr->region))) {
         	gipi << gipr->country_name;
+            sendnearstatement = false;
         }
         else {
         	gipi << unknown;
+            sendnearstatement = false;
         }
         return gipi.str();
     } 
@@ -418,13 +421,13 @@ namespace server {
         const char *types[] = {
             " connected from \f3Unknown",
             " \f7connected (\f2Host\f7)",
-            " \f7connected from\f0"
+            sendnearstatement ? " \f7connected near\f0" : " \f7connected from\f0"
         };
         int typeconsole = 0;
         const char *typesconsole[] = {
             " connected from Unknown",
             " connected (\f2Host\f7)",
-            " connected from "
+            sendnearstatement ? " connected near " : " connected from "
         };
         
         char lmsg[255];
