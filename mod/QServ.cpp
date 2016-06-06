@@ -29,77 +29,6 @@ namespace server {
         return true;
     }
     
-	/*
-    bool contains_number(const std::string &c)
-    {
-    if (c.find('0') != std::string::npos ||
-        c.find('1') != std::string::npos ||
-        c.find('2') != std::string::npos ||
-        c.find('3') != std::string::npos ||
-        c.find('4') != std::string::npos ||
-        c.find('5') != std::string::npos ||
-        c.find('6') != std::string::npos ||
-        c.find('7') != std::string::npos ||
-        c.find('8') != std::string::npos ||
-        c.find('9') != std::string::npos)
-    {
-        return true;
-    }
-        return false;
-    }
-    char *QServ::citygeoip(const char *ip)
-    {
-        
-        char* city = NULL;
-        GeoIPRecord *gir = GeoIP_record_by_addr(city_geoip, ip);
-        if(gir->city!=NULL)
-        {
-            city = gir->city;
-            return (char*)city;
-            //return city; or (char*)city 
-            //GeoIPRecord_delete(gir);
-        }
-        else {city="Unknown";}
-        
-    }
-    char *QServ::regiongeoip(const char *ip) {
-        GeoIPRecord *gipr = GeoIP_record_by_addr(city_geoip, ip);
-        if(!contains_number(gipr->region)) {
-            return (char *)gipr->region;
-        }
-        else return "Unknown";
-    }
-        std::string QServ::cgip(const char *ip)  {
-        std::stringstream gipi;
-        char delimiter[] = ", ";
-        char unknown[] = "Unknown";
-        
-        GeoIPRecord *gipr = GeoIP_record_by_addr(city_geoip, ip);
-        
-        //city
-        if(gipr->city!=NULL) {
-            gipi << gipr->city;
-        } 
-        else gipi << unknown;
-        gipi << delimiter;
-        
-        //state
-        if(!contains_number(gipr->region)) {
-            gipi << gipr->region;
-        }
-        else gipi << unknown;
-        gipi << delimiter; 
-        
-        //country
-        if(GeoIP_country_name_by_name(m_geoip, ip)) {
-            gipi << GeoIP_country_name_by_name(m_geoip, ip);
-        }
-        else gipi << unknown;
-        GeoIPRecord_delete(gipr);
-        return gipi.str();
-        //reset - https://github.com/andrius4669/zeromod/blob/fc017aba9a1114c4db7553c3b3a6846a44ccc486/src/modules/geoip/main.c      
-    }*/
-    
     bool sendnearstatement = false;
     char *QServ::congeoip(const char *ip) {
 		return (char*)GeoIP_country_name_by_name(m_geoip, ip);
@@ -113,7 +42,6 @@ namespace server {
         char unknown[] = "Unknown";
         GeoIPRecord *gipr = GeoIP_record_by_addr(city_geoip, ip);
         
-        //no region codes
         if(gipr->city != NULL && gipr->region != NULL && gipr->country_name != NULL && isalpha(*gipr->region)) {
         	gipi << gipr->city << delimiter << gipr->region << delimiter << gipr->country_name;
         	//GeoIPRecord_delete(gipr);
