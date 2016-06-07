@@ -1940,7 +1940,6 @@ namespace server {
     extern int mapsucksvotes;
     void changemap(const char *s, int mode)
     {
-        if(autodemo) demonextmatch = true;
         out(ECHO_NOCOLOR, "Map changed to: %s | Modenum: %d", s, mode);
         out(ECHO_NOCOLOR, "Gamespeed is: %d", defaultgamespeed);
         stopdemo();
@@ -1997,8 +1996,8 @@ namespace server {
             demonextmatch = false;
             setupdemorecord();
         }
-        
         if(smode) smode->setup();
+        if(autodemo) setupdemorecord();
     }
     void rotatemap(bool next)
     {
