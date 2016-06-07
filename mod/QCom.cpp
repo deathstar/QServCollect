@@ -41,8 +41,35 @@ namespace server {
         ncommand("teampersist", "\f7Toggle persistant teams on or off. Usage: #teampersist <0/1> (0 for off, 1 for on)", PRIV_ADMIN, teampersist_cmd, 1);
         ncommand("allowmaster", "\f7Allows clients to claim master. Usage: #allowmaster <0/1> (0 for off, 1 for on)", PRIV_ADMIN, allowmaster_cmd, 1);
         ncommand("kill", "\f7Brutally murders a player. Usage: #kill <cn>", PRIV_ADMIN, kill_cmd, 1);
+        ncommand("rename", "\f7Renames a player. Usage: #rename <cn>", PRIV_ADMIN, rename_cmd, 2);
         //ncommand("owords", "View list of offensive words. Usage: #owords",PRIV_NONE, owords_cmd, 0);
         //ncommand("olangfilter", "Turn the offensive language filter on or off. Usage: #olang <off/on> (0/1) and #olang to see if it's activated", PRIV_MASTER, olangfilter_cmd, 1);
+    }
+    QSERV_CALLBACK rename_cmd(p) {
+        if(CMD_SA) {
+            int cn = atoi(args[1]);
+            char *name = args[2];
+            clientinfo *ci = qs.getClient(cn);
+            if(!ci || name == NULL || name[0] == 1 || cn < 0 || cn >= 128) return;
+            char newname[MAXNAMELEN + 1];
+            newname[MAXNAMELEN] = 0;
+            filtertext(newname, name, false, MAXNAMELEN);
+            putuint(ci->messages, N_SWITCHNAME);
+            sendstring(newname, ci->messages);
+            vector<uchar> buf;
+            putuint(buf, N_SWITCHNAME);
+            sendstring(newname, buf);
+            packetbuf v(MAXTRANS, ENET_PACKET_FLAG_RELIABLE);
+            putuint(v, N_CLIENT);
+            putint(v, ci->clientnum);
+            putint(v, buf.length());
+            v.put(buf.getbuf(), buf.length());
+            sendpacket(ci->clientnum, 1, v.finalize(), -1);
+            string oldname;
+            copystring(oldname, ci->name);
+            copystring(ci->name, newname);
+        }
+        else sendf(CMD_SENDER, 1, "ris", N_SERVMSG, CMD_DESC(cid));
     }
     QSERV_CALLBACK teampersist_cmd(p) {
         bool usage = false;

@@ -51,6 +51,7 @@ namespace server {
     extern QSERV_CALLBACK invadmin_cmd(p);
     extern QSERV_CALLBACK allowmaster_cmd(p);
     extern QSERV_CALLBACK kill_cmd(p);
+    extern QSERV_CALLBACK rename_cmd(p);
 }
 
 #endif
