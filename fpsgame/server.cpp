@@ -2455,8 +2455,12 @@ best.add(clients[i]); \
             int distanceinteger = int(d + 0.5);
             
             //no teamkills, or weird negative float
-            if(d > 700.0 && d > 0 && actor != target) {out(ECHO_SERV,"\f0%s \f7got a longshot kill on \f3%s \f7(Distance: \f7%d\f7 feet) with a \f1%s", colorname(actor), colorname(target), distanceinteger, guns[gun].name);}
-            if(d <= 20.0 && actor != target) {out(ECHO_SERV,"\f0%s \f7got an up close kill on \f3%s \f7with a \f1%s", colorname(actor), colorname(target), (!strcmp(guns[gun].name, "fist" )) ? "chainsaw" : guns[gun].name);}
+            if(d > 700.0 && d > 0 && actor != target && actor->state.aitype == AI_NONE) {
+                out(ECHO_SERV,"\f0%s \f7got a longshot kill on \f3%s \f7(Distance: \f7%d\f7 feet) with a \f1%s", colorname(actor), colorname(target), distanceinteger, guns[gun].name);
+            }
+            if(d <= 20.0 && actor != target && actor->state.aitype == AI_NONE) {
+                out(ECHO_SERV,"\f0%s \f7got an up close kill on \f3%s \f7with a \f1%s", colorname(actor), colorname(target), (!strcmp(guns[gun].name, "fist" )) ? "chainsaw" : guns[gun].name);
+            }
             
             target->state.deaths++;
             int fragvalue = smode ? smode->fragvalue(target, actor) : (target==actor || isteam(target->team, actor->team) ? -1 : 1);
@@ -2472,8 +2476,8 @@ best.add(clients[i]); \
             if(t) t->frags += fragvalue;
             sendf(-1, 1, "ri5", N_DIED, target->clientnum, actor->clientnum, actor->state.frags, t ? t->frags : 0);
             if(!firstblood && actor != target) { firstblood = true; out(ECHO_SERV, "\f0%s \f7drew \f6FIRST BLOOD!", colorname(actor)); }
-            if(actor != target) actor->state.spreefrags++;
-            if(target->state.spreefrags >= minspreefrags) {
+            if(actor != target && actor->state.aitype == AI_NONE) actor->state.spreefrags++;
+            if(target->state.spreefrags >= minspreefrags && target->state.aitype == AI_NONE) {
                 if(actor == target)
                     out(ECHO_SERV, "\f0%s \f7%s", colorname(target), spreesuicidemsg);
                 else
