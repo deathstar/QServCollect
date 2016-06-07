@@ -3335,7 +3335,7 @@ curmsg = p.length(); \
                 {
                     flushclientposition(*cp);
                     sendf(-1, 0, "ri4x", N_TELEPORT, pcn, teleport, teledest, cp->ownernum);
-                    out(ECHO_SERV, "%s teleported", colorname(cp));
+                    if(cp->state.aitype == AI_NONE) out(ECHO_SERV, "\f0%s \f7teleported", colorname(cp));
                 }
                 break;
             }
