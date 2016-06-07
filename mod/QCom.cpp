@@ -793,11 +793,12 @@ namespace server {
                         if(ci->connected) {
                         	clientinfo *self = qs.getClient(CMD_SENDER);
         					if(cn!=CMD_SENDER && cn >= 0 && cn <= 1000 && ci != NULL && ci->connected && args[1] != NULL) {
-            				defformatstring(forgivemsg)("\f0%s \f7has forgiven \f3%s", colorname(self), colorname(ci));
-            				sendf(-1, 1, "ris", N_SERVMSG, forgivemsg);
-        			}
+                                if(ci->state.teamkills >= 1) ci->state.teamkills--;
+                                defformatstring(forgivemsg)("\f0%s \f7has forgiven \f3%s", colorname(self), colorname(ci));
+                                sendf(-1, 1, "ris", N_SERVMSG, forgivemsg);
+                            }
                             
-                        }
+                       }
                     } else {
                         sendf(CMD_SENDER, 1, "ris", N_SERVMSG, "\f3Error: Player not connected");
                     }
