@@ -213,8 +213,7 @@ namespace server {
                         if(cn!=CMD_SENDER && cn >= 0 && cn <= 1000 && ci != NULL && ci->connected && args[1] != NULL && cn!=CMD_SENDER) {
             				clientinfo *ci = qs.getClient(cn);
             				disconnect_client(ci->clientnum, DISC_IPBAN);
-                            //int master, name 
-            				server::addgban(NULL, ci->ip);
+                            server::addgban(ci->clientnum, ci->ip);
            					 out(ECHO_SERV, "\f0%s \f7has been added to the permanent banlist.", colorname(ci));
             				out(ECHO_NOCOLOR, "%s has been added to the permanent banlist.", colorname(ci));
         				}
