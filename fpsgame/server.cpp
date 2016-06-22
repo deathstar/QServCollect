@@ -2928,66 +2928,61 @@ best.add(clients[i]); \
     
     int reserveclients() { return 3; }
     
-    struct gbaninfo
-    {
-        enet_uint32 ip, mask;
-        int master;
-    };
-    vector<gbaninfo> gbans;
+    extern void verifybans();
     
-    extern void cleargbans(int master)
+    struct banlist
     {
-        if(master < 0)
-        {
-            loopvrev(gbans) if(gbans[i].master >= 0) gbans.remove(i);
-        }
-        else
-        {
-            loopvrev(gbans) if(gbans[i].master == master) gbans.remove(i);
-        }
-    }
-    
-    bool checkgban(uint ip)
-    {
-        loopv(gbans) if((ip & gbans[i].mask) == gbans[i].ip) return true;
-        return false;
-    }
-    
-    void addgban(int master, const char *name)
-    {
-        union { uchar b[sizeof(enet_uint32)]; enet_uint32 i; } ip, mask;
-        ip.i = 0;
-        mask.i = 0;
-        loopi(4)
-        {
-            char *end = NULL;
-            int n = strtol(name, &end, 10);
-            if(!end) break;
-            if(end > name) { ip.b[i] = n; mask.b[i] = 0xFF; }
-            name = end;
-            while(*name && *name++ != '.');
-        }
-        gbaninfo &ban = gbans.add();
-        ban.ip = ip.i;
-        ban.mask = mask.i;
-        ban.master = master;
+        vector<ipmask> bans;
         
+        void clear() { bans.shrink(0); }
+        
+        bool check(uint ip)
+        {
+            loopv(bans) if(bans[i].check(ip)) return true;
+            return false;
+        }
+        
+        void add(const char *ipname)
+        {
+            ipmask ban;
+            ban.parse(ipname);
+            bans.add(ban);
+            
+            verifybans();
+        }
+    } ipbans, gbans;
+    
+    bool checkbans(uint ip)
+    {
+        loopv(bannedips) if(bannedips[i].ip==ip) return true;
+        return ipbans.check(ip) || gbans.check(ip);
+    }
+    
+    void verifybans()
+    {
         loopvrev(clients)
         {
             clientinfo *ci = clients[i];
-            if(ci->privilege >= PRIV_ADMIN) continue;
-            if(checkgban(getclientip(ci->clientnum))) disconnect_client(ci->clientnum, DISC_IPBAN);
+            if(ci->state.aitype != AI_NONE || ci->local || ci->privilege >= PRIV_ADMIN) continue;
+            if(checkbans(getclientip(ci->clientnum))) disconnect_client(ci->clientnum, DISC_IPBAN);
         }
     }
     
-    ICOMMAND(clearpbans, "", (), { cleargbans(-1); });
-    ICOMMAND(addpban, "s", (char *s), { addgban(-1, s); });
+    void ipban(const char *ipname) {
+        ipbans.add(ipname);
+    }
+    
+    void clearipbans() {
+        ipbans.clear();
+    }
+    
+    ICOMMAND(clearipbans, "", (), ipbans.clear());
+    ICOMMAND(ipban, "s", (const char *ipname), ipbans.add(ipname));
     
     int allowconnect(clientinfo *ci, const char *pwd = "")
     {
         if(ci->local) return DISC_NONE;
         if(!m_mp(gamemode)) return DISC_LOCAL;
-        uint ip = getclientip(ci->clientnum);
         if(serverpass[0])
         {
             if(!checkpassword(ci, serverpass, pwd)) return DISC_PASSWORD;
@@ -2995,7 +2990,8 @@ best.add(clients[i]); \
         }
         if(adminpass[0] && checkpassword(ci, adminpass, pwd)) return DISC_NONE;
         if(numclients(-1, false, true)>=maxclients) return DISC_MAXCLIENTS;
-        if(checkgban(ip)) return DISC_IPBAN;
+        uint ip = getclientip(ci->clientnum);
+        if(checkbans(ip)) return DISC_IPBAN;
         if(mastermode>=MM_PRIVATE && allowedips.find(ip)<0) return DISC_PRIVATE;
         return DISC_NONE;
     }
@@ -3122,14 +3118,6 @@ best.add(clients[i]); \
             authsucceeded(id);
         else if(sscanf(cmd, "chalauth %u %255s", &id, val) == 2)
             authchallenged(id, val);
-        else if(!strncmp(cmd, "cleargbans", cmdlen))
-        {
-            cleargbans(-1);
-        }
-        else if(sscanf(cmd, "addgban %100s", val) == 1)
-        {
-            addgban(-1, val);
-        }
     }
     
     void receivefile(int sender, uchar *data, int len)

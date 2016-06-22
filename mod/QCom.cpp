@@ -191,7 +191,7 @@ namespace server {
     }
         
     QSERV_CALLBACK cleargbans_cmd(p) {
-        server::cleargbans(-1);
+        server::clearipbans();
         out(ECHO_SERV, "Cleared permanent game bans");
         out(ECHO_NOCOLOR, "[NOTICE]: You need to use clearpbans in server-init.cfg to unban users, uncomment out the line and restart the server");
     }
@@ -212,8 +212,7 @@ namespace server {
                         
                         if(cn!=CMD_SENDER && cn >= 0 && cn <= 1000 && ci != NULL && ci->connected && args[1] != NULL && cn!=CMD_SENDER) {
             				clientinfo *ci = qs.getClient(cn);
-            				disconnect_client(ci->clientnum, DISC_IPBAN);
-                            server::addgban(ci->clientnum, ci->ip);
+                            server::ipban(ci->ip);
            					 out(ECHO_SERV, "\f0%s \f7has been added to the permanent banlist.", colorname(ci));
             				out(ECHO_NOCOLOR, "%s has been added to the permanent banlist.", colorname(ci));
         				}
