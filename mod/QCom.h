@@ -40,18 +40,25 @@ namespace server {
     extern QSERV_CALLBACK uneditmute_cmd(p);
     extern QSERV_CALLBACK togglelockspec_cmd(p);
     extern QSERV_CALLBACK uptime_cmd(p);
-    extern QSERV_CALLBACK info_cmd(p);
-    //extern QSERV_CALLBACK tournament_cmd(p);
+    extern QSERV_CALLBACK whois_cmd(p);
     extern QSERV_CALLBACK help_cmd(p);
     extern QSERV_CALLBACK cheater_cmd(p);
     extern QSERV_CALLBACK mapsucks_cmd(p);
-    extern QSERV_CALLBACK gban_cmd(p);
-    extern QSERV_CALLBACK cleargbans_cmd(p);
+    extern QSERV_CALLBACK ban_cmd(p);
+    extern QSERV_CALLBACK clearipbans_cmd(p);
     extern QSERV_CALLBACK teampersist_cmd(p);
     extern QSERV_CALLBACK invadmin_cmd(p);
     extern QSERV_CALLBACK allowmaster_cmd(p);
     extern QSERV_CALLBACK kill_cmd(p);
     extern QSERV_CALLBACK rename_cmd(p);
+    extern QSERV_CALLBACK addkey_cmd(p);
+    extern QSERV_CALLBACK reloadconfig_cmd(p);
+    extern QSERV_CALLBACK listbans_cmd(p);
+    extern QSERV_CALLBACK unban_cmd(p);
+    extern QSERV_CALLBACK syncauth_cmd(p);
+    extern QSERV_CALLBACK smartbot_cmd(p);
+    extern QSERV_CALLBACK cw_cmd(p);
+    extern QSERV_CALLBACK duel_cmd(p);
 }
 
 #endif

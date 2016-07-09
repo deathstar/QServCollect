@@ -378,6 +378,24 @@ namespace server {
     {
         int time, expire;
         uint ip;
+        int type;
+        char *reason;   // unique pointer
+        ban(): reason(NULL) {}
+        ban(const ban &b): reason(NULL) { *this = b; }
+        ~ban() { delete[] reason; }
+        ban &operator =(const ban &b)
+        {
+            if(&b != this) {
+                time = b.time;
+                expire = b.expire;
+                ip = b.ip;
+                type = b.type;
+                delete[] reason;
+                reason = b.reason;
+                ((ban *)&b)->reason = NULL;    // ugly hack
+            }
+            return *this;
+        }
     };
 
     namespace aiman

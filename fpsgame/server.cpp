@@ -46,6 +46,8 @@ namespace server {
         out(ECHO_IRC, "All bans cleared");
     }
     
+    
+    
     void addban(uint ip, int expire)
     {
         allowedips.removeobj(ip);
@@ -987,7 +989,7 @@ namespace server {
         
         loopv(clients) sendf(clients[i]->clientnum, 1, "ri3", N_DEMOPLAYBACK, 0, clients[i]->clientnum);
         
-        sendservmsg("\f7Demo finished playing");
+        out(ECHO_ALL,"Demo finished playing");
         
         loopv(clients) sendwelcome(clients[i]);
     }
@@ -1735,7 +1737,7 @@ namespace server {
         packetbuf p(MAXTRANS, ENET_PACKET_FLAG_RELIABLE);
         putinitclient(ci, p);
         sendpacket(-1, 1, p.finalize(), ci->clientnum);
-        if(persist && m_teammode) out(ECHO_SERV, "Persistant teams currently enabled");
+        if(persist && m_teammode) out(ECHO_ALL, "Persistant teams currently enabled");
     }
     
     void cutogz(char *s)
@@ -2471,6 +2473,12 @@ best.add(clients[i]); \
                 if(m_teammode) loopv(clients) if(strcmp(clients[i]->team, actor->team)) enemies++; else friends++;
                 else { friends = 1; enemies = clients.length()-1; }
                 actor->state.effectiveness += fragvalue*friends/float(max(enemies, 1));
+                if(totalmillis - actor->state.lastfragmillis < (int64_t)multifragmillis) {
+                    actor->state.multifrags++;
+                } else {
+                    actor->state.multifrags = 1;
+                }
+                actor->state.lastfragmillis = totalmillis;
             }
             teaminfo *t = m_teammode ? teaminfos.access(actor->team) : NULL;
             if(t) t->frags += fragvalue;
@@ -2487,7 +2495,7 @@ best.add(clients[i]); \
             target->state.multifrags = 0;
             target->state.lastfragmillis = 0;
             loopv(spreemessages) {
-                if(actor->state.spreefrags == spreemessages[i].frags && !isteam(actor->team, target->team)) out(ECHO_SERV, "\f0%s \f7%s \f6%s", colorname(actor), spreemessages[i].msg1, spreemessages[i].msg2);
+                if(actor->state.spreefrags == spreemessages[i].frags) out(ECHO_SERV, "\f0%s \f7%s \f6%s", colorname(actor), spreemessages[i].msg1, spreemessages[i].msg2);
             }
             target->position.setsize(0);
             if(smode) smode->died(target, actor);
@@ -2507,8 +2515,7 @@ best.add(clients[i]); \
                 if(target->clientnum < 128) {
                     sendf(target->clientnum, 1, "ris", N_SERVMSG, srryfrag);
                 }
-                out(ECHO_IRC, "Teamkiller: %s (%d)", colorname(actor), actor->state.teamkills);
-                out(ECHO_CONSOLE, "Teamkiller: %s (%d)", colorname(actor), actor->state.teamkills);
+                out(ECHO_NOCOLOR, "Teamkiller: %s (%d)", colorname(actor), actor->state.teamkills);
             }
             ts.deadflush = ts.lastdeath + DEATHMILLIS;
             // don't issue respawn yet until DEATHMILLIS has elapsed
@@ -2526,6 +2533,9 @@ best.add(clients[i]); \
         teaminfo *t = m_teammode ? teaminfos.access(ci->team) : NULL;
         if(t) t->frags += fragvalue;
         sendf(-1, 1, "ri5", N_DIED, ci->clientnum, ci->clientnum, gs.frags, t ? t->frags : 0);
+        gs.spreefrags = 0;
+        gs.multifrags = 0;
+        gs.lastfragmillis = 0;
         ci->position.setsize(0);
         if(smode) smode->died(ci, NULL);
         gs.state = CS_DEAD;
@@ -2763,10 +2773,9 @@ best.add(clients[i]); \
                 checkvotes(true);
             }
         }
-        //needs work
+       	// multi kill
         loopv(clients) {
             clientinfo *ci = clients[i];
-            ci->connectmillis = totalmillis;
             if(totalmillis - ci->state.lastfragmillis >= (int64_t)multifragmillis) {
                 if(ci->state.multifrags >= minmultikill) {
                     char *msg = NULL;
@@ -2835,6 +2844,7 @@ best.add(clients[i]); \
             if(ci->state.state==CS_SPECTATOR || ci->state.aitype != AI_NONE || ci->clientmap[0] || ci->mapcrc >= 0 || (req < 0 && ci->warned)) continue;
             formatstring(msg)("\f3[Warning]: \f0%s \f7has a modified map file \"%s\")", colorname(ci), smapname);
             sendf(req, 1, "ris", N_SERVMSG, msg);
+            out(ECHO_NOCOLOR,"[Warning]: %s has modified map %s", colorname(ci), smapname);
             if(req < 0) ci->warned = true;
         }
         if(crcs.empty() || crcs.length() < 2) return;
@@ -2845,8 +2855,9 @@ best.add(clients[i]); \
             {
                 clientinfo *ci = clients[j];
                 if(ci->state.state==CS_SPECTATOR || ci->state.aitype != AI_NONE || !ci->clientmap[0] || ci->mapcrc != info.crc || (req < 0 && ci->warned)) continue;
-                formatstring(msg)("\f3[Warning]: \f0%s \f7has a modified map file (someone has modified \"%s\")", colorname(ci), smapname);
+                formatstring(msg)("\f3[Warning]: \f0%s \f7has a modified map file \"%s\")", colorname(ci), smapname);
                 sendf(req, 1, "ris", N_SERVMSG, msg);
+                out(ECHO_NOCOLOR,"[Warning]: %s has modified map %s", colorname(ci), smapname);
                 if(req < 0) ci->warned = true;
             }
         }
@@ -2863,7 +2874,7 @@ best.add(clients[i]); \
         aiman::clearai();
         if(_newflagrun) {_storeflagruns(); _newflagrun = 0;}
         changegamespeed(defaultgamespeed); //return to default on empty, not just changemap
-        out(ECHO_CONSOLE, "Server has emptied");
+        out(ECHO_NOCOLOR, "Server has emptied");
     }
     
     void localconnect(int n)
@@ -2978,6 +2989,106 @@ best.add(clients[i]); \
     
     ICOMMAND(clearipbans, "", (), ipbans.clear());
     ICOMMAND(ipban, "s", (const char *ipname), ipbans.add(ipname));
+    
+    static const struct { const char *name; int timediv; } timedivinfos[] =
+    {
+        { "week", 60*60*24*7 },
+        { "day", 60*60*24 },
+        { "hour", 60*60 },
+        { "minute", 60 },
+        { "second", 1 }
+    };
+    
+    void formatsecs(vector<char> &timebuf, uint secs)
+    {
+        bool moded = false;
+        const size_t tl = sizeof(timedivinfos)/sizeof(timedivinfos[0]);
+        for(size_t i = 0; i < tl; i++)
+        {
+            uint t = secs / timedivinfos[i].timediv;
+            if(!t && (i+1<tl || moded)) continue;
+            secs %= timedivinfos[i].timediv;
+            if(moded) timebuf.add(' ');
+            moded = true;
+            charbuf b = timebuf.reserve(10 + 1);
+            int blen = b.remaining();
+            int plen = snprintf(b.buf, blen, "%u", t);
+            timebuf.advance(clamp(plen, 0, blen-1));
+            timebuf.add(' ');
+            timebuf.put(timedivinfos[i].name, strlen(timedivinfos[i].name));
+            if(t != 1) timebuf.add('s');
+            if(!secs) break;
+        }
+    }
+    
+    void sendbanlist(int cn)
+    {
+        
+        string buf;
+        vector<char> msgbuf;
+        ipmask im;
+        im.mask = ~0;
+        int n;
+        //sendf(cn, 1, "ris", N_SERVMSG, bannedips.length() < 1 ? "Bans:" : "No bans");
+        loopv(bannedips)
+        {
+            msgbuf.setsize(0);
+            im.ip = bannedips[i].ip;
+            n = sprintf(buf, "\f2id: \f7%2d\f2, ip: \f7", i);
+            msgbuf.put(buf, n);
+            n = im.print(buf);
+            msgbuf.put(buf, n);
+            n = sprintf(buf, "expires in: \f7");
+            msgbuf.put(buf, n);
+            formatsecs(msgbuf, (uint)((bannedips[i].expire-totalmillis)/1000));
+            if(bannedips[i].reason)
+            {
+                n = snprintf(buf, sizeof(buf), "\f2, reason: \f7%s", bannedips[i].reason);
+                msgbuf.put(buf, clamp(n, 0, int(sizeof(buf)-1)));
+            }
+            msgbuf.add(0);
+            sendf(cn, 1, "ris", N_SERVMSG, msgbuf.getbuf());
+        }
+    }
+    
+    
+    
+    /*
+    void unban(int argc, char **argv, int sender)
+    {
+        if(argc <= 1)
+        {
+            sendf(sender, 1, "ris", N_SERVMSG, "Please specify ban id");
+            return;
+        }
+        char *end = NULL;
+        int id = (int)strtol(argv[1], &end, 10);
+        if(end <= argv[1] || *end || (id >= 0 && !bannedips.inrange(id)))
+        {
+            sendf(sender, 1, "ris", N_SERVMSG, tempformatstring("Invalid ban id: %s", argv[1]));
+            return;
+        }
+        if(id >= 0)
+        {
+            bannedips.remove(id);
+            sendf(sender, 1, "ris", N_SERVMSG, "Ban removed");
+        }
+        else
+        {
+            bannedips.shrink(0);
+            sendservmsg("cleared all bans");
+        }
+    }*/
+    void unban(int banid)
+    {
+        if(!bannedips.inrange(banid))
+        {
+            //sendf(ci->clientnum, 1, "ris", N_SERVMSG, tempformatstring("Invalid ban id: %d", banid));
+            out(ECHO_CONSOLE, "[Catch]: Invalid ID. Client attempted to unban ID %d", banid);
+            return;
+        }
+        else bannedips.remove(banid);
+    }
     
     int allowconnect(clientinfo *ci, const char *pwd = "")
     {
@@ -3118,6 +3229,11 @@ best.add(clients[i]); \
             authsucceeded(id);
         else if(sscanf(cmd, "chalauth %u %255s", &id, val) == 2)
             authchallenged(id, val);
+        else if(matchstring(cmd, cmdlen, "cleargbans"))
+            gbans.clear();
+        else if(sscanf(cmd, "addgban %100s", val) == 1)
+            gbans.add(val);
+        
     }
     
     void receivefile(int sender, uchar *data, int len)
@@ -3884,7 +4000,7 @@ curmsg = p.length(); \
                 else if(ci->getmap) sendf(sender, 1, "ris", N_SERVMSG, "\f7Map is already downloading, please wait.");
                 else
                 {
-                    sendservmsgf("\f0%s \f7is downloading map \"%s\"...", colorname(ci), smapname);
+                    sendservmsgf("\f0%s \f7is downloading map \"%s\"...", colorname(ci), smapname == "" ? "[new map]" : smapname);
                     if((ci->getmap = sendfile(sender, 2, mapdata, "ri", N_SENDMAP)))
                         ci->getmap->freeCallback = freegetmap;
                         ci->needclipboard = totalmillis ? totalmillis : 1;

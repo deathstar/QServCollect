@@ -843,11 +843,15 @@ namespace server
     extern void clearbans();
     extern void clearipbans();
     extern void ipban(const char *ipname);
+    extern void listbans(int cn);
+    extern void unban(int banid);
     extern void privilegemsg(int min_privilege, const char *fmt, ...);
     extern void switchallowmaster();
     extern void switchdisallowmaster();
     extern bool persist;
     extern void _storeflagruns();
+    extern void adduser(char *name, char *desc, char *pubkey, char *priv);
+    extern void sendbanlist(int cn);
 
     struct clientinfo;
 }

@@ -163,6 +163,8 @@ struct stringformatter
     }
 };
 
+extern char *tempformatstring(const char *fmt, ...) PRINTFARGS(1, 2);
+
 #define formatstring(d) stringformatter((char *)d)
 #define defformatstring(d) string d; formatstring(d)
 #define defvformatstring(d,last,fmt) string d; { va_list ap; va_start(ap, last); vformatstring(d, fmt, ap); va_end(ap); }
@@ -1020,6 +1022,11 @@ template <class T, int SIZE> struct queue
     }
 };
 
+template<size_t N> inline bool matchstring(const char *s, size_t len, const char (&d)[N])
+{
+    return len == N-1 && !memcmp(s, d, N-1);
+}
+
 inline char *newstring(size_t l)                { return new char[l+1]; }
 inline char *newstring(const char *s, size_t l) { return copystring(newstring(l), s, l+1); }
 inline char *newstring(const char *s)           { return newstring(s, strlen(s));          }
@@ -1197,6 +1204,18 @@ extern void sendstring(const char *t, vector<uchar> &p);
 extern void getstring(char *t, ucharbuf &p, int len);
 template<size_t N> static inline void getstring(char (&t)[N], ucharbuf &p) { getstring(t, p, int(N)); }
 extern void filtertext(char *dst, const char *src, bool whitespace = true, int len = sizeof(string)-1);
+
+
+struct ipmask
+{
+    enet_uint32 ip, mask;
+    
+    void parse(const char *name);
+    int print(char *buf) const;
+    bool check(enet_uint32 host) const { return (host & mask) == ip; }
+};
+
+
 
 #endif
 
