@@ -59,7 +59,8 @@ namespace server {
     }
     
     QSERV_CALLBACK reloadconfig_cmd(p) {
-        execfile("config/server-init.cfg", false);
+        execfile("config/modifier.cfg", false);
+        out(ECHO_CONSOLE, "Reloaded configuration from config/modifier.cfg");
         out(ECHO_ALL, "Server has reloaded configuration. Update your server list and reconnect to see changes");
     }
     QSERV_CALLBACK syncauth_cmd(p) {
