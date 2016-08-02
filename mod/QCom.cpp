@@ -40,7 +40,7 @@ namespace server {
         ncommand("teampersist", "\f7Toggle persistant teams on or off. Usage: #teampersist <0/1> (0 for off, 1 for on)", PRIV_MASTER, teampersist_cmd, 1);
         ncommand("allowmaster", "\f7Allows clients to claim master. Usage: #allowmaster <0/1> (0 for off, 1 for on)", PRIV_ADMIN, allowmaster_cmd, 1);
         ncommand("kill", "\f7Brutally murders a player. Usage: #kill <cn>", PRIV_ADMIN, kill_cmd, 1);
-        ncommand("rename", "\f7Renames a player. Usage: #rename <cn>", PRIV_ADMIN, rename_cmd, 2);
+        ncommand("rename", "\f7Renames a player. Usage: #rename <cn> <new name>", PRIV_ADMIN, rename_cmd, 2);
         ncommand("addkey", "\f7Adds an authkey to the server. \nUsage: #addkey <name> <domain> <public key> <privilege>", PRIV_ADMIN, addkey_cmd, 4);
         ncommand("listbans", "\f7Lists all ip bans. Usage: #listbans", PRIV_ADMIN, listbans_cmd, 0);
         ncommand("reloadconfig","\f7Reloads server-init.cfg configuration. Usage: #reloadconfig", PRIV_ADMIN, reloadconfig_cmd, 0);
