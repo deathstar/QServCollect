@@ -398,6 +398,8 @@ namespace server {
     VAR(autodemo, 0, 1, 1);            //record demos automatically
     VAR(welcomewithname, 0, 1, 1);     //welcome a client with name
     VAR(serverconnectmsg, 0, 1, 1);    //incomming connection alerts for admins
+    VAR(nodamage, 0, 1, 1);
+    VAR(notkdamage, 0, 1, 1);          //no damage for teamkills 
     
     VARF(publicserver, 0, 0, 2, {
         switch(publicserver)
@@ -2433,7 +2435,12 @@ best.add(clients[i]); \
     void dodamage(clientinfo *target, clientinfo *actor, int damage, int gun, const vec &hitpush = vec(0, 0, 0))
     {
         gamestate &ts = target->state;
-        ts.dodamage(damage);
+        if(notkdamage) {
+            if(!isteam(actor->team, target->team))
+                ts.dodamage(damage);
+        }
+        else if(nodamage) {}
+        else ts.dodamage(damage);
         if(target!=actor && !isteam(target->team, actor->team)) actor->state.damage += damage;
         sendf(-1, 1, "ri6", N_DAMAGE, target->clientnum, actor->clientnum, damage, ts.armour, ts.health);
         if(target==actor) target->setpushed();
