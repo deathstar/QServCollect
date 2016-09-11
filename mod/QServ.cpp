@@ -1,6 +1,7 @@
 #include "QServ.h"
 #include "../GeoIP/libGeoIP/GeoIPCity.h"
 #include "../GeoIP/libGeoIP/GeoIP.h"
+#include <netdb.h>
 
 //includes geoip handling, command system and a lot of useful tools
 
@@ -362,21 +363,24 @@ namespace server {
         return m_cmdprefix;
     }
     
+    bool isLocalHost()
+    {
+        hostent* localHost = gethostbyname("localhost");
+        char* localIP = inet_ntoa(*(struct in_addr *)*localHost->h_addr_list);
+        if(!strcmp(localHost->h_name, "localhost")) return true; //reversed strcmp
+        else return false;
+    }
+    
     void QServ::getLocation(clientinfo *ci) {
        char *ip = toip(ci->clientnum);
-       /*defformatstring(location)("%s",congeoip(ip));
-       out(ECHO_SERV, "\f0%s \f7connected: \f2%s", colorname(ci), cgip(ip).c_str());
-       out(ECHO_NOCOLOR, "%s connected: %s", colorname(ci), cgip(ip).c_str()); 
-       */
+
        const char *location;
-       //const char *localip[] = {"192.168.1.1", "192.168.1.2", "192.168.1.3", "192.168.1.4", "192.168.1.5", "192.168.1.6", "192.168.1.7", "192.168.1.8", "192.168.1.9", "192.168.1.10", "192.168.1.11", "192.168.1.12"};
-	   if(!strcmp("127.0.0.1", ip) || !strcmp("192.168.1.1",ip) || !strcmp("192.168.1.2",ip) || !strcmp("192.168.1.3",ip)  || !strcmp("192.168.1.4",ip)  || !strcmp("192.168.1.5",ip)  || !strcmp("192.168.1.6",ip)  || !strcmp("192.168.1.7",ip)  || !strcmp("192.168.1.8",ip)  || !strcmp("192.168.1.9",ip)  || !strcmp("192.168.1.10",ip)  || !strcmp("192.168.1.11",ip)  || !strcmp("192.168.1.12",ip)  || !strcmp("192.168.1.13",ip)  || !strcmp("192.168.1.14",ip)  || !strcmp("192.168.1.15",ip)  || !strcmp("192.168.1.16",ip)  || !strcmp("192.168.1.17",ip)
-	    || !strcmp("192.168.1.18",ip)  || !strcmp("192.168.1.19",ip)  || !strcmp("192.168.1.20",ip)  || !strcmp("192.168.1.21",ip)  || !strcmp("192.168.1.22",ip) || !strcmp("192.168.0.1",ip) || !strcmp("192.168.0.2",ip) || !strcmp("192.168.0.3",ip) || !strcmp("192.168.0.4",ip) || !strcmp("192.168.0.5",ip) || !strcmp("192.168.0.6",ip) || !strcmp("192.168.0.7",ip) || !strcmp("192.168.0.8",ip) || !strcmp("192.168.0.9",ip) || !strcmp("192.168.0.10",ip) || !strcmp("192.168.0.11",ip) || !strcmp("192.168.0.12",ip) || !strcmp("192.168.0.13",ip) 
-	    || !strcmp("192.168.0.14",ip) || !strcmp("192.168.0.15",ip) || !strcmp("192.168.0.16",ip) || !strcmp("192.168.0.17",ip) || !strcmp("192.168.0.18",ip) || !strcmp("192.168.0.19",ip) || !strcmp("192.168.0.20",ip) || !strcmp("192.168.0.21",ip) || !strcmp("192.168.0.22",ip)) {
+        if(isLocalHost()) {
             location = (char*)"localhost";
         } else {
             location =  cgip(ip).c_str();
         }
+        
       int type = 0;
         const char *types[] = {
             " connected from \f3Unknown",
