@@ -363,19 +363,11 @@ namespace server {
         return m_cmdprefix;
     }
     
-    bool isLocalHost()
-    {
-        hostent* localHost = gethostbyname("localhost");
-        char* localIP = inet_ntoa(*(struct in_addr *)*localHost->h_addr_list);
-        if(!strcmp(localHost->h_name, "localhost")) return true; //reversed strcmp
-        else return false;
-    }
-    
     void QServ::getLocation(clientinfo *ci) {
        char *ip = toip(ci->clientnum);
 
        const char *location;
-        if(isLocalHost()) {
+        if(strlen(ip) <= 11) { //localhost ip 
             location = (char*)"localhost";
         } else {
             location =  cgip(ip).c_str();
