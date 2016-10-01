@@ -399,7 +399,8 @@ namespace server {
     VAR(welcomewithname, 0, 1, 1);     //welcome a client with name
     VAR(serverconnectmsg, 0, 1, 1);    //incomming connection alerts for admins
     VAR(nodamage, 0, 1, 1);
-    VAR(notkdamage, 0, 1, 1);          //no damage for teamkills 
+    VAR(notkdamage, 0, 1, 1);          //no damage for teamkills
+    VAR(autosendmap, 0, 1, 1);         //automatically sends map in edit mode
     
     VARF(publicserver, 0, 0, 2, {
         switch(publicserver)
@@ -3271,6 +3272,30 @@ best.add(clients[i]); \
         }
     }
     
+    bool z_sendmap(clientinfo *ci, clientinfo *sender = NULL, stream *map = NULL, bool force = false, bool verbose = true)
+    {
+        if(!map) map = mapdata;
+        if(!map) { if(verbose && sender) sendf(sender->clientnum, 1, "ris", N_SERVMSG, "no map to send"); }
+        else if(ci->getmap && !force)
+        {
+            if(verbose && sender) sendf(sender->clientnum, 1, "ris", N_SERVMSG,
+                                        ci->clientnum == sender->clientnum ? "already sending map" : tempformatstring("already sending map to %s", colorname(ci)));
+        }
+        else
+        {
+            if(verbose) sendservmsgf("[%s is getting the map]", colorname(ci));
+            ENetPacket *getmap = sendfile(ci->clientnum, 2, map, "ri", N_SENDMAP);
+            if(getmap)
+            {
+                getmap->freeCallback = freegetmap;
+                ci->getmap = getmap;
+            }
+            ci->needclipboard = totalmillis ? totalmillis : 1;
+            return true;
+        }
+        return false;
+    }
+    
     void connected(clientinfo *ci)
     {
         if(m_demo) enddemoplayback();
@@ -3309,6 +3334,7 @@ best.add(clients[i]); \
                 sendf(ci->clientnum,1,"ris",N_SERVMSG,welcomenonamemsg);
             }
         }
+        if(m_edit && autosendmap) z_sendmap(ci, NULL);
         qs.getLocation(ci);
     }
     
