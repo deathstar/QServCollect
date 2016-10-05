@@ -363,17 +363,72 @@ namespace server {
         return m_cmdprefix;
     }
     
+#include <stdio.h>
+#include <stdlib.h>
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+#include <net/if.h>
+#include <ifaddrs.h>
+#include <errno.h>
+ 
     void QServ::getLocation(clientinfo *ci) {
-       char *ip = toip(ci->clientnum);
-
-       const char *location;
-        if(strlen(ip) <= 11) { //localhost ip 
-            location = (char*)"localhost";
+        
+        //retrive localhost ip INET en1
+        struct ifaddrs *myaddrs, *ifa;
+        void *in_addr;
+        char buf[64];
+        
+        if(getifaddrs(&myaddrs) != 0)
+        {
+            perror("getifaddrs");
+            exit(1);
+        }
+        
+        for (ifa = myaddrs; ifa != NULL; ifa = ifa->ifa_next)
+        {
+            if (ifa->ifa_addr == NULL)
+                continue;
+            if (!(ifa->ifa_flags & IFF_UP))
+                continue;
+            
+            switch (ifa->ifa_addr->sa_family)
+            {
+                case AF_INET:
+                {
+                    struct sockaddr_in *s4 = (struct sockaddr_in *)ifa->ifa_addr;
+                    in_addr = &s4->sin_addr;
+                    break;
+                }
+                    /* extensive networking information - needs seperate function call
+                     case AF_INET6:
+                     {
+                     struct sockaddr_in6 *s6 = (struct sockaddr_in6 *)ifa->ifa_addr;
+                     in_addr = &s6->sin6_addr;
+                     break;
+                     }
+                     */
+                default:
+                    continue;
+            }
+            
+            if (!inet_ntop(ifa->ifa_addr->sa_family, in_addr, buf, sizeof(buf)))
+            {
+                printf("[WARNING]: %s: inet_ntop failed! Connecting from a localhost internal IP could cause a crash\n", ifa->ifa_name);
+            }
+        }
+        freeifaddrs(myaddrs);
+        
+        char *ip = toip(ci->clientnum);
+        const char *location;
+        if(!strcmp("127.0.0.1", ip) || !strcmp(buf, ip)) {
+            location =  (char*)"localhost";
         } else {
             location =  cgip(ip).c_str();
         }
         
-      int type = 0;
+        int type = 0;
         const char *types[] = {
             " connected from \f3Unknown",
             " \f7connected (\f2Host\f7)",
@@ -389,9 +444,9 @@ namespace server {
         char lmsg[255];
         char pmsg[255];
         const char clientip = getclientip(ci->clientnum);
-
+        
         if(strlen(location) > 2 && strlen(ip) > 2 && strcmp("(null)", location)) {
-  			if(!strcmp("(null)", location)) {
+            if(!strcmp("(null)", location)) {
                 type = 0;
                 typeconsole = 0;
             } else if(ci->local) {
@@ -404,11 +459,11 @@ namespace server {
                 sprintf(pmsg, "%s%s", typesconsole[typeconsole], location);
                 
             }
-                //code below moved up into else
-                defformatstring(msg)("\f0%s\f7%s", ci->name, (type < 2) ? types[type] : lmsg);
-            	defformatstring(nocolormsg)("%s%s", ci->name, (typeconsole < 2) ? typesconsole[typeconsole] : pmsg);
-           		out(ECHO_SERV,"%s",msg);
-            	out(ECHO_NOCOLOR, "%s",nocolormsg);
+            //code below moved up into else
+            defformatstring(msg)("\f0%s\f7%s", ci->name, (type < 2) ? types[type] : lmsg);
+            defformatstring(nocolormsg)("%s%s", ci->name, (typeconsole < 2) ? typesconsole[typeconsole] : pmsg);
+            out(ECHO_SERV,"%s",msg);
+            out(ECHO_NOCOLOR, "%s",nocolormsg);
         }
     }
 
