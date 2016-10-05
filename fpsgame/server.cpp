@@ -46,8 +46,6 @@ namespace server {
         out(ECHO_IRC, "All bans cleared");
     }
     
-    
-    
     void addban(uint ip, int expire)
     {
         allowedips.removeobj(ip);
@@ -401,6 +399,7 @@ namespace server {
     VAR(nodamage, 0, 1, 1);
     VAR(notkdamage, 0, 1, 1);          //no damage for teamkills
     VAR(autosendmap, 0, 1, 1);         //automatically sends map in edit mode
+    VAR(instacoop, 0, 1, 1);           //insta like characteristics of edit mode
     
     VARF(publicserver, 0, 0, 2, {
         switch(publicserver)
@@ -3244,10 +3243,54 @@ best.add(clients[i]); \
         
     }
     
+    SVAR(mappath, "packages/base");
+    bool z_savemap(const char *mname, stream *&file = mapdata)
+    {
+        if(!file) return false;
+        int len = (int)min(file->size(), stream::offset(INT_MAX));
+        if(len <= 0 && len > 64<<20) return false;
+        uchar *data = new uchar[len];
+        if(!data) return false;
+        file->seek(0, SEEK_SET);
+        file->read(data, len);
+        delete file;
+        string fname;
+        if(mappath[0]) sformatstring(fname, "%s/%s.ogz", mappath, mname);
+        else sformatstring(fname, "%s.ogz", mname);
+        file = openrawfile(path(fname), "w+b");
+        if(file)
+        {
+            file->write(data, len);
+            delete[] data;
+            return true;
+        }
+        else
+        {
+            file = opentempfile("mapdata", "w+b");
+            if(file) file->write(data, len);
+            delete[] data;
+            return false;
+        }
+    }
+
+    bool z_loadmap(const char *mname, stream *&data = mapdata)
+    {
+        string fname;
+        if(mappath[0]) sformatstring(fname, "%s/%s.ogz", mappath, mname);
+        else sformatstring(fname, "%s.ogz", mname);
+        stream *map = openrawfile(path(fname), "rb");
+        if(!map) return false;
+        stream::offset len = map->size();
+        if(len <= 0 || len > 16<<20) { delete map; return false; }
+        DELETEP(data);
+        data = map;
+        return true;
+    }
+
     void receivefile(int sender, uchar *data, int len)
     {
-        if(!m_edit || len <= 0 || len > 4*1024*1024) return; //ignore empty sendmaps
         clientinfo *ci = getinfo(sender);
+        if(!m_edit || len <= 0 || len > 4*1024*1024 || instacoop && ci->privilege != PRIV_ADMIN) return; //ignore empty sendmaps/instacoop w/o admin
         if(ci->state.state==CS_SPECTATOR && !ci->privilege && !ci->local) return;
         if(mapdata) DELETEP(mapdata);
         //if(!len) return; unneeded empty file check
@@ -3324,6 +3367,13 @@ best.add(clients[i]); \
         
         if(m_demo) setupdemoplayback();
         
+        if(m_edit && autosendmap) {
+            z_sendmap(ci, NULL, mapdata, true, false);
+            z_loadmap(smapname, mapdata);
+            z_savemap(smapname, mapdata);
+        }
+        if(instacoop) ci->isEditMuted = true;
+        
         if(servermotd[0]) {
             if(welcomewithname) {
                 defformatstring(welcomemsg)("\f7Welcome to %s\f7, \f0%s\f7. %s",serverdesc,colorname(ci),servermotd);
@@ -3334,7 +3384,6 @@ best.add(clients[i]); \
                 sendf(ci->clientnum,1,"ris",N_SERVMSG,welcomenonamemsg);
             }
         }
-        if(m_edit && autosendmap) z_sendmap(ci, NULL);
         qs.getLocation(ci);
     }
     
@@ -3360,7 +3409,6 @@ best.add(clients[i]); \
             {
                 case N_CONNECT:
                 {
-                    
                     getstring(text, p);
                     //filtertext given another variable
                     filtertext(text, text, false, MAXNAMELEN);
@@ -3518,8 +3566,15 @@ curmsg = p.length(); \
                 }
                 if(val)
                 {
-                    ci->state.editstate = ci->state.state;
-                    ci->state.state = CS_EDITING;
+                    if(instacoop) {
+                        forcespectator(ci);
+                        ci->isSpecLocked = true;
+                        sendf(ci->clientnum, 1, "ris", N_SERVMSG, "\f3Error: Editing is not allowed, please reconnect to continue playing.");
+                    }
+                    else {
+                        ci->state.editstate = ci->state.state;
+                        ci->state.state = CS_EDITING;
+                    }
                     ci->events.setsize(0);
                     ci->state.rockets.reset();
                     ci->state.grenades.reset();
@@ -3943,7 +3998,7 @@ curmsg = p.length(); \
                     spinfo->state.state = CS_SPECTATOR;
                     spinfo->state.timeplayed += lastmillis - spinfo->state.lasttimeplayed;
                     if(!spinfo->local && !spinfo->privilege) aiman::removeai(spinfo);
-                    out(ECHO_SERV,"\f0%s \f7is now a spectator", colorname(spinfo));
+                    if(!spinfo->isSpecLocked) out(ECHO_SERV,"\f0%s \f7is now a spectator", colorname(spinfo));
                 }
                 else if(spinfo->state.state==CS_SPECTATOR && !val)
                 {
@@ -3952,7 +4007,7 @@ curmsg = p.length(); \
                     spinfo->state.lasttimeplayed = lastmillis;
                     aiman::addclient(spinfo);
                     if(spinfo->clientmap[0] || spinfo->mapcrc) checkmaps();
-                    out(ECHO_SERV,"\f0%s \f7is no longer a spectator", colorname(spinfo));
+                    if(!spinfo->isSpecLocked) out(ECHO_SERV,"\f0%s \f7is no longer a spectator", colorname(spinfo));
                     
                 }
                 if(!spinfo->isSpecLocked) {
