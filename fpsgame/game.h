@@ -93,6 +93,7 @@ enum
     M_COLLECT    = 1<<19
 };
 
+
 static struct gamemodeinfo
 {
     const char *name;
@@ -362,6 +363,7 @@ static const struct guninfo { int sound, attackdelay, damage, spread, projspeed,
 
 #include "ai.h"
 
+
 // inherited by fpsent and server clients
 struct fpsstate
 {
@@ -507,10 +509,20 @@ struct fpsstate
         }
         else
         {
-            armourtype = A_BLUE;
-            armour = 25;
-            ammo[GUN_PISTOL] = 40;
-            ammo[GUN_GL] = 1;
+            VAR(instacoop, 0, 1, 1);        //enables 1 health and 99 rifle ammo in coop for autosendmap games
+            if(instacoop) {
+                armour = 0;
+                health = 1;
+                gunselect = GUN_RIFLE;
+                ammo[GUN_RIFLE] = 100;
+            }
+            // below is for regular coop-edit 
+            else {
+                armourtype = A_BLUE;
+                armour = 25;
+                ammo[GUN_PISTOL] = 40;
+                ammo[GUN_GL] = 1;
+            }
         }
     }
 
