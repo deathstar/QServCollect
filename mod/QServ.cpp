@@ -363,6 +363,25 @@ namespace server {
         return m_cmdprefix;
     }
     
+    bool isPartOf(char* w1, char* w2)
+    {
+        int i=0;
+        int j=0;
+        
+        for(i;i < strlen(w1); i++)
+        {
+            if(w1[i] == w2[j])
+            {
+                j++;
+            }
+        }
+        
+        if(strlen(w2) == j)
+            return true;
+        else
+            return false;
+    }
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/types.h>
@@ -375,7 +394,6 @@ namespace server {
  
     void QServ::getLocation(clientinfo *ci) {
         
-        //retrive localhost ip INET en1
         struct ifaddrs *myaddrs, *ifa;
         void *in_addr;
         char buf[64];
@@ -401,14 +419,14 @@ namespace server {
                     in_addr = &s4->sin_addr;
                     break;
                 }
-                    /* extensive networking information - needs seperate function call
-                     case AF_INET6:
-                     {
+                /* extensive networking information
+                case AF_INET6:
+                {
                      struct sockaddr_in6 *s6 = (struct sockaddr_in6 *)ifa->ifa_addr;
                      in_addr = &s6->sin6_addr;
                      break;
-                     }
-                     */
+                }
+                */
                 default:
                     continue;
             }
@@ -420,15 +438,19 @@ namespace server {
         }
         freeifaddrs(myaddrs);
         
-        char *ip = toip(ci->clientnum);
-        const char *location;
-        if(!strcmp("127.0.0.1", ip) || !strcmp(buf, ip)) {
+       char *ip = toip(ci->clientnum);
+       const char *location;
+        /* checks localhost, internal ip, and other internal ip on net
+        10.0.0.0 - 10.255.255.255 (10/8 prefix)
+        172.16.0.0 - 172.31.255.255 (172.16/12 prefix)
+        192.168.0.0 - 192.168.255.255 (192.168/16 prefix)*/
+        if(!strcmp("127.0.0.1", ip) || !strcmp(buf, ip) || isPartOf(ip,"10.") || isPartOf(ip,"172.16") || isPartOf(ip,"192.168")) {
             location =  (char*)"localhost";
         } else {
             location =  cgip(ip).c_str();
         }
         
-        int type = 0;
+      int type = 0;
         const char *types[] = {
             " connected from \f3Unknown",
             " \f7connected (\f2Host\f7)",
@@ -444,9 +466,9 @@ namespace server {
         char lmsg[255];
         char pmsg[255];
         const char clientip = getclientip(ci->clientnum);
-        
+
         if(strlen(location) > 2 && strlen(ip) > 2 && strcmp("(null)", location)) {
-            if(!strcmp("(null)", location)) {
+  			if(!strcmp("(null)", location)) {
                 type = 0;
                 typeconsole = 0;
             } else if(ci->local) {
@@ -459,11 +481,11 @@ namespace server {
                 sprintf(pmsg, "%s%s", typesconsole[typeconsole], location);
                 
             }
-            //code below moved up into else
-            defformatstring(msg)("\f0%s\f7%s", ci->name, (type < 2) ? types[type] : lmsg);
-            defformatstring(nocolormsg)("%s%s", ci->name, (typeconsole < 2) ? typesconsole[typeconsole] : pmsg);
-            out(ECHO_SERV,"%s",msg);
-            out(ECHO_NOCOLOR, "%s",nocolormsg);
+                //code below moved up into else
+                defformatstring(msg)("\f0%s\f7%s", ci->name, (type < 2) ? types[type] : lmsg);
+            	defformatstring(nocolormsg)("%s%s", ci->name, (typeconsole < 2) ? typesconsole[typeconsole] : pmsg);
+           		out(ECHO_SERV,"%s",msg);
+            	out(ECHO_NOCOLOR, "%s",nocolormsg);
         }
     }
 
