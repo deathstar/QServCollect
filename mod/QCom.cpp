@@ -1098,15 +1098,18 @@ namespace server {
         }
     }
     
+#include <iostream>
+#include <string>
+#include <stdio.h>
+#include <time.h>
+    
     QSERV_CALLBACK localtime_cmd(p) {
-        #include <stdio.h>
-        #include <time.h>
-        time_t rawtime;
-        struct tm * timeinfo;
-        time (&rawtime);
-        timeinfo = localtime (&rawtime);
-        defformatstring(buffer)("Local Time and Date: \f1%s", asctime(timeinfo));
-        sendf(CMD_SENDER, 1, "ris", N_SERVMSG, buffer);
+        time_t     now = time(0);
+        struct tm  tstruct;
+        char       buf[80];
+        tstruct = *localtime(&now);
+        strftime(buf, sizeof(buf), "Date/time for server host: \f1%Y-%m-%d %X %p", &tstruct);
+        sendf(CMD_SENDER, 1, "ris", N_SERVMSG, buf);
     }
     
     
