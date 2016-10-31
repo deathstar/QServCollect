@@ -18,7 +18,7 @@ namespace server {
         ncommand("invadmin", "\f7Claim invisible administrator. Usage: #invadmin <adminpass>", PRIV_NONE, invadmin_cmd, 1);
         ncommand("cheater", "\f7Accuses someone of cheating and alerts moderators. Usage: #cheater <cn>", PRIV_NONE, cheater_cmd, 1);
         ncommand("whois", "\f7View information about a player. Usage: #whois <cn>", PRIV_NONE, whois_cmd, 1);
-        ncommand("time", "\f7View the current time. Usage: #time", PRIV_NONE, time_cmd, 0);
+        ncommand("time", "\f7View the current time. Usage: #time <UTC Offset Number>", PRIV_NONE, time_cmd, 1);
         ncommand("pm", "\f7Send a private message to someone. Usage #pm <cn> <private message>", PRIV_NONE, pm_cmd,2);
         ncommand("callops", "\f7Call all operators on the Internet Relay Chat Server. Usage: #callops", PRIV_NONE, callops_cmd, 0);
         ncommand("mapsucks", "\f7Votes for an intermission to change the map. Usage: #mapsucks", PRIV_NONE, mapsucks_cmd, 0);
@@ -1111,25 +1111,25 @@ namespace server {
         strftime(buf, sizeof(buf), "Date/time for server host: \f1%Y-%m-%d %X %p", &tstruct);
         sendf(CMD_SENDER, 1, "ris", N_SERVMSG, buf);
     }
-    
-    
+
     QSERV_CALLBACK time_cmd(p) {
-        #define MST (-7)
-        time_t rawtime;
-        struct tm * ptm;
-        
-        time ( &rawtime );
-        
-        ptm = gmtime ( &rawtime );
-        
-        defformatstring(la_time)(" Los Angeles, CA (U.S.):    \f1%2d:%02d\n", (ptm->tm_hour+MST)%24, ptm->tm_min);
-        defformatstring(uk_time)("\f7United Kingdom (GMT+1):  \f1%2d:%02d\n", (ptm->tm_hour+MST+8)%24, ptm->tm_min);
-        defformatstring(ru_time)("\f7Moscow, Russia (GMT+3):  \f1%2d:%02d\n", (ptm->tm_hour+MST+10)%24, ptm->tm_min);
-        defformatstring(gf_time)("\f7Germany/France (GMT+2):  \f1%2d:%02d",   (ptm->tm_hour+MST+9)%24, ptm->tm_min);
-        defformatstring(timebuff)("World Times (Military Format) \n%s %s %s %s", la_time, uk_time, ru_time, gf_time);
-        sendf(CMD_SENDER, 1, "ris", N_SERVMSG, timebuff);
+        int UTCOffset = -1;
+        UTCOffset = atoi(args[1]);
+        if(UTCOffset != NULL) {
+            #define UTC (0)
+            time_t rawtime;
+            struct tm * ptm;
+            time ( &rawtime );
+            ptm = gmtime ( &rawtime );
+            //tm_isdst is not accurate nor reliable for UTC applications. UTC time is tm_hour without UTCOffset variable
+            defformatstring(TimeOffset)("Time for UTC (%d): %2d:%02d\n", UTCOffset, (ptm->tm_hour+UTCOffset)%24, ptm->tm_min);
+            defformatstring(TimeOffsetDST)("Time for UTC (%d) with Daylight Savings Time: %2d:%02d\n", UTCOffset, (ptm->tm_hour+UTCOffset+1)%24, ptm->tm_min);
+            defformatstring(TimeOutput)("%s%s", TimeOffset, TimeOffsetDST);
+            sendf(CMD_SENDER, 1, "ris", N_SERVMSG, TimeOutput);
+        }
+        else sendf(CMD_SENDER, 1, "ris", N_SERVMSG, CMD_DESC(cid));
     }
-    
+
     QSERV_CALLBACK bunny_cmd(p) {
         if(strlen(fulltext) > 0) {
             
