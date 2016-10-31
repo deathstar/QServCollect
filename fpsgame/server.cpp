@@ -2091,7 +2091,7 @@ namespace server {
         }
         if(lockmaprotation && !ci->local && ci->privilege < (lockmaprotation > 1 ? PRIV_ADMIN : PRIV_MASTER) && findmaprotation(reqmode, map) < 0)
         {
-            sendf(sender, 1, "ris", N_SERVMSG, "\f3Error: You may not select a different map (Rotation locked)");
+            sendf(sender, 1, "ris", N_SERVMSG, "\f3Error: You may not select a different mode/map");
             return;
         }
         copystring(ci->mapvote, map);
