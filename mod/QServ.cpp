@@ -433,10 +433,10 @@ namespace server {
         char *ip = toip(ci->clientnum);
         const char *location;
         /* checks localhost, internal ip, and other internal ip on net
-         10.0.0.0 - 10.255.255.255 (10/8 prefix) <---- not checked
+         10.0.0.0 - 10.255.255.255 (10/8 prefix)
          172.16.0.0 - 172.31.255.255 (172.16/12 prefix)
          192.168.0.0 - 192.168.255.255 (192.168/16 prefix)*/
-        if(!strcmp("127.0.0.1", ip) || !strcmp(buf, ip) || isPartOf(ip,"172.16") || isPartOf(ip,"192.168")) {
+        if(!strcmp("127.0.0.1", ip) || !strcmp(buf, ip) || isPartOf(ip,"10.") || isPartOf(ip,"172.16") || isPartOf(ip,"192.168")) {
             location =  (char*)"localhost";
         } else {
             location =  cgip(ip).c_str();
