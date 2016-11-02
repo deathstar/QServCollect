@@ -1114,20 +1114,24 @@ namespace server {
 
     QSERV_CALLBACK time_cmd(p) {
         int UTCOffset = -1;
-        UTCOffset = atoi(args[1]);
-        if(UTCOffset != NULL) {
-            #define UTC (0)
-            time_t rawtime;
-            struct tm * ptm;
-            time ( &rawtime );
-            ptm = gmtime ( &rawtime );
-            //tm_isdst is not accurate nor reliable for UTC applications. UTC time is tm_hour without UTCOffset variable
-            defformatstring(TimeOffset)("Time for UTC (%d): %2d:%02d\n", UTCOffset, (ptm->tm_hour+UTCOffset)%24, ptm->tm_min);
-            defformatstring(TimeOffsetDST)("Time for UTC (%d) with Daylight Savings Time: %2d:%02d\n", UTCOffset, (ptm->tm_hour+UTCOffset+1)%24, ptm->tm_min);
-            defformatstring(TimeOutput)("%s%s", TimeOffset, TimeOffsetDST);
-            sendf(CMD_SENDER, 1, "ris", N_SERVMSG, TimeOutput);
+        if(CMD_SA) {
+            UTCOffset = atoi(args[1]);
+            if(UTCOffset != NULL && args[1] != NULL) {
+                #define UTC (0)
+                time_t rawtime;
+                struct tm * ptm;
+                time ( &rawtime );
+                ptm = gmtime ( &rawtime );
+                //tm_isdst is not accurate nor reliable for UTC applications. UTC time is tm_hour without UTCOffset variable
+                defformatstring(TimeOffset)("Time for UTC (%d): %2d:%02d\n", UTCOffset, (ptm->tm_hour+UTCOffset)%24, ptm->tm_min);
+                defformatstring(TimeOffsetDST)("Time for UTC (%d) with Daylight Savings Time: %2d:%02d\n", UTCOffset, (ptm->tm_hour+UTCOffset+1)%24, ptm->tm_min);
+                defformatstring(TimeOutput)("%s%s", TimeOffset, TimeOffsetDST);
+                sendf(CMD_SENDER, 1, "ris", N_SERVMSG, TimeOutput);
+            }
+            else sendf(CMD_SENDER, 1, "ris", N_SERVMSG, "Please enter a time zone number");
         }
         else sendf(CMD_SENDER, 1, "ris", N_SERVMSG, CMD_DESC(cid));
+
     }
 
     QSERV_CALLBACK bunny_cmd(p) {
