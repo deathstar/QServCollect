@@ -1925,6 +1925,74 @@ namespace server {
         return true;
     }
     
+    bool z_sendmap(clientinfo *ci, clientinfo *sender = NULL, stream *map = NULL, bool force = false, bool verbose = true)
+    {
+        if(!map) map = mapdata;
+        if(!map) { if(verbose && sender) sendf(sender->clientnum, 1, "ris", N_SERVMSG, "no map to send"); }
+        else if(ci->getmap && !force)
+        {
+            if(verbose && sender) sendf(sender->clientnum, 1, "ris", N_SERVMSG,
+                                        ci->clientnum == sender->clientnum ? "already sending map" : tempformatstring("already sending map to %s", colorname(ci)));
+        }
+        else
+        {
+            if(verbose) sendservmsgf("[%s is getting the map]", colorname(ci));
+            ENetPacket *getmap = sendfile(ci->clientnum, 2, map, "ri", N_SENDMAP);
+            if(getmap)
+            {
+                getmap->freeCallback = freegetmap;
+                ci->getmap = getmap;
+            }
+            ci->needclipboard = totalmillis ? totalmillis : 1;
+            return true;
+        }
+        return false;
+    }
+    
+    SVAR(mappath, "packages/base");
+    bool z_savemap(const char *mname, stream *&file = mapdata)
+    {
+        if(!file) return false;
+        int len = (int)min(file->size(), stream::offset(INT_MAX));
+        if(len <= 0 && len > 64<<20) return false;
+        uchar *data = new uchar[len];
+        if(!data) return false;
+        file->seek(0, SEEK_SET);
+        file->read(data, len);
+        delete file;
+        string fname;
+        if(mappath[0]) sformatstring(fname, "%s/%s.ogz", mappath, mname);
+        else sformatstring(fname, "%s.ogz", mname);
+        file = openrawfile(path(fname), "w+b");
+        if(file)
+        {
+            file->write(data, len);
+            delete[] data;
+            return true;
+        }
+        else
+        {
+            file = opentempfile("mapdata", "w+b");
+            if(file) file->write(data, len);
+            delete[] data;
+            return false;
+        }
+    }
+
+    bool z_loadmap(const char *mname, stream *&data = mapdata)
+    {
+        string fname;
+        if(mappath[0]) sformatstring(fname, "%s/%s.ogz", mappath, mname);
+        else sformatstring(fname, "%s.ogz", mname);
+        stream *map = openrawfile(path(fname), "rb");
+        if(!map) return false;
+        stream::offset len = map->size();
+        if(len <= 0 || len > 16<<20) { delete map; return false; }
+        DELETEP(data);
+        data = map;
+        return true;
+    }
+    
     void loaditems()
     {
         resetitems();
@@ -2003,6 +2071,15 @@ namespace server {
         }
         if(smode) smode->setup();
         if(autodemo) setupdemorecord();
+        loopv(clients)
+        {
+        	//handle for changemap not just connected
+        	clientinfo *ci = clients[i];
+    		if(m_edit && autosendmap && !interm) {
+            	z_sendmap(ci, NULL, mapdata, true, false);
+            	z_loadmap(smapname, mapdata);
+        	}
+        }
     }
     void rotatemap(bool next)
     {
@@ -2417,7 +2494,11 @@ best.add(clients[i]); \
         //should checkmaps
     }
     
-    void startintermission() {gamelimit = min(gamelimit, gamemillis); checkintermission(); out(ECHO_IRC, "Intermission started");}
+    void startintermission() {
+    	gamelimit = min(gamelimit, gamemillis); 
+    	checkintermission(); 
+    	out(ECHO_IRC, "Intermission started");
+    }
     
     struct spreemsg {
         int frags;
@@ -3243,50 +3324,6 @@ best.add(clients[i]); \
             gbans.add(val);
         
     }
-    
-    SVAR(mappath, "packages/base");
-    bool z_savemap(const char *mname, stream *&file = mapdata)
-    {
-        if(!file) return false;
-        int len = (int)min(file->size(), stream::offset(INT_MAX));
-        if(len <= 0 && len > 64<<20) return false;
-        uchar *data = new uchar[len];
-        if(!data) return false;
-        file->seek(0, SEEK_SET);
-        file->read(data, len);
-        delete file;
-        string fname;
-        if(mappath[0]) sformatstring(fname, "%s/%s.ogz", mappath, mname);
-        else sformatstring(fname, "%s.ogz", mname);
-        file = openrawfile(path(fname), "w+b");
-        if(file)
-        {
-            file->write(data, len);
-            delete[] data;
-            return true;
-        }
-        else
-        {
-            file = opentempfile("mapdata", "w+b");
-            if(file) file->write(data, len);
-            delete[] data;
-            return false;
-        }
-    }
-
-    bool z_loadmap(const char *mname, stream *&data = mapdata)
-    {
-        string fname;
-        if(mappath[0]) sformatstring(fname, "%s/%s.ogz", mappath, mname);
-        else sformatstring(fname, "%s.ogz", mname);
-        stream *map = openrawfile(path(fname), "rb");
-        if(!map) return false;
-        stream::offset len = map->size();
-        if(len <= 0 || len > 16<<20) { delete map; return false; }
-        DELETEP(data);
-        data = map;
-        return true;
-    }
 
     void receivefile(int sender, uchar *data, int len)
     {
@@ -3314,30 +3351,6 @@ best.add(clients[i]); \
                 sendpacket(e.clientnum, 1, ci->clipboard);
             }
         }
-    }
-    
-    bool z_sendmap(clientinfo *ci, clientinfo *sender = NULL, stream *map = NULL, bool force = false, bool verbose = true)
-    {
-        if(!map) map = mapdata;
-        if(!map) { if(verbose && sender) sendf(sender->clientnum, 1, "ris", N_SERVMSG, "no map to send"); }
-        else if(ci->getmap && !force)
-        {
-            if(verbose && sender) sendf(sender->clientnum, 1, "ris", N_SERVMSG,
-                                        ci->clientnum == sender->clientnum ? "already sending map" : tempformatstring("already sending map to %s", colorname(ci)));
-        }
-        else
-        {
-            if(verbose) sendservmsgf("[%s is getting the map]", colorname(ci));
-            ENetPacket *getmap = sendfile(ci->clientnum, 2, map, "ri", N_SENDMAP);
-            if(getmap)
-            {
-                getmap->freeCallback = freegetmap;
-                ci->getmap = getmap;
-            }
-            ci->needclipboard = totalmillis ? totalmillis : 1;
-            return true;
-        }
-        return false;
     }
     
     void connected(clientinfo *ci)
