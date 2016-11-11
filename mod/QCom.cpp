@@ -70,7 +70,7 @@ namespace server {
                 if(togglenum==1) {
                     tagmode = true;
                     clientinfo *ci = qs.getClient(CMD_SENDER);
-                    out(ECHO_SERV, "\f7Tag mode is now \f0enabled");
+                    out(ECHO_SERV, "\f7Tag mode is now \f0enabled \f7for the next match");
                     
                 }
                 else if(togglenum==0) {
