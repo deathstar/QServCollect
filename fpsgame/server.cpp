@@ -400,8 +400,8 @@ namespace server {
     VAR(notkdamage, 0, 1, 1);          //no damage for teamkills
     VAR(autosendmap, 0, 1, 1);         //automatically sends map in edit mode
     VAR(instacoop, 0, 1, 1);           //insta like characteristics of edit mode
-    VAR(instacoop_gamelimit, 1000, 600000, 9999999); 
-    VAR(tagmode, 0, 1, 1);  
+    VAR(instacoop_gamelimit, 1000, 600000, 9999999);
+    VAR(tagmode, 0, 1, 1);
     
     VARF(publicserver, 0, 0, 2, {
         switch(publicserver)
@@ -1979,7 +1979,7 @@ namespace server {
             return false;
         }
     }
-
+    
     bool z_loadmap(const char *mname, stream *&data = mapdata)
     {
         string fname;
@@ -2032,7 +2032,7 @@ namespace server {
         teamkills.shrink(0);
         int mapsucksvotes = 0;
         loopv(clients)
-        {	
+        {
             clientinfo *ci = clients[i];
             ci->state.timeplayed += lastmillis - ci->state.lasttimeplayed;
             ci->votedmapsucks = false;
@@ -2058,15 +2058,17 @@ namespace server {
             ci->state.lasttimeplayed = lastmillis;
             if(m_mp(gamemode) && ci->state.state!=CS_SPECTATOR) sendspawn(ci);
             
-            if(tagmode) {
-            	int connectedclients = numclients(-1, true, true);
-        		int taggedcn = rand() % connectedclients + 0;
-        		clientinfo *taggedclient = (clientinfo *)getclientinfo(taggedcn);
-            	taggedclient->isTagged = true;
-            	if(ci->clientnum != taggedcn) ci->isTagged = false;
-            }
         }
-        if(tagmode) out(ECHO_SERV, "\f2Tag mode: A player is randomly selected to be it at the start of the match!");
+        if(tagmode) {
+            int connectedclients = numclients(-1, true, true);
+            if(connectedclients >= 1) {
+                int taggedcn = rand() % connectedclients + 0;
+                clientinfo *taggedclient = (clientinfo *)getclientinfo(taggedcn);
+                if(taggedclient->connected) taggedclient->isTagged = true;
+                else taggedclient->isTagged = false;
+            }
+            out(ECHO_SERV, "\f2Tag mode: A player is randomly selected to be it at the start of the match!");
+        }
         
         aiman::changemap();
         
@@ -2083,12 +2085,12 @@ namespace server {
         if(autodemo) setupdemorecord();
         loopv(clients)
         {
-        	//handle for changemap not just connected
-        	clientinfo *ci = clients[i];
-    		if(m_edit && autosendmap && !interm) {
-            	z_sendmap(ci, NULL, mapdata, true, false);
-            	z_loadmap(smapname, mapdata);
-        	}
+            //handle for changemap not just connected
+            clientinfo *ci = clients[i];
+            if(m_edit && autosendmap && !interm) {
+                z_sendmap(ci, NULL, mapdata, true, false);
+                z_loadmap(smapname, mapdata);
+            }
         }
     }
     void rotatemap(bool next)
@@ -2505,9 +2507,9 @@ best.add(clients[i]); \
     }
     
     void startintermission() {
-    	gamelimit = min(gamelimit, gamemillis); 
-    	checkintermission(); 
-    	out(ECHO_IRC, "Intermission started");
+        gamelimit = min(gamelimit, gamemillis);
+        checkintermission();
+        out(ECHO_IRC, "Intermission started");
     }
     
     struct spreemsg {
@@ -2544,11 +2546,11 @@ best.add(clients[i]); \
         }
         if(ts.health<=0)
         {
-        	if(tagmode && actor->isTagged) {
-        		actor->isTagged = false;
-        		target->isTagged = true;
-        		out(ECHO_SERV, "\f0%s \f7has been tagged by \f6%s. \f0%s \f7is now it!", colorname(target), colorname(actor), colorname(target));
-        	}
+            if(tagmode && actor->isTagged) {
+                actor->isTagged = false;
+                target->isTagged = true;
+                out(ECHO_SERV, "\f0%s \f7has been tagged by \f6%s. \f0%s \f7is now it!", colorname(target), colorname(actor), colorname(target));
+            }
             //QServ longshot and close up kill (y - depth, z - height, x - left/right)
             float x2 = target->state.o.x;     //target shot x
             float x1 = actor->state.o.x;      //actor shot x
@@ -3019,6 +3021,22 @@ best.add(clients[i]); \
     void clientdisconnect(int n)
     {
         clientinfo *ci = getinfo(n);
+        /*
+         if(tagmode) {
+         int connectedclients = numclients(-1, true, true);
+         ci->isTagged = false;
+         int taggedcn = rand() % connectedclients + 0;
+         clientinfo *taggedclient = (clientinfo *)getclientinfo(taggedcn);
+         if(taggedclient->connected) taggedclient->isTagged = true;
+         else if(!taggedclient->connected) {
+         taggedclient->isTagged = false;
+         taggedcn = 0;
+         tagmode = false;
+         }
+         else tagmode = false;
+         }
+         */
+        
         loopv(clients) if(clients[i]->authkickvictim == ci->clientnum) clients[i]->cleanauth();
         if(ci->connected)
         {
@@ -3158,31 +3176,31 @@ best.add(clients[i]); \
     
     
     /*
-    void unban(int argc, char **argv, int sender)
-    {
-        if(argc <= 1)
-        {
-            sendf(sender, 1, "ris", N_SERVMSG, "Please specify ban id");
-            return;
-        }
-        char *end = NULL;
-        int id = (int)strtol(argv[1], &end, 10);
-        if(end <= argv[1] || *end || (id >= 0 && !bannedips.inrange(id)))
-        {
-            sendf(sender, 1, "ris", N_SERVMSG, tempformatstring("Invalid ban id: %s", argv[1]));
-            return;
-        }
-        if(id >= 0)
-        {
-            bannedips.remove(id);
-            sendf(sender, 1, "ris", N_SERVMSG, "Ban removed");
-        }
-        else
-        {
-            bannedips.shrink(0);
-            sendservmsg("cleared all bans");
-        }
-    }*/
+     void unban(int argc, char **argv, int sender)
+     {
+     if(argc <= 1)
+     {
+     sendf(sender, 1, "ris", N_SERVMSG, "Please specify ban id");
+     return;
+     }
+     char *end = NULL;
+     int id = (int)strtol(argv[1], &end, 10);
+     if(end <= argv[1] || *end || (id >= 0 && !bannedips.inrange(id)))
+     {
+     sendf(sender, 1, "ris", N_SERVMSG, tempformatstring("Invalid ban id: %s", argv[1]));
+     return;
+     }
+     if(id >= 0)
+     {
+     bannedips.remove(id);
+     sendf(sender, 1, "ris", N_SERVMSG, "Ban removed");
+     }
+     else
+     {
+     bannedips.shrink(0);
+     sendservmsg("cleared all bans");
+     }
+     }*/
     void unban(int banid)
     {
         if(!bannedips.inrange(banid))
@@ -3339,7 +3357,7 @@ best.add(clients[i]); \
             gbans.add(val);
         
     }
-
+    
     void receivefile(int sender, uchar *data, int len)
     {
         clientinfo *ci = getinfo(sender);
@@ -3425,7 +3443,7 @@ best.add(clients[i]); \
     
     void parsepacket(int sender, int chan, packetbuf &p) //has to parse exactly each byte of the packet
     {
-        if(instacoop && gamemillis >= instacoop_gamelimit && !interm) startintermission(); //instacoop intermission initializer 
+        if(instacoop && gamemillis >= instacoop_gamelimit && !interm) startintermission(); //instacoop intermission initializer
         if(sender<0 || p.packet->flags&ENET_PACKET_FLAG_UNSEQUENCED || chan > 2) return;
         char text[MAXTRANS];
         int type;
@@ -4120,7 +4138,7 @@ curmsg = p.length(); \
                     sendservmsgf("\f0%s \f7is downloading map \"%s\"...", colorname(ci), smapname == "" ? "[new map]" : smapname);
                     if((ci->getmap = sendfile(sender, 2, mapdata, "ri", N_SENDMAP)))
                         ci->getmap->freeCallback = freegetmap;
-                        ci->needclipboard = totalmillis ? totalmillis : 1;
+                    ci->needclipboard = totalmillis ? totalmillis : 1;
                 }
                 break;
                 
@@ -4324,10 +4342,10 @@ curmsg = p.length(); \
             return;
         }
         putint(p, numclients(-1, false, true));
-        putint(p, gamepaused || gamespeed != 100 ? 7 : 5); //number of attrs following 
-        putint(p, PROTOCOL_VERSION);  
+        putint(p, gamepaused || gamespeed != 100 ? 7 : 5); //number of attrs following
+        putint(p, PROTOCOL_VERSION);
         
-        //generic attributes passed back  					   
+        //generic attributes passed back
         putint(p, gamemode);
         putint(p, m_timed ? max((gamelimit - gamemillis)/1000, 0) : 0);
         
