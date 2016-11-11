@@ -59,6 +59,7 @@ namespace server {
     extern QSERV_CALLBACK smartbot_cmd(p);
     extern QSERV_CALLBACK cw_cmd(p);
     extern QSERV_CALLBACK duel_cmd(p);
+    extern QSERV_CALLBACK coopgamelimit_cmd(p);
 }
 
 #endif

@@ -55,6 +55,8 @@ namespace server {
         public:
             QServ(bool, int, char);
             ~QServ();
+            
+            int instacoop_gamelimit;
 
             bool initgeoip(const char*);
             bool initcitygeoip(const char*);

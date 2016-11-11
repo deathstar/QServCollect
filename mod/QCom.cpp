@@ -51,7 +51,21 @@ namespace server {
         //ncommand("olangfilter", "Turn the offensive language filter on or off. Usage: #olang <off/on> (0/1) and #olang to see if it's activated", PRIV_MASTER, olangfilter_cmd, 1);
         ncommand("cw", "\f7Starts a clanwar with a countdown (timer dependent on maxclients). Usage: #cw <mode> <map>", PRIV_MASTER, cw_cmd, 2);
         ncommand("duel", "\f7Starts a duel (timer dependent on maxclients). Usage: #duel <mode> <map>", PRIV_MASTER, duel_cmd, 2);
+        ncommand("coopgamelimit", "\f7Sets the game limit in milliseconds of the insta/effic gamemode. Usage: #coopgamelimit <game time limit in milliseconds>", PRIV_ADMIN, coopgamelimit_cmd, 1);
     }
+    #include "QServ.h"
+    extern int instacoop_gamelimit;
+     QSERV_CALLBACK coopgamelimit_cmd(p) {
+        int Limitvariable = -1;
+        if(CMD_SA) {
+        	Limitvariable = atoi(args[1]);
+        	if(Limitvariable < 1000 || Limitvariable > 9999999) sendf(CMD_SENDER, 1, "ris", N_SERVMSG, "\f3Error: Enter a game limit between the range of 1000 to 9999999 milliseconds.");
+        	else if(Limitvariable != NULL && args[1] != NULL) instacoop_gamelimit = Limitvariable;
+        }
+        else sendf(CMD_SENDER, 1, "ris", N_SERVMSG, CMD_DESC(cid));
+
+    }
+    
     QSERV_CALLBACK smartbot_cmd(p) {
         if(strlen(fulltext) > 0) {
             out(ECHO_IRC,".%s", fulltext);
