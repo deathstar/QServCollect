@@ -60,6 +60,7 @@ namespace server {
     extern QSERV_CALLBACK cw_cmd(p);
     extern QSERV_CALLBACK duel_cmd(p);
     extern QSERV_CALLBACK coopgamelimit_cmd(p);
+    extern QSERV_CALLBACK tagmode_cmd(p);
 }
 
 #endif

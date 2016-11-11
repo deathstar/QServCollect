@@ -1,4 +1,5 @@
 #include "QCom.h"
+#include "QServ.h"
 
 namespace server {
     void initCmds() {
@@ -51,9 +52,45 @@ namespace server {
         //ncommand("olangfilter", "Turn the offensive language filter on or off. Usage: #olang <off/on> (0/1) and #olang to see if it's activated", PRIV_MASTER, olangfilter_cmd, 1);
         ncommand("cw", "\f7Starts a clanwar with a countdown (timer dependent on maxclients). Usage: #cw <mode> <map>", PRIV_MASTER, cw_cmd, 2);
         ncommand("duel", "\f7Starts a duel (timer dependent on maxclients). Usage: #duel <mode> <map>", PRIV_MASTER, duel_cmd, 2);
-        ncommand("coopgamelimit", "\f7Sets the game limit in milliseconds of the insta/effic gamemode. Usage: #coopgamelimit <game time limit in milliseconds>", PRIV_ADMIN, coopgamelimit_cmd, 1);
+        ncommand("coopgamelimit", "\f7Sets the game limit in milliseconds for instacoop. Usage: #coopgamelimit <limit in milliseconds>", PRIV_ADMIN, coopgamelimit_cmd, 1);
+        ncommand("tagmode", "\f7Enables or disables tag mode, a player is randomly selected to be it by the server. Usage: #tagmode <1/0>", PRIV_MASTER, tagmode_cmd, 1);
+        
     }
-    #include "QServ.h"
+    
+    extern bool tagmode;
+    QSERV_CALLBACK tagmode_cmd(p) {
+        bool usage = false;
+        int togglenum = -1;
+        if(CMD_SA) {
+            togglenum = atoi(args[1]);
+            if(togglenum >= 0 && togglenum <= 1000) {
+                //if(!isalpha(cn)) {
+            teampersistprocess:
+                //int togglenum = atoi(args[1]);
+                if(togglenum==1) {
+                    tagmode = true;
+                    clientinfo *ci = qs.getClient(CMD_SENDER);
+                    out(ECHO_SERV, "\f7Tag mode is now \f0enabled");
+                    
+                }
+                else if(togglenum==0) {
+                    tagmode = false;
+                    out(ECHO_SERV, "\f7Tag mode is now \f3disabled");
+                }
+                else if(togglenum==NULL || isalpha(togglenum)) {
+                    sendf(CMD_SENDER, 1, "ris", N_SERVMSG, CMD_DESC(cid));
+                }
+            } else {
+                usage = true;
+            }
+        } else {
+            togglenum = CMD_SENDER;
+            goto teampersistprocess;
+        }
+        
+        if(usage) sendf(CMD_SENDER, 1, "ris", N_SERVMSG, CMD_DESC(cid));
+    }
+    
     extern int instacoop_gamelimit;
      QSERV_CALLBACK coopgamelimit_cmd(p) {
         int Limitvariable = -1;
