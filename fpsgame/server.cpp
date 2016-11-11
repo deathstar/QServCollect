@@ -400,6 +400,7 @@ namespace server {
     VAR(notkdamage, 0, 1, 1);          //no damage for teamkills
     VAR(autosendmap, 0, 1, 1);         //automatically sends map in edit mode
     VAR(instacoop, 0, 1, 1);           //insta like characteristics of edit mode
+    VAR(instacoop_gamelimit, 1000, 600000, 9999999); 
     
     VARF(publicserver, 0, 0, 2, {
         switch(publicserver)
@@ -3373,7 +3374,6 @@ best.add(clients[i]); \
             z_savemap(smapname, mapdata);
         }
         if(instacoop) ci->isEditMuted = true;
-        
         if(servermotd[0]) {
             if(welcomewithname) {
                 defformatstring(welcomemsg)("\f7Welcome to %s\f7, \f0%s\f7. %s",serverdesc,colorname(ci),servermotd);
@@ -3397,6 +3397,7 @@ best.add(clients[i]); \
     
     void parsepacket(int sender, int chan, packetbuf &p) //has to parse exactly each byte of the packet
     {
+        if(instacoop && gamemillis >= instacoop_gamelimit && !interm) startintermission(); //instacoop intermission initializer 
         if(sender<0 || p.packet->flags&ENET_PACKET_FLAG_UNSEQUENCED || chan > 2) return;
         char text[MAXTRANS];
         int type;
