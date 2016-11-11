@@ -3022,15 +3022,6 @@ best.add(clients[i]); \
         loopv(clients) if(clients[i]->authkickvictim == ci->clientnum) clients[i]->cleanauth();
         if(ci->connected)
         {
-        	 //assign a new person to be it if our tagged client disconnects
-            if(tagmode) { 
-            	if(ci->isTagged) ci->isTagged = false;
-            	int connectedclients = numclients(-1, true, true);
-            	int taggedcn = rand() % connectedclients + 0;
-        		clientinfo *taggedclient = (clientinfo *)getclientinfo(taggedcn);
-            	if(connectedclients >= 2) taggedclient->isTagged = true;
-            }
-            
             if(ci->privilege) setmaster(ci, false);
             if(smode) smode->leavegame(ci, true);
             ci->state.timeplayed += lastmillis - ci->state.lasttimeplayed;
