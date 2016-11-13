@@ -396,12 +396,12 @@ namespace server {
     VAR(autodemo, 0, 1, 1);            //record demos automatically
     VAR(welcomewithname, 0, 1, 1);     //welcome a client with name
     VAR(serverconnectmsg, 0, 1, 1);    //incomming connection alerts for admins
-    VAR(nodamage, 0, 1, 1);
-    VAR(notkdamage, 0, 1, 1);          //no damage for teamkills
+    VAR(nodamage, 0, 0, 1);
+    VAR(notkdamage, 0, 0, 1);          //no damage for teamkills
     VAR(autosendmap, 0, 1, 1);         //automatically sends map in edit mode
-    VAR(instacoop, 0, 1, 1);           //insta like characteristics of edit mode
+    VAR(instacoop, 0, 0, 1);           //insta like characteristics of edit mode
     VAR(instacoop_gamelimit, 1000, 600000, 9999999);
-    VAR(tagmode, 0, 1, 1);
+    VAR(tagmode, 0, 0, 1);
     
     VARF(publicserver, 0, 0, 2, {
         switch(publicserver)
@@ -2067,6 +2067,7 @@ namespace server {
                 if(taggedclient->connected) taggedclient->isTagged = true;
                 else taggedclient->isTagged = false;
             }
+            else tagmode = false;
             out(ECHO_SERV, "\f2Tag mode: A player is randomly selected to be it at the start of the match!");
         }
         
