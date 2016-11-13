@@ -2009,16 +2009,13 @@ namespace server {
         }
         notgotitems = false;
     }
-    
     void findtaggableclient() {
-        int connectedclients = numclients(-1, true, true);
-        if(connectedclients >= 1) {
-            int taggedcn = rand() % connectedclients;
-            clientinfo *taggedclient = (clientinfo *)getclientinfo(taggedcn);
-            if(taggedclient->connected) taggedclient->isTagged = true;
-            else findtaggableclient();
-        }
-        else tagmode = false;
+        int numofclients = numclients(-1, true, true);
+        numofclients = 0;
+        int taggedcn = 0;
+		(numofclients > 0) ? taggedcn = rand()%numofclients : taggedcn = 0;
+        clientinfo *taggedclient = (clientinfo *)getclientinfo(taggedcn);
+        if(taggedclient->connected) taggedclient->isTagged = true;
     }
     
     VAR(defaultgamespeed, 10, 100, 1000);
@@ -2073,7 +2070,6 @@ namespace server {
         
         if(tagmode) {
             findtaggableclient();
-            if(!findtaggableclient) tagmode = false; //if we fail to find a taggable client
             out(ECHO_SERV, "\f2Tag mode: A player is randomly selected to be it at the start of the match!");
         }
         
@@ -3029,7 +3025,6 @@ best.add(clients[i]); \
     {
         clientinfo *ci = getinfo(n);
         if(tagmode) findtaggableclient();
-        else tagmode = false;
         
         loopv(clients) if(clients[i]->authkickvictim == ci->clientnum) clients[i]->cleanauth();
         if(ci->connected)

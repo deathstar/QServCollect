@@ -1185,6 +1185,7 @@ void *irc_thread(void *t) {
 }
 
 int main(int argc, char **argv) {
+    srand (time(NULL));
     qs.initCommands(server::initCmds);
     setlogfile(NULL);
     if(enet_initialize()<0) fatal("[FATAL ERROR]: Unable to initialise network module");
