@@ -2013,7 +2013,7 @@ namespace server {
         int numofclients = numclients(-1, true, true);
         numofclients = 0;
         int taggedcn = 0;
-		(numofclients > 0) ? taggedcn = rand()%numofclients : taggedcn = 0;
+        (numofclients > 0) ? taggedcn = rand()%numofclients : taggedcn = 0;
         clientinfo *taggedclient = (clientinfo *)getclientinfo(taggedcn);
         if(taggedclient->connected) taggedclient->isTagged = true;
     }
