@@ -2010,6 +2010,17 @@ namespace server {
         notgotitems = false;
     }
     
+    void findtaggableclient() {
+        int connectedclients = numclients(-1, true, true);
+        if(connectedclients >= 1) {
+            int taggedcn = rand() % connectedclients;
+            clientinfo *taggedclient = (clientinfo *)getclientinfo(taggedcn);
+            if(taggedclient->connected) taggedclient->isTagged = true;
+            else findtaggableclient();
+        }
+        else tagmode = false;
+    }
+    
     VAR(defaultgamespeed, 10, 100, 1000);
     extern int mapsucksvotes;
     void changemap(const char *s, int mode)
@@ -2059,15 +2070,10 @@ namespace server {
             if(m_mp(gamemode) && ci->state.state!=CS_SPECTATOR) sendspawn(ci);
             
         }
+        
         if(tagmode) {
-            int connectedclients = numclients(-1, true, true);
-            if(connectedclients >= 1) {
-                int taggedcn = rand() % connectedclients + 0;
-                clientinfo *taggedclient = (clientinfo *)getclientinfo(taggedcn);
-                if(taggedclient->connected) taggedclient->isTagged = true;
-                else taggedclient->isTagged = false;
-            }
-            else tagmode = false;
+            findtaggableclient();
+            if(!findtaggableclient) tagmode = false; //if we fail to find a taggable client
             out(ECHO_SERV, "\f2Tag mode: A player is randomly selected to be it at the start of the match!");
         }
         
@@ -3022,21 +3028,8 @@ best.add(clients[i]); \
     void clientdisconnect(int n)
     {
         clientinfo *ci = getinfo(n);
-        /*
-         if(tagmode) {
-         int connectedclients = numclients(-1, true, true);
-         ci->isTagged = false;
-         int taggedcn = rand() % connectedclients + 0;
-         clientinfo *taggedclient = (clientinfo *)getclientinfo(taggedcn);
-         if(taggedclient->connected) taggedclient->isTagged = true;
-         else if(!taggedclient->connected) {
-         taggedclient->isTagged = false;
-         taggedcn = 0;
-         tagmode = false;
-         }
-         else tagmode = false;
-         }
-         */
+        if(tagmode) findtaggableclient();
+        else tagmode = false;
         
         loopv(clients) if(clients[i]->authkickvictim == ci->clientnum) clients[i]->cleanauth();
         if(ci->connected)
