@@ -2016,6 +2016,7 @@ namespace server {
 		(numofclients > 0) ? taggedcn = rand()%numofclients : taggedcn = 0;
         clientinfo *taggedclient = (clientinfo *)getclientinfo(taggedcn);
         if(taggedclient->connected) taggedclient->isTagged = true;
+        else tagmode = false;
     }
     
     VAR(defaultgamespeed, 10, 100, 1000);
@@ -2549,7 +2550,7 @@ best.add(clients[i]); \
         }
         if(ts.health<=0)
         {
-            if(tagmode && actor->isTagged) {
+            if(tagmode && actor->isTagged && target->connected && actor->connected) {
                 actor->isTagged = false;
                 target->isTagged = true;
                 out(ECHO_SERV, "\f0%s \f7has been tagged by \f6%s. \f0%s \f7is now it!", colorname(target), colorname(actor), colorname(target));
@@ -3024,7 +3025,7 @@ best.add(clients[i]); \
     void clientdisconnect(int n)
     {
         clientinfo *ci = getinfo(n);
-        if(tagmode) findtaggableclient();
+        if(ci->connected) if(tagmode && ci->isTagged) findtaggableclient();
         
         loopv(clients) if(clients[i]->authkickvictim == ci->clientnum) clients[i]->cleanauth();
         if(ci->connected)
