@@ -3025,11 +3025,10 @@ best.add(clients[i]); \
     void clientdisconnect(int n)
     {
         clientinfo *ci = getinfo(n);
-        if(ci->connected) if(tagmode && ci->isTagged) findtaggableclient();
-        
         loopv(clients) if(clients[i]->authkickvictim == ci->clientnum) clients[i]->cleanauth();
         if(ci->connected)
         {
+            if(tagmode && ci->isTagged) findtaggableclient();
             if(ci->privilege) setmaster(ci, false);
             if(smode) smode->leavegame(ci, true);
             ci->state.timeplayed += lastmillis - ci->state.lasttimeplayed;
