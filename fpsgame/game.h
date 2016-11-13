@@ -509,19 +509,18 @@ struct fpsstate
         }
         else
         {
-            VAR(instacoop, 0, 0, 1);        //enables 1 health and 99 rifle ammo in coop for autosendmap games
-            if(!instacoop) {
-                armourtype = A_BLUE;
-                armour = 25;
-                ammo[GUN_PISTOL] = 40;
-                ammo[GUN_GL] = 1;
-                health = 100;
-            }
-            else if(instacoop) {
+            if(getvar("instacoop")) {
                 armour = 0;
                 health = 1;
                 gunselect = GUN_RIFLE;
                 ammo[GUN_RIFLE] = 100;
+            }
+            else {
+                armourtype = A_BLUE;
+                armour = 25;
+                health = 100;
+                ammo[GUN_PISTOL] = 40;
+                ammo[GUN_GL] = 1;
             }
         }
     }
