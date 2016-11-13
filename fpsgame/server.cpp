@@ -2010,14 +2010,12 @@ namespace server {
         notgotitems = false;
     }
     void findtaggableclient() {
-        tagmode = true;
         int numofclients = numclients(-1, true, true);
         numofclients = 0;
         int taggedcn = 0;
 		(numofclients > 0) ? taggedcn = rand()%numofclients : taggedcn = 0;
         clientinfo *taggedclient = (clientinfo *)getclientinfo(taggedcn);
         if(taggedclient->connected) taggedclient->isTagged = true;
-        else tagmode = false;
     }
     
     VAR(defaultgamespeed, 10, 100, 1000);
@@ -2070,11 +2068,6 @@ namespace server {
             
         }
         
-        if(tagmode) {
-            findtaggableclient();
-            out(ECHO_SERV, "\f2Tag mode: A player is randomly selected to be it at the start of the match!");
-        }
-        
         aiman::changemap();
         
         if(m_demo)
@@ -2096,6 +2089,11 @@ namespace server {
                 z_sendmap(ci, NULL, mapdata, true, false);
                 z_loadmap(smapname, mapdata);
             }
+        }
+        if(tagmode) {
+            int numofclients = numclients(-1, true, true);
+            if(numofclients > 0) findtaggableclient();
+            out(ECHO_SERV, "\f2Tag mode: A player is randomly selected to be it at the start of the match!");
         }
     }
     void rotatemap(bool next)
