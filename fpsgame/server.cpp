@@ -3027,7 +3027,8 @@ best.add(clients[i]); \
         loopv(clients) if(clients[i]->authkickvictim == ci->clientnum) clients[i]->cleanauth();
         if(ci->connected)
         {
-            if(tagmode && ci->isTagged) findtaggableclient();
+            int numofclients = numclients(-1, true, true);
+            if(tagmode && ci->isTagged && numofclients > 1) findtaggableclient();
             if(ci->privilege) setmaster(ci, false);
             if(smode) smode->leavegame(ci, true);
             ci->state.timeplayed += lastmillis - ci->state.lasttimeplayed;
