@@ -2010,6 +2010,7 @@ namespace server {
         notgotitems = false;
     }
     void findtaggableclient() {
+        tagmode = true;
         int numofclients = numclients(-1, true, true);
         numofclients = 0;
         int taggedcn = 0;
@@ -2550,7 +2551,7 @@ best.add(clients[i]); \
         }
         if(ts.health<=0)
         {
-            if(tagmode && actor->isTagged && target->connected && actor->connected) {
+            if(tagmode && actor->isTagged && actor != target && target->connected && actor->connected) {
                 actor->isTagged = false;
                 target->isTagged = true;
                 out(ECHO_SERV, "\f0%s \f7has been tagged by \f6%s. \f0%s \f7is now it!", colorname(target), colorname(actor), colorname(target));
