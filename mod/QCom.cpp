@@ -53,42 +53,6 @@ namespace server {
         ncommand("cw", "\f7Starts a clanwar with a countdown (timer dependent on maxclients). Usage: #cw <mode> <map>", PRIV_MASTER, cw_cmd, 2);
         ncommand("duel", "\f7Starts a duel (timer dependent on maxclients). Usage: #duel <mode> <map>", PRIV_MASTER, duel_cmd, 2);
         ncommand("coopgamelimit", "\f7Sets the game limit in milliseconds for instacoop. Usage: #coopgamelimit <limit in milliseconds>", PRIV_ADMIN, coopgamelimit_cmd, 1);
-        ncommand("tagmode", "\f7Enables or disables tag mode, a player is randomly selected to be it by the server. Usage: #tagmode <1/0>", PRIV_MASTER, tagmode_cmd, 1);
-        
-    }
-    
-    extern bool tagmode;
-    QSERV_CALLBACK tagmode_cmd(p) {
-        bool usage = false;
-        int togglenum = -1;
-        if(CMD_SA) {
-            togglenum = atoi(args[1]);
-            if(togglenum >= 0 && togglenum <= 1000) {
-                //if(!isalpha(cn)) {
-            teampersistprocess:
-                //int togglenum = atoi(args[1]);
-                if(togglenum==1) {
-                    tagmode = true;
-                    clientinfo *ci = qs.getClient(CMD_SENDER);
-                    out(ECHO_SERV, "\f7Tag mode is now \f0enabled \f7for the next match");
-                    
-                }
-                else if(togglenum==0) {
-                    tagmode = false;
-                    out(ECHO_SERV, "\f7Tag mode is now \f3disabled");
-                }
-                else if(togglenum==NULL || isalpha(togglenum)) {
-                    sendf(CMD_SENDER, 1, "ris", N_SERVMSG, CMD_DESC(cid));
-                }
-            } else {
-                usage = true;
-            }
-        } else {
-            togglenum = CMD_SENDER;
-            goto teampersistprocess;
-        }
-        
-        if(usage) sendf(CMD_SENDER, 1, "ris", N_SERVMSG, CMD_DESC(cid));
     }
     
     extern int instacoop_gamelimit;
@@ -146,6 +110,7 @@ namespace server {
         }
         else sendf(CMD_SENDER, 1, "ris", N_SERVMSG, CMD_DESC(cid));
     }
+    
     QSERV_CALLBACK rename_cmd(p) {
         if(CMD_SA) {
             int cn = atoi(args[1]);
@@ -362,6 +327,7 @@ namespace server {
         }
         else if(ci->votedmapsucks) sendf(ci->clientnum, 1, "ris", N_SERVMSG, "\f3Error: You have already voted");
     }
+    
     //min, default, max
     VAR(clanwartimermillis, 5000, 8999, 10000);
     int mc = 22;
@@ -405,6 +371,7 @@ namespace server {
             sendf(CMD_SENDER, 1, "ris", N_SERVMSG, f);
         }
     }
+    
     //min, default, max
     VAR(dueltimermillis, 5000, 8999, 10000);
     int mcduel = 22;
@@ -970,11 +937,13 @@ namespace server {
         }
         else {defformatstring(operatorunavailable)("\f7Sorry, No operators are available currently. \nEmail: \f1%s \f7for more assistance.",contactemail); sendf(CMD_SENDER, 1, "ris", N_SERVMSG, operatorunavailable);}
     }
+    
     SVAR(qserv_version, "");
     QSERV_CALLBACK getversion_cmd(p) {
     defformatstring(ver)("\f7Running \f3QServ \f7(\f2%s\f7): \f1www.github.com/deathstar/QServCollect", qserv_version);
     sendf(CMD_SENDER, 1, "ris", N_SERVMSG, ver);
     }
+    
     QSERV_CALLBACK forceintermission_cmd(p) {bool intermission = false; if(!intermission){startintermission(); defformatstring(msg)("\f0%s \f7forced an intermission",CMD_SCI.name);sendf(-1, 1, "ris", N_SERVMSG, msg); out(ECHO_IRC,"%s forced an intermission",CMD_SCI.name);}}
 
     QSERV_CALLBACK me_cmd(p) {

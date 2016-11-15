@@ -401,7 +401,6 @@ namespace server {
     VAR(autosendmap, 0, 1, 1);         //automatically sends map in edit mode
     VAR(instacoop, 0, 0, 1);           //insta like characteristics of edit mode
     VAR(instacoop_gamelimit, 1000, 600000, 9999999);
-    VAR(tagmode, 0, 0, 1);
     
     VARF(publicserver, 0, 0, 2, {
         switch(publicserver)
@@ -2008,16 +2007,7 @@ namespace server {
             else sents[i].spawned = true;
         }
         notgotitems = false;
-    }
-    void findtaggableclient() {
-        int numofclients = numclients(-1, true, true);
-        numofclients = 0;
-        int taggedcn = 0;
-        (numofclients > 0) ? taggedcn = rand()%numofclients : taggedcn = 0;
-        clientinfo *taggedclient = (clientinfo *)getclientinfo(taggedcn);
-        if(taggedclient->connected) taggedclient->isTagged = true;
-    }
-    
+    }    
     VAR(defaultgamespeed, 10, 100, 1000);
     extern int mapsucksvotes;
     void changemap(const char *s, int mode)
@@ -2089,11 +2079,6 @@ namespace server {
                 z_sendmap(ci, NULL, mapdata, true, false);
                 z_loadmap(smapname, mapdata);
             }
-        }
-        if(tagmode) {
-            int numofclients = numclients(-1, true, true);
-            if(numofclients > 0) findtaggableclient();
-            out(ECHO_SERV, "\f2Tag mode: A player is randomly selected to be it at the start of the match!");
         }
     }
     void rotatemap(bool next)
@@ -2549,11 +2534,6 @@ best.add(clients[i]); \
         }
         if(ts.health<=0)
         {
-            if(tagmode && actor->isTagged && actor != target && target->connected && actor->connected) {
-                actor->isTagged = false;
-                target->isTagged = true;
-                out(ECHO_SERV, "\f0%s \f7has been tagged by \f6%s. \f0%s \f7is now it!", colorname(target), colorname(actor), colorname(target));
-            }
             //QServ longshot and close up kill (y - depth, z - height, x - left/right)
             float x2 = target->state.o.x;     //target shot x
             float x1 = actor->state.o.x;      //actor shot x
@@ -3028,7 +3008,6 @@ best.add(clients[i]); \
         if(ci->connected)
         {
             int numofclients = numclients(-1, true, true);
-            if(tagmode && ci->isTagged && numofclients > 1) findtaggableclient();
             if(ci->privilege) setmaster(ci, false);
             if(smode) smode->leavegame(ci, true);
             ci->state.timeplayed += lastmillis - ci->state.lasttimeplayed;

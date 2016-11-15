@@ -245,7 +245,6 @@ namespace server {
         bool isEditMuted = false;
         bool pingwarned = false;
         bool votedmapsucks = false;
-        bool isTagged = false;
         
         int64_t lasttext;
         int spamlines;
