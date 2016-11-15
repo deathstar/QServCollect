@@ -58,6 +58,7 @@ namespace server {
     }
     
     //QServ
+    bool q_teammode = false;
     bool persist = false;
     bool notgotitems = true; //true when map has changed and waiting for clients to send item
     bool gamepaused = false, shouldstep = true;
@@ -549,6 +550,17 @@ namespace server {
         defvformatstring(s, fmt, fmt);
         sendf(-1, 1, "ris", N_SERVMSG, s);
     }
+    
+    // weapon accuracy
+    int getwepaccuracy(int cn, int gun)
+    {
+        int acc = 0;
+        clientinfo *ci = getinfo(cn);
+        if(ci && gun>0 && gun<=NUMGUNS)
+            acc = ci->state.guninfo[gun].damage*100/max(ci->state.guninfo[gun].shotdamage, 1);
+        return(acc);
+    }
+    
     
     void resetitems()
     {
@@ -2516,6 +2528,7 @@ best.add(clients[i]); \
     
     void dodamage(clientinfo *target, clientinfo *actor, int damage, int gun, const vec &hitpush = vec(0, 0, 0))
     {
+        actor->state.guninfo[gun].damage += damage; //adds damage per guninfo
         gamestate &ts = target->state;
         if(notkdamage) {
             if(!isteam(actor->team, target->team))
@@ -2687,6 +2700,10 @@ best.add(clients[i]); \
               int(to.x*DMF), int(to.y*DMF), int(to.z*DMF),
               ci->ownernum);
         gs.shotdamage += guns[gun].damage*(gs.quadmillis ? 4 : 1)*guns[gun].rays;
+        
+        //adds shotdamage per guninfo
+        gs.guninfo[gun].shotdamage += guns[gun].damage*(gs.quadmillis ? 4 : 1)*guns[gun].rays;
+        
         switch(gun)
         {
             case GUN_RL: gs.rockets.add(id); break;
@@ -3411,6 +3428,7 @@ best.add(clients[i]); \
     
     void parsepacket(int sender, int chan, packetbuf &p) //has to parse exactly each byte of the packet
     {
+        if(m_teammode) q_teammode = true;
         if(instacoop && gamemillis >= instacoop_gamelimit && !interm) startintermission(); //instacoop intermission initializer
         if(sender<0 || p.packet->flags&ENET_PACKET_FLAG_UNSEQUENCED || chan > 2) return;
         char text[MAXTRANS];

@@ -863,6 +863,8 @@ namespace server
     extern void _storeflagruns();
     extern void adduser(char *name, char *desc, char *pubkey, char *priv);
     extern void sendbanlist(int cn);
+    extern bool q_teammode;
+    extern int getwepaccuracy(int cn, int gun);
 
     struct clientinfo;
 }

@@ -111,6 +111,12 @@ namespace server {
         int lasttimeplayed, timeplayed;
         float effectiveness;
         
+        struct
+        {
+            int shotdamage;
+            int damage;
+        } guninfo[NUMGUNS];
+        
         gamestate() : state(CS_DEAD), editstate(CS_DEAD) {}
         
         bool isalive(int gamemillis)
@@ -140,6 +146,11 @@ namespace server {
             lastfragmillis = 0;
             multifrags = spreefrags = 0;
             
+            loopi(NUMGUNS)
+            {
+                guninfo[i].damage = 0;
+                guninfo[i].shotdamage = 0;
+            }
             
         }
         
@@ -160,10 +171,7 @@ namespace server {
             grenades.reset();
         }
     };
-    
 
-
-   
     struct savedscore
     {
         uint ip;
@@ -199,6 +207,8 @@ namespace server {
             gs.effectiveness = effectiveness;
         }
     };
+    
+    
 
     extern int gamemillis, nextexceeded;
     
