@@ -2570,8 +2570,6 @@ best.add(clients[i]); \
             int fragvalue = smode ? smode->fragvalue(target, actor) : (target==actor || isteam(target->team, actor->team) ? -1 : 1);
             actor->state.frags += fragvalue;
             
-            if(target==actor) target->state._suicides++; //suicide counter
-            
             if(fragvalue>0)
             {
                 int friends = 0, enemies = 0; // note: friends also includes the fragger
@@ -2646,6 +2644,7 @@ best.add(clients[i]); \
         gs.state = CS_DEAD;
         gs.lastdeath = gamemillis;
         gs.respawn();
+        ci->state._suicides++;
         out(ECHO_SERV, "\f0%s \f7%s", colorname(ci), spreesuicidemsg);
     }
     
