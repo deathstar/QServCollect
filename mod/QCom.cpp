@@ -1207,10 +1207,6 @@ namespace server {
                             string buf;
                             char msg[MAXTRANS];
                             
-                            if(location) sprintf(lmsg[1], "%s", location);
-                            (CMD_SCI.privilege == PRIV_ADMIN) ? sprintf(lmsg[0], "%s (%s)", lmsg[1], ip) :
-                            sprintf(lmsg[0], "%s", lmsg[1]);
-                            
                             formatstring(msg)("\f7Stats for \f0%s\f7: cn: \f2%d \f7frags: \f2%i \f7deaths: \f2%i \f7suicides: \f2%i \f7kpd: \f2%.2f \f7acc: \f2%i%%",
                                               colorname(ci), ci->clientnum, ci->state.frags, ci->state.deaths, ci->state._suicides,
                                               (float(ci->state.frags)/float(max(ci->state.deaths, 1))), ci->state.damage*100/max(ci->state.shotdamage,1));
@@ -1219,12 +1215,16 @@ namespace server {
                                 formatstring(buf)("\n\f7teamkills: \f2%i \f7flags scored: \f2%i \f7flags stolen: \f2%i \f7flags returned: \f2%i", ci->state.teamkills, ci->state.flags, ci->state._stolen, ci->state._returned);
                                 concatstring(msg, buf, MAXTRANS);
                             }
-                            formatstring(buf)(" \f7location: \f6%s", lmsg[0]);
-                            concatstring(msg, buf, MAXTRANS);
-                            
                             formatstring(buf)("\n\f7shotgun: \f2%i%% \f7chaingun: \f2%i%% \f7rocketlauncher: \f2%i%% \f7rifle: \f2%i%% \f7grenadelauncher: \f2%i%% \f7pistol: \f2%i%%",
                             getwepaccuracy(ci->clientnum, 1), getwepaccuracy(ci->clientnum, 2), getwepaccuracy(ci->clientnum, 3),
                             getwepaccuracy(ci->clientnum, 4), getwepaccuracy(ci->clientnum, 5), getwepaccuracy(ci->clientnum, 6));
+                            concatstring(msg, buf, MAXTRANS);
+                            
+                            if(location) sprintf(lmsg[1], "%s", location);
+                            (CMD_SCI.privilege == PRIV_ADMIN) ? sprintf(lmsg[0], "%s (%s)", lmsg[1], ip) :
+                            sprintf(lmsg[0], "%s", lmsg[1]);
+                            
+                            formatstring(buf)("\n\f7location: \f6%s", lmsg[0]);
                             concatstring(msg, buf, MAXTRANS);
                             
                             sendf(CMD_SENDER, 1, "ris", N_SERVMSG, msg);
