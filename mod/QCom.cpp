@@ -536,12 +536,13 @@ namespace server {
 
                     if(ci != NULL) {
                         if(ci->connected) {
-                            char *ip = toip(cn), lmsg[3][255], *location;
+                            char *ip = toip(cn), lmsg[3][255];
+                            const char *location;
 
                             if(!strcmp("127.0.0.1", ip)) {
                                 location = (char*)"localhost";
                             } else {
-                                location = qs.congeoip(ip);
+                                location = qs.cgip(ip).c_str(); //qs.congeoip(ip); <-- just country
 
                                 if(!location) {
                                     sprintf(lmsg[1], "%s", "Unknown Location");
@@ -1193,12 +1194,13 @@ namespace server {
 
                     if(ci != NULL) {
                         if(ci->connected) {
-                            char *ip = toip(cn), lmsg[3][255], *location;
+                            char *ip = toip(cn), lmsg[3][255];
+                            const char *location;
 
                             if(!strcmp("127.0.0.1", ip)) {
                                 location = (char*)"localhost";
                             } else {
-                                location = qs.congeoip(ip);
+                                location = qs.cgip(ip).c_str(); //qs.congeoip(ip); <-- just country
 
                                 if(!location) {
                                     sprintf(lmsg[1], "%s", "Unknown Location");
