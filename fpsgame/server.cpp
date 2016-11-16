@@ -3432,6 +3432,8 @@ best.add(clients[i]); \
     void parsepacket(int sender, int chan, packetbuf &p) //has to parse exactly each byte of the packet
     {
         if(m_teammode) q_teammode = true;
+        else if(!m_teammode) q_teammode = false;
+            
         if(instacoop && gamemillis >= instacoop_gamelimit && !interm) startintermission(); //instacoop intermission initializer
         if(sender<0 || p.packet->flags&ENET_PACKET_FLAG_UNSEQUENCED || chan > 2) return;
         char text[MAXTRANS];
