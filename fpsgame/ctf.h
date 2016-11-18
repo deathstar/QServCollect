@@ -1228,8 +1228,6 @@ struct ctfclientmode : clientmode
 	}
 };
 
-
-extern void dropflag(clientinfo *ci, clientinfo *dropper = NULL);
 extern ctfclientmode ctfmode;
 ICOMMAND(dropflag, "", (), { ctfmode.trydropflag(); });
 
