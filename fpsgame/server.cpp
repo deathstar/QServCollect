@@ -402,6 +402,7 @@ namespace server {
     VAR(autosendmap, 0, 1, 1);         //automatically sends map in edit mode
     VAR(instacoop, 0, 0, 1);           //insta like characteristics of edit mode
     VAR(instacoop_gamelimit, 1000, 600000, 9999999);
+    VAR(enable_passflag, 0, 1, 1);
     
     VARF(publicserver, 0, 0, 2, {
         switch(publicserver)
@@ -2534,6 +2535,7 @@ best.add(clients[i]); \
             if(!isteam(actor->team, target->team))
                 ts.dodamage(damage);
         }
+        else if(enable_passflag && actor!=target && isteam(actor->team, target->team)) ctfmode.dopassflagsequence(actor,target);
         else if(nodamage) {}
         else ts.dodamage(damage);
         if(target!=actor && !isteam(target->team, actor->team)) actor->state.damage += damage;

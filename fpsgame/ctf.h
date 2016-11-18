@@ -20,12 +20,13 @@ struct ctfclientmode : clientmode
     static const int HOLDSECS = 20;
     static const int HOLDFLAGS = 1;
     static const int RESPAWNSECS = 5;
-
+    
     struct flag
     {
         int id, version, spawnindex;
         vec droploc, spawnloc;
         int team, droptime, owntime;
+        
 #ifdef SERVMODE
         int owner, dropcount, dropper, invistime;
 #else
@@ -60,7 +61,7 @@ struct ctfclientmode : clientmode
             team = 0;
             droptime = owntime = 0;
         }
-
+        
 #ifndef SERVMODE
         const vec &pos()
         {
@@ -70,6 +71,22 @@ struct ctfclientmode : clientmode
         }
 #endif
     };
+    
+    void dopassflagsequence(clientinfo *actor, clientinfo *target)
+    {
+        loopv(flags)
+            {
+                flag &f = flags[i];
+                if(flags[i].owner == actor->clientnum) {
+                    returnflag(i);
+                    dropflag(actor);
+                    loopv(flags) if(flags[i].dropper == actor->clientnum) { flags[i].dropper = -1; flags[i].dropcount = 0; }
+                    takeflag(target, i, f.version);
+                    update();
+                    out(ECHO_SERV, "%s passed the flag to %s", colorname(actor), colorname(target));
+                }
+            }
+    }
 
     struct holdspawn
     {
@@ -1211,6 +1228,8 @@ struct ctfclientmode : clientmode
 	}
 };
 
+
+extern void dropflag(clientinfo *ci, clientinfo *dropper = NULL);
 extern ctfclientmode ctfmode;
 ICOMMAND(dropflag, "", (), { ctfmode.trydropflag(); });
 
