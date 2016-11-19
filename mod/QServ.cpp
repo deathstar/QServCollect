@@ -437,7 +437,7 @@ namespace server {
          172.16.0.0 - 172.31.255.255 (172.16/12 prefix)
          192.168.0.0 - 192.168.255.255 (192.168/16 prefix)*/
         if(!strcmp("127.0.0.1", ip) || !strcmp(buf, ip) || isPartOf(ip,"172.16") || isPartOf(ip,"192.168")) {
-            location =  (char*)"localhost";
+            location =  (char*)"Unknown"; //handles localhost on exterior connection bug
         } else {
             location =  cgip(ip).c_str();
         }
