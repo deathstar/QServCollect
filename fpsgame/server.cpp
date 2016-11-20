@@ -2006,6 +2006,27 @@ namespace server {
         return true;
     }
     
+    void listmaps(int sender)
+    {
+        vector<char *> files;
+        vector<char> line;
+        listfiles(mappath, "ogz", files);
+        files.sort();
+        sendf(sender, 1, "ris", N_SERVMSG, files.length() ? "server map files:" : "server has no map files");
+        for(int i = 0; i < files.length();)
+        {
+            line.setsize(0);
+            for(int j = 0; i < files.length() && j < 5; i++, j++)
+            {
+                if(j) line.add(' ');
+                line.put(files[i], strlen(files[i]));
+            }
+            line.add(0);
+            sendf(sender, 1, "ris", N_SERVMSG, line.getbuf());
+        }
+        files.deletearrays();
+    }
+    
     void loaditems()
     {
         resetitems();

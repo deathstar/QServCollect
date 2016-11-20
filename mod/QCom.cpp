@@ -53,6 +53,12 @@ namespace server {
         ncommand("cw", "\f7Starts a clanwar with a countdown (timer dependent on maxclients). Usage: #cw <mode> <map>", PRIV_MASTER, cw_cmd, 2);
         ncommand("duel", "\f7Starts a duel (timer dependent on maxclients). Usage: #duel <mode> <map>", PRIV_MASTER, duel_cmd, 2);
         ncommand("coopgamelimit", "\f7Sets the game limit in milliseconds for instacoop. Usage: #coopgamelimit <limit in milliseconds>", PRIV_ADMIN, coopgamelimit_cmd, 1);
+        ncommand("listmaps", "\f7Lists all the maps stored on the server. Usage #listmaps", PRIV_NONE, listmaps_cmd, 0);
+    }
+    
+    QSERV_CALLBACK listmaps_cmd(p) {
+        clientinfo *ci = qs.getClient(CMD_SENDER);
+        server::listmaps(ci->clientnum);
     }
     
     extern int instacoop_gamelimit;
