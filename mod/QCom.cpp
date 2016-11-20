@@ -54,6 +54,46 @@ namespace server {
         ncommand("duel", "\f7Starts a duel (timer dependent on maxclients). Usage: #duel <mode> <map>", PRIV_MASTER, duel_cmd, 2);
         ncommand("coopgamelimit", "\f7Sets the game limit in milliseconds for instacoop. Usage: #coopgamelimit <limit in milliseconds>", PRIV_ADMIN, coopgamelimit_cmd, 1);
         ncommand("listmaps", "\f7Lists all the maps stored on the server. Usage #listmaps", PRIV_NONE, listmaps_cmd, 0);
+        ncommand("savemap", "\f7Saves a map to the server. Usage #savemap", PRIV_ADMIN, savemap_cmd, 0);
+        ncommand("autosendmap", "\f7Automatically sends the map to connecting clients. Usage #autosendmap <1/0>", PRIV_ADMIN, autosendmap_cmd, 1);
+    }
+    
+    QSERV_CALLBACK autosendmap_cmd(p) {
+        bool usage = false;
+        int togglenum = -1;
+        if(CMD_SA) {
+            togglenum = atoi(args[1]);
+            if(togglenum >= 0 && togglenum <= 1000) {
+                //if(!isalpha(cn)) {
+            teampersistprocess:
+                //int togglenum = atoi(args[1]);
+                if(togglenum==1) {
+                    server::enableautosendmap = true;
+                    clientinfo *ci = qs.getClient(CMD_SENDER);
+                    out(ECHO_SERV, "\f7Autosendmap is now \f0enabled");
+                    
+                }
+                else if(togglenum==0) {
+                    server::enableautosendmap = false;
+                    out(ECHO_SERV, "\f7Autosendmap is now \f3disabled");
+                }
+                else if(togglenum==NULL || isalpha(togglenum)) {
+                    sendf(CMD_SENDER, 1, "ris", N_SERVMSG, CMD_DESC(cid));
+                }
+            } else {
+                usage = true;
+            }
+        } else {
+            togglenum = CMD_SENDER;
+            goto teampersistprocess;
+        }
+        
+        if(usage) sendf(CMD_SENDER, 1, "ris", N_SERVMSG, CMD_DESC(cid));
+    }
+    
+    QSERV_CALLBACK savemap_cmd(p) {
+        clientinfo *ci = qs.getClient(CMD_SENDER);
+        server::dosavemap();
     }
     
     QSERV_CALLBACK listmaps_cmd(p) {

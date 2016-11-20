@@ -61,6 +61,8 @@ namespace server {
     extern QSERV_CALLBACK duel_cmd(p);
     extern QSERV_CALLBACK coopgamelimit_cmd(p);
     extern QSERV_CALLBACK listmaps_cmd(p);
+    extern QSERV_CALLBACK savemap_cmd(p);
+    extern QSERV_CALLBACK autosendmap_cmd(p);
 }
 
 #endif

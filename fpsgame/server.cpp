@@ -58,6 +58,7 @@ namespace server {
     }
     
     //QServ
+    bool enableautosendmap = true;
     bool q_teammode = false;
     bool persist = false;
     bool notgotitems = true; //true when map has changed and waiting for clients to send item
@@ -1991,6 +1992,9 @@ namespace server {
             return false;
         }
     }
+    void dosavemap() {
+        z_savemap(smapname, mapdata);
+    }
     
     bool z_loadmap(const char *mname, stream *&data = mapdata)
     {
@@ -2108,10 +2112,11 @@ namespace server {
         loopv(clients)
         {
             clientinfo *ci = clients[i];
-            if(m_edit && autosendmap) {
+            if(m_edit && autosendmap && enableautosendmap) {
                 z_sendmap(ci, NULL, mapdata, true, false);
                 z_loadmap(smapname, mapdata);
-                //z_savemap(smapname, mapdata);
+                if(autosendmap) enableautosendmap = true;
+                else autosendmap = false;
             }
         }
     }
@@ -3423,10 +3428,11 @@ best.add(clients[i]); \
         
         if(m_demo) setupdemoplayback();
         
-        if(m_edit && autosendmap) {
+        if(m_edit && autosendmap && enableautosendmap) {
             z_sendmap(ci, NULL, mapdata, true, false);
             z_loadmap(smapname, mapdata);
-            //z_savemap(smapname, mapdata);
+            if(autosendmap) enableautosendmap = true;
+            else autosendmap = false;
         }
         if(instacoop) ci->isEditMuted = true;
         if(servermotd[0]) {
@@ -3454,7 +3460,6 @@ best.add(clients[i]); \
     {
         if(m_teammode) q_teammode = true;
         else if(!m_teammode) q_teammode = false;
-            
         if(instacoop && gamemillis >= instacoop_gamelimit && !interm) startintermission(); //instacoop intermission initializer
         if(sender<0 || p.packet->flags&ENET_PACKET_FLAG_UNSEQUENCED || chan > 2) return;
         char text[MAXTRANS];
