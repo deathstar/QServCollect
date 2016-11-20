@@ -865,6 +865,9 @@ namespace server
     extern void sendbanlist(int cn);
     extern bool q_teammode;
     extern int getwepaccuracy(int cn, int gun);
+    extern void listmaps(int sender);
+    extern void dosavemap();
+    extern bool enableautosendmap;
 
     struct clientinfo;
 }
