@@ -2087,7 +2087,7 @@ namespace server {
         loopv(clients)
         {
             clientinfo *ci = clients[i];
-            if(m_edit && autosendmap) {
+            if(m_edit && autosendmap && !interm) {
                 z_sendmap(ci, NULL, mapdata, true, false);
                 z_loadmap(smapname, mapdata);
                 z_savemap(smapname, mapdata);
