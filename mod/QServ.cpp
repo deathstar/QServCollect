@@ -31,6 +31,7 @@ namespace server {
     }
     
     bool sendnearstatement = false;
+    bool no_geoip_lookup = false;
     char *QServ::congeoip(const char *ip) {
 		return (char*)GeoIP_country_name_by_name(m_geoip, ip);
     }
@@ -83,6 +84,7 @@ namespace server {
         else {
         	gipi << unknown;
             sendnearstatement = false;
+            no_geoip_lookup = true;
         }
         
         return gipi.str();
@@ -381,7 +383,7 @@ namespace server {
         else
             return false;
     }
-
+    
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/types.h>
@@ -391,7 +393,7 @@ namespace server {
 #include <net/if.h>
 #include <ifaddrs.h>
 #include <errno.h>
- 
+    
     void QServ::getLocation(clientinfo *ci) {
         
         struct ifaddrs *myaddrs, *ifa;
@@ -403,7 +405,7 @@ namespace server {
             perror("getifaddrs");
             exit(1);
         }
-
+        
         for (ifa = myaddrs; ifa != NULL; ifa = ifa->ifa_next)
         {
             if (ifa->ifa_addr == NULL)
@@ -432,54 +434,59 @@ namespace server {
         
         char *ip = toip(ci->clientnum);
         const char *location;
-        /* checks localhost, internal ip, and other internal ip on net
-         10.0.0.0 - 10.255.255.255 (10/8 prefix) don't check handle as unknown
+        
+        /*
+         10.0.0.0 - 10.255.255.255 (10/8 prefix)
          172.16.0.0 - 172.31.255.255 (172.16/12 prefix)
          192.168.0.0 - 192.168.255.255 (192.168/16 prefix)*/
-        if(!strcmp("127.0.0.1", ip) || !strcmp(buf, ip) || isPartOf(ip,"172.16") || isPartOf(ip,"192.168")) {
-            location =  (char*)"Unknown"; //handles localhost on exterior connection bug
-        } else {
-            location =  cgip(ip).c_str();
-        }
+        
+        if(!strcmp(ip,"127.0.0.1") || !strcmp(buf, ip) || isPartOf(ip,"172.16") || isPartOf(ip,"192.168")) location = (char*)"localhost";
+        else location = cgip(ip).c_str();
+        
+        //format message for console/irc and server
+        int type = 0;
+        int typeconsole = 0;
+        const char *types[] = {
+            " connected from \f3unknown",
+            " \f7connected from \f3unknown", //usually localhost but catches externals as well
+            sendnearstatement ? " \f7connected near\f0" : " \f7connected from\f0"
+        };
+        const char *typesconsole[] = {
+            " connected from unknown",
+            " connected from unknown/localhost", 
+            sendnearstatement ? " connected near " : " connected from "
+        };
+        
+        char lmsg[255];
+        char pmsg[255];
+        const char clientip = getclientip(ci->clientnum);
+        if(strlen(ip) > 2) {
             
-            int type = 0;
-            const char *types[] = {
-                " connected from \f3Unknown",
-                " \f7connected (\f2Host\f7)",
-                sendnearstatement ? " \f7connected near\f0" : " \f7connected from\f0"
-            };
-            int typeconsole = 0;
-            const char *typesconsole[] = {
-                " connected from Unknown",
-                " connected (\f2Host\f7)",
-                sendnearstatement ? " connected near " : " connected from "
-            };
-            
-            char lmsg[255];
-            char pmsg[255];
-            const char clientip = getclientip(ci->clientnum);
-            
-            if(strlen(location) > 2 && strlen(ip) > 2 && strcmp("(null)", location)) {
-                if(!strcmp("(null)", location)) {
-                    type = 0;
-                    typeconsole = 0;
-                } else if(ci->local) {
-                    type = 1;
-                    typeconsole = 1;
-                } else {
-                    type = 2;
-                    typeconsole = 2;
-                    sprintf(lmsg, "%s %s", types[type], location);
-                    sprintf(pmsg, "%s%s", typesconsole[typeconsole], location);
-                    
-                }
-                //code below moved up into else
-                defformatstring(msg)("\f0%s\f7%s", ci->name, (type < 2) ? types[type] : lmsg);
-                defformatstring(nocolormsg)("%s%s", ci->name, (typeconsole < 2) ? typesconsole[typeconsole] : pmsg);
-                out(ECHO_SERV,"%s",msg);
-                out(ECHO_NOCOLOR, "%s",nocolormsg);
+            //unknown geoip lookup
+            if(no_geoip_lookup) {
+                type = 0;
+                typeconsole = 0;
+                
+            //localhost exclusion
+            } else if(!strcmp(ip,"127.0.0.1") || !strcmp(buf, ip) || isPartOf(ip,"172.16") || isPartOf(ip,"192.168")) {
+                type = 1;
+                typeconsole = 1;
+                
+            //found geoip data
+            } else {
+                type = 2;
+                typeconsole = 2;
+                sprintf(lmsg, "%s %s", types[type], location);
+                sprintf(pmsg, "%s%s", typesconsole[typeconsole], location);
             }
+            
+            //output
+            defformatstring(msg)("\f0%s\f7%s", ci->name, (type < 2) ? types[type] : lmsg);
+            defformatstring(nocolormsg)("%s%s", ci->name, (typeconsole < 2) ? typesconsole[typeconsole] : pmsg);
+            out(ECHO_SERV,"%s",msg);
+            out(ECHO_NOCOLOR, "%s",nocolormsg);
         }
+    }
 
     void QServ::checkMsg(int cn) {
         ms[cn].count += 1;

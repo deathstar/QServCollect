@@ -1123,14 +1123,14 @@ namespace server {
 #include <string>
 #include <stdio.h>
 #include <time.h>
-    
     QSERV_CALLBACK localtime_cmd(p) {
-        time_t     now = time(0);
-        struct tm  tstruct;
-        char       buf[80];
-        tstruct = *localtime(&now);
-        strftime(buf, sizeof(buf), "Date/time for server host: \f1%Y-%m-%d %X %p", &tstruct);
-        sendf(CMD_SENDER, 1, "ris", N_SERVMSG, buf);
+        struct tm newtime;
+        time_t ltime;
+        char buf[50];
+        ltime=time(&ltime);
+        localtime_r(&ltime, &newtime); //localtime__r and asctime_r: threadsafe
+        defformatstring(localtime)("%s", asctime_r(&newtime, buf));
+        sendf(CMD_SENDER, 1, "ris", N_SERVMSG, localtime);
     }
 
     QSERV_CALLBACK time_cmd(p) {
