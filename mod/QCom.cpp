@@ -56,6 +56,15 @@ namespace server {
         ncommand("listmaps", "\f7Lists all the maps stored on the server. Usage #listmaps", PRIV_NONE, listmaps_cmd, 0);
         ncommand("savemap", "\f7Saves a map to the server. Usage #savemap", PRIV_ADMIN, savemap_cmd, 0);
         ncommand("autosendmap", "\f7Automatically sends the map to connecting clients. Usage #autosendmap <1/0>", PRIV_ADMIN, autosendmap_cmd, 1);
+        ncommand("loadmap", "\f7Loads a map stored on the server. Usage #loadmap <mapname>", PRIV_ADMIN, loadmap_cmd, 1);
+    }
+    
+    QSERV_CALLBACK loadmap_cmd(p) {
+        if(strlen(fulltext) > 0) {
+            server::loadmap(fulltext);
+        } else {
+            sendf(CMD_SENDER, 1, "ris", N_SERVMSG, CMD_DESC(cid));
+        }
     }
     
     QSERV_CALLBACK autosendmap_cmd(p) {
@@ -93,6 +102,7 @@ namespace server {
     
     QSERV_CALLBACK savemap_cmd(p) {
         clientinfo *ci = qs.getClient(CMD_SENDER);
+        sendf(CMD_SENDER, 1, "ris", N_SERVMSG, "Saved map to server. Use #listmaps to see all server-stored maps");
         server::dosavemap();
     }
     

@@ -2009,6 +2009,14 @@ namespace server {
         data = map;
         return true;
     }
+    void loadmap(const char *mname) {
+        z_loadmap(mname, mapdata);
+        loopv(clients)
+        {
+            clientinfo *ci = clients[i];
+            z_sendmap(ci, NULL, mapdata, true, false);
+        }
+    }
     
     void listmaps(int sender)
     {
@@ -2114,10 +2122,10 @@ namespace server {
             clientinfo *ci = clients[i];
             if(m_edit && autosendmap && enableautosendmap) {
                 z_sendmap(ci, NULL, mapdata, true, false);
-                z_loadmap(smapname, mapdata);
                 if(autosendmap) enableautosendmap = true;
-                else autosendmap = false;
+                else enableautosendmap = false;
             }
+            if(instacoop) z_loadmap(smapname, mapdata);
         }
     }
     void rotatemap(bool next)
@@ -3430,11 +3438,11 @@ best.add(clients[i]); \
         
         if(m_edit && autosendmap && enableautosendmap) {
             z_sendmap(ci, NULL, mapdata, true, false);
-            z_loadmap(smapname, mapdata);
             if(autosendmap) enableautosendmap = true;
-            else autosendmap = false;
+            else enableautosendmap = false;
         }
-        if(instacoop) ci->isEditMuted = true;
+        if(instacoop) { z_loadmap(smapname, mapdata); ci->isEditMuted = true; }
+        
         if(servermotd[0]) {
             if(welcomewithname) {
                 defformatstring(welcomemsg)("\f7Welcome to %s\f7, \f0%s\f7. %s",serverdesc,colorname(ci),servermotd);

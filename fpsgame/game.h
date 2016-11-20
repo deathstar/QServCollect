@@ -868,6 +868,7 @@ namespace server
     extern void listmaps(int sender);
     extern void dosavemap();
     extern bool enableautosendmap;
+    extern void loadmap(const char *mname);
 
     struct clientinfo;
 }
