@@ -2086,11 +2086,11 @@ namespace server {
         if(autodemo) setupdemorecord();
         loopv(clients)
         {
-            //handle for changemap not just connected
             clientinfo *ci = clients[i];
-            if(m_edit && autosendmap && !interm) {
+            if(m_edit && autosendmap) {
                 z_sendmap(ci, NULL, mapdata, true, false);
                 z_loadmap(smapname, mapdata);
+                z_savemap(smapname, mapdata);
             }
         }
     }
@@ -2997,7 +2997,6 @@ best.add(clients[i]); \
         ci->local = true;
         connects.add(ci);
         sendservinfo(ci);
-        if(ci->isSpecLocked) forcespectator(ci);
     }
     
     void localdisconnect(int n)
@@ -3017,7 +3016,7 @@ best.add(clients[i]); \
         ci->sessionid = (rnd(0x1000000)*((totalmillis%10000)+1))&0xFFFFFF;
         connects.add(ci);
         if(ci->isSpecLocked) forcespectator(ci);
-        if(ci->votedmapsucks) {ci->votedmapsucks = true;}
+        if(ci->votedmapsucks) ci->votedmapsucks = true;
         if(!m_mp(gamemode)) return DISC_LOCAL;
         sendservinfo(ci);
         return DISC_NONE;
