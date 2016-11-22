@@ -19,7 +19,7 @@ namespace server {
         ncommand("invadmin", "\f7Claim invisible administrator. Usage: #invadmin <adminpass>", PRIV_NONE, invadmin_cmd, 1);
         ncommand("cheater", "\f7Accuses someone of cheating and alerts moderators. Usage: #cheater <cn>", PRIV_NONE, cheater_cmd, 1);
         ncommand("whois", "\f7View information about a player. Usage: #whois <cn>", PRIV_NONE, whois_cmd, 1);
-        ncommand("time", "\f7View the current time. Usage: #time <UTC Offset Number>", PRIV_NONE, time_cmd, 1);
+        //ncommand("time", "\f7View the current time. Usage: #time <UTC Offset Number>", PRIV_NONE, time_cmd, 1);
         ncommand("pm", "\f7Send a private message to someone. Usage #pm <cn> <private message>", PRIV_NONE, pm_cmd,2);
         ncommand("callops", "\f7Call all operators on the Internet Relay Chat Server. Usage: #callops", PRIV_NONE, callops_cmd, 0);
         ncommand("mapsucks", "\f7Votes for an intermission to change the map. Usage: #mapsucks", PRIV_NONE, mapsucks_cmd, 0);
@@ -43,9 +43,9 @@ namespace server {
         ncommand("kill", "\f7Brutally murders a player. Usage: #kill <cn>", PRIV_ADMIN, kill_cmd, 1);
         ncommand("rename", "\f7Renames a player. Usage: #rename <cn> <new name>", PRIV_ADMIN, rename_cmd, 2);
         ncommand("addkey", "\f7Adds an authkey to the server. \nUsage: #addkey <name> <domain> <public key> <privilege>", PRIV_ADMIN, addkey_cmd, 4);
-        ncommand("listbans", "\f7Lists all ip bans. Usage: #listbans", PRIV_ADMIN, listbans_cmd, 0);
+        //ncommand("listbans", "\f7Lists all ip bans. Usage: #listbans", PRIV_ADMIN, listbans_cmd, 0);
         ncommand("reloadconfig","\f7Reloads server-init.cfg configuration. Usage: #reloadconfig", PRIV_ADMIN, reloadconfig_cmd, 0);
-        ncommand("unban", "\f7Unbans a player, use #listbans to see all bans. Usage: #unban <ID>", PRIV_ADMIN, unban_cmd, 1);
+        //ncommand("unban", "\f7Unbans a player. Usage: #unban <ID>", PRIV_ADMIN, unban_cmd, 1);
         ncommand("syncauth", "\f7Sync server with new authkeys added to users.cfg. Usage: #syncauth", PRIV_ADMIN, syncauth_cmd, 0);
         ncommand("smartbot", "\f7Speak to smart IRC bot. Usage: #smartbot <command> \nUse: #smartbot help for a list of commands", PRIV_NONE, smartbot_cmd, 1);
         //ncommand("owords", "View list of offensive words. Usage: #owords",PRIV_NONE, owords_cmd, 0);
@@ -154,7 +154,7 @@ namespace server {
         else sendf(CMD_SENDER, 1, "ris", N_SERVMSG, CMD_DESC(cid));
     }
     
-    QSERV_CALLBACK listbans_cmd(p) {
+    /*QSERV_CALLBACK listbans_cmd(p) {
         clientinfo *ci = qs.getClient(CMD_SENDER);
         server::sendbanlist(ci->clientnum);
     }
@@ -165,7 +165,7 @@ namespace server {
             server::unban(banid);
         }
         else sendf(CMD_SENDER, 1, "ris", N_SERVMSG, CMD_DESC(cid));
-    }
+    }*/
     
     QSERV_CALLBACK rename_cmd(p) {
         if(CMD_SA) {
@@ -1189,7 +1189,7 @@ namespace server {
         sendf(CMD_SENDER, 1, "ris", N_SERVMSG, localtime);
     }
 
-    QSERV_CALLBACK time_cmd(p) {
+    /*QSERV_CALLBACK time_cmd(p) {
         int UTCOffset = -1;
         if(CMD_SA) {
             UTCOffset = atoi(args[1]);
@@ -1209,7 +1209,7 @@ namespace server {
         }
         else sendf(CMD_SENDER, 1, "ris", N_SERVMSG, CMD_DESC(cid));
 
-    }
+    }*/
 
     QSERV_CALLBACK bunny_cmd(p) {
         if(strlen(fulltext) > 0) {
