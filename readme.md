@@ -22,37 +22,46 @@ Terminal Download Command: git clone https://github.com/deathstar/QServCollect
 
 **Mac Users, simply download and run [this installer](http://techmaster.mooo.com/download/QServ-Installer.zip) to download and install QServ.**
 
-##REQUIREMENTS
+###Requirements
 
 **MAC OSX**
+
 - xCode: Go to the App Store and download "xCode," or visit: https://developer.apple.com/xcode/download/
-- Command Line tools: run: "xcode-select --install" from Terminal after xCode is installed
-- Cmake: https://cmake.org/download/
+- Command Line tools: run: `xcode-select --install` from Terminal after xCode is installed
+- Cmake: Download a binary release for Mac OSX from https://cmake.org/download/ or run: `/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"; brew install cmake` from Terminal
 
 **LINUX**
-- Cmake: [https://cmake.org/download/]((download a binary client))
-- install Zlib from command line: `sudo apt-get install zlib1g-dev`
-- install compiler: `sudo apt-get install build-essential`
-- update: `sudo apt-get update`
 
-**WINDOWS**
-- Cmake: [https://cmake.org/download/]((download a binary client))
-- Zlib: [http://gnuwin32.sourceforge.net/packages/zlib.htm]((download the libary))
+ - Cmake: Download a binary release for Linux from [https://cmake.org/download/]((download a binary client)) or run `sudo apt-get install cmake` from Terminal
+ - install Zlib from Terminal: `sudo apt-get install zlib1g-dev`
+ - install compiler from Terminal: `sudo apt-get install build-essential`
+ - update from Terminal: `sudo apt-get update`
+
+###QUICK SETUP
+1 ) Download QServ by [clicking here](https://codeload.github.com/deathstar/QServCollect/zip/master) 
+
+- `git clone https://github.com/deathstar/QServCollect.git` for command line 
+(requires git): `sudo apt-get install git-all` or http://sourceforge.net/projects/git-osx-installer/
+you can just download the zip from the website and place it on your web server if you do not wish to install git to use the command line code to download QServ.
+
+2 ) place the QServCollect-master folder on your Desktop and make sure it's named accordingly 
+
+3 ) Open command line and type: `cd Desktop/QServCollect-master`
+
+4 ) Run the cmake command (or select the QServCollect folder from the CMake GUI): `cmake .`
+
+5 ) Run the make command: `make`
+
+6 ) Run the start server command: `./qserv` for a live log, `nohup ./qserv &` for background
+
+Note: if you just use `./qserv` you will need to keep the window open to keep the server running. It is suggested that you always run `nohup ./qserv &` to keep the server up in the background and output the log to nohup.out.
+
+- Press Control-C to stop, or use `top` to get the PID of QServ then use `kill PID` to kill a background server
 
 ##CONFIGURATION
 - Configure general attributes in config/server-init.cfg
 - Add authkeys in config/users.cfg
 - Type `chmod 777 config/flagruns.cfg` from command line to give QServ permission to store flagruns
-
-##QUICK SETUP
-- Forward the ports on your router to the internal IP address of the computer which has QServ (28785 and 28786 TCP/UDP are standard)
-- download QServ from https://codeload.github.com/deathstar/QServCollect/zip/master
-- place the QServCollect folder on your Desktop
-- change directories into it: cd Desktop/QServCollect
-- Run the check make command: cmake .
-- Run the make command: make
-- Run the start server command: ./qserv or "nohup ./qserv &" for a background server
-- Press Control-C to stop, or use "top" then "kill PID" to kill a background server
 
 ##TROUBLESHOOTING
 "command not found: cmake .": cmake is not installed, see above for download link.
