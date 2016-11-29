@@ -12,6 +12,7 @@
 #include <iostream>
 #include <sstream>
 
+
 const bool olanguagewarn = false;
 const int maxolangwarnings = 5;
 const char commandprefix = '#';
@@ -136,6 +137,16 @@ namespace server {
             msg ms[1000];
     };
 }
+
+enum
+{
+    ECHO_ALL = 0,
+    ECHO_IRC ,
+    ECHO_CONSOLE,
+    ECHO_SERV,
+    ECHO_NOCOLOR,
+};
+extern void out(int type, const char *fmt, ...);
 
 #define toip(cn) qs.cntoip(cn)
 
