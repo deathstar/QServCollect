@@ -13,6 +13,49 @@ namespace game {
     const char *gameident() { return "fps"; }
 }
 
+void out(int type, const char *fmt, ...)
+{
+    char msg[1000];
+    va_list list;
+    va_start(list,fmt);
+    vsnprintf(msg,1000,fmt,list);
+    va_end(list);
+    
+    switch(type)
+    {
+        case ECHO_ALL:
+        {
+            server::sendservmsg(msg);
+            irc.speak(msg);
+            puts(msg);
+            break;
+        }
+        case ECHO_IRC:
+        {
+            irc.speak(msg);
+            break;
+        }
+        case ECHO_CONSOLE:
+        {
+            puts(msg);
+            break;
+        }
+        case ECHO_SERV:
+        {
+            server::sendservmsg(msg);
+            break;
+        }
+        case ECHO_NOCOLOR:
+        {
+            puts(msg);
+            irc.speak(msg);
+            break;
+        }
+        default:
+            break;
+    }
+}
+
 extern ENetAddress masteraddress;
 
 //Main server namespace

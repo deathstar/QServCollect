@@ -27,6 +27,8 @@ class ircBot
         int getSock();
         int speak(const char *fmt, ...);
         bool checkping(char *buff);
+        void sendpong();
+        void periodicpong(char *buff);
         bool IsCommand(char *buff);
         void join(char *channel);
         void part(char *channel);
@@ -44,18 +46,6 @@ class ircBot
 
 extern ircBot irc;
 
-enum
-{
-    ECHO_ALL = 0,
-    ECHO_IRC ,
-    ECHO_CONSOLE,
-    ECHO_SERV,
-    ECHO_NOCOLOR,
-};
-extern void out(int type, const char *fmt, ...);
-
 extern bool isloggedin(bool echo = 1);
-
-extern int tightpussy;
 
 #endif ///__IRCBOT_INCLUDED

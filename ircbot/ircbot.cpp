@@ -130,10 +130,20 @@ void ircBot::notice(char *user, const char *message){
 
 
 void ircBot::ParseMessage(char *buff){
-    if(sscanf(buff,":%[^!]!%[^@]@%[^ ] %*[^ ] %[^ :] :%[^\r\n]",msg.nick,msg.user,msg.host,msg.chan,msg.message) == 5){
-        msg.is_ready = 1;
-        if(msg.chan[0] != '#') strcpy(msg.chan,msg.nick);
-    } else msg.is_ready = 0;
+    if(strlen(buff) < 1000) { //check buffer size to allow safe sscanf: was 100 w/o seg
+        if(sscanf(buff,":%[^!]!%[^@]@%[^ ] %*[^ ] %[^ :] :%[^\r\n]",msg.nick,msg.user,msg.host,msg.chan,msg.message) == 5){
+            msg.is_ready = 1;
+            if(msg.chan[0] != '#') strcpy(msg.chan,msg.nick);
+        } else msg.is_ready = 0;
+    }
+}
+
+void ircBot::sendpong()
+{
+    char Pingout[60];
+    snprintf(Pingout,60,"PONG :%s\r\n",irchost);
+    send(sock,Pingout,strlen(Pingout),0);
+    printf("SENT: %s\n", Pingout);
 }
 
 bool ircBot::checkping(char *buff)
@@ -141,14 +151,95 @@ bool ircBot::checkping(char *buff)
     printf("%s\n", buff);
     char Pingout[60];
     memset(Pingout,'\0',60);
-    if(sscanf(buff,"PING :%s",buff)==1)
+    if(strlen(buff) < 60) { //check buffer size again to not overload mem: was 100 before seg
+        if(sscanf(buff,"PING :%s",buff)==1)
+        {
+            snprintf(Pingout,60,"PONG :%s\r\n",buff);
+            send(sock,Pingout,strlen(Pingout),0);
+            printf("SENT: %s\n", Pingout);
+            return 1;
+        }
+        return 0;
+    }
+    char * toSearch = "PING ";
+    
+    for (int i = 0; i < strlen(buff);i++)
     {
+        //If the active char is equil to the first search item then search toSearch
+        if (buff[i] == toSearch[0])
+        {
+            bool found = true;
+            //search the char array for search field
+            for (int x = 1; x < 4; x++)
+            {
+                if (buff[i+x]!=toSearch[x])
+                {
+                    found = false;
+                }
+            }
+            
+            //if found return true;
+            if (found == true)
+            {
+                int count = 0;
+                //Count the chars
+                for (int x = (i+strlen(toSearch)); x < strlen(buff);x++)
+                {
+                    count++;
+                }
+                
+                //Create the new char array
+                char returnHost[count + 5];
+                returnHost[0]='P';
+                returnHost[1]='O';
+                returnHost[2]='N';
+                returnHost[3]='G';
+                returnHost[4]=' ';
+                
+                
+                count = 0;
+                char Pingout[60];
+                //set the hostname data
+                for (int x = (i+strlen(toSearch)); x < strlen(buff);x++)
+                {
+                    returnHost[count+5]=buff[x];
+                    send(sock,Pingout,strlen(Pingout),0);
+                    count++;
+                }
+                
+                //send the pong
+                if (buff)
+                {
+                    snprintf(Pingout,60,"PONG :%s\r\n",buff);
+                    send(sock,Pingout,strlen(Pingout),0);
+                    return 1;
+                }
+            
+                return 0;
+            }
+        }
+    }
+
+}
+
+#include <unistd.h>
+#include <stdio.h>
+
+const int NUM_SECONDS = 10;
+
+void ircBot::periodicpong(char *buff) {
+    int i;
+    int count = 1;
+    char Pingout[60];
+    for(;;)
+    {
+        // delay for 10 seconds
+        for(i = 0 ; i < NUM_SECONDS ; i++) { usleep(60000000); }
+        // print
+        printf("PONG :%s\r\n", buff);
         snprintf(Pingout,60,"PONG :%s\r\n",buff);
         send(sock,Pingout,strlen(Pingout),0);
-        printf("SENT: %s\n", Pingout);
-        return 1;
     }
-    return 0;
 }
 
 int ircstring = 0;
@@ -162,7 +253,7 @@ void ircBot::init()
     struct hostent *he;
 
     sock = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
-
+        
     sa.sin_family = AF_INET;
     he = gethostbyname(irchost);
     bcopy(*he->h_addr_list, (char *)&sa.sin_addr.s_addr, sizeof(sa.sin_addr.s_addr));
@@ -181,7 +272,6 @@ void ircBot::init()
 
     
    while(1){
-
 		ircstring = recv(sock, mybuffer, sizeof(mybuffer), 0);
         if(!connected)
         {
@@ -207,51 +297,6 @@ void ircBot::init()
     }
 	connected = false;
 }}
-
-
-void out(int type, const char *fmt, ...)
-{
-    char msg[1000];
-    va_list list;
-    va_start(list,fmt);
-    vsnprintf(msg,1000,fmt,list);
-    va_end(list);
-    
-    switch(type)
-    {
-        case ECHO_ALL:
-        {
-            server::sendservmsg(msg);
-            irc.speak(msg);
-            puts(msg);
-            break;
-        }
-        case ECHO_IRC:
-        {
-            irc.speak(msg);
-            break;
-        }
-        case ECHO_CONSOLE:
-        {
-            puts(msg);
-            break;
-        }
-        case ECHO_SERV:
-        {
-            server::sendservmsg(msg);
-            break;
-        }
-        case ECHO_NOCOLOR:
-        {
-            puts(msg);
-            irc.speak(msg);
-            break;
-        }
-        default:
-            break;
-    }
-}
-
 
 bool ircBot::isConnected() {
 	return connected;
