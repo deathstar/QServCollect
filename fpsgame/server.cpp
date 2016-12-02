@@ -2101,9 +2101,9 @@ namespace server {
     extern int mapsucksvotes;
     void changemap(const char *s, int mode)
     {
-        //can cause excess flood on loop i mapchange 
-        //out(ECHO_NOCOLOR, "Map changed to: %s | Modenum: %d", s, mode);
-        //out(ECHO_NOCOLOR, "Gamespeed is: %d", defaultgamespeed);
+        //can cause excess flood on loop i mapchange for IRC
+        out(ECHO_CONSOLE, "Map changed to: %s | Modenum: %d", s, mode);
+        out(ECHO_CONSOLE, "Gamespeed is: %d", defaultgamespeed);
         stopdemo();
         pausegame(false);
         changegamespeed(defaultgamespeed);
