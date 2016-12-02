@@ -61,8 +61,8 @@ Note: if you just use `./qserv` you will need to keep the window open to keep th
 ##CONFIGURATION
 - Configure general attributes in config/server-init.cfg
 - Add authkeys in config/users.cfg
-- Type `chmod 777 config/flagruns.cfg` from command line to give QServ permission to store flagruns (optional)
-- Type `chmod 777 packages; chmod 777 base` from command line to give QServ permission to store maps (optional)
+- Type `chmod 777 config/flagruns.cfg` from command line to give QServ permission to store flagruns. Or, just change the permissions of the config/flagruns.cfg file to Full Access (optional)
+- Type `chmod 777 packages; chmod 777 base` from command line to give QServ permission to store maps. Or just change the permissions of the packages/base folder to Full Access (optional)
 
 ##TROUBLESHOOTING
 "command not found: cmake .": cmake is not installed, see above for download link.
