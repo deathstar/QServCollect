@@ -720,7 +720,7 @@ void serverslice(bool dedicated, uint timeout)   // main server update, called f
     {
         laststatus = totalmillis;
         if(nonlocalclients || serverhost->totalSentData || serverhost->totalReceivedData) {
-            irc.sendpong();
+            if(getvar("ircignore") == 0) irc.sendpong();
             out(ECHO_NOCOLOR,"[ STATUS ] %d remote client(s), %.1f sent, %.1f rec (K/sec)", nonlocalclients, serverhost->totalSentData/60.0f/1024, serverhost->totalReceivedData/60.0f/1024);
         }
         serverhost->totalSentData = serverhost->totalReceivedData = 0;
