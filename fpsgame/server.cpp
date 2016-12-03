@@ -3840,7 +3840,6 @@ curmsg = p.length(); \
             {
                 getstring(text, p);
                 filtertext(text, text, true);
-                
                 if(totalmillis - ci->lasttext < (int64_t)spammillis) {
                     ci->spamlines++;
                     if(ci->spamlines >= maxspam) {
@@ -3853,7 +3852,6 @@ curmsg = p.length(); \
                     ci->spamwarned = false;
                     ci->spamlines = 0;
                 }
-                
                 ci->lasttext = totalmillis;
                 if(text[0] == '#') {
                     char *c = text;
@@ -3864,13 +3862,12 @@ curmsg = p.length(); \
                     for (int a=0; a<(strlen(*blkmsg)-1); a++) {
                         textblk(blkmsg[a], text, ci);
                     }
-                    
                     if(!ci->isMuted) {
                         QUEUE_AI;
                         QUEUE_INT(N_TEXT);
                         QUEUE_STR(text);
                     }
-                    else {sendf(ci->clientnum, 1, "ris", N_SERVMSG, "\f3Error: Failed to send message: you are muted.");}
+                    else sendf(ci->clientnum, 1, "ris", N_SERVMSG, "\f3Error: Failed to send message: you are muted.");
                 }
 #include <stdio.h>
 #include <time.h>

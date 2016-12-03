@@ -124,8 +124,10 @@ namespace server {
     }
     
     QSERV_CALLBACK smartbot_cmd(p) {
+        clientinfo *ci = qs.getClient(CMD_SENDER);
         if(strlen(fulltext) > 0) {
-            out(ECHO_IRC,".%s", fulltext);
+            out(ECHO_NOCOLOR,".%s", fulltext);
+            out(ECHO_SERV,"\f7%s: \f0#smartbot %s", colorname(ci), fulltext); //format command for server
         } else sendf(CMD_SENDER, 1, "ris", N_SERVMSG, CMD_DESC(cid));
     }
     
