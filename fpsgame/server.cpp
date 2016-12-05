@@ -425,28 +425,29 @@ namespace server {
     int multifrags;
     int spreefrags;
     
-    VAR(minspreefrags, 2, 5, INT_MAX);
-    VAR(multifragmillis, 1, 2000, INT_MAX);
-    VAR(maxpingwarn, 1, 1000, INT_MAX);
-    VAR(minmultikill, 2, 2, INT_MAX);   // minimum number of kills for a multi-kill to occur
-    VAR(spammillis, 1, 1000, INT_MAX);  //interval for spam detection
-    VAR(maxspam, 2, 3, INT_MAX);        //number of lines that you can type in spammillis interval without getting blocked
-    VAR(maxteamkills, 1, 100, INT_MAX); //max teamkill number for message
-    VAR(clearbansonempty, 0, 1, 1);
-    VAR(maxdemos, 0, 5, 25);
-    VAR(maxdemosize, 0, 16, 64);
-    VAR(restrictdemos, 0, 1, 1);
-    VAR(restrictpausegame, 0, 1, 1);
-    VAR(restrictgamespeed, 0, 1, 1);
-    VAR(autodemo, 0, 1, 1);            //record demos automatically
-    VAR(welcomewithname, 0, 1, 1);     //welcome a client with name
-    VAR(serverconnectmsg, 0, 1, 1);    //incomming connection alerts for admins
-    VAR(nodamage, 0, 0, 1);
-    VAR(notkdamage, 0, 0, 1);          //no damage for teamkills
-    VAR(autosendmap, 0, 1, 1);         //automatically sends map in edit mode
-    VAR(instacoop, 0, 0, 1);           //insta like characteristics of edit mode
-    VAR(instacoop_gamelimit, 1000, 600000, 9999999);
-    VAR(enable_passflag, 0, 1, 1);
+    VAR(minspreefrags, 2, 5, INT_MAX);               //minimum number of kills for a killing spree to occur
+    VAR(multifragmillis, 1, 2000, INT_MAX);          //milliseconds between multi-kill messages
+    VAR(maxpingwarn, 1, 1000, INT_MAX);              //maximum ping before a client is warned about their ping
+    VAR(minmultikill, 2, 2, INT_MAX);                //minimum number of kills for a multi-kill to occur
+    VAR(spammillis, 1, 1000, INT_MAX);               //interval for spam detection
+    VAR(maxspam, 2, 3, INT_MAX);                     //number of lines that you can type in spammillis interval without getting blocked
+    VAR(maxteamkills, 1, 100, INT_MAX);              //max teamkill number for message
+    VAR(clearbansonempty, 0, 1, 1);                  //enables/disables clearing bans when the server empties of players
+    VAR(maxdemos, 0, 5, 25);                         //maximum demos stored on the server
+    VAR(maxdemosize, 0, 16, 64);                     //sets the max demo size for packets per demo
+    VAR(restrictdemos, 0, 1, 1);                     //restircts recording demos for masters/admins/nopriv
+    VAR(restrictpausegame, 0, 1, 1);                 //restricts setting pausegame for masters/admin/nopriv
+    VAR(restrictgamespeed, 0, 1, 1);                 //restricts setting gamespeed for masters/admin/nopriv
+    VAR(autodemo, 0, 1, 1);                          //record demos automatically
+    VAR(welcomewithname, 0, 1, 1);                   //welcome a client with name
+    VAR(serverconnectmsg, 0, 1, 1);                  //incoming connection alerts for admins
+    VAR(nodamage, 0, 0, 1);                          //no damage for anyone
+    VAR(notkdamage, 0, 0, 1);                        //no damage for teamkills
+    VAR(autosendmap, 0, 1, 1);                       //automatically sends map in edit mode
+    VAR(instacoop, 0, 0, 1);                         //insta like characteristics of edit mode
+    VAR(instacoop_gamelimit, 1000, 600000, 9999999); //time limit for instacoop games
+    VAR(enable_passflag, 0, 1, 1);                   //enables pass the flag in ctf modes
+    VAR(no_single_private, 0, 0, 1);                 //no single user can set mastermode private (requires at least 2 clients/admins are exempt)
     
     VARF(publicserver, 0, 0, 2, {
         switch(publicserver)
@@ -2320,7 +2321,7 @@ best.add(clients[i]); \
         static char const * const bestkills = "\f0The Good:\f7";
         static char const * const worstkills = "\f3The Bad:\f7";
         
-        // Best kills
+        //Intermission statistics 
         msg[0] = '\0';
         
         // frags
@@ -2690,14 +2691,11 @@ best.add(clients[i]); \
                 addteamkill(actor, target, 1);
                 defformatstring(msg)("\f7Say sorry to \f1%s\f7. You have teamkilled (%d/%d times). You will be banned if you teamkill %d more times.", colorname(target), actor->state.teamkills, maxteamkills, maxteamkills-actor->state.teamkills);
                 
-                if(actor->clientnum < 128) { //don't send msg to bots
-                    sendf(actor->clientnum, 1, "ris", N_SERVMSG, msg);
-                }
+                if(actor->clientnum < 128) sendf(actor->clientnum, 1, "ris", N_SERVMSG, msg); //don't send msg to bots
+            
                 
                 defformatstring(srryfrag)("\f7You were teamkilled by: \f0%s \f7(\f3%d\f7). Use \f2#forgive %d \f7or use \f2#callops \f7to make a report.", colorname(actor), actor->state.teamkills, actor->clientnum);
-                if(target->clientnum < 128) {
-                    sendf(target->clientnum, 1, "ris", N_SERVMSG, srryfrag);
-                }
+                if(target->clientnum < 128) sendf(target->clientnum, 1, "ris", N_SERVMSG, srryfrag); //don't send msg to bots
                 out(ECHO_NOCOLOR, "Teamkiller: %s (%d)", colorname(actor), actor->state.teamkills);
             }
             ts.deadflush = ts.lastdeath + DEATHMILLIS;
@@ -3956,7 +3954,7 @@ curmsg = p.length(); \
                 break;
             }
                 
-                //Editmute
+            //Editmute
             case N_EDITF:   //maptitle, fpush
             case N_EDITT:   //texture
             case N_EDITM:   //model
@@ -4057,14 +4055,20 @@ curmsg = p.length(); \
                 {
                     if((ci->privilege>=PRIV_ADMIN || ci->local) || (mastermask&(1<<mm)))
                     {
-                        mastermode = mm;
-                        allowedips.shrink(0);
-                        if(mm>=MM_PRIVATE)
-                        {
-                            loopv(clients) allowedips.add(getclientip(clients[i]->clientnum));
+                        if(mm==MM_PRIVATE && numclients(-1, false, false) == 1 && ci->privilege != PRIV_ADMIN && no_single_private) {
+                            defformatstring(s)("\f3Error: Server can't be set to private when only one client is connected.");
+                            sendf(sender, 1, "ris", N_SERVMSG, s);
                         }
-                        sendf(-1, 1, "rii", N_MASTERMODE, mastermode);
-                        out(ECHO_NOCOLOR, "Mastermode: %s (%d)", mastermodename(mastermode), mastermode);
+                        else {
+                            mastermode = mm;
+                            allowedips.shrink(0);
+                            if(mm>=MM_PRIVATE)
+                            {
+                                loopv(clients) allowedips.add(getclientip(clients[i]->clientnum));
+                            }
+                            sendf(-1, 1, "rii", N_MASTERMODE, mastermode);
+                            out(ECHO_NOCOLOR, "Mastermode: %s (%d)", mastermodename(mastermode), mastermode);
+                        }
                     }
                     else
                     {

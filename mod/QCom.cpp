@@ -370,15 +370,11 @@ namespace server {
             mapsucksvotes++;
             out(ECHO_SERV, "\f0%s \f7thinks this map sucks, use \f2#mapsucks \f7to vote for an intermission to skip it.", colorname(ci));
             ci->votedmapsucks = true;
-            
             if(mapsucksvotes>=getvar("votestopassmapsucks")) {
                 startintermission();
                 out(ECHO_SERV, "\f7Changing map: That map sucked (\f7%d \f7votes to skip)", votestopassmapsucks);
-                
                 while(mapsucksvotes>=getvar("votestopassmapsucks")) {
-                    mapsucksvotes--;
-                    mapsucksvotes--;
-                    mapsucksvotes--;
+                    mapsucksvotes = 0;
                     out(ECHO_SERV,"\f7Clearing votes...");
                 }
             }
