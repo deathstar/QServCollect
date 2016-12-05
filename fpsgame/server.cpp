@@ -2690,17 +2690,13 @@ best.add(clients[i]); \
                 actor->state.teamkills++;
                 addteamkill(actor, target, 1);
                 defformatstring(msg)("\f7Say sorry to \f1%s\f7. You have teamkilled (%d/%d times). You will be banned if you teamkill %d more times.", colorname(target), actor->state.teamkills, maxteamkills, maxteamkills-actor->state.teamkills);
-                
                 if(actor->clientnum < 128) sendf(actor->clientnum, 1, "ris", N_SERVMSG, msg); //don't send msg to bots
-            
-                
                 defformatstring(srryfrag)("\f7You were teamkilled by: \f0%s \f7(\f3%d\f7). Use \f2#forgive %d \f7or use \f2#callops \f7to make a report.", colorname(actor), actor->state.teamkills, actor->clientnum);
                 if(target->clientnum < 128) sendf(target->clientnum, 1, "ris", N_SERVMSG, srryfrag); //don't send msg to bots
                 out(ECHO_NOCOLOR, "Teamkiller: %s (%d)", colorname(actor), actor->state.teamkills);
             }
             ts.deadflush = ts.lastdeath + DEATHMILLIS;
-            // don't issue respawn yet until DEATHMILLIS has elapsed
-            // ts.respawn();
+            // ts.respawn(); don't issue respawn yet until DEATHMILLIS has elapsed
         }
     }
     
@@ -2779,9 +2775,8 @@ best.add(clients[i]); \
               int(from.x*DMF), int(from.y*DMF), int(from.z*DMF),
               int(to.x*DMF), int(to.y*DMF), int(to.z*DMF),
               ci->ownernum);
-        gs.shotdamage += guns[gun].damage*(gs.quadmillis ? 4 : 1)*guns[gun].rays;
-        
         //adds shotdamage per guninfo
+        gs.shotdamage += guns[gun].damage*(gs.quadmillis ? 4 : 1)*guns[gun].rays;
         gs.guninfo[gun].shotdamage += guns[gun].damage*(gs.quadmillis ? 4 : 1)*guns[gun].rays;
         
         switch(gun)
@@ -2959,7 +2954,7 @@ best.add(clients[i]); \
                 checkvotes(true);
             }
         }
-       	// multi kill
+       	//multi kill
         loopv(clients) {
             clientinfo *ci = clients[i];
             if(totalmillis - ci->state.lastfragmillis >= (int64_t)multifragmillis) {
@@ -2977,7 +2972,6 @@ best.add(clients[i]); \
                 ci->state.multifrags = 0;
             }
         }
-        
         shouldstep = clients.length() > 0;
     }
     struct crcinfo
@@ -3059,7 +3053,7 @@ best.add(clients[i]); \
         if(clearbansonempty) bannedips.shrink(0);
         aiman::clearai();
         if(_newflagrun) {_storeflagruns(); _newflagrun = 0;}
-        changegamespeed(defaultgamespeed); //return to default on empty, not just changemap
+        changegamespeed(defaultgamespeed); //return back to normal gamespeed
         out(ECHO_NOCOLOR, "Server has emptied");
     }
     
@@ -3236,9 +3230,7 @@ best.add(clients[i]); \
             sendf(cn, 1, "ris", N_SERVMSG, msgbuf.getbuf());
         }
     }
-    
-    
-    
+
     /*
      void unban(int argc, char **argv, int sender)
      {
