@@ -246,57 +246,60 @@ int ircstring = 0;
 void ircBot::init()
 {
     if(!getvar("ircignore")) {
-    int con;
-    char mybuffer[1000];
-
-    struct sockaddr_in sa;
-    struct hostent *he;
-
-    sock = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
+    init:
+        int con;
+        char mybuffer[1000];
         
-    sa.sin_family = AF_INET;
-    he = gethostbyname(irchost);
-    bcopy(*he->h_addr_list, (char *)&sa.sin_addr.s_addr, sizeof(sa.sin_addr.s_addr));
-    sa.sin_port = htons(ircport);
-    connected = false;
-    con = connect(sock, (struct sockaddr *)&sa, sizeof(sa));
-
-    defformatstring(user)("USER %s 0 * :%s\r\n", ircbotname, ircbotname);
-    send(sock, user, strlen(user), 0);
-    defformatstring(nick)("NICK %s\r\n", ircbotname);
-    send(sock, nick, strlen(nick), 0);
-    defformatstring(join)("JOIN %s\r\n", ircchan);
-    send(sock, join, strlen(join), 0);
-    
-    printf("[ OK ] Initalizing IRC...\n");
-
-    
-   while(1){
-		ircstring = recv(sock, mybuffer, sizeof(mybuffer), 0);
-        if(!connected)
-        {
-            send(sock, join, strlen(join), 0);
-            connected = true;
-		 } else {
-			connected = false;
-		 }
-		
-			if(ircstring) {
-			if(!IsCommand(mybuffer)){
-			
-					defformatstring(toserver)("\f7%s \f3%s \f7- \f0%s\f7: %s", newstring(irchost), newstring(ircchan), msg.nick, msg.message);
-					server::sendservmsg(toserver);
-			
-			}
-			} else {
-				connected = false;
-				break;
-			}
-			
-        memset(mybuffer,'\0',1000);
+        struct sockaddr_in sa;
+        struct hostent *he;
+        
+        sock = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
+        
+        sa.sin_family = AF_INET;
+        he = gethostbyname(irchost);
+        bcopy(*he->h_addr_list, (char *)&sa.sin_addr.s_addr, sizeof(sa.sin_addr.s_addr));
+        sa.sin_port = htons(ircport);
+        connected = false;
+        con = connect(sock, (struct sockaddr *)&sa, sizeof(sa));
+        
+        defformatstring(user)("USER %s 0 * :%s\r\n", ircbotname, ircbotname);
+        send(sock, user, strlen(user), 0);
+        defformatstring(nick)("NICK %s\r\n", ircbotname);
+        send(sock, nick, strlen(nick), 0);
+        defformatstring(join)("JOIN %s\r\n", ircchan);
+        send(sock, join, strlen(join), 0);
+        
+        printf("[ OK ] Initalizing IRC...\n");
+        
+        
+        while(1){
+            ircstring = recv(sock, mybuffer, sizeof(mybuffer), 0);
+            if(!connected)
+            {
+                send(sock, join, strlen(join), 0);
+                connected = true;
+            } else {
+                connected = false;
+            }
+            
+            if(ircstring) {
+                if(!IsCommand(mybuffer)){
+                    
+                    defformatstring(toserver)("\f7%s \f3%s \f7- \f0%s\f7: %s", newstring(irchost), newstring(ircchan), msg.nick, msg.message);
+                    server::sendservmsg(toserver);
+                    
+                }
+            } else {
+                connected = false;
+                break;
+            }
+            
+            memset(mybuffer,'\0',1000);
+        }
+        connected = false;
+        if(!connected) goto init; //re-initalize after excess flood 
     }
-	connected = false;
-}}
+}
 
 bool ircBot::isConnected() {
 	return connected;
