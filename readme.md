@@ -18,7 +18,8 @@ Github offers a zip (link below) or you can git clone the repository from the co
 
 Direct Download link: https://codeload.github.com/deathstar/QServCollect/zip/master
 
-Terminal Download Command: git clone https://github.com/deathstar/QServCollect
+Terminal Download Command: `git clone https://github.com/deathstar/QServCollect`
+
 (requires git): `sudo apt-get install git-all` or http://sourceforge.net/projects/git-osx-installer/
 
 you can just download the zip from the website and place it on your web server if you do not wish to install git to use the command line code to download QServ.
