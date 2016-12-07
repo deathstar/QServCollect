@@ -432,13 +432,13 @@ namespace server {
 	extern int mastermode;
     
     //QServ 
-	extern void send_connected_time(clientinfo *ci, int sender);
-	extern int vmessage(int cn, const char *fmt, va_list ap);
+    extern void send_connected_time(clientinfo *ci, int sender);
+    extern int vmessage(int cn, const char *fmt, va_list ap);
     extern bool duplicatename(clientinfo *ci, char *name);
     extern const char *colorname(clientinfo *ci);
-	extern void revokemaster(clientinfo *ci);
-	extern void checkpausegame();
-	extern bool setmaster(clientinfo *ci, bool val, const char *pass, const char *authname, const char *authdesc, int authpriv, bool force, bool trial, bool revoke);
+    extern void revokemaster(clientinfo *ci);
+    extern void checkpausegame();
+    extern bool setmaster(clientinfo *ci, bool val, const char *pass, const char *authname, const char *authdesc, int authpriv, bool force, bool trial, bool revoke);
 
 }
 
