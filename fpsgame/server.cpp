@@ -458,6 +458,53 @@ namespace server {
         }
     });
     
+    static const struct { const char *name; int timediv; } timedivinfos[] =
+    {
+        // month is inaccurate
+        { "week", 60*60*24*7 },
+        { "day", 60*60*24 },
+        { "hour", 60*60 },
+        { "minute", 60 },
+        { "second", 1 }
+    };
+    
+    void formatsecs(vector<char> &timebuf, uint secs)
+    {
+        bool moded = false;
+        const size_t tl = sizeof(timedivinfos)/sizeof(timedivinfos[0]);
+        for(size_t i = 0; i < tl; i++)
+        {
+            uint t = secs / timedivinfos[i].timediv;
+            if(!t && (i+1<tl || moded)) continue;
+            secs %= timedivinfos[i].timediv;
+            if(moded) timebuf.add(' ');
+            moded = true;
+            charbuf b = timebuf.reserve(10 + 1);
+            int blen = b.remaining();
+            int plen = snprintf(b.buf, blen, "%u", t);
+            timebuf.advance(clamp(plen, 0, blen-1));
+            timebuf.add(' ');
+            timebuf.put(timedivinfos[i].name, strlen(timedivinfos[i].name));
+            if(t != 1) timebuf.add('s');
+            if(!secs) break;
+        }
+    }
+    
+    uint mspassed;
+    void send_connected_time(clientinfo *ci, int sender) {
+    	mspassed = uint(totalmillis-ci->connectmillis);
+    	if(mspassed/1000 != 0)
+    	{
+        	vector<char> timebuf;
+        	formatsecs(timebuf, mspassed/1000);
+        	if(timebuf.length())
+        	{
+            	timebuf.add(0);
+            	sendf(sender, 1, "ris", N_SERVMSG, tempformatstring("connected: %s ago", timebuf.getbuf()));
+        	}
+    	}
+    }
+    
     //Enable or disable master
     void switchallowmaster() {
         mastermask = MM_PRIVSERV;
@@ -3170,37 +3217,7 @@ best.add(clients[i]); \
     ICOMMAND(clearipbans, "", (), ipbans.clear());
     ICOMMAND(ipban, "s", (const char *ipname), ipbans.add(ipname));
     
-    static const struct { const char *name; int timediv; } timedivinfos[] =
-    {
-        { "week", 60*60*24*7 },
-        { "day", 60*60*24 },
-        { "hour", 60*60 },
-        { "minute", 60 },
-        { "second", 1 }
-    };
-    
-    void formatsecs(vector<char> &timebuf, uint secs)
-    {
-        bool moded = false;
-        const size_t tl = sizeof(timedivinfos)/sizeof(timedivinfos[0]);
-        for(size_t i = 0; i < tl; i++)
-        {
-            uint t = secs / timedivinfos[i].timediv;
-            if(!t && (i+1<tl || moded)) continue;
-            secs %= timedivinfos[i].timediv;
-            if(moded) timebuf.add(' ');
-            moded = true;
-            charbuf b = timebuf.reserve(10 + 1);
-            int blen = b.remaining();
-            int plen = snprintf(b.buf, blen, "%u", t);
-            timebuf.advance(clamp(plen, 0, blen-1));
-            timebuf.add(' ');
-            timebuf.put(timedivinfos[i].name, strlen(timedivinfos[i].name));
-            if(t != 1) timebuf.add('s');
-            if(!secs) break;
-        }
-    }
-    
+
     void sendbanlist(int cn)
     {
         

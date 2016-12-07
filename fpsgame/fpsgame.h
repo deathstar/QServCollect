@@ -96,6 +96,8 @@ namespace server {
         }
     };
     
+    extern void send_connected_time(clientinfo *ci, int sender);
+    
     struct gamestate : fpsstate
     {
         int64_t lastfragmillis;

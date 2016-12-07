@@ -1284,6 +1284,8 @@ namespace server {
                             concatstring(msg, buf, MAXTRANS);
                             
                             sendf(CMD_SENDER, 1, "ris", N_SERVMSG, msg);
+                            
+                            send_connected_time(ci, CMD_SENDER); 
                         }
                     } else {
                         sendf(CMD_SENDER, 1, "ris", N_SERVMSG, "\f3Error: Player not connected");
