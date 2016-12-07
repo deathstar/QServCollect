@@ -431,8 +431,7 @@ namespace server {
     extern vector<clientinfo *> connects, clients, bots;
 	extern int mastermode;
     
-	/****/
-	
+    //QServ 
 	extern void send_connected_time(clientinfo *ci, int sender);
 	extern int vmessage(int cn, const char *fmt, va_list ap);
     extern bool duplicatename(clientinfo *ci, char *name);
