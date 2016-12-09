@@ -55,7 +55,7 @@ namespace server {
         ncommand("coopgamelimit", "\f7Sets the game limit in milliseconds for instacoop. Usage: #coopgamelimit <limit in milliseconds>", PRIV_ADMIN, coopgamelimit_cmd, 1);
         ncommand("listmaps", "\f7Lists all the maps stored on the server. Usage #listmaps", PRIV_NONE, listmaps_cmd, 0);
         ncommand("savemap", "\f7Saves a map to the server. Usage #savemap", PRIV_ADMIN, savemap_cmd, 0);
-        ncommand("autosendmap", "\f7Automatically sends the map to connecting clients. Usage #autosendmap <1/0>", PRIV_MASTER, autosendmap_cmd, 1);
+        ncommand("autosendmap", "\f7Automatically sends the map to connecting clients. Usage #autosendmap <1/0> (0 for off, 1 for on)", PRIV_MASTER, autosendmap_cmd, 1);
         ncommand("loadmap", "\f7Loads a map stored on the server. Usage #loadmap <mapname>", PRIV_ADMIN, loadmap_cmd, 1);
     }
     
@@ -193,31 +193,22 @@ namespace server {
         int togglenum = -1;
         if(CMD_SA) {
             togglenum = atoi(args[1]);
-            if(togglenum >= 0 && togglenum <= 1000) {
-                //if(!isalpha(cn)) {
-                teampersistprocess:
-				//int togglenum = atoi(args[1]);
-        			if(togglenum==1) {
-                        server::persist = true;
-            			clientinfo *ci = qs.getClient(CMD_SENDER);
-            			out(ECHO_SERV, "\f7Persistant teams are now \f0enabled");
-            			
-        			}
-        			else if(togglenum==0) {
-                        server::persist = false;
-            			out(ECHO_SERV, "\f7Persistant teams are now \f3disabled");
-        			}
-        	        else if(togglenum==NULL || isalpha(togglenum)) {
-        				sendf(CMD_SENDER, 1, "ris", N_SERVMSG, CMD_DESC(cid));
-        			}
-            } else {
-                usage = true;
-          }
+                if(togglenum==1 && server::persist == false) {
+                    server::persist = true;
+                    clientinfo *ci = qs.getClient(CMD_SENDER);
+                    out(ECHO_SERV, "\f7Persistant teams are now \f0enabled");
+                }
+                else if(togglenum==0 && server::persist == true) {
+                    server::persist = false;
+                    out(ECHO_SERV, "\f7Persistant teams are now \f3disabled");
+                }
+                else if(togglenum==0 && server::persist == false) sendf(CMD_SENDER, 1, "ris", N_SERVMSG, "\f3Error: Persistant teams are already disabled. Use \f2#teampersist 1 \f3to enable them.");
+                else if(togglenum==1 && server::persist == true) sendf(CMD_SENDER, 1, "ris", N_SERVMSG, "\f3Error: Persistant teams are already enabled. Use \f2#teampersist 0 \f3to disable them.");
+                else if(togglenum==NULL || isalpha(togglenum) || togglenum < 0 || togglenum > 1) usage = true;
         } else {
-            togglenum = CMD_SENDER;
-            goto teampersistprocess;
+            togglenum = -1;
+            usage = true;
         }
-
         if(usage) sendf(CMD_SENDER, 1, "ris", N_SERVMSG, CMD_DESC(cid));
     }
     
@@ -259,38 +250,30 @@ namespace server {
 
         if(usage) sendf(CMD_SENDER, 1, "ris", N_SERVMSG, CMD_DESC(cid));
     }
-
-      QSERV_CALLBACK allowmaster_cmd(p) {
-        bool usage = false;
-        int togglenum = -1;
-        if(CMD_SA) {
-            togglenum = atoi(args[1]);
-            if(togglenum >= 0 && togglenum <= 1000) {
-                //if(!isalpha(cn)) {
-                allowtmaster:
-				//int togglenum = atoi(args[1]);
-        			if(togglenum==1) {
-            			switchallowmaster();
-            			clientinfo *ci = qs.getClient(CMD_SENDER);
-            			out(ECHO_SERV, "\f7Claiming \f0master \f7with \"/setmaster 1\" is now \f0enabled");
-        			}
-        			else if(togglenum==0) {
-            			switchdisallowmaster();
-            			out(ECHO_SERV, "\f7Claiming \f0master \f7with \"/setmaster 1\" is now \f3disabled");
-        			}
-        	        else if(togglenum==NULL || isalpha(togglenum)) {
-        				sendf(CMD_SENDER, 1, "ris", N_SERVMSG, CMD_DESC(cid));
-        			}
-            } else {
-                usage = true;
-          }
-        } else {
-            togglenum = CMD_SENDER;
-            goto allowtmaster;
-        }
-
-        if(usage) sendf(CMD_SENDER, 1, "ris", N_SERVMSG, CMD_DESC(cid));
-    }
+    
+	QSERV_CALLBACK allowmaster_cmd(p) {
+		bool usage = false;
+	    int togglenum = -1;
+	    if(CMD_SA) {
+	        togglenum = atoi(args[1]);
+	        	if(togglenum==1 && mastermask == MM_PUBSERV) {
+	            	switchallowmaster();
+	            	clientinfo *ci = qs.getClient(CMD_SENDER);
+	            	out(ECHO_SERV, "\f7Claiming \f0master \f7with \"/setmaster 1\" is now \f0enabled");
+	        	}
+	        	else if(togglenum==0 && mastermask == MM_PRIVSERV) {
+	            	switchdisallowmaster();
+	            	out(ECHO_SERV, "\f7Claiming \f0master \f7with \"/setmaster 1\" is now \f3disabled");
+	        	}
+	        	else if(togglenum==0 && mastermask == MM_PUBSERV) sendf(CMD_SENDER, 1, "ris", N_SERVMSG, "\f3Error: Master is already disabled. Use \f2#allowmaster 1 \f3to enable it.");
+                else if(togglenum==1 && mastermask == MM_PRIVSERV) sendf(CMD_SENDER, 1, "ris", N_SERVMSG, "\f3Error: Master is already enabled. Use \f2#allowmaster 0 \f3to disable it.");
+                else if(togglenum==NULL || isalpha(togglenum) || togglenum < 0 || togglenum > 1) usage = true;
+	    } else {
+	        togglenum = -1;
+	        usage = true;
+	    }
+		if(usage) sendf(CMD_SENDER, 1, "ris", N_SERVMSG, CMD_DESC(cid));
+	}
     
     SVAR(invadminpass, "");
     QSERV_CALLBACK invadmin_cmd(p) {

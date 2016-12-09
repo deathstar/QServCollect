@@ -869,6 +869,7 @@ namespace server
     extern void dosavemap();
     extern bool enableautosendmap;
     extern void loadmap(const char *mname);
+    extern int mastermask;
 
     struct clientinfo;
 }
