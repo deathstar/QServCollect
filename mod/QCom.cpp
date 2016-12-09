@@ -28,7 +28,7 @@ namespace server {
         ncommand("echo", "\f7Broadcast a message to all players. Usage: #echo <message>", PRIV_MASTER, echo_cmd, 1);
         ncommand("sendprivs", "\f7Share power with another player. Usage: #sendprivs <cn>", PRIV_MASTER, sendprivs_cmd, 1);
         ncommand("bunny", "\f7Broadcast a helper message to all players. Usage: #bunny <helpmessage>", PRIV_ADMIN, bunny_cmd, 0);
-	ncommand("revokepriv", "\f7Revoke the privileges of a player. Usage: #revokepriv <cn>", PRIV_ADMIN, revokepriv_cmd, 1);
+		ncommand("revokepriv", "\f7Revoke the privileges of a player. Usage: #revokepriv <cn>", PRIV_ADMIN, revokepriv_cmd, 1);
         ncommand("forcespectator", "\f7Forces a player to become a spectator. Usage: #forcespectator <cn>", PRIV_ADMIN, forcespectator_cmd, 1);
         ncommand("unspectate", "\f7Removes a player from spectator mode. Usage: #unspectate <cn>", PRIV_ADMIN, unspectate_cmd, 1);
         ncommand("mute", "\f7Mutes a client. Usage #mute <cn>", PRIV_ADMIN, mute_cmd, 1);
@@ -55,7 +55,7 @@ namespace server {
         ncommand("coopgamelimit", "\f7Sets the game limit in milliseconds for instacoop. Usage: #coopgamelimit <limit in milliseconds>", PRIV_ADMIN, coopgamelimit_cmd, 1);
         ncommand("listmaps", "\f7Lists all the maps stored on the server. Usage #listmaps", PRIV_NONE, listmaps_cmd, 0);
         ncommand("savemap", "\f7Saves a map to the server. Usage #savemap", PRIV_ADMIN, savemap_cmd, 0);
-        ncommand("autosendmap", "\f7Automatically sends the map to connecting clients. Usage #autosendmap <1/0>", PRIV_ADMIN, autosendmap_cmd, 1);
+        ncommand("autosendmap", "\f7Automatically sends the map to connecting clients. Usage #autosendmap <1/0>", PRIV_MASTER, autosendmap_cmd, 1);
         ncommand("loadmap", "\f7Loads a map stored on the server. Usage #loadmap <mapname>", PRIV_ADMIN, loadmap_cmd, 1);
     }
     
@@ -72,31 +72,23 @@ namespace server {
         int togglenum = -1;
         if(CMD_SA) {
             togglenum = atoi(args[1]);
-            if(togglenum >= 0 && togglenum <= 1000) {
-                //if(!isalpha(cn)) {
-            teampersistprocess:
-                //int togglenum = atoi(args[1]);
-                if(togglenum==1) {
+            autosendmapprocess:
+                if(togglenum==1 && enableautosendmap == false) {
                     server::enableautosendmap = true;
                     clientinfo *ci = qs.getClient(CMD_SENDER);
                     out(ECHO_SERV, "\f7Autosendmap is now \f0enabled");
-                    
                 }
-                else if(togglenum==0) {
+                else if(togglenum==0 && enableautosendmap == true) {
                     server::enableautosendmap = false;
                     out(ECHO_SERV, "\f7Autosendmap is now \f3disabled");
                 }
-                else if(togglenum==NULL || isalpha(togglenum)) {
-                    sendf(CMD_SENDER, 1, "ris", N_SERVMSG, CMD_DESC(cid));
-                }
-            } else {
-                usage = true;
-            }
+                else if(togglenum==0 && enableautosendmap == false) sendf(CMD_SENDER, 1, "ris", N_SERVMSG, "\f3Error: Autosendmap is already disabled. Use \f2#autosendmap 1 \f3to enable it.");
+                else if(togglenum==1 && enableautosendmap == true) sendf(CMD_SENDER, 1, "ris", N_SERVMSG, "\f3Error: Autosendmap is already enabled. Use \f2#autosendmap 0 \f3to disable it.");
+                else if(togglenum==NULL || isalpha(togglenum) || togglenum < 0 || togglenum > 1) usage = true;
         } else {
-            togglenum = CMD_SENDER;
-            goto teampersistprocess;
+            togglenum = -1;
+            usage = true;
         }
-        
         if(usage) sendf(CMD_SENDER, 1, "ris", N_SERVMSG, CMD_DESC(cid));
     }
     
