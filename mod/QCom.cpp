@@ -13,22 +13,22 @@ namespace server {
         ncommand("help", "\f7View command list or command usage. \nUsage: #help for command list and #help <name-of-command> for usage", PRIV_NONE, help_cmd, 1);
         ncommand("me", "\f7Echo your name and message to everyone. Usage: #me <message>", PRIV_NONE, me_cmd, 0);
         ncommand("stats", "\f7View the stats of a player or yourself. Usage: #stats <cn> or #stats", PRIV_NONE, stats_cmd, 1);
-        ncommand("localtime", "\f7Get the local time of the Server. Usage: #localtime", PRIV_NONE, localtime_cmd, 0);
-        ncommand("getversion", "\f7Get the current QServ Version. Usage: #getversion", PRIV_NONE, getversion_cmd, 0);
+        ncommand("localtime", "\f7Get the local time of the server. Usage: #localtime", PRIV_ADMIN, localtime_cmd, 0);
+        ncommand("ver", "\f7Get the current QServ version. Usage: #ver", PRIV_NONE, getversion_cmd, 0);
         ncommand("uptime", "\f7View how long the server has been up for. Usage: #uptime", PRIV_NONE, uptime_cmd, 0);
         ncommand("invadmin", "\f7Claim invisible administrator. Usage: #invadmin <adminpass>", PRIV_NONE, invadmin_cmd, 1);
         ncommand("cheater", "\f7Accuses someone of cheating and alerts moderators. Usage: #cheater <cn>", PRIV_NONE, cheater_cmd, 1);
         ncommand("whois", "\f7View information about a player. Usage: #whois <cn>", PRIV_NONE, whois_cmd, 1);
-        //ncommand("time", "\f7View the current time. Usage: #time <UTC Offset Number>", PRIV_NONE, time_cmd, 1);
+        ncommand("time", "\f7View the current time. Usage: #time <UTC Offset Number>", PRIV_MASTER, time_cmd, 1);
         ncommand("pm", "\f7Send a private message to someone. Usage #pm <cn> <private message>", PRIV_NONE, pm_cmd,2);
         ncommand("callops", "\f7Call all operators on the Internet Relay Chat Server. Usage: #callops", PRIV_NONE, callops_cmd, 0);
         ncommand("mapsucks", "\f7Votes for an intermission to change the map. Usage: #mapsucks", PRIV_NONE, mapsucks_cmd, 0);
         ncommand("forgive", "\f7Forgive a player for teamkilling or just in general. Usage: #forgive <cn>", PRIV_NONE, forgive_cmd, 1);
-        ncommand("forceintermission", "\f7Force an intermission. Usage: #forceintermission", PRIV_MASTER, forceintermission_cmd, 0);
+        ncommand("intermission", "\f7Force an intermission. Usage: #intermission", PRIV_MASTER, forceintermission_cmd, 0);
         ncommand("echo", "\f7Broadcast a message to all players. Usage: #echo <message>", PRIV_MASTER, echo_cmd, 1);
         ncommand("sendprivs", "\f7Share power with another player. Usage: #sendprivs <cn>", PRIV_MASTER, sendprivs_cmd, 1);
         ncommand("bunny", "\f7Broadcast a helper message to all players. Usage: #bunny <helpmessage>", PRIV_ADMIN, bunny_cmd, 0);
-	ncommand("revokepriv", "\f7Revoke the privileges of a player. Usage: #revokepriv <cn>", PRIV_ADMIN, revokepriv_cmd, 1);
+		ncommand("revokepriv", "\f7Revoke the privileges of a player. Usage: #revokepriv <cn>", PRIV_ADMIN, revokepriv_cmd, 1);
         ncommand("forcespectator", "\f7Forces a player to become a spectator. Usage: #forcespectator <cn>", PRIV_ADMIN, forcespectator_cmd, 1);
         ncommand("unspectate", "\f7Removes a player from spectator mode. Usage: #unspectate <cn>", PRIV_ADMIN, unspectate_cmd, 1);
         ncommand("mute", "\f7Mutes a client. Usage #mute <cn>", PRIV_ADMIN, mute_cmd, 1);
@@ -36,27 +36,28 @@ namespace server {
         ncommand("editmute", "\f7Stops a client from editing. Usage #editmute <cn>", PRIV_ADMIN, editmute_cmd, 1);
         ncommand("uneditmute", "\f7Allows a client to edit again. Usage #uneditmute <cn>", PRIV_ADMIN, uneditmute_cmd, 1);
         ncommand("togglelockspec", "\f7Forces a client to be locked in spectator mode. Usage #togglelockspec <cn>", PRIV_ADMIN, togglelockspec_cmd, 1);
-        ncommand("ban", "\f7Bans a client. Usage: #ban <cn>", PRIV_ADMIN, ban_cmd, 1);
-        ncommand("clearipbans", "\f7Clears all server bans stored and issued. Usage: #clearipbans", PRIV_ADMIN, clearipbans_cmd, 0);
+        ncommand("ban", "\f7Bans a client. Usage: #ban <cn> <ban time in minutes>", PRIV_ADMIN, ban_cmd, 2);
+        ncommand("pban", "\f7Permanently bans a client. Not listed on #listkickbans, not undoable. Use #clearpbans to clear. Usage: #pban <cn>", PRIV_ADMIN, ban_cmd, 1);
+        ncommand("clearpbans", "\f7Clears all pbans and ipbans. Usage: #clearpbans", PRIV_ADMIN, clearpbans_cmd, 0);
         ncommand("teampersist", "\f7Toggle persistant teams on or off. Usage: #teampersist <0/1> (0 for off, 1 for on)", PRIV_MASTER, teampersist_cmd, 1);
         ncommand("allowmaster", "\f7Allows clients to claim master. Usage: #allowmaster <0/1> (0 for off, 1 for on)", PRIV_ADMIN, allowmaster_cmd, 1);
         ncommand("kill", "\f7Brutally murders a player. Usage: #kill <cn>", PRIV_ADMIN, kill_cmd, 1);
         ncommand("rename", "\f7Renames a player. Usage: #rename <cn> <new name>", PRIV_ADMIN, rename_cmd, 2);
         ncommand("addkey", "\f7Adds an authkey to the server. \nUsage: #addkey <name> <domain> <public key> <privilege>", PRIV_ADMIN, addkey_cmd, 4);
-        //ncommand("listbans", "\f7Lists all ip bans. Usage: #listbans", PRIV_ADMIN, listbans_cmd, 0);
+        ncommand("listkickbans", "\f7Lists all kicks/bans. Usage: #listkickbans", PRIV_ADMIN, listkickbans_cmd, 0);
         ncommand("reloadconfig","\f7Reloads server-init.cfg configuration. Usage: #reloadconfig", PRIV_ADMIN, reloadconfig_cmd, 0);
-        //ncommand("unban", "\f7Unbans a player. Usage: #unban <ID>", PRIV_ADMIN, unban_cmd, 1);
+        ncommand("unkickban", "\f7Unkick/unbans a player. Usage: #unban <ID>. Use #listkickbans for a list with ID's", PRIV_ADMIN, unkickban_cmd, 1);
         ncommand("syncauth", "\f7Sync server with new authkeys added to users.cfg. Usage: #syncauth", PRIV_ADMIN, syncauth_cmd, 0);
         ncommand("smartbot", "\f7Speak to smart IRC bot. Usage: #smartbot <command> \nUse: #smartbot help for a list of commands", PRIV_NONE, smartbot_cmd, 1);
-        //ncommand("owords", "View list of offensive words. Usage: #owords",PRIV_NONE, owords_cmd, 0);
-        //ncommand("olangfilter", "Turn the offensive language filter on or off. Usage: #olang <off/on> (0/1) and #olang to see if it's activated", PRIV_MASTER, olangfilter_cmd, 1);
         ncommand("cw", "\f7Starts a clanwar with a countdown (timer dependent on maxclients). Usage: #cw <mode> <map>", PRIV_MASTER, cw_cmd, 2);
         ncommand("duel", "\f7Starts a duel (timer dependent on maxclients). Usage: #duel <mode> <map>", PRIV_MASTER, duel_cmd, 2);
-        ncommand("coopgamelimit", "\f7Sets the game limit in milliseconds for instacoop. Usage: #coopgamelimit <limit in milliseconds>", PRIV_ADMIN, coopgamelimit_cmd, 1);
-        ncommand("listmaps", "\f7Lists all the maps stored on the server. Usage #listmaps", PRIV_NONE, listmaps_cmd, 0);
+        ncommand("icgl", "\f7Sets the game limit in milliseconds for instacoop. Usage: #icgl <limit in milliseconds>", PRIV_ADMIN, coopgamelimit_cmd, 1);
+        ncommand("listmaps", "\f7Lists all the maps stored on the server. Usage #listmaps", PRIV_ADMIN, listmaps_cmd, 0);
         ncommand("savemap", "\f7Saves a map to the server. Usage #savemap", PRIV_ADMIN, savemap_cmd, 0);
         ncommand("autosendmap", "\f7Automatically sends the map to connecting clients. Usage #autosendmap <1/0> (0 for off, 1 for on)", PRIV_MASTER, autosendmap_cmd, 1);
         ncommand("loadmap", "\f7Loads a map stored on the server. Usage #loadmap <mapname>", PRIV_ADMIN, loadmap_cmd, 1);
+        //ncommand("owords", "View list of offensive words. Usage: #owords",PRIV_NONE, owords_cmd, 0);
+        //ncommand("olangfilter", "Turn the offensive language filter on or off. Usage: #olang <off/on> (0/1) and #olang to see if it's activated", PRIV_MASTER, olangfilter_cmd, 1);
     }
     
     QSERV_CALLBACK loadmap_cmd(p) {
@@ -148,18 +149,19 @@ namespace server {
         else sendf(CMD_SENDER, 1, "ris", N_SERVMSG, CMD_DESC(cid));
     }
     
-    /*QSERV_CALLBACK listbans_cmd(p) {
+    QSERV_CALLBACK listkickbans_cmd(p) {
         clientinfo *ci = qs.getClient(CMD_SENDER);
-        server::sendbanlist(ci->clientnum);
+        server::sendkickbanlist(ci->clientnum);
     }
     
-    QSERV_CALLBACK unban_cmd(p) {
+    QSERV_CALLBACK unkickban_cmd(p) {
         if(CMD_SA){
+        	clientinfo *ci = qs.getClient(CMD_SENDER);
             int banid = atoi(args[1]);
-            server::unban(banid);
+            server::unkickban(banid, ci->clientnum);
         }
         else sendf(CMD_SENDER, 1, "ris", N_SERVMSG, CMD_DESC(cid));
-    }*/
+    }
     
     QSERV_CALLBACK rename_cmd(p) {
         if(CMD_SA) {
@@ -290,57 +292,88 @@ namespace server {
         }
     }
         
-    QSERV_CALLBACK clearipbans_cmd(p) {
+    QSERV_CALLBACK clearpbans_cmd(p) {
         clientinfo *ci = qs.getClient(CMD_SENDER);
         sendf(ci->clientnum, 1, "ris", N_SERVMSG, "Cleared all IP bans");
-        server::clearipbans();
+        server::clearpbans();
     }
     
     QSERV_CALLBACK ban_cmd(p) {
         bool usage = false;
         int cn = -1;
-
         if(CMD_SA) {
             cn = atoi(args[1]);
             if(cn >= 0 && cn <= 1000) {
-                //if(!isalpha(cn)) {
-                    gbanprocess:
-                    clientinfo *ci = qs.getClient(cn);
-
-                    if(ci != NULL) {
-                        if(ci->connected) {
-                        
+                clientinfo *ci = qs.getClient(cn);
+                if(ci != NULL) {
+                    if(ci->connected) {
                         if(cn!=CMD_SENDER && cn >= 0 && cn <= 1000 && ci != NULL && ci->connected && args[1] != NULL && cn!=CMD_SENDER) {
-            				clientinfo *ci = qs.getClient(cn);
-                            server::ipban(ci->ip);
-           					 out(ECHO_SERV, "\f0%s \f7has been added to the permanent banlist.", colorname(ci));
-            				out(ECHO_NOCOLOR, "%s has been added to the permanent banlist.", colorname(ci));
-        				}
-                        
-                           
+                            /*ipban doesn't get listed on listbans and should be implemented as a permban system
+                             //clientinfo *ci = qs.getClient(cn);
+                             server::ipban(ci->ip, ci->clientnum);*/
+                            if(args[2] != NULL) {
+                                uint ip = getclientip(ci->clientnum);
+                                int expiremilliseconds = atoi(args[2])*60000;
+                                int expireseconds = (int) (expiremilliseconds/1000) % 60 ;
+                                int expireminutes = (int) ((expiremilliseconds/(1000*60)) % 60);
+                                addban(ip, expiremilliseconds);
+                                clientinfo *sender = qs.getClient(CMD_SENDER);
+                                disconnect_client(cn, DISC_KICK);
+                                out(ECHO_SERV, "\f0%s \f7has been banned for %d minutes.", colorname(ci), expireminutes);
+                                out(ECHO_NOCOLOR, "%s has been banned for %d minutes.", colorname(ci), expireminutes);
+                            }
+                            else if(args[2] == NULL) usage = true;
                         }
-                    } else {
-                        sendf(CMD_SENDER, 1, "ris", N_SERVMSG, "\f3Error: Player not connected");
                     }
-                /*} else {
-                    usage = true;
-                }*/
+                } else {
+                    sendf(CMD_SENDER, 1, "ris", N_SERVMSG, "\f3Error: Player not connected");
+                }
+                
             } else {
                 usage = true;
             }
         } else {
             cn = CMD_SENDER;
-            goto gbanprocess;
+            usage = true;
         }
-
         if(usage) sendf(CMD_SENDER, 1, "ris", N_SERVMSG, CMD_DESC(cid));
     }
-   
+    
+    QSERV_CALLBACK pban_cmd(p) {
+        bool usage = false;
+        int cn = -1;
+        if(CMD_SA) {
+            cn = atoi(args[1]);
+            if(cn >= 0 && cn <= 1000) {
+                clientinfo *ci = qs.getClient(cn);
+                if(ci != NULL) {
+                    if(ci->connected) {
+                        if(cn!=CMD_SENDER && cn >= 0 && cn <= 1000 && ci != NULL && ci->connected && args[1] != NULL && cn!=CMD_SENDER) {
+                            //ipban doesn't get listed on listbans and should be implemented as a permban system
+                            clientinfo *ci = qs.getClient(cn);
+                            server::ipban(ci->ip, ci->clientnum);
+                            out(ECHO_SERV, "\f0%s \f7has been permanently banned", colorname(ci));
+                            out(ECHO_NOCOLOR, "%s has been permanently banned.", colorname(ci));
+                        }
+                    }
+                } else {
+                    sendf(CMD_SENDER, 1, "ris", N_SERVMSG, "\f3Error: Player not connected");
+                }
+                
+            } else {
+                usage = true;
+            }
+        } else {
+            cn = CMD_SENDER;
+            usage = true;
+        }
+        if(usage) sendf(CMD_SENDER, 1, "ris", N_SERVMSG, CMD_DESC(cid));
+    }
+    
     VAR(votestopassmapsucks, 2, 10, INT_MAX);
     int mapsucksvotes = 0;
     QSERV_CALLBACK mapsucks_cmd(p) {
         clientinfo *ci = qs.getClient(CMD_SENDER);
-        
         if(!ci->votedmapsucks) {
             mapsucksvotes++;
             out(ECHO_SERV, "\f0%s \f7thinks this map sucks, use \f2#mapsucks \f7to vote for an intermission to skip it.", colorname(ci));
@@ -1098,7 +1131,7 @@ namespace server {
             strcpy(commandList, "");
             clientinfo *ci = qs.getClient(CMD_SENDER);
             if(ci->privilege==PRIV_ADMIN) {
-                sprintf(commandList, "%s", "\f2Commands: \f6");
+                sprintf(commandList, "%s", "\f2Commands: \f7");
                 for(int i = 0; i < CMD_LAST; i++) {
                     if(CMD_PRIV(i) == PRIV_ADMIN || CMD_PRIV(i) == PRIV_MASTER || CMD_PRIV(i) == PRIV_NONE) {
                         strcat(commandList, CMD_NAME(i));
@@ -1109,7 +1142,7 @@ namespace server {
                 }
             }
             else if(ci->privilege==PRIV_MASTER) {
-                sprintf(commandList, "%s", "\f2Commands: \f0");
+                sprintf(commandList, "%s", "\f2Commands: \f7");
                 for(int i = 0; i < CMD_LAST; i++) {
                     if(CMD_PRIV(i) == PRIV_MASTER || CMD_PRIV(i) == PRIV_NONE) {
                         strcat(commandList, CMD_NAME(i));
@@ -1162,7 +1195,7 @@ namespace server {
         sendf(CMD_SENDER, 1, "ris", N_SERVMSG, localtime);
     }
 
-    /*QSERV_CALLBACK time_cmd(p) {
+    QSERV_CALLBACK time_cmd(p) {
         int UTCOffset = -1;
         if(CMD_SA) {
             UTCOffset = atoi(args[1]);
@@ -1182,7 +1215,7 @@ namespace server {
         }
         else sendf(CMD_SENDER, 1, "ris", N_SERVMSG, CMD_DESC(cid));
 
-    }*/
+    }
 
     QSERV_CALLBACK bunny_cmd(p) {
         if(strlen(fulltext) > 0) {

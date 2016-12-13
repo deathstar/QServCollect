@@ -448,6 +448,7 @@ namespace server {
     VAR(instacoop_gamelimit, 1000, 600000, 9999999); //time limit for instacoop games
     VAR(enable_passflag, 0, 1, 1);                   //enables pass the flag in ctf modes
     VAR(no_single_private, 0, 0, 1);                 //no single user can set mastermode private (requires at least 2 clients/admins are exempt)
+    VAR(enablemultiplemasters, 0, 0, 1);             //enables /setmaster 1 for multiple clients (stops need for #sendprivs or givemaster)
     
     VARF(publicserver, 0, 0, 2, {
         switch(publicserver)
@@ -1303,10 +1304,12 @@ namespace server {
                     sendf(ci->clientnum, 1, "ris", N_SERVMSG, "\f3Error: Spectators may not claim master");
                     return false;
                 }
-                loopv(clients) if(ci!=clients[i] && clients[i]->privilege)
-                {
-                    sendf(ci->clientnum, 1, "ris", N_SERVMSG, "\f3Error: Someone already has privileges");
-                    return false;
+                if(!enablemultiplemasters) {
+                    loopv(clients) if(ci!=clients[i] && clients[i]->privilege)
+                    {
+                        sendf(ci->clientnum, 1, "ris", N_SERVMSG, "\f3Error: Someone already has privileges");
+                        return false;
+                    }
                 }
                 if(!authname && !(mastermask&MM_AUTOAPPROVE) && !ci->privilege && !ci->local)
                 {
@@ -3168,10 +3171,9 @@ best.add(clients[i]); \
     
     extern void verifybans();
     
+    vector<ipmask> bans;
     struct banlist
     {
-        vector<ipmask> bans;
-        
         void clear() { bans.shrink(0); }
         
         bool check(uint ip)
@@ -3185,7 +3187,6 @@ best.add(clients[i]); \
             ipmask ban;
             ban.parse(ipname);
             bans.add(ban);
-            
             verifybans();
         }
     } ipbans, gbans;
@@ -3206,36 +3207,34 @@ best.add(clients[i]); \
         }
     }
     
-    void ipban(const char *ipname) {
+    void ipban(const char *ipname, int bannedcn) {
         ipbans.add(ipname);
     }
     
-    void clearipbans() {
+    void clearpbans() {
         ipbans.clear();
     }
     
-    ICOMMAND(clearipbans, "", (), ipbans.clear());
+    ICOMMAND(clearpbans, "", (), ipbans.clear());
     ICOMMAND(ipban, "s", (const char *ipname), ipbans.add(ipname));
     
-
-    void sendbanlist(int cn)
+    void sendkickbanlist(int cn)
     {
-        
         string buf;
         vector<char> msgbuf;
         ipmask im;
         im.mask = ~0;
         int n;
-        //sendf(cn, 1, "ris", N_SERVMSG, bannedips.length() < 1 ? "Bans:" : "No bans");
+        sendf(cn, 1, "ris", N_SERVMSG, bannedips.empty() ? "kick/ban list is empty" : "kick/ban list:");
         loopv(bannedips)
         {
             msgbuf.setsize(0);
             im.ip = bannedips[i].ip;
-            n = sprintf(buf, "\f2id: \f7%2d\f2, ip: \f7", i);
+            n = sprintf(buf, "\f2id:\f7%2d\f2, ip: \f7", i);
             msgbuf.put(buf, n);
             n = im.print(buf);
             msgbuf.put(buf, n);
-            n = sprintf(buf, "expires in: \f7");
+            n = sprintf(buf, "\f2, expires in: \f7");
             msgbuf.put(buf, n);
             formatsecs(msgbuf, (uint)((bannedips[i].expire-totalmillis)/1000));
             if(bannedips[i].reason)
@@ -3247,42 +3246,23 @@ best.add(clients[i]); \
             sendf(cn, 1, "ris", N_SERVMSG, msgbuf.getbuf());
         }
     }
-
-    /*
-     void unban(int argc, char **argv, int sender)
-     {
-     if(argc <= 1)
-     {
-     sendf(sender, 1, "ris", N_SERVMSG, "Please specify ban id");
-     return;
-     }
-     char *end = NULL;
-     int id = (int)strtol(argv[1], &end, 10);
-     if(end <= argv[1] || *end || (id >= 0 && !bannedips.inrange(id)))
-     {
-     sendf(sender, 1, "ris", N_SERVMSG, tempformatstring("Invalid ban id: %s", argv[1]));
-     return;
-     }
-     if(id >= 0)
-     {
-     bannedips.remove(id);
-     sendf(sender, 1, "ris", N_SERVMSG, "Ban removed");
-     }
-     else
-     {
-     bannedips.shrink(0);
-     sendservmsg("cleared all bans");
-     }
-     }*/
-    void unban(int banid)
+    
+    void unkickban(int banid, int sender)
     {
-        if(!bannedips.inrange(banid))
+        if(bannedips.inrange(banid) && banid >= 0)
         {
-            //sendf(ci->clientnum, 1, "ris", N_SERVMSG, tempformatstring("Invalid ban id: %d", banid));
-            out(ECHO_CONSOLE, "[Catch]: Invalid ID. Client attempted to unban ID %d", banid);
+            bannedips.remove(banid);
+            sendf(sender, 1, "ris", N_SERVMSG, "kick/ban removed");
+            banid = banid+banid++; //the kick/ban is now gone so occupy the id by another one
+        }
+        else if(banid < 0) {
+            bannedips.shrink(0);
+            sendservmsg("cleared all kicks/bans");
+        }
+        else {
+            sendf(sender, 1, "ris", N_SERVMSG, tempformatstring("Invalid kick/ban id: %d", banid));
             return;
         }
-        else bannedips.remove(banid);
     }
     
     int allowconnect(clientinfo *ci, const char *pwd = "")

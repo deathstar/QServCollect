@@ -852,17 +852,17 @@ namespace server
     extern bool serveroption(const char *arg);
     extern bool delayspawn(int type);
     extern void clearbans();
-    extern void clearipbans();
-    extern void ipban(const char *ipname);
+    extern void clearpbans();
+    extern void ipban(const char *ipname, int bannedcn);
     extern void listbans(int cn);
-    extern void unban(int banid);
+    extern void unkickban(int banid, int sender);
     extern void privilegemsg(int min_privilege, const char *fmt, ...);
     extern void switchallowmaster();
     extern void switchdisallowmaster();
     extern bool persist;
     extern void _storeflagruns();
     extern void adduser(char *name, char *desc, char *pubkey, char *priv);
-    extern void sendbanlist(int cn);
+    extern void sendkickbanlist(int cn);
     extern bool q_teammode;
     extern int getwepaccuracy(int cn, int gun);
     extern void listmaps(int sender);
@@ -870,6 +870,7 @@ namespace server
     extern bool enableautosendmap;
     extern void loadmap(const char *mname);
     extern int mastermask;
+    extern void addban(uint ip, int expire);
 
     struct clientinfo;
 }
