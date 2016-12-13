@@ -1049,54 +1049,33 @@ namespace server {
     }
     
     QSERV_CALLBACK sendprivs_cmd(p) {
-		int cn = -1;
+        int cn = -1;
         if(CMD_SA) {
-			cn = atoi(args[1]);
+            cn = atoi(args[1]);
             if(cn >= 0 && cn <= 1000) {
-				clientinfo *ci = qs.getClient(cn);
-				clientinfo *self = qs.getClient(CMD_SENDER);
-				
+                clientinfo *ci = qs.getClient(cn);
+                clientinfo *self = qs.getClient(CMD_SENDER);
+                
                 if(ci != NULL) {
-					if(ci->connected) {
-					   defformatstring(shareprivsmsg)("\f7Ok, %s\f7. Sharing your privileges with \f0%s\f7.", colorname(self), colorname(ci));
-            		   sendf(CMD_SENDER, 1, "ris", N_SERVMSG, shareprivsmsg);
-                       if(self->privilege==PRIV_MASTER) {
-                       defformatstring(sendprivsmsg)("\f7You have received invisible \f0master \f7from \f0%s\f7.", colorname(self));
-                       sendf(cn, 1, "ris", N_SERVMSG, sendprivsmsg);
-                       ci->privilege=PRIV_MASTER;
-                	   self->privilege=PRIV_MASTER;
-            		   }
-            		   else if(self->privilege==PRIV_ADMIN) {
-                       defformatstring(sendprivsmsg)("\f7You have received invisible \f6admin \f7from \f6%s\f7.", colorname(self));
-                       sendf(cn, 1, "ris", N_SERVMSG, sendprivsmsg);
-                       ci->privilege=PRIV_ADMIN;
-                       self->privilege=PRIV_ADMIN;
-                       }
-
-						//setmaster(clientinfo *ci, bool val, const char *pass = "", const char *authname = NULL, const char *authdesc = NULL, int authpriv = PRIV_MASTER, bool force = false, bool trial = false)
-						//loopv(clients) if(ci!=clients[i] && clients[i]->privilege) {
-						//	sendf(-1, 1, "ri2", N_CLIENT, clients[i]->privilege);
-						//}
-						
-						/**packetbuf p(MAXTRANS, ENET_PACKET_FLAG_RELIABLE);
-						putint(p, N_SERVMSG);
-						sendstring(msg, p);
-						putint(p, N_CURRENTMASTER);
-						putint(p, mastermode);
-						loopv(clients) if(clients[i]->privilege >= PRIV_MASTER)
-						{
-							putint(p, clients[i]->clientnum);
-							putint(p, clients[i]->privilege);
-						}
-						putint(p, -1);
-						sendpacket(-1, 1, p.finalize());*/
-						//scheckpausegame();
-					}
-				} else {
-					sendf(CMD_SENDER, 1, "ris", N_SERVMSG, "\f3Error: Player not connected");
+                    if(ci->connected) {
+                        defformatstring(shareprivsmsg)("\f7Ok, %s\f7. Sharing your privileges with \f0%s\f7.", colorname(self), colorname(ci));
+                        sendf(CMD_SENDER, 1, "ris", N_SERVMSG, shareprivsmsg);
+                        if(self->privilege==PRIV_MASTER) {
+                            defformatstring(sendprivsmsg)("\f7You have received invisible \f0master \f7from \f0%s\f7.", colorname(self));
+                            sendf(cn, 1, "ris", N_SERVMSG, sendprivsmsg);
+                            server::setmaster(ci, 1, "", NULL, NULL, PRIV_MASTER, true, false, false);
+                        }
+                        else if(self->privilege==PRIV_ADMIN) {
+                            defformatstring(sendprivsmsg)("\f7You have received invisible \f6admin \f7from \f6%s\f7.", colorname(self));
+                            sendf(cn, 1, "ris", N_SERVMSG, sendprivsmsg);
+                            server::setmaster(ci, 1, "", NULL, NULL, PRIV_ADMIN, true, false, false);
+                        }
+                    }
+                } else {
+                    sendf(CMD_SENDER, 1, "ris", N_SERVMSG, "\f3Error: Player not connected");
                 } 
-			}
-		} else {
+            }
+        } else {
             sendf(CMD_SENDER, 1, "ris", N_SERVMSG, CMD_DESC(cid));
         }
     }
