@@ -28,7 +28,7 @@ namespace server {
         ncommand("echo", "\f7Broadcast a message to all players. Usage: #echo <message>", PRIV_MASTER, echo_cmd, 1);
         ncommand("sendprivs", "\f7Share master/admin with another player. Usage: #sendprivs <cn>", PRIV_MASTER, sendprivs_cmd, 1);
         ncommand("bunny", "\f7Broadcast a helper message to all players. Usage: #bunny <helpmessage>", PRIV_ADMIN, bunny_cmd, 0);
-	ncommand("revokepriv", "\f7Revoke the privileges of a player. Usage: #revokepriv <cn>", PRIV_ADMIN, revokepriv_cmd, 1);
+        ncommand("revokepriv", "\f7Revoke the privileges of a player. Usage: #revokepriv <cn>", PRIV_ADMIN, revokepriv_cmd, 1);
         ncommand("forcespectator", "\f7Forces a player to become a spectator. Usage: #forcespectator <cn>", PRIV_ADMIN, forcespectator_cmd, 1);
         ncommand("unspectate", "\f7Removes a player from spectator mode. Usage: #unspectate <cn>", PRIV_ADMIN, unspectate_cmd, 1);
         ncommand("mute", "\f7Mutes a client. Usage #mute <cn>", PRIV_ADMIN, mute_cmd, 1);
@@ -1304,31 +1304,9 @@ namespace server {
                 if(ci != NULL) {
 					if(ci->connected) {
 						server::revokemaster(ci);
-							
 						defformatstring(msg)("Privileges have been revoked from the specified client \f3%s", colorname(ci));
 						sendf(-1, 1, "ris", N_SERVMSG, msg);
-						
-						setmaster(ci, true, "", NULL, NULL, PRIV_NONE, true, false,
-									true);
-
-						//setmaster(clientinfo *ci, bool val, const char *pass = "", const char *authname = NULL, const char *authdesc = NULL, int authpriv = PRIV_MASTER, bool force = false, bool trial = false)
-						//loopv(clients) if(ci!=clients[i] && clients[i]->privilege) {
-						//	sendf(-1, 1, "ri2", N_CLIENT, clients[i]->privilege);
-						//}
-						
-						/**packetbuf p(MAXTRANS, ENET_PACKET_FLAG_RELIABLE);
-						putint(p, N_SERVMSG);
-						sendstring(msg, p);
-						putint(p, N_CURRENTMASTER);
-						putint(p, mastermode);
-						loopv(clients) if(clients[i]->privilege >= PRIV_MASTER)
-						{
-							putint(p, clients[i]->clientnum);
-							putint(p, clients[i]->privilege);
-						}
-						putint(p, -1);
-						sendpacket(-1, 1, p.finalize());*/
-						//scheckpausegame();
+						setmaster(ci, true, "", NULL, NULL, PRIV_NONE, true, false, true);
 					}
 				} else {
 					sendf(CMD_SENDER, 1, "ris", N_SERVMSG, "\f3Error: Player not connected");
