@@ -2214,13 +2214,13 @@ namespace server {
         if(autodemo) setupdemorecord();
         loopv(clients)
         {
+            if(instacoop) z_loadmap(smapname, mapdata);
             clientinfo *ci = clients[i];
             if(m_edit && autosendmap && enableautosendmap) {
                 z_sendmap(ci, NULL, mapdata, true, false);
                 if(autosendmap) enableautosendmap = true;
                 else enableautosendmap = false;
             }
-            if(instacoop) z_loadmap(smapname, mapdata);
         }
     }
     void rotatemap(bool next)
@@ -3467,12 +3467,12 @@ best.add(clients[i]); \
         
         if(m_demo) setupdemoplayback();
         
+        if(instacoop) { z_loadmap(smapname, mapdata); ci->isEditMuted = true; }
         if(m_edit && autosendmap && enableautosendmap) {
             z_sendmap(ci, NULL, mapdata, true, false);
             if(autosendmap) enableautosendmap = true;
             else enableautosendmap = false;
         }
-        if(instacoop) { z_loadmap(smapname, mapdata); ci->isEditMuted = true; }
         
         if(servermotd[0]) {
             if(welcomewithname) {
