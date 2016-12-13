@@ -351,7 +351,7 @@ namespace server {
                         if(cn!=CMD_SENDER && cn >= 0 && cn <= 1000 && ci != NULL && ci->connected && args[1] != NULL && cn!=CMD_SENDER) {
                             //ipban doesn't get listed on listbans and should be implemented as a permban system
                             clientinfo *ci = qs.getClient(cn);
-                            server::ipban(ci->ip, ci->clientnum);
+                            server::ipban(ci->ip);
                             out(ECHO_SERV, "\f0%s \f7has been permanently banned", colorname(ci));
                             out(ECHO_NOCOLOR, "%s has been permanently banned.", colorname(ci));
                         }
