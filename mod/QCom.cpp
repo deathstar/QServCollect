@@ -1037,9 +1037,10 @@ namespace server {
             if(strlen(fulltext) > 0 && cn!=CMD_SENDER && ci != NULL && cn >= 0 && cn <= 128 && args[1] != NULL) {
                 clientinfo *self = qs.getClient(CMD_SENDER);
                 if(strlen(fulltext) > 0 && ci->connected && args[1] != NULL && ci != NULL) {
-                    defformatstring(recieverpmmsg)("\f7Private message from \f0%s\f7: \f3%s", colorname(self), fulltext);
+                    char* privatemessage = fulltext + 1; //ommit cn from fulltext
+                    defformatstring(recieverpmmsg)("\f7Private message from \f0%s\f7:\f3%s", colorname(self), privatemessage);
                     sendf(cn, 1, "ris", N_SERVMSG, recieverpmmsg);
-                    defformatstring(senderpmconf)("\f7Sent \f0%s \f7your message: \f3%s", colorname(ci), fulltext);
+                    defformatstring(senderpmconf)("\f7Sent \f0%s \f7your message:\f3%s", colorname(ci), privatemessage);
                     sendf(CMD_SENDER, 1, "ris", N_SERVMSG, senderpmconf);
                 }
             }
