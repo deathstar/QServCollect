@@ -3171,9 +3171,9 @@ best.add(clients[i]); \
     
     extern void verifybans();
     
-    vector<ipmask> bans;
     struct banlist
     {
+        vector<ipmask> bans;
         void clear() { bans.shrink(0); }
         
         bool check(uint ip)
@@ -3207,7 +3207,7 @@ best.add(clients[i]); \
         }
     }
     
-    void ipban(const char *ipname, int bannedcn) {
+    void ipban(const char *ipname) {
         ipbans.add(ipname);
     }
     
