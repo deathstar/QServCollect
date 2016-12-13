@@ -853,7 +853,7 @@ namespace server
     extern bool delayspawn(int type);
     extern void clearbans();
     extern void clearpbans();
-    extern void ipban(const char *ipname, int bannedcn);
+    extern void ipban(const char *ipname);
     extern void listbans(int cn);
     extern void unkickban(int banid, int sender);
     extern void privilegemsg(int min_privilege, const char *fmt, ...);
