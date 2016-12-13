@@ -26,7 +26,7 @@ namespace server {
         ncommand("forgive", "\f7Forgive a player for teamkilling or just in general. Usage: #forgive <cn>", PRIV_NONE, forgive_cmd, 1);
         ncommand("intermission", "\f7Force an intermission. Usage: #intermission", PRIV_MASTER, forceintermission_cmd, 0);
         ncommand("echo", "\f7Broadcast a message to all players. Usage: #echo <message>", PRIV_MASTER, echo_cmd, 1);
-        ncommand("sendprivs", "\f7Share power with another player. Usage: #sendprivs <cn>", PRIV_MASTER, sendprivs_cmd, 1);
+        ncommand("sendprivs", "\f7Share master/admin with another player. Usage: #sendprivs <cn>", PRIV_MASTER, sendprivs_cmd, 1);
         ncommand("bunny", "\f7Broadcast a helper message to all players. Usage: #bunny <helpmessage>", PRIV_ADMIN, bunny_cmd, 0);
 		ncommand("revokepriv", "\f7Revoke the privileges of a player. Usage: #revokepriv <cn>", PRIV_ADMIN, revokepriv_cmd, 1);
         ncommand("forcespectator", "\f7Forces a player to become a spectator. Usage: #forcespectator <cn>", PRIV_ADMIN, forcespectator_cmd, 1);
@@ -1061,12 +1061,12 @@ namespace server {
                         defformatstring(shareprivsmsg)("\f7Ok, %s\f7. Sharing your privileges with \f0%s\f7.", colorname(self), colorname(ci));
                         sendf(CMD_SENDER, 1, "ris", N_SERVMSG, shareprivsmsg);
                         if(self->privilege==PRIV_MASTER) {
-                            defformatstring(sendprivsmsg)("\f7You have received invisible \f0master \f7from \f0%s\f7.", colorname(self));
+                            defformatstring(sendprivsmsg)("\f7You have received \f0master \f7from \f0%s\f7.", colorname(self));
                             sendf(cn, 1, "ris", N_SERVMSG, sendprivsmsg);
                             server::setmaster(ci, 1, "", NULL, NULL, PRIV_MASTER, true, false, false);
                         }
                         else if(self->privilege==PRIV_ADMIN) {
-                            defformatstring(sendprivsmsg)("\f7You have received invisible \f6admin \f7from \f6%s\f7.", colorname(self));
+                            defformatstring(sendprivsmsg)("\f7You have received \f6admin \f7from \f6%s\f7.", colorname(self));
                             sendf(cn, 1, "ris", N_SERVMSG, sendprivsmsg);
                             server::setmaster(ci, 1, "", NULL, NULL, PRIV_ADMIN, true, false, false);
                         }
