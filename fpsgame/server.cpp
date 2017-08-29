@@ -141,7 +141,7 @@ namespace server {
     {
         if(timeused <= 500)
         {
-            out(ECHO_ALL, "\f3[Warning] %s is cheating: flaghack",colorname(ci));
+            out(ECHO_ALL, "\f0%s \f7scored an assisted flagrun",colorname(ci));
             return;
         }
         if(serverflagruns)
