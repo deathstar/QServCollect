@@ -28,11 +28,11 @@ REQUIREMENTS
 - Simply download and run this installer: http://techmaster.mooo.com/download/QServ-Installer.zip 
 - xCode: Go to the App Store and download "xCode," or visit: https://developer.apple.com/xcode/download/
 - Command Line tools: run: "xcode-select --install" from Terminal after xCode is installed
-- Cmake: Download a binary from https://cmake.org/download/ or run: "/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"; brew install cmake" from Terminal
+- Cmake: Download a Mac OSX binary from https://cmake.org/download/
 
 **LINUX**
 
- - Cmake: Download abinary from https://cmake.org/download/ or run "sudo apt-get install cmake" 
+ - Cmake: Download a Linux binary from https://cmake.org/download/ or run "sudo apt-get install cmake" 
  - install Zlib from Terminal: "sudo apt-get install zlib1g-dev"
  - install compiler from Terminal: "sudo apt-get install build-essential"
  - update from Terminal: "sudo apt-get update"
