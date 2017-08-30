@@ -45,10 +45,7 @@ REQUIREMENTS
 QUICK SETUP
 -----------
 
-1) Download QServ by [clicking here](https://codeload.github.com/deathstar/QServCollect/zip/master) 
-- OR run "git clone https://github.com/deathstar/QServCollect.git" from command line 
-(requires git): "sudo apt-get install git-all" or http://sourceforge.net/projects/git-osx-installer/
-you can just download the zip from the website and place it on your web server if you do not wish to install git to use the command line code to download QServ.
+1) Download QServ by [clicking here](https://codeload.github.com/deathstar/QServCollect/zip/master) or run "git clone https://github.com/deathstar/QServCollect.git" from command line (requires git): "sudo apt-get install git-all" or http://sourceforge.net/projects/git-osx-installer/
 
 2) place the QServCollect folder on your Desktop and make sure it's named accordingly 
 
@@ -79,8 +76,6 @@ TROUBLESHOOTING
 "command not found: cmake .": cmake is not installed, see above for download link.
 
 "make: *** No targets specified and no makefile found.  Stop.": the cmake . command was not issued before make.
-
-"library not found GeoIP": GeoIP is not installed for some reason, download http://dev.maxmind.com/geoip/legacy/geolite/.
 
 "No such file or directory": you are changing directories into an invalid folder, make sure QServCollect is the name
 
