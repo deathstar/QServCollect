@@ -29,7 +29,7 @@ REQUIREMENTS
 
 **LINUX**
 
- - Cmake: Download a binary release for Linux from [https://cmake.org/download/]((download a binary client)) or run "sudo apt-get install cmake" from Terminal
+ - Cmake: Download a binary release for Linux from https://cmake.org/download/ or run "sudo apt-get install cmake" from Terminal
  - install Zlib from Terminal: "sudo apt-get install zlib1g-dev"
  - install compiler from Terminal: "sudo apt-get install build-essential"
  - update from Terminal: "sudo apt-get update"
