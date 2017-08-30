@@ -22,14 +22,15 @@ REQUIREMENTS
 
 **MAC OSX**
 
-- Simply download and run: this installer: http://techmaster.mooo.com/download/QServ-Installer.zip to download and install QServ.
+- There is an automatic downloader/installer for QServ, you can use it only if you have the requirements below
+- Simply download and run this installer: http://techmaster.mooo.com/download/QServ-Installer.zip 
 - xCode: Go to the App Store and download "xCode," or visit: https://developer.apple.com/xcode/download/
 - Command Line tools: run: "xcode-select --install" from Terminal after xCode is installed
 - Cmake: Download a binary release for Mac OSX from https://cmake.org/download/ or run: "/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"; brew install cmake" from Terminal
 
 **LINUX**
 
- - Cmake: Download a binary release for Linux from https://cmake.org/download/ or run "sudo apt-get install cmake" from Terminal
+ - Cmake: Download from https://cmake.org/download/ or run "sudo apt-get install cmake" 
  - install Zlib from Terminal: "sudo apt-get install zlib1g-dev"
  - install compiler from Terminal: "sudo apt-get install build-essential"
  - update from Terminal: "sudo apt-get update"
@@ -43,7 +44,7 @@ QUICK SETUP
 -----------
 
 1) Download QServ by [clicking here](https://codeload.github.com/deathstar/QServCollect/zip/master) 
-- run "git clone https://github.com/deathstar/QServCollect.git" from command line 
+- OR run "git clone https://github.com/deathstar/QServCollect.git" from command line 
 (requires git): "sudo apt-get install git-all" or http://sourceforge.net/projects/git-osx-installer/
 you can just download the zip from the website and place it on your web server if you do not wish to install git to use the command line code to download QServ.
 
