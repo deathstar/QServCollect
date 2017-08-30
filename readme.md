@@ -1,11 +1,8 @@
-We hope you enjoy the modification. A full documentation is included here.
-For further assistance, please view the Wiki: https://github.com/deathstar/QServCollect/wiki
-If you still need help, email: gscottmalibu@gmail.com, join #QServ @ irc.gamesurge.net, or leave an issue on the github page.
-
 OVERVIEW 
 --------
+For further assistance, please view the Wiki: https://github.com/deathstar/QServCollect/wiki 
 
-QServ is a highly configurable, compact, fast, extendable, cross-compatible, standalone server modification for Cube 2: Sauerbraten. It is a rather small (approximately 43mb) and only uses about 1% of the CPU with a normal load.
+If you still need help, email: gscottmalibu@gmail.com. QServ is a highly configurable, compact, fast, extendable, cross-compatible, standalone server modification for Cube 2: Sauerbraten. It is a rather small (approximately 43mb) and only uses about 1% of the CPU with a normal load. 
 
 FEATURES
 --------
