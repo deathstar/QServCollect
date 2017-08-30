@@ -1,14 +1,16 @@
-README 
-------
-
 We hope you enjoy the modification. A full documentation is included here.
 For further assistance, please view the Wiki: https://github.com/deathstar/QServCollect/wiki
 If you still need help, email: gscottmalibu@gmail.com, join #QServ @ irc.gamesurge.net, or leave an issue on the github page.
 
-OVERVIEW
+OVERVIEW 
 --------
 
-QServ is a standalone server modification for Cube 2: Sauerbraten. It is completely compatible with Mac OSX Linux & Windows. You can download, install, configure and start QServ in less than 5 minutes (if you have the prerequisites).
+QServ is a highly configurable, compact, fast, extendable, cross-compatible, standalone server modification for Cube 2: Sauerbraten. It is a rather small (approximately 43mb) and only uses about 1% of the CPU with a normal load.
+
+FEATURES
+--------
+
+30+ commands, GeoIP city/region & country, IRC Bot with commands, multi-server chat linkage, smartbot (weather/translator/dictionary/calculator), killing spree messages, server stored maps, longshot/close up kills, beststats, pass-the-flag, command builder, reloadable server configuration/authkeys live, automatically sent maps with lightmaps.
 
 DOWNLOAD
 --------
