@@ -6,7 +6,7 @@ QServ is a highly configurable, compact, fast, extendable, cross-compatible, sta
 FEATURES
 --------
 
-30+ commands, GeoIP city/region & country, IRC Bot with commands, multi-server chat linkage, smartbot (weather/translator/dictionary/calculator), killing spree messages, server stored maps, longshot/close up kills, beststats, pass-the-flag, command builder, reloadable server configuration/authkeys live, automatically sent maps with lightmaps.
+30+ commands, GeoIP city/region & country, IRC Bot with commands, multi-server chat linkage, smartbot (weather/translator/dictionary/calculator), killing spree messages, server stored maps, longshot/close up kills, beststats, pass-the-flag, command builder, reloadable server configuration/authkeys live without restart, banlist, selective unbanning, banning by ip, chat/server log with time, automatically sent maps with lightmaps, lag detection, instagib on automatically sent maps from the server with lights, no teamkill damage toggle, no damage toggle, stored flagrun times, banner messages, no 1 person private mode toggle, greet clients with name toggle, default gamemode/map option and much more. 
 
 DOWNLOAD
 --------
@@ -66,7 +66,8 @@ CONFIGURATION
 
 - Configure general attributes in config/server-init.cfg
 - Add authkeys in config/users.cfg
-- Type "chmod 777 config/flagruns.cfg" from command line to give QServ permission to store flagruns. Or, just change the permissions of the config/flagruns.cfg file to Full Access (optional)
+- Type "chmod 777 config/
+s.cfg" from command line to give QServ permission to store flagruns. Or, just change the permissions of the config/flagruns.cfg file to Full Access (optional)
 - Type "chmod 777 packages; chmod 777 base" from command line to give QServ permission to store maps. Or just change the permissions of the packages/base folder to Full Access (optional)
 
 TROUBLESHOOTING
