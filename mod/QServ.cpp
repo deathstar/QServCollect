@@ -14,11 +14,11 @@ namespace server {
         m_olangcheck = olangcheck;
         m_maxolangwarns = maxolangwarns;
         m_cmdprefix = cmdprefix;
-}
-
-   QServ::~QServ() { ; }
-
-   bool QServ::initgeoip(const char *filename) {
+    }
+    
+    QServ::~QServ() { ; }
+    
+    bool QServ::initgeoip(const char *filename) {
         m_geoip = GeoIP_open(filename, GEOIP_STANDARD);
         if(m_geoip == NULL) return false;
         return true;
@@ -30,99 +30,71 @@ namespace server {
         return true;
     }
     
-    bool sendnearstatement = false;
-    bool no_geoip_lookup = false;
     char *QServ::congeoip(const char *ip) {
-		return (char*)GeoIP_country_name_by_name(m_geoip, ip);
+        return (char*)GeoIP_country_name_by_name(m_geoip, ip);
     }
     
+    bool sendnearstatement = false;
+    bool is_unknown_ip = false;
+    bool geoip_record_copied = false;
     std::string QServ::cgip(const char *ip)  {
-    	
+        
         std::stringstream gipi;
-        
-        char delimiter[] = ", ";
-        char unknown[] = "Unknown";
+        const char delimiter[] = ", ";
         GeoIPRecord *gipr = GeoIP_record_by_addr(city_geoip, ip);
-        
-        //city, region, and country (omit region numbers)
-        if(gipr->city != NULL && gipr->region != NULL && gipr->country_name != NULL && isalpha(*gipr->region)) {
-        	gipi << gipr->city << delimiter << gipr->region << delimiter << gipr->country_name;
-            sendnearstatement = true;
+        if(gipr) {
+            if(gipr->city != NULL && gipr->region != NULL && isalpha(*gipr->region) && gipr->country_name != NULL) {
+                gipi << gipr->city << delimiter << gipr->region << delimiter << gipr->country_name;
+                sendnearstatement = true;
+            }
+            else if(gipr->city != NULL && gipr->country_name != NULL) {
+                gipi << gipr->city << delimiter << gipr->country_name;
+                sendnearstatement = true;
+            }
+            else if(gipr->city != NULL) {
+                gipi << gipr->city;
+                sendnearstatement = true;
+            }
+            else if(gipr->country_name != NULL) {
+                gipi << gipr->country_name;
+                sendnearstatement = false;
+            }
         }
-        
-        //city only
-        else if(gipr->country_name == NULL && gipr->region == NULL && gipr->city != NULL) {
-            gipi << gipr->city;
-            sendnearstatement = true;
-        }
-        
-        //country name only
-        else if(gipr->city == NULL || (gipr->region == NULL && gipr->country_name != NULL)) {
-        	gipi << gipr->country_name;
-            sendnearstatement = false;
-        }
-        
-        //omit region numbers, get city and country if possible
-        else if(!isalpha(*gipr->region) && gipr->city != NULL && gipr->country_name != NULL) {
-            gipi << gipr->city << delimiter << gipr->country_name;
-            sendnearstatement = true;
-        }
-        
-        //omit region numbers, get country
-        else if(!isalpha(*gipr->region) && gipr->country_name != NULL && gipr->city == NULL) {
-            gipi << gipr->country_name;
-            sendnearstatement = false;
-        }
-        
-        //omit region numbers, get city
-        else if(!isalpha(*gipr->region) && gipr->country_name == NULL && gipr->city != NULL) {
-            gipi << gipr->city;
-            sendnearstatement = true;
-        }
-        
-        //unknown location
         else {
-        	gipi << unknown;
-            sendnearstatement = false;
-            no_geoip_lookup = true;
+            gipi << "unknown location";
+            is_unknown_ip = true;
         }
-        
         return gipi.str();
-        
-        //cleanup
-        if(gipr) GeoIPRecord_delete(gipr);
-        if(gipr->city != NULL) gipr->city=0;
-        if(gipr->region != NULL) gipr->region=0;
-        if(gipr->country_name != NULL) gipr->country_name=0;
+        if(gipr && geoip_record_copied) GeoIPRecord_delete(gipr); //don't clear until copied
     }
     
     void QServ::newcommand(const char *name, const char *desc, int priv, void (*callback)(int, char **args, int),
                            int args) {
         sprintf(m_command[m_lastcommand].name, "%c%s", m_cmdprefix, name);
         sprintf(m_command[m_lastcommand].desc, "%s", desc);
-
+        
         m_command[m_lastcommand].priv = priv;
         m_command[m_lastcommand].id = m_lastcommand;
         m_command[m_lastcommand].func = callback;
         m_command[m_lastcommand].args = args+1;
-
+        
         if(args > 0) {
             m_command[m_lastcommand].hasargs = true;
         } else {
             m_command[m_lastcommand].hasargs = false;
         }
-
+        
         m_lastcommand += 1;
     }
-
+    
     bool QServ::isCommand(char *text) {
         if(text[0] == m_cmdprefix) return true;
         return false;
     }
-
+    
     int QServ::getCommand(char *text, char **args) {
         int CommandId = -1;
-
+        
         for(int i = 0; i < m_lastcommand; i++) {
             if(strlen(m_command[i].name) > 1) {
                 if(!strcmp(m_command[i].name, args[0])) {
@@ -133,20 +105,20 @@ namespace server {
         }
         return CommandId;
     }
-
+    
     void QServ::exeCommand(int command, char **args, int argc) {
         if(command > -1) {
             m_command[command].func(command, args, argc);
         }
     }
-
+    
     char QServ::findWord(char *ctext, char *text, bool reg) {
         for(int i = 0; i < strlen(ctext); i++) {
             if(text[i+1] != ctext[i]) {
                 return false;
             }
         }
-
+        
         if(reg) {
             if(text[strlen(ctext)+1] != ' ' && text[strlen(ctext)+1] != '\0') {
                 for(int j = 0; j < 3; j++) {
@@ -160,31 +132,31 @@ namespace server {
         }
         return true;
     }
-
+    
     char *QServ::getCommandName(int command) {
         return m_command[command].name;
     }
-
+    
     char *QServ::getCommandDesc(int commandid) {
         return m_command[commandid].desc;
     }
-
+    
     int QServ::getCommandPriv(int commandid) {
         return m_command[commandid].priv;
     }
-
+    
     bool QServ::commandHasArgs(int command) {
         return m_command[command].hasargs;
     }
-
+    
     int QServ::getCommandArgCount(int command) {
         return m_command[command].args;
     }
-
+    
     int QServ::getlastCommand() {
         return m_lastcommand;
     }
-
+    
     static int btimes = 0;
     void QServ::checkoLang(int cn, char *text) {
         if(m_olangcheck) {
@@ -197,7 +169,7 @@ namespace server {
                     }
                 }
             }
-
+            
             if(btimes > 0) {
                 if(m_lastCI.connected) {
                     setoLangWarn(cn);
@@ -214,86 +186,86 @@ namespace server {
             }
         }
     }
-
+    
     void QServ::setoLangWarn(int cn) {
         m_oLangWarn[cn] += 1;
     }
-
+    
     void QServ::resetoLangWarn(int cn) {
         m_oLangWarn[cn] = 0;
     }
-
+    
     int QServ::getoLangWarn(int cn) {
         return m_oLangWarn[cn];
     }
-
+    
     void QServ::initCommands(void (*init)()) {
         init();
     }
-
+    
     void QServ::setFullText(const char *text) {
         strcpy(m_fulltext, text);
     }
-
+    
     char *QServ::getFullText() {
         return m_fulltext;
     }
-
+    
     void QServ::setSender(int cn) {
         m_sender = cn;
     }
-
+    
     int QServ::getSender() {
         return m_sender;
     }
-
+    
     void QServ::setlastCI(clientinfo *ci) {
         m_lastCI = *ci;
     }
-
+    
     clientinfo QServ::getlastCI() {
         return QServ::m_lastCI;
     }
-
+    
     void QServ::setlastSA(bool lastsa) {
         m_lastSA = lastsa;
     }
-
+    
     bool QServ::getlastSA() {
         return m_lastSA;
     }
-
+    
     clientinfo *QServ::getClient(int cn) {
         return (clientinfo*)getclientinfo(cn);
     }
-
+    
     char *QServ::cntoip(int cn) {
         static char ip[32];
         unsigned char by[4];
-
+        
         for(int i = 0; i < 4; i++) {
             by[i] = (getclientip(cn) >> i*8) & 0xFF;
             sprintf(ip, "%d.%d.%d.%d", by[0], by[1], by[2], by[3]);
         }
         return ip;
     }
-
+    
     bool QServ::handleTextCommands(clientinfo *ci, char *text) {
         setSender(ci->clientnum);
         setlastCI(ci);
-
+        
         char ftb[1024] = {0};
-
+        
         sprintf(ftb, "%s", text);
         setFullText(ftb);
         
         if(isCommand(text)) {
-        char *args[20];
-        
+            char *args[20];
+            
             
             int argc = 0;
             char *token = 0;
-
+            
             token = strtok(text, " ");
             while(token != NULL) {
                 args[argc] = token;
@@ -306,11 +278,11 @@ namespace server {
             if(command >= 0) {
                 
                 char fulltext[1024];
-            for(int j = 0; j <= strlen(ftb); j++) {
+                for(int j = 0; j <= strlen(ftb); j++) {
                     fulltext[j] = ftb[j+strlen(args[0])+1];
                 }
                 setFullText(fulltext);
-
+                
                 bool fargs = false;
                 if(ci->privilege >= getCommandPriv(command)) {
                     if(commandHasArgs(command)) {
@@ -322,7 +294,7 @@ namespace server {
                     } else {
                         fargs = true;
                     }
-
+                    
                     setlastSA(fargs);
                     exeCommand(command, args, argc);
                     return false;
@@ -335,7 +307,7 @@ namespace server {
                 return false;
             }
         } else {
-        
+            
             if(strlen(ftb) < 1024 && irc.isConnected()) {
                 irc.speak("%s(%d): %s\r\n", ci->name, ci->clientnum, ftb);
                 printf("%s(%d): %s\r\n", ci->name, ci->clientnum, ftb);
@@ -345,22 +317,22 @@ namespace server {
             //checkoLang(ci->clientnum, text);
         }
         //memset(ftb,'\0',1000);
-
+        
         return false;
     }
-
+    
     bool QServ::isLangWarnOn() {
         return m_olangcheck;
     }
-
+    
     void QServ::setoLang(bool on) {
         m_olangcheck = on;
     }
-
+    
     void QServ::setCmdPrefix(unsigned char cp) {
         m_cmdprefix = cp;
     }
-
+    
     char QServ::getCmdPrefix() {
         return m_cmdprefix;
     }
@@ -396,6 +368,7 @@ namespace server {
     
     void QServ::getLocation(clientinfo *ci) {
         
+        //get our localhost ip for comparison exclusion
         struct ifaddrs *myaddrs, *ifa;
         void *in_addr;
         char buf[64];
@@ -435,12 +408,15 @@ namespace server {
         char *ip = toip(ci->clientnum);
         const char *location;
         
-        /*
-         10.0.0.0 - 10.255.255.255 (10/8 prefix)
+        /* Excluded localhost ip ranges
+         10.0.0.0 - 10.255.255.255 (10/8 prefix) *IGNORED*
          172.16.0.0 - 172.31.255.255 (172.16/12 prefix)
-         192.168.0.0 - 192.168.255.255 (192.168/16 prefix)*/
-        
-        if(!strcmp(ip,"127.0.0.1") || !strcmp(buf, ip) || isPartOf(ip,"172.16") || isPartOf(ip,"192.168")) location = (char*)"localhost";
+         192.168.0.0 - 192.168.255.255 (192.168/16 prefix)
+        */
+        char localhost_s1[] = "127.0.0.1";
+        char localhost_s2[] = "172.16";
+        char localhost_s3[] = "192.168";
+        if(!strcmp(ip,localhost_s1) || !strcmp(buf, ip) || isPartOf(ip,localhost_s2) || isPartOf(ip,localhost_s3)) location = (char*)"localhost";
         else location = cgip(ip).c_str();
         
         //format message for console/irc and server
@@ -453,7 +429,7 @@ namespace server {
         };
         const char *typesconsole[] = {
             " connected from unknown",
-            " connected from unknown/localhost", 
+            " connected from unknown/localhost",
             sendnearstatement ? " connected near " : " connected from "
         };
         
@@ -463,12 +439,12 @@ namespace server {
         if(strlen(ip) > 2) {
             
             //unknown geoip lookup
-            if(no_geoip_lookup) {
+            if(!strcmp("(null)", location) || is_unknown_ip) {
                 type = 0;
                 typeconsole = 0;
                 
             //localhost exclusion
-            } else if(!strcmp(ip,"127.0.0.1") || !strcmp(buf, ip) || isPartOf(ip,"172.16") || isPartOf(ip,"192.168")) {
+            } else if(!strcmp(ip,localhost_s1) || !strcmp(buf, ip) || isPartOf(ip,localhost_s2) || isPartOf(ip,localhost_s3)) {
                 type = 1;
                 typeconsole = 1;
                 
@@ -485,17 +461,18 @@ namespace server {
             defformatstring(nocolormsg)("%s%s", ci->name, (typeconsole < 2) ? typesconsole[typeconsole] : pmsg);
             out(ECHO_SERV,"%s",msg);
             out(ECHO_NOCOLOR, "%s",nocolormsg);
+            geoip_record_copied = true;
         }
     }
-
+    
     void QServ::checkMsg(int cn) {
         ms[cn].count += 1;
     }
-
+    
     int QServ::getMsgC(int cn) {
         return ms[cn].count;
     }
-
+    
     void QServ::resetMsg(int cn) {
         ms[cn].count = 0;
     }
