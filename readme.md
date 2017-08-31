@@ -88,7 +88,7 @@ QServ IRC not launching at all (excess flood): you either restarted the server t
 
 If you are experiencing issues with IRC, simply use the "ircignore 1" command in the server-init.cfg to disable it.
 
-No such file or directory "GeoIP.h": geoIP come precompiled w/ dat, this means some GeoIP file is missing, most likely your download was corrupt.
+No such file or directory "GeoIP.h": this means some GeoIP file is missing, most likely your download was corrupt.
 
 MORE HELP RESOURCES 
 -------------------
