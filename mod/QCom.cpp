@@ -1021,9 +1021,7 @@ namespace server {
     
     QSERV_CALLBACK echo_cmd(p) {
         if(strlen(fulltext) > 0) {
-            qs.checkoLang(CMD_SENDER, fulltext);
-            defformatstring(msg)("\f7%s", fulltext);
-            out(ECHO_SERV, "%s", msg);
+            out(ECHO_SERV, "%s", fulltext);
         } else {
             sendf(CMD_SENDER, 1, "ris", N_SERVMSG, CMD_DESC(cid));
         }
