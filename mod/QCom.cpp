@@ -1023,7 +1023,7 @@ namespace server {
         if(strlen(fulltext) > 0) {
             qs.checkoLang(CMD_SENDER, fulltext);
             defformatstring(msg)("\f7%s", fulltext);
-            sendf(-1, 1, "ris", N_SERVMSG, msg);
+            out(ECHO_SERV, "%s", msg);
         } else {
             sendf(CMD_SENDER, 1, "ris", N_SERVMSG, CMD_DESC(cid));
         }
