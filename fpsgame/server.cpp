@@ -101,6 +101,7 @@ namespace server {
     }
     
     //QServ
+    bool firstblood;
     bool enableautosendmap = true;
     bool q_teammode = false;
     bool persist = false;
@@ -141,7 +142,7 @@ namespace server {
     {
         if(timeused <= 500)
         {
-            out(ECHO_ALL, "\f0%s \f7scored an assisted flagrun",colorname(ci));
+            out(ECHO_ALL, "\f3[Warning] %s is cheating: flaghack",colorname(ci));
             return;
         }
         if(serverflagruns)
@@ -493,17 +494,17 @@ namespace server {
     
     uint mspassed;
     void send_connected_time(clientinfo *ci, int sender) {
-    	mspassed = uint(totalmillis-ci->connectmillis);
-    	if(mspassed/1000 != 0)
-    	{
-        	vector<char> timebuf;
-        	formatsecs(timebuf, mspassed/1000);
-        	if(timebuf.length())
-        	{
-            	timebuf.add(0);
-            	sendf(sender, 1, "ris", N_SERVMSG, tempformatstring("connected: %s ago", timebuf.getbuf()));
-        	}
-    	}
+        mspassed = uint(totalmillis-ci->connectmillis);
+        if(mspassed/1000 != 0)
+        {
+            vector<char> timebuf;
+            formatsecs(timebuf, mspassed/1000);
+            if(timebuf.length())
+            {
+                timebuf.add(0);
+                sendf(sender, 1, "ris", N_SERVMSG, tempformatstring("connected: %s ago", timebuf.getbuf()));
+            }
+        }
     }
     
     //Enable or disable master
@@ -2147,7 +2148,7 @@ namespace server {
             else sents[i].spawned = true;
         }
         notgotitems = false;
-    }    
+    }
     VAR(defaultgamespeed, 10, 100, 1000);
     extern int mapsucksvotes;
     void changemap(const char *s, int mode)
@@ -2170,6 +2171,7 @@ namespace server {
         scores.shrink(0);
         teamkills.shrink(0);
         int mapsucksvotes = 0;
+        firstblood = false;
         loopv(clients)
         {
             clientinfo *ci = clients[i];
@@ -2239,7 +2241,6 @@ namespace server {
         maprotation &rot = maprotations[curmaprotation];
         changemap(rot.map, rot.findmode(gamemode));
     }
-    bool firstblood = false;
     
     struct votecount
     {
@@ -2335,7 +2336,7 @@ namespace server {
 best.setsize(0); \
 best.add(clients[0]); \
 besti = best[0]->state.stat; \
-for(int i = 1; i < clients.length(); i++) if(!clients[i]->_xi.spy) \
+for(int i = 1; i < clients.length(); i++) \
 { \
 if(clients[i]->state.stat > besti) \
 { \
@@ -2371,7 +2372,7 @@ best.add(clients[i]); \
         static char const * const bestkills = "\f0The Good:\f7";
         static char const * const worstkills = "\f3The Bad:\f7";
         
-        //Intermission statistics 
+        //Intermission statistics
         msg[0] = '\0';
         
         // frags
@@ -2431,7 +2432,7 @@ best.add(clients[i]); \
         best.setsize(0);
         best.add(clients[0]);
         besti = best[0]->state.damage * 100 / max(best[0]->state.shotdamage, 1);
-        for(int i = 1; i < clients.length(); i++) if(!clients[i]->_xi.spy)
+        for(int i = 1; i < clients.length(); i++)
         {
             int curri = clients[i]->state.damage * 100 / max(clients[i]->state.shotdamage, 1);
             if(curri > besti)
@@ -2499,7 +2500,7 @@ best.add(clients[i]); \
         best.setsize(0);
         best.add(clients[0]);
         besti = best[0]->state.shotdamage-best[0]->state.damage;
-        for(int i = 1; i < clients.length(); i++) if(!clients[i]->_xi.spy)
+        for(int i = 1; i < clients.length(); i++)
         {
             int curri = clients[i]->state.shotdamage-clients[i]->state.damage;
             if(curri > besti)
@@ -3943,7 +3944,7 @@ curmsg = p.length(); \
                 break;
             }
                 
-            //Editmute
+                //Editmute
             case N_EDITF:   //maptitle, fpush
             case N_EDITT:   //texture
             case N_EDITM:   //model

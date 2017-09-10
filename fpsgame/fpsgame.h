@@ -4,32 +4,32 @@
 #include "game.h"
 
 namespace server {
- struct server_entity            // server side version of "entity" type
+    struct server_entity            // server side version of "entity" type
     {
         int type;
         int spawntime;
         char spawned;
     };
-
+    
     static const int DEATHMILLIS = 300;
-
+    
     struct gameevent
     {
         virtual ~gameevent() {}
-
+        
         virtual bool flush(clientinfo *ci, int fmillis);
         virtual void process(clientinfo *ci) {}
-
+        
         virtual bool keepable() const { return false; }
     };
-
+    
     struct timedevent : gameevent
     {
         int millis;
-
+        
         bool flush(clientinfo *ci, int fmillis);
     };
-
+    
     struct hitinfo
     {
         int target;
@@ -38,53 +38,53 @@ namespace server {
         float dist;
         vec dir;
     };
-
+    
     struct shotevent : timedevent
     {
         int id, gun;
         vec from, to;
         vector<hitinfo> hits;
-
+        
         void process(clientinfo *ci);
     };
-
+    
     struct explodeevent : timedevent
     {
         int id, gun;
         vector<hitinfo> hits;
-
+        
         bool keepable() const { return true; }
-
+        
         void process(clientinfo *ci);
     };
-
+    
     struct suicideevent : gameevent
     {
         void process(clientinfo *ci);
     };
-
+    
     struct pickupevent : gameevent
     {
         int ent;
         void process(clientinfo *ci);
     };
-
+    
     template <int N>
     struct projectilestate
     {
         int projs[N];
         int numprojs;
-
+        
         projectilestate() : numprojs(0) {}
-
+        
         void reset() { numprojs = 0; }
-
+        
         void add(int val)
         {
             if(numprojs>=N) numprojs = 0;
             projs[numprojs++] = val;
         }
-
+        
         bool remove(int val)
         {
             loopi(numprojs) if(projs[i]==val)
@@ -171,7 +171,7 @@ namespace server {
             grenades.reset();
         }
     };
-
+    
     struct savedscore
     {
         uint ip;
@@ -179,7 +179,7 @@ namespace server {
         int maxhealth, frags, flags, deaths, teamkills, shotdamage, damage;
         int timeplayed;
         float effectiveness;
-
+        
         void save(gamestate &gs)
         {
             maxhealth = gs.maxhealth;
@@ -192,7 +192,7 @@ namespace server {
             timeplayed = gs.timeplayed;
             effectiveness = gs.effectiveness;
         }
-
+        
         void restore(gamestate &gs)
         {
             if(gs.health==gs.maxhealth) gs.health = maxhealth;
@@ -209,14 +209,12 @@ namespace server {
     };
     
     
-
+    
     extern int gamemillis, nextexceeded;
     
     struct extrainfo
     {
-        bool spy;
         int lasttakeflag;
-
     };
     
     struct clientinfo
@@ -259,56 +257,56 @@ namespace server {
         int64_t lasttext;
         int spamlines;
         bool spamwarned;
-    
+        
         clientinfo() : getdemo(NULL), getmap(NULL), clipboard(NULL), authchallenge(NULL), authkickreason(NULL) { reset(); }
         ~clientinfo() { events.deletecontents(); cleanclipboard(); cleanauth(); }
-
+        
         void addevent(gameevent *e)
         {
             if(state.state==CS_SPECTATOR || events.length()>100) delete e;
             else events.add(e);
         }
-
+        
         enum
         {
             PUSHMILLIS = 2500
         };
-
+        
         int calcpushrange()
         {
             ENetPeer *peer = getclientpeer(ownernum);
             return PUSHMILLIS + (peer ? peer->roundTripTime + peer->roundTripTimeVariance : ENET_PEER_DEFAULT_ROUND_TRIP_TIME);
         }
-
+        
         bool checkpushed(int millis, int range)
         {
             return millis >= pushed - range && millis <= pushed + range;
         }
-
+        
         void scheduleexceeded()
         {
             if(state.state!=CS_ALIVE || !exceeded) return;
             int range = calcpushrange();
             if(!nextexceeded || exceeded + range < nextexceeded) nextexceeded = exceeded + range;
         }
-
+        
         void setexceeded()
         {
             if(state.state==CS_ALIVE && !exceeded && !checkpushed(gamemillis, calcpushrange())) exceeded = gamemillis;
             scheduleexceeded();
         }
-
+        
         void setpushed()
         {
             pushed = max(pushed, gamemillis);
             if(exceeded && checkpushed(exceeded, calcpushrange())) exceeded = 0;
         }
-
+        
         bool checkexceeded()
         {
             return state.state==CS_ALIVE && exceeded && gamemillis > exceeded + calcpushrange();
         }
-
+        
         void mapchange()
         {
             mapvote[0] = 0;
@@ -326,7 +324,7 @@ namespace server {
             gameclip = false;
             _xi.lasttakeflag = 0;
         }
-
+        
         void reassign()
         {
             state.reassign();
@@ -334,26 +332,26 @@ namespace server {
             timesync = false;
             lastevent = 0;
         }
-
+        
         void cleanclipboard(bool fullclean = true)
         {
             if(clipboard) { if(--clipboard->referenceCount <= 0) enet_packet_destroy(clipboard); clipboard = NULL; }
             if(fullclean) lastclipboard = 0;
         }
-
+        
         void cleanauthkick()
         {
             authkickvictim = -1;
             DELETEA(authkickreason);
         }
-
+        
         void cleanauth(bool full = true)
         {
             authreq = 0;
             if(authchallenge) { freechallenge(authchallenge); authchallenge = NULL; }
             if(full) cleanauthkick();
         }
-
+        
         void reset()
         {
             name[0] = team[0] = 0;
@@ -371,7 +369,7 @@ namespace server {
             mapchange();
             lasttext = spamlines = 0; //QServ Anti message flood
         }
-
+        
         int geteventmillis(int servmillis, int clientmillis)
         {
             if(!timesync || (events.empty() && state.waitexpired(servmillis)))
@@ -383,7 +381,7 @@ namespace server {
             else return gameoffset + clientmillis;
         }
     };
-
+    
     struct ban
     {
         int time, expire;
@@ -407,7 +405,7 @@ namespace server {
             return *this;
         }
     };
-
+    
     namespace aiman
     {
         extern void removeai(clientinfo *ci);
@@ -421,17 +419,17 @@ namespace server {
         extern void addclient(clientinfo *ci);
         extern void changeteam(clientinfo *ci);
     }
-
-    #define MM_MODE 0xF
-    #define MM_AUTOAPPROVE 0x1000
-    #define MM_PRIVSERV (MM_MODE | MM_AUTOAPPROVE)
-    #define MM_PUBSERV ((1<<MM_OPEN) | (1<<MM_VETO))
-    #define MM_COOPSERV (MM_AUTOAPPROVE | MM_PUBSERV | (1<<MM_LOCKED))
-
-    extern vector<clientinfo *> connects, clients, bots;
-	extern int mastermode;
     
-    //QServ 
+#define MM_MODE 0xF
+#define MM_AUTOAPPROVE 0x1000
+#define MM_PRIVSERV (MM_MODE | MM_AUTOAPPROVE)
+#define MM_PUBSERV ((1<<MM_OPEN) | (1<<MM_VETO))
+#define MM_COOPSERV (MM_AUTOAPPROVE | MM_PUBSERV | (1<<MM_LOCKED))
+    
+    extern vector<clientinfo *> connects, clients, bots;
+    extern int mastermode;
+    
+    //QServ
     extern void send_connected_time(clientinfo *ci, int sender);
     extern int vmessage(int cn, const char *fmt, va_list ap);
     extern bool duplicatename(clientinfo *ci, char *name);
@@ -439,7 +437,7 @@ namespace server {
     extern void revokemaster(clientinfo *ci);
     extern void checkpausegame();
     extern bool setmaster(clientinfo *ci, bool val, const char *pass, const char *authname, const char *authdesc, int authpriv, bool force, bool trial, bool revoke);
-
+    
 }
 
 #endif
