@@ -48,7 +48,6 @@ namespace server {
         ncommand("reloadconfig","\f7Reloads server-init.cfg configuration. Usage: #reloadconfig", PRIV_ADMIN, reloadconfig_cmd, 0);
         ncommand("unkickban", "\f7Unkick/unbans a player. Usage: #unban <ID>. Use #listkickbans for a list with ID's", PRIV_ADMIN, unkickban_cmd, 1);
         ncommand("syncauth", "\f7Sync server with new authkeys added to users.cfg. Usage: #syncauth", PRIV_ADMIN, syncauth_cmd, 0);
-        ncommand("smartbot", "\f7Speak to smart IRC bot. Usage: #smartbot <command> \nUse: #smartbot help for a list of commands", PRIV_NONE, smartbot_cmd, 1);
         ncommand("cw", "\f7Starts a clanwar with a countdown (timer dependent on maxclients). Usage: #cw <mode> <map>", PRIV_MASTER, cw_cmd, 2);
         ncommand("duel", "\f7Starts a duel (timer dependent on maxclients). Usage: #duel <mode> <map>", PRIV_MASTER, duel_cmd, 2);
         ncommand("icgl", "\f7Sets the game limit in milliseconds for instacoop. Usage: #icgl <limit in milliseconds>", PRIV_ADMIN, coopgamelimit_cmd, 1);
@@ -56,6 +55,7 @@ namespace server {
         ncommand("savemap", "\f7Saves a map to the server. Usage #savemap", PRIV_ADMIN, savemap_cmd, 0);
         ncommand("autosendmap", "\f7Automatically sends the map to connecting clients. Usage #autosendmap <1/0> (0 for off, 1 for on)", PRIV_MASTER, autosendmap_cmd, 1);
         ncommand("loadmap", "\f7Loads a map stored on the server. Usage #loadmap <mapname>", PRIV_ADMIN, loadmap_cmd, 1);
+        //ncommand("smartbot", "\f7Speak to smart IRC bot. Usage: #smartbot <command> \nUse: #smartbot help for a list of commands", PRIV_NONE, smartbot_cmd, 1);
         //ncommand("owords", "View list of offensive words. Usage: #owords",PRIV_NONE, owords_cmd, 0);
         //ncommand("olangfilter", "Turn the offensive language filter on or off. Usage: #olang <off/on> (0/1) and #olang to see if it's activated", PRIV_MASTER, olangfilter_cmd, 1);
     }
