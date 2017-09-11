@@ -1,4 +1,4 @@
-# ![](https://cdn0.iconfinder.com/data/icons/HDRV/32/Grey_Server_B.png) QServ [![Build Status](https://travis-ci.org/dwyl/esta.svg?branch=master)](https://travis-ci.org/dwyl/esta) [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/dwyl/esta/issues) [![HitCount](http://hits.dwyl.com/{deathstar}/{QServCollect}.svg)](http://hits.dwyl.com/{deathstar}/{QServCollect})
+# ![](https://cdn0.iconfinder.com/data/icons/HDRV/32/Grey_Server_B.png) QServ [![Build Status](https://travis-ci.org/deathstar/QServCollect.svg?branch=master)](https://travis-ci.org/deathstar/QServCollect) [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/dwyl/esta/issues) [![HitCount](http://hits.dwyl.com/{deathstar}/{QServCollect}.svg)](http://hits.dwyl.com/{deathstar}/{QServCollect})
 
 
 QServ is a highly configurable, compact, fast, extendable, cross-compatible, standalone server modification for Cube 2: Sauerbraten. It is a rather small (approximately 43mb) and only uses about 1% of the CPU with a normal load. 
