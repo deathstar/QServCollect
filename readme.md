@@ -98,7 +98,5 @@ For info about modding, creating commands & more please view the Wiki: https://g
 
 If you still need help, you can email the main developer: gscottmalibu@gmail.com
 
-### Stats
-
 [![HitCount](http://hits.dwyl.com/{deathstar}/{QServCollect}.svg)](http://hits.dwyl.com/{deathstar}/{QServCollect})
 
