@@ -1,5 +1,4 @@
-# ![](https://cdn0.iconfinder.com/data/icons/HDRV/32/Grey_Server_B.png) QServ [![Build Status](https://travis-ci.org/deathstar/QServCollect.svg?branch=master)](https://travis-ci.org/deathstar/QServCollect) [![GitHub release](https://img.shields.io/github/release/deathstar/QServCollect.svg)]() [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/deathstar/QServCollect/wiki/Contributing) [![HitCount](http://hits.dwyl.com/{deathstar}/{QServCollect}.svg)](http://hits.dwyl.com/{deathstar}/{QServCollect})
-
+# ![](https://cdn0.iconfinder.com/data/icons/HDRV/32/Grey_Server_B.png) QServ [![Build Status](https://travis-ci.org/deathstar/QServCollect.svg?branch=master)](https://travis-ci.org/deathstar/QServCollect) [![GitHub release](https://img.shields.io/github/release/deathstar/QServCollect.svg)]() [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/deathstar/QServCollect/wiki/Contributing) 
 
 QServ is a highly configurable, compact, fast, extendable, cross-compatible, standalone server modification for Cube 2: Sauerbraten. It is a rather small (approximately 43mb) and only uses about 1% of the CPU with a normal load. 
 
@@ -98,3 +97,8 @@ MORE HELP RESOURCES
 For info about modding, creating commands & more please view the Wiki: https://github.com/deathstar/QServCollect/wiki 
 
 If you still need help, you can email the main developer: gscottmalibu@gmail.com
+
+### Stats
+
+[![HitCount](http://hits.dwyl.com/{deathstar}/{QServCollect}.svg)](http://hits.dwyl.com/{deathstar}/{QServCollect})
+
