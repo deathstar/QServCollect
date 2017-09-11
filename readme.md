@@ -11,6 +11,8 @@ FEATURES
 DOWNLOAD
 --------
 
+[Instructional video on how to download/install QServ](http://techmaster.mooo.com/download/howto_install_qserv.mp4)
+
 Github offers a zip (link below) or you can git clone the repository from the command line
 
 Direct Download link: https://codeload.github.com/deathstar/QServCollect/zip/master
