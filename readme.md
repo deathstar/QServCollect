@@ -95,6 +95,6 @@ No such file or directory "GeoIP.h": this means some GeoIP file is missing, most
 MORE HELP RESOURCES 
 -------------------
 
-For further assistance, please view the Wiki: https://github.com/deathstar/QServCollect/wiki 
+For info about modding, creating commands & more please view the Wiki: https://github.com/deathstar/QServCollect/wiki 
 
 If you still need help, you can email the main developer: gscottmalibu@gmail.com
