@@ -462,6 +462,7 @@ namespace server {
             out(ECHO_SERV,"%s",msg);
             out(ECHO_NOCOLOR, "%s",nocolormsg);
             geoip_record_copied = true;
+            is_unknown_ip = false; //reset
         }
     }
     
