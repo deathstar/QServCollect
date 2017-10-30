@@ -2691,7 +2691,7 @@ best.add(clients[i]); \
             int distanceinteger = int(d + 0.5);
             
             //no teamkills, or weird negative float
-            if(d > 700.0 && d > 0 && actor != target && actor->state.aitype == AI_NONE) {
+            if(d > 700.0 && distanceinteger > 0 && actor != target && actor->state.aitype == AI_NONE) {
                 out(ECHO_SERV,"\f0%s \f7got a longshot kill on \f3%s \f7(Distance: \f7%d\f7 feet) with a \f1%s", colorname(actor), colorname(target), distanceinteger, guns[gun].name);
             }
             if(d <= 20.0 && actor != target && actor->state.aitype == AI_NONE) {
