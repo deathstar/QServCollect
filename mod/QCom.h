@@ -45,6 +45,7 @@ namespace server {
     extern QSERV_CALLBACK cheater_cmd(p);
     extern QSERV_CALLBACK mapsucks_cmd(p);
     extern QSERV_CALLBACK ban_cmd(p);
+    extern QSERV_CALLBACK pban_cmd(p);
     extern QSERV_CALLBACK clearpbans_cmd(p);
     extern QSERV_CALLBACK teampersist_cmd(p);
     extern QSERV_CALLBACK invadmin_cmd(p);

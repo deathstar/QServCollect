@@ -37,7 +37,7 @@ namespace server {
         ncommand("uneditmute", "\f7Allows a client to edit again. Usage #uneditmute <cn>", PRIV_ADMIN, uneditmute_cmd, 1);
         ncommand("togglelockspec", "\f7Forces a client to be locked in spectator mode. Usage #togglelockspec <cn>", PRIV_ADMIN, togglelockspec_cmd, 1);
         ncommand("ban", "\f7Bans a client. Usage: #ban <cn> <ban time in minutes>", PRIV_ADMIN, ban_cmd, 2);
-        ncommand("pban", "\f7Permanently bans a client. Not listed on #listkickbans, not undoable. Use #clearpbans to clear. Usage: #pban <cn>", PRIV_ADMIN, ban_cmd, 1);
+        ncommand("pban", "\f7Permanently bans a client. Not listed on #listkickbans, not undoable. Use #clearpbans to clear all. Usage: #pban <cn>", PRIV_ADMIN, pban_cmd, 1);
         ncommand("clearpbans", "\f7Clears all pbans and ipbans. Usage: #clearpbans", PRIV_ADMIN, clearpbans_cmd, 0);
         ncommand("teampersist", "\f7Toggle persistant teams on or off. Usage: #teampersist <0/1> (0 for off, 1 for on)", PRIV_MASTER, teampersist_cmd, 1);
         ncommand("allowmaster", "\f7Allows clients to claim master. Usage: #allowmaster <0/1> (0 for off, 1 for on)", PRIV_ADMIN, allowmaster_cmd, 1);
@@ -308,19 +308,19 @@ namespace server {
                 if(ci != NULL) {
                     if(ci->connected) {
                         if(cn!=CMD_SENDER && cn >= 0 && cn <= 1000 && ci != NULL && ci->connected && args[1] != NULL && cn!=CMD_SENDER) {
-                            /*ipban doesn't get listed on listbans and should be implemented as a permban system
-                             //clientinfo *ci = qs.getClient(cn);
-                             server::ipban(ci->ip, ci->clientnum);*/
-                            if(args[2] != NULL) {
+                            if(args[2] != NULL) { 
                                 uint ip = getclientip(ci->clientnum);
-                                int expiremilliseconds = atoi(args[2])*60000;
-                                int expireseconds = (int) (expiremilliseconds/1000) % 60 ;
-                                int expireminutes = (int) ((expiremilliseconds/(1000*60)) % 60);
-                                addban(ip, expiremilliseconds);
-                                clientinfo *sender = qs.getClient(CMD_SENDER);
-                                disconnect_client(cn, DISC_KICK);
-                                out(ECHO_SERV, "\f0%s \f7has been banned for %d minutes.", colorname(ci), expireminutes);
-                                out(ECHO_NOCOLOR, "%s has been banned for %d minutes.", colorname(ci), expireminutes);
+                                int expiremilliseconds = atoi(args[2])*60000;    
+                                int expireseconds = (expiremilliseconds/1000);   
+                                int expireminutes = (expireseconds/60);          
+                                if(expireminutes < 60 && expireminutes > 0) {
+                                	addban(ip, expiremilliseconds);
+                                	clientinfo *sender = qs.getClient(CMD_SENDER);
+                                	disconnect_client(cn, DISC_KICK);
+                                	out(ECHO_SERV, "\f0%s \f7has been banned for %d minutes.", colorname(ci), expireminutes);
+                                	out(ECHO_NOCOLOR, "%s has been banned for %d minutes.", colorname(ci), expireminutes);
+                                }
+                                else sendf(CMD_SENDER, 1, "ris", N_SERVMSG, "\f3Error: Ban time must be between 1 and 59 minutes.");
                             }
                             else if(args[2] == NULL) usage = true;
                         }
@@ -349,11 +349,12 @@ namespace server {
                 if(ci != NULL) {
                     if(ci->connected) {
                         if(cn!=CMD_SENDER && cn >= 0 && cn <= 1000 && ci != NULL && ci->connected && args[1] != NULL && cn!=CMD_SENDER) {
-                            //ipban doesn't get listed on listbans and should be implemented as a permban system
+                            //ipban doesn't get listed on listkickbans
                             clientinfo *ci = qs.getClient(cn);
-                            server::ipban(ci->ip);
-                            out(ECHO_SERV, "\f0%s \f7has been permanently banned", colorname(ci));
+                            out(ECHO_SERV, "\f0%s \f7has been permanently banned.", colorname(ci));
                             out(ECHO_NOCOLOR, "%s has been permanently banned.", colorname(ci));
+                            server::ipban(ci->ip);
+                            disconnect_client(cn, DISC_IPBAN);
                         }
                     }
                 } else {
