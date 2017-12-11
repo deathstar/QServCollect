@@ -1186,12 +1186,8 @@ namespace server {
 #include <stdio.h>
 #include <time.h>
     QSERV_CALLBACK localtime_cmd(p) {
-        struct tm newtime;
-        time_t ltime;
-        char buf[50];
-        ltime=time(&ltime);
-        localtime_r(&ltime, &newtime); //localtime__r and asctime_r: threadsafe
-        defformatstring(localtime)("%s", asctime_r(&newtime, buf));
+  		time_t rawtime; time (&rawtime);
+  		defformatstring(localtime)("Local server time: %s", ctime (&rawtime));
         sendf(CMD_SENDER, 1, "ris", N_SERVMSG, localtime);
     }
 
