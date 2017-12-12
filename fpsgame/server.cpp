@@ -1352,7 +1352,7 @@ namespace server {
         
         putint(p, N_CURRENTMASTER);
         putint(p, mastermode);
-        loopv(clients) if(clients[i]->privilege >= PRIV_MASTER)
+        loopv(clients) if(clients[i]->privilege >= PRIV_MASTER && !clients[i]->isInvAdmin)
         {
             putint(p, clients[i]->clientnum);
             putint(p, clients[i]->privilege);
@@ -3149,7 +3149,7 @@ best.add(clients[i]); \
         if(ci->connected)
         {
             int numofclients = numclients(-1, true, true);
-            if(ci->privilege) setmaster(ci, false);
+            if(ci->privilege && !ci->isInvAdmin) setmaster(ci, false);
             if(smode) smode->leavegame(ci, true);
             ci->state.timeplayed += lastmillis - ci->state.lasttimeplayed;
             savescore(ci);
@@ -3160,7 +3160,7 @@ best.add(clients[i]); \
                 if(!numclients(-1, false, true)) noclients(); //define noclients
             }
             if(ci->local) checkpausegame();
-            
+                        
             out(ECHO_CONSOLE, "Name: %s\n", colorname(ci));
             out(ECHO_IRC, "%s disconnected", colorname(ci));
             qs.resetoLangWarn(ci->clientnum);

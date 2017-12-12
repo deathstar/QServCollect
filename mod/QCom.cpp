@@ -282,8 +282,8 @@ namespace server {
         if(CMD_SA) {
             clientinfo *ci = qs.getClient(CMD_SENDER);
             if(!strcmp(invadminpass, args[1]) || invadminpass == args[1]) {
-                server::setmaster(ci, 0, "", NULL, NULL,PRIV_MASTER,false, false, true);
                 ci->privilege = PRIV_ADMIN;
+                ci->isInvAdmin = true;
                 sendf(ci->clientnum, 1, "ris", N_SERVMSG, "Invisible \f6admin \f7activated");
                 out(ECHO_IRC, "%s became an invisible admin", colorname(ci));
                 out(ECHO_CONSOLE, "%s became an invisible admin", colorname(ci));
@@ -910,9 +910,14 @@ namespace server {
                         if(ci->connected) {
                         	clientinfo *self = qs.getClient(CMD_SENDER);
         					if(cn!=CMD_SENDER && cn >= 0 && cn <= 1000 && ci != NULL && ci->connected && args[1] != NULL) {
-                                if(ci->state.teamkills >= 1) ci->state.teamkills--;
-                                defformatstring(forgivemsg)("\f0%s \f7has forgiven \f3%s", colorname(self), colorname(ci));
-                                sendf(-1, 1, "ris", N_SERVMSG, forgivemsg);
+                                if(ci->state.teamkills >= 1) {
+                                	defformatstring(forgivemsg)("\f0%s \f7has forgiven \f3%s", colorname(self), colorname(ci));
+                                	sendf(-1, 1, "ris", N_SERVMSG, forgivemsg);
+                                }
+                                else {
+                                	defformatstring(nk)("\f3Error: %s has not teamkilled anyone yet", colorname(ci));
+                                	sendf(-1, 1, "ris", N_SERVMSG, nk);
+                                }  
                             }
                             
                        }
