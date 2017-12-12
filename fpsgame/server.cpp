@@ -4195,7 +4195,7 @@ curmsg = p.length(); \
                 else if(ci->getmap) sendf(sender, 1, "ris", N_SERVMSG, "\f7Map is already downloading, please wait.");
                 else
                 {
-                    sendservmsgf("\f0%s \f7is downloading map \"%s\"...", colorname(ci), smapname == "" ? "[new map]" : smapname);
+                    sendservmsgf("\f0%s \f7is downloading map \"%s\"...", colorname(ci), smapname[0] == '\0' ? "[untitled]" : smapname);
                     if((ci->getmap = sendfile(sender, 2, mapdata, "ri", N_SENDMAP)))
                         ci->getmap->freeCallback = freegetmap;
                     ci->needclipboard = totalmillis ? totalmillis : 1;
