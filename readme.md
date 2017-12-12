@@ -40,7 +40,7 @@ REQUIREMENTS
  
 **WINDOWS**
 
-- Download and install this version: https://github.com/DragonSlayer87/QServWindows
+- Download this version: https://github.com/deathstar/QServWindows
 - Special thanks to BudSpencer for porting QServ to Windows! 
 
 QUICK SETUP
