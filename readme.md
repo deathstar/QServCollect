@@ -75,7 +75,7 @@ TROUBLESHOOTING
 
 "command not found: cmake .": cmake is not installed, see above for download link.
 
-GeoIP not working: try using cURL geolocation instead of GeoIP - in the QServ/mod folder, rename "QServ.cpp" to "old.cpp" and then rename "curlipgeolocation.cpp" to "QServ.cpp," now compile QServ again using the  cmake . and make commands, then restart your server
+GeoIP not working: try using cURL geolocation instead of GeoIP - first, create a folder in the QServCollect folder named "curl". Then, in the QServCollect/mod folder, rename "QServ.cpp" to "old.cpp" and then rename "curlipgeolocation.cpp" to "QServ.cpp," now compile QServ again using the  cmake . and make commands, then restart your server
 
 "make: *** No targets specified and no makefile found.  Stop.": the cmake . command was not issued before make.
 
