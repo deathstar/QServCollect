@@ -75,7 +75,8 @@ TROUBLESHOOTING
 
 "command not found: cmake .": cmake is not installed, see above for download link.
 
-GeoIP not working: try using cURL geolocation instead of GeoIP - first, create a folder in the QServCollect folder named "curl". Then, in the QServCollect/mod folder, rename "QServ.cpp" to "old.cpp" and then rename "curlipgeolocation.cpp" to "QServ.cpp," now compile QServ again using the  cmake . and make commands, then restart your server
+Can't see player city/state/country msg: try using cURL geolocation instead of GeoIP - open QServCollect/geolocation_mode.txt, type "curl" in the text file and save it. 
+If you wish to use geoip, type "geoip" and save it. Please note that with curl geolocation, the #whois and #stats commands will echo unknown locations.
 
 "make: *** No targets specified and no makefile found.  Stop.": the cmake . command was not issued before make.
 
