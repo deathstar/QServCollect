@@ -456,64 +456,52 @@ namespace server {
                 sprintf(pmsg, "%s%s", typesconsole[typeconsole], location);
             }
             
-            /*
-            defformatstring(msg)("\f0%s\f7%s", ci->name, (type < 2) ? types[type] : lmsg);
-            defformatstring(nocolormsg)("%s%s", ci->name, (typeconsole < 2) ? typesconsole[typeconsole] : pmsg);
-            out(ECHO_SERV,"%s",msg);
-            out(ECHO_NOCOLOR, "%s",nocolormsg);
-            geoip_record_copied = true;
-            is_unknown_ip = false;
-            */
-            
-            					//curl geolocation
-                                //city
-                                defformatstring(curlcmd_ip_city)("%s%s%s", "curl https://ipapi.co/", ip, "/city/ -o curl/pcity.txt");
-                                std::string command = curlcmd_ip_city; system(command.c_str());
+            //city
+            defformatstring(curlcmd_ip_city)("%s%s%s", "curl https://ipapi.co/", ip, "/city/ -o curl/pcity.txt");
+            std::string command = curlcmd_ip_city; system(command.c_str());
                                 
-                                FILE* f_city = fopen("curl/pcity.txt", "r");
+            FILE* f_city = fopen("curl/pcity.txt", "r");
                         
-                           		fseek(f_city, 0, SEEK_END);
-                           		size_t size_city = ftell(f_city);
+            fseek(f_city, 0, SEEK_END);
+            size_t size_city = ftell(f_city);
                         
-                        	    char* where_city = new char[size_city];
+            char* where_city = new char[size_city];
                         
-                           	    rewind(f_city);
-                                fread(where_city, sizeof(char), size_city, f_city);
+            rewind(f_city);
+            fread(where_city, sizeof(char), size_city, f_city);
                                 
-                                //region
-                                defformatstring(curlcmd_ip_region)("%s%s%s", "curl https://ipapi.co/", ip, "/region/ -o curl/pregion.txt");
-                                std::string command_region = curlcmd_ip_region; system(command_region.c_str());
+            //region
+            defformatstring(curlcmd_ip_region)("%s%s%s", "curl https://ipapi.co/", ip, "/region/ -o curl/pregion.txt");
+        	std::string command_region = curlcmd_ip_region; system(command_region.c_str());
                                 
-                                FILE* f_region = fopen("curl/pregion.txt", "r");
+            FILE* f_region = fopen("curl/pregion.txt", "r");
                         
-                           		fseek(f_region, 0, SEEK_END);
-                           		size_t size_region = ftell(f_region);
+            fseek(f_region, 0, SEEK_END);
+            size_t size_region = ftell(f_region);
                         
-                        	    char* where_region = new char[size_region];
+            char* where_region = new char[size_region];
                         
-                           	    rewind(f_region);
-                                fread(where_region, sizeof(char), size_region, f_region);
+            rewind(f_region);
+            fread(where_region, sizeof(char), size_region, f_region);
                                 
-                                //country 
-                                defformatstring(curlcmd_ip_country)("%s%s%s", "curl https://ipapi.co/", ip, "/country/ -o curl/pcountry.txt");
-                                std::string command_country = curlcmd_ip_country; system(command_country.c_str());
+            //country 
+            defformatstring(curlcmd_ip_country)("%s%s%s", "curl https://ipapi.co/", ip, "/country/ -o curl/pcountry.txt");
+            std::string command_country = curlcmd_ip_country; system(command_country.c_str());
                                 
-                                FILE* f_country = fopen("curl/pcountry.txt", "r");
+            FILE* f_country = fopen("curl/pcountry.txt", "r");
                         
-                           		fseek(f_country, 0, SEEK_END);
-                           		size_t size_country = ftell(f_country);
+            fseek(f_country, 0, SEEK_END);
+            size_t size_country = ftell(f_country);
                         
-                        	    char* where_country = new char[size_country];
+            char* where_country = new char[size_country];
                         
-                           	    rewind(f_country);
-                                fread(where_country, sizeof(char), size_country, f_country);
+            rewind(f_country);
+            fread(where_country, sizeof(char), size_country, f_country);
                                 
-                                defformatstring(cmsg)("%s, %s, %s", where_city, where_region, where_country);
-                                out(ECHO_SERV, "\f0%s \f7connected from \f2%s", ci->name, cmsg);
-                                delete[] where_city;
-                                delete[] where_region;
-                                delete[] where_country;
-                                
+            defformatstring(cmsg)("%s, %s, %s", where_city, where_region, where_country);
+            out(ECHO_SERV, "\f0%s \f7connected from \f2%s", ci->name, cmsg);
+            delete[] where_city, where_country;
+            //do not delete "where_region" to avoid echoing buggy characters                  
         }
     }
 
