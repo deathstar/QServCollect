@@ -78,6 +78,8 @@ TROUBLESHOOTING
 Can't see player city/state/country msg: try using cURL geolocation instead of GeoIP - open QServCollect/geolocation_mode.txt, type "curl" in the text file and save it. 
 If you wish to use geoip, type "geoip" and save it. Please note that with curl geolocation, the #whois and #stats commands will echo unknown locations.
 
+weird symbols displaying for geolocation data: Try both the geoip and curl geolocation modes (directions above). Make sure the geolocation_mode.txt file exists in the QServ folder, make sure the file permissions are set to read and write so QServ can access it. 
+
 "make: *** No targets specified and no makefile found.  Stop.": the cmake . command was not issued before make.
 
 "No such file or directory": you are changing directories into an invalid folder, make sure QServCollect is the name
