@@ -482,7 +482,7 @@ namespace server {
                                 
                 FILE* f_city = fopen("curl/pcity.txt", "r");
                 
-                if(!f_city) out(ECHO_CONSOLE, "[FATAL CURL ERROR]: failed to open curl/pcity.txt for geolocation data, the file either doesn't exist or QServ does not have the proper permission to access the file.")
+                if(!f_city) out(ECHO_CONSOLE, "[FATAL CURL ERROR]: failed to open curl/pcity.txt for geolocation data, the file either doesn't exist or QServ does not have the proper permission to access the file.");
                         
                 fseek(f_city, 0, SEEK_END);
                 size_t size_city = ftell(f_city);
@@ -517,7 +517,7 @@ namespace server {
                 std::string command_country = curlcmd_ip_country; system(command_country.c_str());
                                 
                 FILE* f_country = fopen("curl/pcountry.txt", "r");
-                if(!f_country) out(ECHO_CONSOLE, "[FATAL CURL ERROR]: failed to open curl/pcountry.txt for geolocation data, the file either doesn't exist or QServ does not have the proper permission to access the file.")
+                if(!f_country) out(ECHO_CONSOLE, "[FATAL CURL ERROR]: failed to open curl/pcountry.txt for geolocation data, the file either doesn't exist or QServ does not have the proper permission to access the file.");
                         
                 fseek(f_country, 0, SEEK_END);
                 size_t size_country = ftell(f_country);
