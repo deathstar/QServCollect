@@ -41,7 +41,7 @@ REQUIREMENTS
 **WINDOWS**
 
 - Download this version: https://github.com/deathstar/QServWindows
-- Special thanks to BudSpencer for porting QServ to Windows! 
+- Special thanks to BudSpencer+DragonSlayer for porting QServ to Windows! 
 
 QUICK SETUP
 -----------
