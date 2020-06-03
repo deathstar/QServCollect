@@ -46,7 +46,7 @@ REQUIREMENTS
 QUICK SETUP
 -----------
 
-You can simply use the included binaries in the QServCollect-master/bins folder. please move the qserv osx or qserv linux executable into the root QServCollect-master folder, then run them so they can properly access all the files. If the x64 binaries are not compatible with your system (for example, if you have a 32 bit operating system, then please compile QServ yourself and create your own executable by following the steps below:
+You can simply use the included precompiled executables in the QServCollect-master/bins folder. please move the qserv osx or qserv linux executable into the root QServCollect-master folder and rename them qserv, then run them so QServ can properly access all the files. If the x64 executables are not compatible with your system (for example, if you have a 32 bit operating system, then please compile QServ yourself and create your own executable by following the steps below:
 
 1) Download QServ by [clicking here](https://codeload.github.com/deathstar/QServCollect/zip/master) or run "git clone https://github.com/deathstar/QServCollect.git" from command line (requires git): "sudo apt-get install git-all" or http://sourceforge.net/projects/git-osx-installer/
 
