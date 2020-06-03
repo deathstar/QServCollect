@@ -74,8 +74,8 @@ CONFIGURATION
 
 - Configure general attributes in config/server-init.cfg
 - Add authkeys in config/users.cfg
-- Type "chmod 777 config/flagruns.cfg" from command line to give QServ permission to store flagruns. Or, just change the permissions of the config/flagruns.cfg file to Full Access (optional)
-- Create a "packages/base" folder set in the QServ root directory. Type "chmod -R 777 packages" from command line to give QServ permission to store maps. 
+- Type "chmod 777 config/flagruns.cfg" from the command line to give QServ permission to store flagruns. (recommended)
+- Create a "packages/base" folder set in the QServ root directory. Then, type "chmod -R 777 packages" from the command line to give QServ permission to store maps. (optional)
 
 TROUBLESHOOTING
 --------------- 
@@ -95,8 +95,6 @@ Can't see player city/state/country msg: try using geoIP geolocation instead of 
 QServ IRC not working (incompatable client): Retry the launch (it will work the second time).
 
 QServ IRC not launching at all (excess flood): you either restarted the server too much or flooded IRC, time will fix.
-
-If you are experiencing issues with IRC, simply use the "ircignore 1" command in the server-init.cfg to disable it.
 
 No such file or directory "GeoIP.h": this means some GeoIP file is missing, most likely your download was corrupt.
 
