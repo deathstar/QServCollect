@@ -68,7 +68,7 @@ CONFIGURATION
 - Configure general attributes in config/server-init.cfg
 - Add authkeys in config/users.cfg
 - Type "chmod 777 config/flagruns.cfg" from command line to give QServ permission to store flagruns. Or, just change the permissions of the config/flagruns.cfg file to Full Access (optional)
-- Type "chmod 777 packages; chmod 777 base" from command line to give QServ permission to store maps. Or just change the permissions of the packages/base folder to Full Access (optional)
+- Create a "packages/base" folder set in the QServ root directory. Type "chmod 777 packages; chmod 777 base" from command line to give QServ permission to store maps. 
 
 TROUBLESHOOTING
 --------------- 
@@ -81,7 +81,7 @@ Can't see player city/state/country msg: try using geoIP geolocation instead of 
 
 "No such file or directory": you are changing directories into an invalid folder, make sure QServCollect is the name
 
-"Segmentation fault: 11" on launch: wait for IRC to start! Retry the launch (it will work the second time).
+"Segmentation fault: 11" on launch: wait for IRC to start! Retry the launch (it will work the second time). Also, please remember the IRC bot is experimental. I have been working on some fixes for it but the threading conflicts make it difficult.
  
 "Segmentation fault" at a random time after launch: contact DeathStar @ gscottmalibu@gmail.com.
 
