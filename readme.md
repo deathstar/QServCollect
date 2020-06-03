@@ -75,7 +75,7 @@ CONFIGURATION
 - Configure general attributes in config/server-init.cfg
 - Add authkeys in config/users.cfg
 - Type "chmod 777 config/flagruns.cfg" from command line to give QServ permission to store flagruns. Or, just change the permissions of the config/flagruns.cfg file to Full Access (optional)
-- Create a "packages/base" folder set in the QServ root directory. Type "chmod 777 packages; chmod 777 base" from command line to give QServ permission to store maps. 
+- Create a "packages/base" folder set in the QServ root directory. Type "chmod -R 777 packages" from command line to give QServ permission to store maps. 
 
 TROUBLESHOOTING
 --------------- 
