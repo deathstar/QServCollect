@@ -10,8 +10,6 @@ FEATURES
 DOWNLOAD
 --------
 
-[Instructional video on how to download/install QServ](http://techmaster.mooo.com/download/howto_install_qserv.mp4)
-
 Github offers a zip (link below) or you can git clone the repository from the command line
 
 Direct Download link: https://codeload.github.com/deathstar/QServCollect/zip/master
@@ -20,8 +18,13 @@ Terminal Download Command: git clone https://github.com/deathstar/QServCollect
 
 (requires git): sudo apt-get install git-all or http://sourceforge.net/projects/git-osx-installer/
 
-REQUIREMENTS
-------------
+QUICK SETUP
+-----------
+
+You can simply use the included precompiled executables in the QServCollect-master/bins folder. please move the qserv osx or qserv linux (according to if you're on mac osx or linux) executable into the root QServCollect-master folder and rename it qserv, then run the server executable by executing ./qserv. If the x64 executables are not compatible with your system (for example, if you have a 32 bit operating system), then please compile QServ yourself and create your own executable by following the steps below:
+
+REQUIREMENTS FOR COMPILING
+--------------------------
 
 **MAC OSX**
 
@@ -43,10 +46,12 @@ REQUIREMENTS
 - Download this version: https://github.com/deathstar/QServWindows
 - Special thanks to BudSpencer for porting QServ to Windows! 
 
-QUICK SETUP
------------
+Compiling Instructions
+----------------------
 
-You can simply use the included precompiled executables in the QServCollect-master/bins folder. please move the qserv osx or qserv linux executable into the root QServCollect-master folder and rename them qserv, then run them so QServ can properly access all the files. If the x64 executables are not compatible with your system (for example, if you have a 32 bit operating system, then please compile QServ yourself and create your own executable by following the steps below:
+Please make sure you have all of the requirements for compiling (listed above) installed before continuing.
+
+[Instructional video on how to download/install (compile) QServ](http://techmaster.mooo.com/download/howto_install_qserv.mp4)
 
 1) Download QServ by [clicking here](https://codeload.github.com/deathstar/QServCollect/zip/master) or run "git clone https://github.com/deathstar/QServCollect.git" from command line (requires git): "sudo apt-get install git-all" or http://sourceforge.net/projects/git-osx-installer/
 
