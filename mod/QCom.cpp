@@ -587,6 +587,13 @@ namespace server {
     }
 
      QSERV_CALLBACK whois_cmd(p) {
+         #include <stdio.h>
+         //check to see if we want to use curl
+         FILE* f_mode = fopen("usecurl.txt", "r");
+         bool curlgeolocation;
+         if(f_mode) {curlgeolocation = true;}
+         else {curlgeolocation = false;}
+         
         bool usage = false;
         int cn = -1;
 
@@ -613,8 +620,15 @@ namespace server {
                             }
                             if(location) sprintf(lmsg[1], "%s", location);
                             (CMD_SCI.privilege == PRIV_ADMIN) ? sprintf(lmsg[0], "%s (%s)", lmsg[1], ip) : sprintf(lmsg[0], "%s", lmsg[1]);
-                            defformatstring(s)("Name: \f0%s \f7CN: \f1%d \f7Location: \f2%s",colorname(ci), ci->clientnum,lmsg[0]);
-                            sendf(CMD_SENDER, 1, "ris", N_SERVMSG, s);
+                            if(curlgeolocation) {
+                                defformatstring(s)("Name: \f0%s \f7CN: \f1%d", colorname(ci), ci->clientnum);
+                                sendf(CMD_SENDER, 1, "ris", N_SERVMSG, s);
+                                
+                            }
+                            else {
+                                 defformatstring(s)("Name: \f0%s \f7CN: \f1%d \f7Location: \f2%s",colorname(ci), ci->clientnum,lmsg[0]);
+                                sendf(CMD_SENDER, 1, "ris", N_SERVMSG, s);
+                            }
                         }
                     } else {
                         sendf(CMD_SENDER, 1, "ris", N_SERVMSG, "\f3Error: Player not connected");
@@ -1245,6 +1259,13 @@ namespace server {
     }
 
      QSERV_CALLBACK stats_cmd(p) {
+         #include <stdio.h>
+         //check to see if we want to use curl
+         FILE* f_mode = fopen("usecurl.txt", "r");
+         bool curlgeolocation;
+         if(f_mode) {curlgeolocation = true;}
+         else {curlgeolocation = false;}
+         
         bool usage = false;
         int cn = -1;
 
@@ -1289,8 +1310,12 @@ namespace server {
                             (CMD_SCI.privilege == PRIV_ADMIN) ? sprintf(lmsg[0], "%s (%s)", lmsg[1], ip) :
                             sprintf(lmsg[0], "%s", lmsg[1]);
                             
-                            formatstring(buf)("\n\f7location: \f6%s", lmsg[0]);
-                            concatstring(msg, buf, MAXTRANS);
+                            if(curlgeolocation) {
+                            }
+                            else {
+                                formatstring(buf)("\n\f7location: \f6%s", lmsg[0]);
+                                concatstring(msg, buf, MAXTRANS);
+                            }
                             
                             sendf(CMD_SENDER, 1, "ris", N_SERVMSG, msg);
                             

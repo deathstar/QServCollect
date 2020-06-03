@@ -365,7 +365,11 @@ namespace server {
 #include <net/if.h>
 #include <ifaddrs.h>
 #include <errno.h>
-    
+
+     bool IsAlphabetical(char c) { //also allows spaces
+        return (c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z') || (c == ' ');
+     }
+            
     void QServ::getLocation(clientinfo *ci) {
         
         //get our localhost ip for comparison exclusion
@@ -456,19 +460,11 @@ namespace server {
                 sprintf(pmsg, "%s%s", typesconsole[typeconsole], location);
             }
             
-            FILE* f_mode = fopen("geolocation_mode.txt", "r");
-                        
-            fseek(f_mode, 0, SEEK_END);
-            size_t size_mode = ftell(f_mode);
-                        
-            char* where_mode = new char[size_mode];
-                        
-            rewind(f_mode);
-            fread(where_mode, sizeof(char), size_mode, f_mode);
-            
+            //check to see if we want to use curl
+            FILE* f_mode = fopen("usecurl.txt", "r");
             bool curlgeolocation;
-            if(!strcmp(where_mode,"curl")) {curlgeolocation = true;}
-            if(!strcmp(where_mode,"geoip")) {curlgeolocation = false;}
+            if(f_mode) {curlgeolocation = true;}
+            else {curlgeolocation = false;}
             
             if(!curlgeolocation) {
                 defformatstring(msg)("\f0%s\f7%s", ci->name, (type < 2) ? types[type] : lmsg);
@@ -481,8 +477,8 @@ namespace server {
             
             if(curlgeolocation) {
                 //city
-                defformatstring(curlcmd_ip_city)("%s%s%s", "curl https://ipapi.co/", ip, "/city/ -o curl/pcity.txt");
-                std::string command = curlcmd_ip_city; system(command.c_str());
+                defformatstring(curlcmd_ip_city)("%s%s%s", "curl -sS https://ipapi.co/", ip, "/city/ -o curl/pcity.txt");
+                std::string command_city = curlcmd_ip_city; system(command_city.c_str());
                                 
                 FILE* f_city = fopen("curl/pcity.txt", "r");
                         
@@ -490,26 +486,32 @@ namespace server {
                 size_t size_city = ftell(f_city);
                         
                 char* where_city = new char[size_city];
-                        
+                
                 rewind(f_city);
                 fread(where_city, sizeof(char), size_city, f_city);
-                                
-                //region
-                defformatstring(curlcmd_ip_region)("%s%s%s", "curl https://ipapi.co/", ip, "/region/ -o curl/pregion.txt");
-                std::string command_region = curlcmd_ip_region; system(command_region.c_str());
-                                
-                FILE* f_region = fopen("curl/pregion.txt", "r");
-                        
-                fseek(f_region, 0, SEEK_END);
-                size_t size_region = ftell(f_region);
-                        
-                char* where_region = new char[size_region];
-                        
-                rewind(f_region);
-                fread(where_region, sizeof(char), size_region, f_region);
+                
+                //strip string of weird characters
+                 char* str = where_city;
+                size_t strLength = size_city;
+            
+                size_t finalLength = 0;
+                for(size_t i = 0; i < strLength; i++ ) {
+                    char c = str[i];
+                    if( IsAlphabetical(c) ) finalLength++;
+                }
+            
+                char* p_city_Filtered = new char[ finalLength + 1 ];
+                size_t p_city_FilteredI = 0;
+                for(size_t i = 0; i < strLength; i++ ) {
+                    char c = str[i];
+                    if( IsAlphabetical(c) ) p_city_Filtered[ p_city_FilteredI++ ] = c;
+                }
+                p_city_Filtered[ p_city_FilteredI ] = '\0';
+               
+                fclose(f_city);
                                 
                 //country
-                defformatstring(curlcmd_ip_country)("%s%s%s", "curl https://ipapi.co/", ip, "/country/ -o curl/pcountry.txt");
+                defformatstring(curlcmd_ip_country)("%s%s%s", "curl -sS https://ipapi.co/", ip, "/country_name/ -o curl/pcountry.txt");
                 std::string command_country = curlcmd_ip_country; system(command_country.c_str());
                                 
                 FILE* f_country = fopen("curl/pcountry.txt", "r");
@@ -518,15 +520,39 @@ namespace server {
                 size_t size_country = ftell(f_country);
                         
                 char* where_country = new char[size_country];
-                        
+                
                 rewind(f_country);
                 fread(where_country, sizeof(char), size_country, f_country);
                 
-                defformatstring(cmsg)("%s, %s, %s", where_city, where_region, where_country);
-                //check to make sure there's data (strcmp is backwards)
-                if(strcmp(where_city, "Undefined")) out(ECHO_SERV, "\f0%s \f7connected from \f2%s", ci->name, cmsg);
-                delete[] where_city, where_country;
-                //do not delete "where_region" to avoid echoing buggy characters
+                //strip of weird chars
+                 char* rawstr_country = where_country;
+                size_t rawstr_countryLength = size_country;
+            
+                size_t finalLength_country = 0;
+                for(size_t i = 0; i < rawstr_countryLength; i++ ) {
+                    char c = rawstr_country[i];
+                    if( IsAlphabetical(c) ) finalLength++;
+                }
+            
+                char* p_country_Filtered = new char[ finalLength + 1 ];
+                size_t p_country_FilteredI = 0;
+                for(size_t i = 0; i < rawstr_countryLength; i++ ) {
+                    char c = rawstr_country[i];
+                    if( IsAlphabetical(c) ) p_country_Filtered[ p_country_FilteredI++ ] = c;
+                }
+                p_country_Filtered[ p_country_FilteredI ] = '\0';
+                      
+                fclose(f_country);
+            
+                defformatstring(cmsg)("%s, %s", p_city_Filtered, p_country_Filtered);
+                out(ECHO_SERV, "\f0%s \f7connected from \f1%s", ci->name, cmsg);
+                
+                //hefty cleanup avoids bad chars
+                command_city.clear(); command_country.clear();
+                free (where_city);
+                free (where_country);
+                free (p_city_Filtered);
+                free (p_country_Filtered);
             }
         }
     }
