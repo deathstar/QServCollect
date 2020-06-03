@@ -82,7 +82,9 @@ TROUBLESHOOTING
 
 "command not found: cmake .": cmake is not installed, see above for download link.
 
-Can't see player city/state/country msg: try using geoIP geolocation instead of Curl. To do this, rename the text file in the QServCollect root directory something other than "usecurl.txt." Make sure the file permissions are set to allow QServ Access to the curl folder and its contents, along with the entire config folder and usecurl.txt (if you're using curl). Please note that with curl geolocation, the #whois and #stats commands will not show player locations. 
+Can't see player city/state/country msg: try using geoIP geolocation instead of Curl. To do this, rename the text file in the QServCollect root directory something other than "usecurl.txt." Make sure the file permissions are set to allow QServ access to the curl folder and its contents, along with the entire config folder and usecurl.txt (if you're using curl). You can just use "chmod -R 777 QServCollect" from the command line. Please note that with curl geolocation, the #whois and #stats commands will not show player locations. 
+
+flagruns not storing: You can just use "chmod -R 777 QServCollect" from the command line to give QServ access to its files.
 
 "make: *** No targets specified and no makefile found.  Stop.": the cmake . command was not issued before make.
 
