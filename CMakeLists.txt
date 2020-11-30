@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 2.7)
 
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+set(CMAKE_CXX_STANDARD 11)
+
 
 project(qserv)
 subdirs(enet GeoIP)
@@ -34,6 +36,9 @@ include(CheckSymbolExists)
 
 IF(CMAKE_COMPILER_IS_GNUCXX)
 set(CMAKE_CXX_FLAGS "-rdynamic")
+
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -include mod/HTTPRequest.hpp")
+
 ENDIF(CMAKE_COMPILER_IS_GNUCXX)
 
 check_function_exists(gethostbyaddr_r, HAS_GETHOSTBYADDR_R)

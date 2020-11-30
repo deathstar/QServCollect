@@ -2,6 +2,7 @@
 #include "../GeoIP/libGeoIP/GeoIPCity.h"
 #include "../GeoIP/libGeoIP/GeoIP.h"
 #include <netdb.h>
+#include "HTTPRequest.hpp"
 
 //includes geoip handling, command system and a lot of useful tools
 
@@ -369,7 +370,26 @@ namespace server {
      bool IsAlphabetical(char c) { //also allows spaces
         return (c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z') || (c == ' ');
      }
-            
+
+    void ReplaceStringInPlace(std::string& subject, const std::string& search, const std::string& replace) {
+        size_t pos = 0;
+        while ((pos = subject.find(search, pos)) != std::string::npos) {
+            subject.replace(pos, search.length(), replace);
+            pos += replace.length();
+        }
+    }
+
+    char* DeleteLast2Chars(char* name)
+    {
+        int i = 0;
+        while(name[i] != '\0')
+        {
+            i++;
+        }
+        name[i-2] = '\0';
+        return name;
+    }
+
     void QServ::getLocation(clientinfo *ci) {
         
         //get our localhost ip for comparison exclusion
@@ -460,13 +480,13 @@ namespace server {
                 sprintf(pmsg, "%s%s", typesconsole[typeconsole], location);
             }
             
-            //check to see if we want to use curl
-            FILE* f_mode = fopen("usecurl.txt", "r");
-            bool curlgeolocation;
-            if(f_mode) {curlgeolocation = true;}
-            else {curlgeolocation = false;}
+            //check to see if we want to use http geolocation or geoip
+            FILE* f_mode = fopen("config/use_http_geo.cfg", "r");
+            bool HTTP_geolocation;
+            if(f_mode) { HTTP_geolocation = true; }
+            else { HTTP_geolocation = false; }
             
-            if(!curlgeolocation) {
+            if(!HTTP_geolocation) {
                 defformatstring(msg)("\f0%s\f7%s", ci->name, (type < 2) ? types[type] : lmsg);
                 defformatstring(nocolormsg)("%s%s", ci->name, (typeconsole < 2) ? typesconsole[typeconsole] : pmsg);
                 out(ECHO_SERV,"%s",msg);
@@ -475,87 +495,29 @@ namespace server {
                 is_unknown_ip = false; //reset
             }
             
-            if(curlgeolocation) {
-                //city
-                defformatstring(curlcmd_ip_city)("%s%s%s", "curl -sS https://ipapi.co/", ip, "/city/ -o curl/pcity.txt");
-                std::string command_city = curlcmd_ip_city; system(command_city.c_str());
-                                
-                FILE* f_city = fopen("curl/pcity.txt", "r");
-                
-                if(!f_city) out(ECHO_CONSOLE, "[FATAL CURL ERROR]: failed to open curl/pcity.txt for geolocation data, the file either doesn't exist or QServ does not have the proper permission to access the file.");
-                        
-                fseek(f_city, 0, SEEK_END);
-                size_t size_city = ftell(f_city);
-                        
-                char* where_city = new char[size_city];
-                
-                rewind(f_city);
-                fread(where_city, sizeof(char), size_city, f_city);
-                
-                //strip string of weird characters
-                 char* str = where_city;
-                size_t strLength = size_city;
-            
-                size_t finalLength = 0;
-                for(size_t i = 0; i < strLength; i++ ) {
-                    char c = str[i];
-                    if( IsAlphabetical(c) ) finalLength++;
+            //todo: localhost exclusion
+            if(HTTP_geolocation) {
+                try
+                {
+                    //pull info
+                    defformatstring(r_str)("%s%s%s", "http://ip-api.com/line/", ip, "?fields=city,regionName,country");
+                    http::Request req(r_str);
+                    const http::Response res = req.send("GET");
+                    const char* a = std::string(res.body.begin(), res.body.end()).c_str();
+                    
+                    //cleanup and output
+                    std::string s = a;
+                    ReplaceStringInPlace(s, "\n", " > ");
+                    DeleteLast2Chars((char *)a);
+                    defformatstring(msg)("\f0%s \f7connected from \f6%s", colorname(ci), a);
+                    out(ECHO_SERV,"%s", msg);
+                    defformatstring(cmsg)("%s connected from %s", colorname(ci), a);
+                    out(ECHO_CONSOLE,"%s", cmsg);
                 }
-            
-                char* p_city_Filtered = new char[ finalLength + 1 ];
-                size_t p_city_FilteredI = 0;
-                for(size_t i = 0; i < strLength; i++ ) {
-                    char c = str[i];
-                    if( IsAlphabetical(c) ) p_city_Filtered[ p_city_FilteredI++ ] = c;
+                catch (const std::exception& e)
+                {
+                    std::cerr << "[ERROR]: HTTP geolocation failed: " << e.what() << '\n';
                 }
-                p_city_Filtered[ p_city_FilteredI ] = '\0';
-               
-                fclose(f_city);
-                                
-                //country
-                defformatstring(curlcmd_ip_country)("%s%s%s", "curl -sS https://ipapi.co/", ip, "/country_name/ -o curl/pcountry.txt");
-                std::string command_country = curlcmd_ip_country; system(command_country.c_str());
-                                
-                FILE* f_country = fopen("curl/pcountry.txt", "r");
-                if(!f_country) out(ECHO_CONSOLE, "[FATAL CURL ERROR]: failed to open curl/pcountry.txt for geolocation data, the file either doesn't exist or QServ does not have the proper permission to access the file.");
-                        
-                fseek(f_country, 0, SEEK_END);
-                size_t size_country = ftell(f_country);
-                        
-                char* where_country = new char[size_country];
-                
-                rewind(f_country);
-                fread(where_country, sizeof(char), size_country, f_country);
-                
-                //strip of weird chars
-                 char* rawstr_country = where_country;
-                size_t rawstr_countryLength = size_country;
-            
-                size_t finalLength_country = 0;
-                for(size_t i = 0; i < rawstr_countryLength; i++ ) {
-                    char c = rawstr_country[i];
-                    if( IsAlphabetical(c) ) finalLength++;
-                }
-            
-                char* p_country_Filtered = new char[ finalLength + 1 ];
-                size_t p_country_FilteredI = 0;
-                for(size_t i = 0; i < rawstr_countryLength; i++ ) {
-                    char c = rawstr_country[i];
-                    if( IsAlphabetical(c) ) p_country_Filtered[ p_country_FilteredI++ ] = c;
-                }
-                p_country_Filtered[ p_country_FilteredI ] = '\0';
-                      
-                fclose(f_country);
-            
-                defformatstring(cmsg)("%s, %s", p_city_Filtered, p_country_Filtered);
-                out(ECHO_SERV, "\f0%s \f7connected from \f1%s", ci->name, cmsg);
-                
-                //hefty cleanup avoids bad chars
-                command_city.clear(); command_country.clear();
-                free (where_city);
-                free (where_country);
-                free (p_city_Filtered);
-                free (p_country_Filtered);
             }
         }
     }

@@ -1,1 +1,0 @@
-Having this file exist in the QServ root directory forces QServ to use curl for geolocation. Rename this file to something else to use GeoIP.
